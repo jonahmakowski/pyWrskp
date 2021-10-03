@@ -1,1 +1,1 @@
-# PyWrskp
+# pyWrskp
