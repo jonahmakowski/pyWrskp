@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>{{ post.content }}</h1>
+    <p>{{ post.info }}</p>
+    <p>by {{ post.creator.username }}</p>
+{% endblock %}

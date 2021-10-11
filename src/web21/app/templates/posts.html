@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<p><div><a href='/home/blogposts/small'>small view</a></div></p>
+
+{% for post in posts%}
+    <div>
+        <h3><div><a href={{ post.link }}>{{ post.content }}</a></div></h3>
+        <p>by {{ post.creator.username }}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}
