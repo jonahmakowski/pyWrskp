@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>{{ title }}</title>
+	</head>
+	<body>
+        <table>
+            <tr>
+                <form action="/" method="post"><button name="Welcome" type="submit">Welcome</button></form>
+                <form action="/home" method="post"><button name="Home" type="submit">Home</button></form>
+                <form action="/music" method="post"><button name="Music" type="submit">Music</button></form>
+                <form action="/calendar" method="post"><button name="Calendar" type="submit">Calendar</button></form>
+                <form action="/home/blogposts" method="post"><button name="Blog_Posts" type="submit">Blog Posts</button></form>
+                <form action="/home/blogposts/small" method="post"><button name="Blog_Posts_Small" type="submit">Blog Posts Small</button></form>
+            </tr>
+        </table>
+        <hr>
+		{% block content %}{% endblock %}
+	</body>
+</html>
