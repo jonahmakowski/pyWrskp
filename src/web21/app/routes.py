@@ -10,7 +10,7 @@ blogPosts_list = [
         'link':'/post/Jonah'
     },
     {
-        'creator':{'username':"Mr. Payne's 4/5 class", 'user':"Mr.Payne's+45+class"},
+        'creator':{'username':"Mr. Payne's 4/5 class 2020-21", 'user':"Mr.Payne's+45+class+2020-21"},
         'content':'Why in-person school is better then the online version',
         'info':"In-person school is sooooooooooo much better than online school becuase when we are in person we can chat, and eat together (note this was not written by Mr.Payne's class, it was written by Jonah)",
         'link':"/post/Mr.Payne's+45+class"
@@ -18,9 +18,7 @@ blogPosts_list = [
     {'creator':{'username':'Jonah', 'user':'Jonah1'},
      'content':'What does www stand for?',
      'info':'What does www (like https://www...) mean? www means World Wide Web!',
-     'link':'/post/Jonah1'
-        }
-]
+     'link':'/post/Jonah1'}]
 
 CEO = {'name':'Jonah',
        'email':'jonah.kmjn@gmail.com'}
@@ -67,3 +65,6 @@ def ceo_info():
     email = 'Email:   ' + CEO['email']
     print(name + '\n' + email)
     return '<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell</p> <a href="/">return to home page</a>'
+@app.route('/youtube', methods=['POST', 'GET'])
+def youtube():
+    return render_template('youtube.html', title='youtube')
