@@ -76,8 +76,9 @@ def ceo_info():
 def youtube():
     return render_template('youtube.html', title='youtube')
 
-@app.route('/home/cac/n1=<num_1>/t=<type>/n2=<num2>')
+@app.route('/home/cac/<num_1>/<type>/<num_2>')
 def caculator(num_1, type, num_2):
+    num_1, num_2 = int(num_1), int(num_2)
     if type == '+':
         a = num_1 + num_2
     elif type == '-':
