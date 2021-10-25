@@ -27,9 +27,11 @@ CEO = {'name':'Jonah',
 @app.route('/welcome', methods=['POST', 'GET'])
 def Welcome():
     return render_template('index.html', title='Welcome', user=currentUser)
+
 @app.route('/home', methods=['POST', 'GET'])
 def home():
     return render_template('home.html', title='Home', user=currentUser)
+
 @app.route('/home/blogposts', methods=['POST', 'GET'])
 @app.route('/home/blogposts/', methods=['POST', 'GET'])
 @app.route('/blogposts', methods=['POST', 'GET'])
@@ -50,21 +52,41 @@ def post(creator):
         return render_template('error.html', title=title, error=error)
     else:
         return render_template('Blog_outline.html', title=post['creator']['username'] + "'s blog post", post=post)
+
 @app.route('/home/blogposts/small', methods=['POST', 'GET'])
 def blog_post_small():
     return render_template('posts_small.html', title='blog posts', posts=blogPosts_list)
+
 @app.route('/music', methods=['POST', 'GET'])
 def music():
     return render_template('music.html', title='Music')
+
 @app.route('/calendar', methods=['POST', 'GET'])
 def calendar():
     return render_template('calendar.html', title='calendar')
+
 @app.route('/ceo+info', methods=['POST', 'GET'])
 def ceo_info():
     name = 'Name:    ' + CEO ['name']
     email = 'Email:   ' + CEO['email']
     print(name + '\n' + email)
     return '<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell</p> <a href="/">return to home page</a>'
+
 @app.route('/youtube', methods=['POST', 'GET'])
 def youtube():
     return render_template('youtube.html', title='youtube')
+
+@app.route('/home/cac/e=<equation>')
+def caculator(equation):
+    nums = ''
+    equation = list(equation)
+    equation_edited = []
+    for item in equation:
+        try:
+            testing = int(item)
+            nums += item
+        except:
+            equation_edited.append(nums)
+            nums = ''
+            equation_edited.append(item)
+    
