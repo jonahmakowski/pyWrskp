@@ -76,17 +76,14 @@ def ceo_info():
 def youtube():
     return render_template('youtube.html', title='youtube')
 
-@app.route('/home/cac/e=<equation>')
-def caculator(equation):
-    nums = ''
-    equation = list(equation)
-    equation_edited = []
-    for item in equation:
-        try:
-            testing = int(item)
-            nums += item
-        except:
-            equation_edited.append(nums)
-            nums = ''
-            equation_edited.append(item)
-    
+@app.route('/home/cac/n1=<num_1>/t=<type>/n2=<num2>')
+def caculator(num_1, type, num_2):
+    if type == '+':
+        a = num_1 + num_2
+    elif type == '-':
+        a = num_1 - num_2
+    elif type == '*':
+        a = num_1 * num_2
+    elif type == '/':
+        a = num_1 / num_2
+    return render_template('caculator.html', title='cacylator a', a = a)
