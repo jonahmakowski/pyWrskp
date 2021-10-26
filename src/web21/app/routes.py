@@ -15,13 +15,17 @@ blogPosts_list = [
         'info':"In-person school is sooooooooooo much better than online school becuase when we are in person we can chat, and eat together (note this was not written by Mr.Payne's class, it was written by Jonah)",
         'link':"/post/Mr.Payne's+45+class"
         },
-    {'creator':{'username':'Jonah', 'user':'Jonah1'},
+    {
+        'creator':{'username':'Jonah', 'user':'Jonah1'},
      'content':'What does www stand for?',
      'info':'What does www (like https://www...) mean? www means World Wide Web!',
-     'link':'/post/Jonah1'}]
+     'link':'/post/Jonah1'
+        }]
 
 CEO = {'name':'Jonah',
-       'email':'jonah.kmjn@gmail.com'}
+       'email':'jonah.kmjn@gmail.com',
+       'email2':'jonah@makowski.ca',
+       'email3':'jonah@makowski.at'}
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/welcome', methods=['POST', 'GET'])
@@ -68,7 +72,7 @@ def calendar():
 @app.route('/ceo+info', methods=['POST', 'GET'])
 def ceo_info():
     name = 'Name:    ' + CEO ['name']
-    email = 'Email:   ' + CEO['email']
+    email = 'Email:   {}, {}, {}'.format(CEO['email'], CEO['email2'], CEO['email3'])
     print(name + '\n' + email)
     return '<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell</p> <a href="/">return to home page</a>'
 
@@ -87,4 +91,4 @@ def caculator(num_1, type, num_2):
         a = num_1 * num_2
     elif type == '/':
         a = num_1 / num_2
-    return render_template('caculator.html', title='cacylator a', a = a)
+    return render_template('caculator.html', title='caculator', a = a)
