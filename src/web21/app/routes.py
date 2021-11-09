@@ -80,7 +80,7 @@ def ceo_info():
 def youtube():
     return render_template('youtube.html', title='youtube')
 
-@app.route('/home/cac/<num_1>/<type>/<num_2>')
+@app.route('/home/cac/<num_1>/<type>/<num_2>', methods=['POST', 'GET'])
 def caculator(num_1, type, num_2):
     num_1, num_2 = int(num_1), int(num_2)
     if type == '+':
@@ -92,3 +92,7 @@ def caculator(num_1, type, num_2):
     elif type == '/':
         a = num_1 / num_2
     return render_template('caculator.html', title='caculator', a = a)
+
+@app.route('/page', methods=['POST', 'GET'])
+def page():
+    return render_template('page.html', title='List of Pages | This is a list of pages on this website')
