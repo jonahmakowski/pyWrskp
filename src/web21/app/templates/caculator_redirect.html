@@ -1,1 +1,22 @@
-NOT DONE YET
+{% extends "layout.html" %}
+
+{% block content %}
+<html>
+ <body>
+   <h1>Caculator info</h1>
+
+   <form method=POST>
+    <fieldset>
+   <legend>Info</legend>
+   <ul>
+    <li>1st Number: <input name='num1'></li>
+    <li>Type:  <input name='type'></li>
+    <li>2nd Number:  <input name='num2'></li>
+   </ul>
+   <input type='submit' value='Submit Form'>
+   </fieldset>
+   </form>
+
+ </body>
+</html>
+{% endblock %}
