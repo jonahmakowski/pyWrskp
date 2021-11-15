@@ -1,22 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<html>
- <body>
-   <h1>Caculator info</h1>
-
-   <form method=POST>
-    <fieldset>
-   <legend>Info</legend>
-   <ul>
-    <li>1st Number: <input name='num1'></li>
-    <li>Type:  <input name='type'></li>
-    <li>2nd Number:  <input name='num2'></li>
-   </ul>
-   <input type='submit' value='Submit Form'>
-   </fieldset>
-   </form>
-
- </body>
-</html>
+    <form action="{{ url_for("caculator_sender")}}" method="post">
+    <label for="num1">First number:</label>
+    <input type="text" id="num1" name="num1" placeholder="first number">
+    <label for="type">Type (+, -, *, /):</label>
+    <input type="text" id="type" name="type" placeholder="type">
+    <label for="num1">Second number:</label>
+    <input type="text" id="num2" name="num2" placeholder="second number">
+    <button type="submit">=</button>
 {% endblock %}
