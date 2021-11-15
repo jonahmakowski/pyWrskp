@@ -88,21 +88,52 @@ def page():
 def caculator_sender():
     if request.method == "POST":
         # getting input with name = fname in HTML form
-        num1 = int(request.form.get("num1"))
-        num2 = int(request.form.get("num2"))
+        num1 = float(request.form.get("num1"))
+        try:
+            num2 = float(request.form.get("num2"))
+        except:
+            pass
         type = request.form.get("type")
-        print(num1)
-        print(num2)
-        print(type)
         if type == '+':
-            a = num1 + num2
+            try:
+                a = num1 + num2
+                q = '{} + {}'.format(num1, num2)
+            except:
+                q = "ISSUE"
+                a = "ISSUE"
         elif type == '-':
-            a = num1 - num2
+            try:
+                a = num1 - num2
+                q = '{} - {}'.format(num1, num2)
+            except:
+                q = "ISSUE"
+                a = "ISSUE"
         elif type == '*':
-            a = num1 * num2
+            try:
+                a = num1 * num2
+                q = '{} * {}'.format(num1, num2)
+            except:
+                q = "ISSUE"
+                a = "ISSUE"
         elif type == '/':
-            a = num1 / num2
+            try:
+                a = num1 / num2
+                q = '{} / {}'.format(num1, num2)
+            except:
+                q = "ISSUE"
+                a = "ISSUE"
+        elif type == '**':
+            try:
+                a = num1 ** num2
+                q = '{} ** {}'.format(num1, num2)
+            except:
+                q = "ISSUE"
+                a = "ISSUE"
+        elif type == '^':
+            from math import sqrt
+            a = sqrt(num1)
+            q = '{}^'.format(num1)
         else:
-            a = "ISSUE CODE CAN NOT FIND NUMBERS NESSARY, TALK TO THE OWNER OF THIS WEBSITE"
-        return render_template('caculator.html', title='caculator', a = a)
+            a = "ISSUE CODE CaN NOT FIND NUMBERS NESSaRY, TaLK TO THE OWNER OF THIS WEBSITE"
+        return render_template('caculator.html', title='caculator', a = a, q = q)
     return render_template('caculator_redirect.html', title='Caculator Sender')

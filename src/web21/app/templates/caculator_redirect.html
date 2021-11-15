@@ -4,9 +4,12 @@
     <form action="{{ url_for("caculator_sender")}}" method="post">
     <label for="num1">First number:</label>
     <input type="text" id="num1" name="num1" placeholder="first number">
-    <label for="type">Type (+, -, *, /):</label>
+    <hr>
+    <label for="type">Type (+, -, *, /, **, ^) for square root, only use number one:</label>
     <input type="text" id="type" name="type" placeholder="type">
+    <hr>
     <label for="num1">Second number:</label>
     <input type="text" id="num2" name="num2" placeholder="second number">
+    <hr>
     <button type="submit">=</button>
 {% endblock %}
