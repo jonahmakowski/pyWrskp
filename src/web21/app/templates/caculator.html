@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <p>your awnser is:</p>
-    <p>{{ a }}</p>
+    <p>A = {{ q }} = {{ a }}</p>
+    <form action="/cac" method="get"><button name="cac" type="submit">RELOAD</button></form>
 {% endblock %}
