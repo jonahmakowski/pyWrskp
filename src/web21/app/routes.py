@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import Flask, request, render_template, redirect
 from app import app
 
 currentUser = {'username': input('What is your name?\n')}
@@ -80,19 +80,29 @@ def ceo_info():
 def youtube():
     return render_template('youtube.html', title='youtube')
 
-@app.route('/home/cac/<num_1>/<type>/<num_2>', methods=['POST', 'GET'])
-def caculator(num_1, type, num_2):
-    num_1, num_2 = int(num_1), int(num_2)
-    if type == '+':
-        a = num_1 + num_2
-    elif type == '-':
-        a = num_1 - num_2
-    elif type == '*':
-        a = num_1 * num_2
-    elif type == '/':
-        a = num_1 / num_2
-    return render_template('caculator.html', title='caculator', a = a)
-
 @app.route('/page', methods=['POST', 'GET'])
 def page():
     return render_template('page.html', title='List of Pages | This is a list of pages on this website')
+
+@app.route('/cac', methods=['POST', 'GET'])
+def caculator_sender():
+    if request.method == "POST":
+        # getting input with name = fname in HTML form
+        num1 = int(request.form.get("num1"))
+        num2 = int(request.form.get("num2"))
+        type = request.form.get("type")
+        print(num1)
+        print(num2)
+        print(type)
+        if type == '+':
+            a = num1 + num2
+        elif type == '-':
+            a = num1 - num2
+        elif type == '*':
+            a = num1 * num2
+        elif type == '/':
+            a = num1 / num2
+        else:
+            a = "ISSUE CODE CAN NOT FIND NUMBERS NESSARY, TALK TO THE OWNER OF THIS WEBSITE"
+        return render_template('caculator.html', title='caculator', a = a)
+    return render_template('caculator_redirect.html', title='Caculator Sender')
