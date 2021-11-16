@@ -94,46 +94,30 @@ def caculator_sender():
         except:
             pass
         type = request.form.get("type")
-        if type == '+':
-            try:
+        try:
+            if type == '+':
                 a = num1 + num2
                 q = '{} + {}'.format(num1, num2)
-            except:
-                q = "ISSUE"
-                a = "ISSUE"
-        elif type == '-':
-            try:
+            elif type == '-':
                 a = num1 - num2
                 q = '{} - {}'.format(num1, num2)
-            except:
-                q = "ISSUE"
-                a = "ISSUE"
-        elif type == '*':
-            try:
+            elif type == '*':
                 a = num1 * num2
                 q = '{} * {}'.format(num1, num2)
-            except:
-                q = "ISSUE"
-                a = "ISSUE"
-        elif type == '/':
-            try:
+            elif type == '/':
                 a = num1 / num2
                 q = '{} / {}'.format(num1, num2)
-            except:
-                q = "ISSUE"
-                a = "ISSUE"
-        elif type == '**':
-            try:
+            elif type == '**':
                 a = num1 ** num2
                 q = '{} ** {}'.format(num1, num2)
-            except:
-                q = "ISSUE"
-                a = "ISSUE"
-        elif type == '^':
-            from math import sqrt
-            a = sqrt(num1)
-            q = '{}^'.format(num1)
-        else:
-            a = "ISSUE CODE CaN NOT FIND NUMBERS NESSaRY, TaLK TO THE OWNER OF THIS WEBSITE"
+            elif type == '^':
+                from math import sqrt
+                a = sqrt(num1)
+                q = '{}^'.format(num1)
+            else:
+                a = "ISSUE CODE CAN NOT FIND NUMBERS NESSaRY, TALK TO THE OWNER OF THIS WEBSITE"
+        except:
+            q = "ISSUE"
+            a = "ISSUE"
         return render_template('caculator.html', title='caculator', a = a, q = q)
     return render_template('caculator_redirect.html', title='Caculator Sender')
