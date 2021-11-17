@@ -2,6 +2,7 @@ def draw_hex(sides, length_of_sides, t):
     for i in range(sides):
         t.forward(length_of_sides)
         t.right(360 / sides)
+
 def turn(length, turn, left_or_right, t):
     if left_or_right == 'right':
         for i in range(length):
