@@ -5,8 +5,15 @@
     <label for="num1">First number:</label>
     <input type="text" id="num1" name="num1" placeholder="first number">
     <hr>
-    <label for="type">Type (+, -, *, /, **, ^) for square root, only use number one:</label>
-    <input type="text" id="type" name="type" placeholder="type">
+    <label for="type">Type (+, -, *, /, **, ^) for square root, only use number one, and dividing by 0 is not allowed:</label>
+    <select name="type">
+        <option value="+" selected>+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+        <option value="**">**</option>
+        <option value="^">^</option>
+    </select>
     <hr>
     <label for="num1">Second number:</label>
     <input type="text" id="num2" name="num2" placeholder="second number">
