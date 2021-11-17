@@ -115,9 +115,9 @@ def caculator_sender():
                 a = sqrt(num1)
                 q = '{}^'.format(num1)
             else:
-                a = "ISSUE CODE CAN NOT FIND NUMBERS NESSaRY, TALK TO THE OWNER OF THIS WEBSITE"
+                a = "ISSUE CODE CAN NOT FIND NUMBERS NESSARY, TALK TO THE OWNER OF THIS WEBSITE"
         except:
             q = "ISSUE"
             a = "ISSUE"
-        return render_template('caculator.html', title='caculator', a = a, q = q)
+        return render_template('caculator.html', title='Caculator', a = a, q = q)
     return render_template('caculator_redirect.html', title='Caculator Sender')
