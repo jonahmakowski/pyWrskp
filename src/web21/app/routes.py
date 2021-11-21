@@ -128,15 +128,10 @@ def passwords():
         from random import randint
 
         letter = request.form.get("letters")
-        #print(letter)
         num = request.form.get("numbers")
-        #print(num)
         sc = request.form.get("sc")
-        #print(sc)
         super_c = request.form.get("super_c")
-        #print(super_c)
         length = int(request.form.get("length"))
-        #print(length)
 
         chars = []
         letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
