@@ -121,3 +121,41 @@ def caculator_sender():
             a = "ISSUE"
         return render_template('caculator.html', title='Caculator', a = a, q = q)
     return render_template('caculator_redirect.html', title='Caculator Sender')
+
+@app.route('/passwords', methods=['GET', 'POST'])
+def passwords():
+    if request.method == "POST":
+        from random import randint
+
+        letter = request.form.get("letters")
+        num = request.form.get("numbers")
+        sc = request.form.get("sc")
+        super_c = request.form.get("super_c")
+        length = int(request.form.get("length"))
+
+        chars = []
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        scs = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '~', '`', '{', '}', '[', ']', ';', ':', '"', "'", '<', '>', '?', ',',
+               '.', '/', '|']
+        super_s_c = ['←', '↑', '→', '↓', '·', '•', '●', '–', '‽', '‖', '«', '»', '‘', '„', '✅', '❤️', '⌘', '', '⌥', '⌫', '∞', '™', '¼', '½', '¾', 'À', 'Á', 'Â', 'Ã',
+                     'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'æ', 'Ħ',
+                     'ĳ', 'Œ', 'œ', '☚', '☛', '★', '☆', '♠', '♣', '♥', '♦', '♪', '♫', '♀']
+
+        if letter == 'y':
+            chars += letters
+        if num == 'y':
+            chars += nums
+        if sc == 'y':
+            chars += scs
+        if super_c == 'y':
+            chars += super_s_c
+
+        password = ''
+
+        for i in range(length):
+            loc = randint(0, len(chars) - 1)
+            password += chars[loc]
+        return render_template()
+    return render_template('passwords.html', title='Passwords')
