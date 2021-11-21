@@ -1,8 +1,8 @@
 from random import randint
 
-letter = input('Would you like letters? (ex. A, B, C)')
+letter = input('Would you like letters? (ex. A, b, c)')
 num = input('Would you like numbers? (ex. 1, 2, 3)')
-sc = input('Would you like special chars? (ex. @, %, &)')
+sc = input('Would you like special chars? (ex. @, %, -)')
 super_c = input('Would you like super special chars (ex. ←, ↑, →), \nsome websites may not allow this, if it does not work turn this off')
 length = int(input('how long would you like your password to be?'))
 
