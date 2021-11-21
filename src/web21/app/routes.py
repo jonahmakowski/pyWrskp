@@ -128,10 +128,15 @@ def passwords():
         from random import randint
 
         letter = request.form.get("letters")
+        #print(letter)
         num = request.form.get("numbers")
+        #print(num)
         sc = request.form.get("sc")
+        #print(sc)
         super_c = request.form.get("super_c")
+        #print(super_c)
         length = int(request.form.get("length"))
+        #print(length)
 
         chars = []
         letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -157,5 +162,11 @@ def passwords():
         for i in range(length):
             loc = randint(0, len(chars) - 1)
             password += chars[loc]
-        return render_template()
+            print(password)
+        return render_template('password_show.html', title='Passwords', password=password)
+    '''
+    else:
+        print('ERROR')
+        print('not supported method {}'.format(request.method))
+    '''
     return render_template('passwords.html', title='Passwords')
