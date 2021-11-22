@@ -161,7 +161,7 @@ def passwords():
                 loc = randint(0, len(chars) - 1)
                 password += chars[loc]
         elif create == False:
-            password = 'Sorry, you have put n in all the questions, so there are no options'
+            password = 'Sorry, you have put no in all the questions, so there are no options'
         return render_template('password_show.html', title='Passwords', password=password)
     '''
     else:
