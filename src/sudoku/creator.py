@@ -1,3 +1,7 @@
+'''
+THIS DOES NOT WORK
+'''
+
 from solve_mm1 import Board
 
 def sudoku(size):
@@ -62,9 +66,9 @@ def sudoku(size):
 
     # print ('--finished calculating--')
     total_time = time.time()-start_time
-    return mydict, n, total_time
+    return mydict
 
-return_dict, total_tries, amt_of_time = sudoku(9)
+return_dict = sudoku(9)
 # print ('')
 # print ('--printing output--')
 for n,v in return_dict.items():
