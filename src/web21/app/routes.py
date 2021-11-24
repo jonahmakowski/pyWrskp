@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, redirect
 from app import app
 
-currentUser = {'username': input('What is your name?\n')}
 blogPosts_list = [
     {
         'creator':{'username':'Jonah', 'user':'Jonah'},
@@ -30,11 +29,11 @@ CEO = {'name':'Jonah',
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/welcome', methods=['POST', 'GET'])
 def Welcome():
-    return render_template('index.html', title='Welcome', user=currentUser)
+    return render_template('index.html', title='Welcome')
 
 @app.route('/home', methods=['POST', 'GET'])
 def home():
-    return render_template('home.html', title='Home', user=currentUser)
+    return render_template('home.html', title='Home')
 
 @app.route('/home/blogposts', methods=['POST', 'GET'])
 @app.route('/home/blogposts/', methods=['POST', 'GET'])
