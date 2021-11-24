@@ -6,7 +6,7 @@ def sudoku(size):
     import random as rn
     mydict = {}
     n = 0
-    print '--started calculating--'
+    # print ('--started calculating--')
     while len(mydict) < 9:
         n += 1
         x = range(1, size+1)
@@ -56,16 +56,16 @@ def sudoku(size):
             if isgoodafterduplicatecheck == True:
 
                 mydict[len(mydict)] = testlist
-                print 'success found', len(mydict), 'row'   
+                # print ('success found', len(mydict), 'row')
 
-    print '--finished calculating--'
+    # print ('--finished calculating--')
     total_time = time.time()-start_time
     return mydict, n, total_time
 
 return_dict, total_tries, amt_of_time = sudoku(9)
-print ''
-print '--printing output--'
+# print ('')
+# print ('--printing output--')
 for n,v in return_dict.items():
-    print n,v
-print 'process took',total_tries,'tries in', round(amt_of_time,2), 'secs'
-print '-------------------'
+    print (n,v)
+# print ('process took',total_tries,'tries in', round(amt_of_time,2), 'secs')
+# print ('-------------------')
