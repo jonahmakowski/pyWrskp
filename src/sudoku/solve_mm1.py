@@ -17,18 +17,21 @@ class Board:
         self.debug = 0      # debug level
         self.nzeros = 0     # number of non-zeros (i.e., predefined slots)
 
-    def define_tst(self):   # define a board for testing
+    def define_tst(self, board=None):   # define a board for testing
         #   [5, 3, 0, 0, 7, 0, 0, 0, 0],
-        self.board = [
-            [5, 3, 0, 0, 7, 0, 1, 0, 0],  # slot in col 6 set to 1 (to assure a unique solution?)
-            [6, 0, 0, 1, 9, 5, 0, 0, 0],
-            [0, 9, 8, 0, 0, 0, 0, 6, 0],
-            [8, 0, 0, 0, 6, 0, 0, 0, 3],
-            [4, 0, 0, 8, 0, 3, 0, 0, 1],
-            [7, 0, 0, 0, 2, 0, 0, 0, 6],
-            [0, 6, 0, 0, 0, 0, 2, 8, 0],
-            [0, 0, 0, 4, 1, 9, 0, 0, 5],
-            [0, 0, 0, 0, 8, 0, 0, 0, 0]]
+        if board != None:
+            self.board = board
+        elif board == None:
+            self.board = [
+                [5, 3, 0, 0, 7, 0, 1, 0, 0],  # slot in col 6 set to 1 (to assure a unique solution?)
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 0, 0]]
 
     # return true if num fits to the board cell at position (row, col)
     # checks all rows, then cols, then boxes
