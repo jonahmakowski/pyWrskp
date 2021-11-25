@@ -112,7 +112,7 @@ def caculator_sender():
             elif type == '^':
                 from math import sqrt
                 a = sqrt(num1)
-                q = '{}^'.format(num1)
+                q = '√{}'.format(num1)
             else:
                 a = "ISSUE CODE CAN NOT FIND NUMBERS NESSARY, TALK TO THE OWNER OF THIS WEBSITE"
         except:
