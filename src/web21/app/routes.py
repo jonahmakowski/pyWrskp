@@ -168,3 +168,15 @@ def passwords():
         print('not supported method {}'.format(request.method))
     '''
     return render_template('passwords.html', title='Passwords')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        user = request.form.get("username")
+        password = request.form.get("password")
+        if user == 'WhiteSwine' and password == 'LOLA IS THE BEST':
+            return render_template('logged_in.html', title = 'logged in!', user = 'WhiteSwine')
+        else:
+            return '<h1>INCORRECT</h1>'
+        
+    return render_template('login.html', title='login')
