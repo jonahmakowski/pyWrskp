@@ -86,11 +86,13 @@ class system(tk.Frame):
         self.pack()
         self.usr = usr
         self.create_buttons_btns()
+        self.runtime = 0
     def create_buttons_btns(self):
         self.btnFrame = tk.Frame(self)
 
         self.btns = [
-            {'loc':[10,10], 'item':tk.Button(self.btnFrame, text='log out', command=self.master.destroy)}]
+            {'loc':[10,10], 'item':tk.Button(self.btnFrame, text='log out', command=self.master.destroy)},
+            {'loc':[0,0], 'item':tk.Button(self.btnFrame, text='Info', command=self.info)}]
         self.create_buttons()
     def create_buttons(self):
         self.btnFrame.grid(row = 0, column=0, sticky='ns')
@@ -98,6 +100,15 @@ class system(tk.Frame):
             r = item['loc'][0]
             c = item['loc'][1]
             item['item'].grid(row=r, column=c, sticky='ew')
+    def info(self):
+        if self.runtime >= 1:
+            print('\n\n\n\n\n\n\n')
+        self.runtime += 1
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~         ~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~  Hello  ~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~         ~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
 from time import sleep
 from random import randint
@@ -128,7 +139,7 @@ if app.active == True and app.pas == app.code:
     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     name = input()
     
-    if name == 'Jonah' or name == 'Noah':
+    if (name == 'Jonah' or name == 'Noah') or (name == 'Jonah Makowski' or name == 'Noah Makowski'):
         sleep(2.5)
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         print('~~~~~~~~  SYSTEM 100% ACTIVE  ~~~~~~~~')

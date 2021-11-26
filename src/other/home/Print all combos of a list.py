@@ -19,7 +19,12 @@ def combinationUtil(arr, data, start,
                         end, index + 1, r);
         i += 1;
  
-arr = ['Z', 'V', 'R', '/', 'z', 'v', 'r'];
-r = 4;
+arr = [];
+while True:
+    add = input('what would you like to add?')
+    if add == '':
+        break
+    arr.append(add)
+r = int(input('size of possiblities'));
 n = len(arr);
 printCombination(arr, n, r);
