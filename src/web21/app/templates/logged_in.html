@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Welcome, {{ user }}</h1>
+    <p>Hope you have a great day!</p>
+    <form action="/login" method="get"><button name="log out" type="submit">log out</button></form>
+{% endblock %}
