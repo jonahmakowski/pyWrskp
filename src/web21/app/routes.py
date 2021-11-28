@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, redirect
 from app import app
 
+User = 'testing'
+
 blogPosts_list = [
     {
         'creator':{'username':'Jonah', 'user':'Jonah'},
@@ -29,11 +31,11 @@ CEO = {'name':'Jonah',
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/welcome', methods=['POST', 'GET'])
 def Welcome():
-    return render_template('index.html', title='Welcome')
+    return render_template('index.html', title='Welcome', User = User)
 
 @app.route('/home', methods=['POST', 'GET'])
 def home():
-    return render_template('home.html', title='Home')
+    return render_template('home.html', title='Home', User = User)
 
 @app.route('/home/blogposts', methods=['POST', 'GET'])
 @app.route('/home/blogposts/', methods=['POST', 'GET'])
@@ -171,11 +173,13 @@ def passwords():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    global User
     if request.method == "POST":
         user = request.form.get("username")
         password = request.form.get("password")
+        User = request.form.get("username")
         if user == 'WhiteSwine' and password == 'LOLA IS THE BEST':
-            return render_template('logged_in.html', title = 'logged in!', user = 'WhiteSwine')
+            return render_template('logged_in.html', title = 'logged in!', user = User)
         else:
             return '<h1>INCORRECT</h1>'
         
