@@ -24,9 +24,10 @@ blogPosts_list = [
         }]
 
 CEO = {'name':'Jonah',
-       'email':'jonah.kmjn@gmail.com',
-       'email2':'jonah@makowski.ca',
-       'email3':'jonah@makowski.at'}
+       'emails':{
+        '1':'jonah.kmjn@gmail.com',
+        '2':'jonah@makowski.ca',
+        '3':'jonah@makowski.at'}}
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/welcome', methods=['POST', 'GET'])
@@ -73,7 +74,7 @@ def calendar():
 @app.route('/ceo+info', methods=['POST', 'GET'])
 def ceo_info():
     name = 'Name:    ' + CEO ['name']
-    email = 'Email:   {}, {}, {}'.format(CEO['email'], CEO['email2'], CEO['email3'])
+    email = 'Email:   {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
     print(name + '\n' + email)
     return '<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell</p> <a href="/">return to home page</a>'
 
