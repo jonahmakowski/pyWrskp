@@ -19,5 +19,4 @@ while True:
     mess += message
 final_message = ('{}\n\nSent by: {}'.format(mess, user))
 
-client.chat_postMessage(channel='#bots_pywrskp', text=final_message)
 client.chat_postMessage(channel='#general', text=final_message)
