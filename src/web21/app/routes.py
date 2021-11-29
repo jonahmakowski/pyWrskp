@@ -164,18 +164,12 @@ def passwords():
         elif create == False:
             password = 'Sorry, you have put no in all the questions, so there are no options'
         return render_template('password_show.html', title='Passwords', password=password)
-    '''
-    else:
-        print('ERROR')
-        print('not supported method {}'.format(request.method))
-    '''
     return render_template('passwords.html', title='Passwords')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     global User
     if request.method == "POST":
-        user = request.form.get("username")
         password = request.form.get("password")
         User = request.form.get("username")
         if user == 'WhiteSwine' and password == 'LOLA IS THE BEST':
