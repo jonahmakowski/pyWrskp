@@ -1,18 +1,27 @@
-A = input('What opration would you like to do?\n* is multiplying, / is dividing, - is subtracting, + is adding\n')
-
-B = int(input('What is the 1st number you want to ' + A  + '?\n'))
-C = int(input('What is the 2nd number you want to ' + A  + '?\n'))
-
-if A == ('*'):
-    D = B * C
-
-if A == ('/'):
-    D = B / C
-
-if A == ('+'):
-    D = B + C
-
-if A == ('-'):
-    D = B - C
-
-print (str(B) + ' ' + A + ' ' + str(C) + ' ' + '=' + ' ' + str(D))
+def use(num1, num2, type):
+        try:
+            if type == '+':
+                a = num1 + num2
+                q = '{} + {}'.format(num1, num2)
+            elif type == '-':
+                a = num1 - num2
+                q = '{} - {}'.format(num1, num2)
+            elif type == '*':
+                a = num1 * num2
+                q = '{} * {}'.format(num1, num2)
+            elif type == '/':
+                a = num1 / num2
+                q = '{} / {}'.format(num1, num2)
+            elif type == '**':
+                a = num1 ** num2
+                q = '{} ** {}'.format(num1, num2)
+            elif type == '^':
+                from math import sqrt
+                a = sqrt(num1)
+                q = '√{}'.format(num1)
+            else:
+                a = "ISSUE CODE CAN NOT FIND NUMBERS NESSARY, TALK TO THE OWNER OF THIS WEBSITE"
+        except:
+            q = "ISSUE"
+            a = "ISSUE"
+        return q, a
