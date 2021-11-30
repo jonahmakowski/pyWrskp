@@ -89,38 +89,18 @@ def page():
 @app.route('/cac', methods=['POST', 'GET'])
 def caculator_sender():
     if request.method == "POST":
-        # getting input with name = fname in HTML form
-        num1 = float(request.form.get("num1"))
         try:
-            num2 = float(request.form.get("num2"))
+            num2 = int(request.form.get("num2"))
         except:
-            pass
-        type = request.form.get("type")
-        try:
-            if type == '+':
-                a = num1 + num2
-                q = '{} + {}'.format(num1, num2)
-            elif type == '-':
-                a = num1 - num2
-                q = '{} - {}'.format(num1, num2)
-            elif type == '*':
-                a = num1 * num2
-                q = '{} * {}'.format(num1, num2)
-            elif type == '/':
-                a = num1 / num2
-                q = '{} / {}'.format(num1, num2)
-            elif type == '**':
-                a = num1 ** num2
-                q = '{} ** {}'.format(num1, num2)
-            elif type == '^':
-                from math import sqrt
-                a = sqrt(num1)
-                q = '√{}'.format(num1)
-            else:
-                a = "ISSUE CODE CAN NOT FIND NUMBERS NESSARY, TALK TO THE OWNER OF THIS WEBSITE"
-        except:
-            q = "ISSUE"
-            a = "ISSUE"
+            num2 = None
+        import sys
+        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/home')
+
+        from caculator import use
+        
+        q, a = use(int(request.form.get("num1")),
+                   num2,
+                   request.form.get("type"))
         return render_template('caculator.html', title='Caculator', a = a, q = q)
     return render_template('caculator_redirect.html', title='Caculator Sender')
 
@@ -128,9 +108,7 @@ def caculator_sender():
 def passwords():
     if request.method == "POST":
         from random import randint
-        # some_file.py
         import sys
-        # insert at 1, 0 is the script path (or '' in REPL)
         sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/password_maker')
 
         from Creater import create
