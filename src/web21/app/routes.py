@@ -128,42 +128,20 @@ def caculator_sender():
 def passwords():
     if request.method == "POST":
         from random import randint
+        # some_file.py
+        import sys
+        # insert at 1, 0 is the script path (or '' in REPL)
+        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/password_maker')
 
-        letter = request.form.get("letters")
-        num = request.form.get("numbers")
-        sc = request.form.get("sc")
-        super_c = request.form.get("super_c")
-        length = int(request.form.get("length"))
-
-        chars = []
-        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-        nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-        scs = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '~', '`', '{', '}', '[', ']', ';', ':', '"', "'", '<', '>', '?', ',',
-               '.', '/', '|']
-        super_s_c = ['←', '↑', '→', '↓', '·', '•', '●', '–', '‽', '‖', '«', '»', '‘', '„', '✅', '❤️', '⌘', '', '⌥', '⌫', '∞', '™', '¼', '½', '¾', 'À', 'Á', 'Â', 'Ã',
-                     'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'æ', 'Ħ',
-                     'ĳ', 'Œ', 'œ', '☚', '☛', '★', '☆', '♠', '♣', '♥', '♦', '♪', '♫', '♀']
+        from Creater import create
         
-        create = True
-        if letter == 'y':
-            chars += letters
-        if num == 'y':
-            chars += nums
-        if sc == 'y':
-            chars += scs
-        if super_c == 'y':
-            chars += super_s_c
-        if (letter == 'n' and num == 'n') and (sc == 'n' and super_c == 'n'):
-            create = False
-
-        password = ''
-        if create:
-            for i in range(length):
-                loc = randint(0, len(chars) - 1)
-                password += chars[loc]
-        elif create == False:
-            password = 'Sorry, you have put no in all the questions, so there are no options'
+        password = create(request.form.get("letters"),
+                        request.form.get("numbers"),
+                        request.form.get("sc"),
+                        request.form.get("super_c"),
+                        int(request.form.get("length")),
+                        'n',
+                        False)
         return render_template('password_show.html', title='Passwords', password=password)
     return render_template('passwords.html', title='Passwords')
 
