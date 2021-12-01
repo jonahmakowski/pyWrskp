@@ -18,12 +18,18 @@ blogPosts_list = [
         },
     {
         'creator':{'username':'Jonah', 'user':'Jonah1'},
-     'content':'What does www stand for?',
-     'info':'What does www (like https://www...) mean? www means World Wide Web!',
-     'link':'/post/Jonah1'
+        'content':'What does www stand for?',
+        'info':'What does www (like https://www...) mean? www means World Wide Web!',
+        'link':'/post/Jonah1'
+        },
+    {
+        'creator':{'username':'Jonah', 'user':'Jonah2'},
+        'content':'How to print creator info in shell',
+        'info':'in your web address bar, remove "/link/Jonah2", and put "/ceo+info" instead, then press enter, and bingo, you got the CEO info!',
+        'link':'/post/Jonah2'
         }]
 
-CEO = {'name':'Jonah',
+CEO = {'name':'Jonah Makowski',
        'emails':{
         '1':'jonah.kmjn@gmail.com',
         '2':'jonah@makowski.ca',
@@ -74,7 +80,7 @@ def calendar():
 @app.route('/ceo+info', methods=['POST', 'GET'])
 def ceo_info():
     name = 'Name:    ' + CEO ['name']
-    email = 'Email:   {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
+    email = 'Emails:  {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
     print(name + '\n' + email)
     return '<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell</p> <a href="/">return to home page</a>'
 
