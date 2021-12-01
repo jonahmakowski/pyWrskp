@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect
 from app import app
+import sys
 
 User = ''
 
@@ -114,7 +115,7 @@ def caculator_sender():
 def passwords():
     if request.method == "POST":
         from random import randint
-        import sys
+        
         sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/password_maker')
 
         from Creater import create
@@ -145,7 +146,6 @@ def login():
 @app.route('/turtle', methods=['GET', 'POST'])
 def turtle():
     if request.method == "POST":
-        import sys
         
         sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/home')
         
@@ -159,8 +159,6 @@ def turtle():
 @app.route('/pygame/draw', methods=['GET', 'POST'])
 def draw():
     if request.method == "POST":
-        import sys
-        
         sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/classes')
         
         from Class_one import draw
