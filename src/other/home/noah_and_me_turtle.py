@@ -59,6 +59,9 @@ def run():
     t.forward(length_sides / 2)
     extra_turtle_stuff.turn(3, 30, 'left', t)
     t.forward(length_sides - 10)
+    
+    t.penup()
+    t.goto((0 + (length_sides * -1.5)), 75)
 
 
 run()
