@@ -82,7 +82,7 @@ def ceo_info():
     name = 'Name:    ' + CEO ['name']
     email = 'Emails:  {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
     print(name + '\n' + email)
-    return '<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell</p> <a href="/">return to home page</a>'
+    return ('<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell and here it is too:</p> <p>{}</p> <p>{}</p> <a href="/">return to home page</a>'.format(name, email))
 
 @app.route('/youtube', methods=['POST', 'GET'])
 def youtube():
