@@ -25,3 +25,4 @@ def use(num1, num2, type):
             q = "ISSUE"
             a = "ISSUE"
         return q, a
+use(input('What is the first number?'), input('What is the type?'), input('what is the other number?'))
