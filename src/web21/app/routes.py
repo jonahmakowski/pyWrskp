@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect
+from flask import request, render_template, redirect
 from app import app
 import sys
 
@@ -25,7 +25,7 @@ blogPosts_list = [
         },
     {
         'creator':{'username':'Jonah', 'user':'Jonah2'},
-        'content':'How to print creator info in shell',
+        'content':'How to show the CEO info',
         'info':'in your web address bar, remove "/link/Jonah2", and put "/ceo+info" instead, then press enter, and bingo, you got the CEO info!',
         'link':'/post/Jonah2'
         }]
