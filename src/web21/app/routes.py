@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect
 from app import app
 
-User = 'testing'
+User = ''
 
 blogPosts_list = [
     {
@@ -129,7 +129,7 @@ def login():
     if request.method == "POST":
         password = request.form.get("password")
         User = request.form.get("username")
-        if user == 'WhiteSwine' and password == 'LOLA IS THE BEST':
+        if User == 'WhiteSwine' and password == 'LOLA IS THE BEST':
             return render_template('logged_in.html', title = 'logged in!', user = User)
         else:
             return '<h1>INCORRECT</h1>'
@@ -143,8 +143,9 @@ def turtle():
         
         sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/home')
         
-        from noah_and_me_turtle  import run
-        
-        run()
+        try:
+            run()
+        except:
+            return redirect('/')
         return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'
     return render_template('turtle.html', title='Noah and me turtle')
