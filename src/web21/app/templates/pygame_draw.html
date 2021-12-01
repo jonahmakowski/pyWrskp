@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
+    <h1>PYGAME DRAWING!</h1>
+    <p>Space: change background to current color</p>
+    <p>a: clear canvas</p>
+    <p>Click and hold: darw</p>
+    <p>Clcik color rectangeles: change color</p>
     <form action="/pygame/draw" method="post"><button name="Draw" type="submit">Draw</button></form>
 {% endblock %}
