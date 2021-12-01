@@ -135,3 +135,13 @@ def login():
             return '<h1>INCORRECT</h1>'
         
     return render_template('login.html', title='login')
+
+@app.route('/turtle', methods=['GET', 'POST'])
+def turtle():
+    if request.method == "POST":
+        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/home')
+        
+        from noah_and_me_turtle  import run
+        
+        run()
+        return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'

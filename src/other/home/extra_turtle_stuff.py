@@ -13,4 +13,4 @@ def turn(length, turn, left_or_right, t):
             t.forward(1)
             t.left(turn)
     else:
-        print('you have an error with the fuction "turn"')
+        print('you have an error with the fuction "turn", becasue for left_or_right, you put in {}, not left or right'.format(left_or_right))
