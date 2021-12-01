@@ -155,3 +155,16 @@ def turtle():
             return redirect('/')
         return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'
     return render_template('turtle.html', title='Noah and me turtle')
+
+@app.route('/pygame/draw', methods=['GET', 'POST'])
+def draw():
+    if request.method == "POST":
+        import sys
+        
+        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/classes')
+        
+        from Class_one import draw
+        
+        draw()
+        return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'
+    return render_template('pygame_draw.html', title='DRAW!')

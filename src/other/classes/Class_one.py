@@ -111,5 +111,5 @@ def draw():
         pygame.draw.circle(screen, WHITE, (675, 25), 20)
         pygame.draw.circle(screen, WHITE, (725, 25), 25)
         pygame.display.update()
+    pygame.quit()
 draw()
-pygame.quit()
