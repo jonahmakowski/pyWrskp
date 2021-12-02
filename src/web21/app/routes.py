@@ -166,3 +166,7 @@ def draw():
         draw()
         return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'
     return render_template('pygame_draw.html', title='DRAW!')
+
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    return render_template('feedback.html', title='Feedback')
