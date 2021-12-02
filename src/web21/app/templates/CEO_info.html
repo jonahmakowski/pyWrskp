@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>DONE</h1>
+    <p>info printed in shell and here it is too:</p> 
+    <p>{{ name }}</p> 
+    <p>{{ email }}</p>
+    <p>{{ link }}</p>
+    <p>Button to redirect:</p>
+    <form action="/ceo+info" method="post"><button name="fire" type="submit">Youtube link</button></form>
+    <a href="/">return to home page</a>
+{% endblock %}
