@@ -154,6 +154,7 @@ def turtle():
         sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/home')
         
         try:
+            from noah_and_me_turtle import run
             run()
         except:
             return redirect('/')
