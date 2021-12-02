@@ -34,7 +34,8 @@ CEO = {'name':'Jonah Makowski',
        'emails':{
         '1':'jonah.kmjn@gmail.com',
         '2':'jonah@makowski.ca',
-        '3':'jonah@makowski.at'}}
+        '3':'jonah@makowski.at'},
+       'link':'https://www.youtube.com/channel/UC1ti62i-uMnBVAh9b_Pp3UA/'}
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/welcome', methods=['POST', 'GET'])
@@ -80,10 +81,13 @@ def calendar():
 
 @app.route('/ceo+info', methods=['POST', 'GET'])
 def ceo_info():
-    name = 'Name:    ' + CEO ['name']
-    email = 'Emails:  {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
-    print(name + '\n' + email)
-    return ('<head> <title>CEO info</title> </head> <h1>DONE</h1> <p>info printed in shell and here it is too:</p> <p>{}</p> <p>{}</p> <a href="/">return to home page</a>'.format(name, email))
+    if request.method == "POST":
+        return redirect(CEO['link'])
+    name = 'Name:         ' + CEO ['name']
+    email = 'Emails:       {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
+    link = 'Youtube link: ' + CEO['link']
+    print(name + '\n' + email + '\n' + link)
+    return render_template('CEO_info.html', title='CEO info', name = name, email=email, link=link)
 
 @app.route('/youtube', methods=['POST', 'GET'])
 def youtube():
