@@ -176,6 +176,6 @@ def draw():
 def feedback():
     return render_template('feedback.html', title='Feedback')
 
-@app.route('/fire')
+@app.route('/fire', methods=['GET', 'POST'])
 def fire():
     return render_template('fire.html', title='Fire')
