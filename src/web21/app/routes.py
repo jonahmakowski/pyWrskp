@@ -1,8 +1,12 @@
 from flask import request, render_template, redirect
 from app import app
 import sys
+import os
 
-pyWrkspLoc = '/home/jonah/Python-Code/Github-Files/pyWrskp' #change this to the loc of the pyWrskp repo (include the pyWrskp part)
+try:  
+   pyWrskpLoc = os.environ["PYWRKSP"]
+except KeyError: 
+   pyWrkspLoc = '/home/jonah/Python-Code/Github-Files/pyWrskp' # change this to the loc of the pyWrskp repo (include the pyWrskp part)
 
 User = ''
 
