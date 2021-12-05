@@ -6,7 +6,7 @@ import os
 try:  
    pyWrskpLoc = os.environ["PYWRKSP"]
 except KeyError: 
-   pyWrkspLoc = '/home/jonah/Python-Code/Github-Files/pyWrskp' # change this to the loc of the pyWrskp repo (include the pyWrskp part)
+   pyWrkspLoc = '/home/jonah/pyWrskp' # change this to the loc of the pyWrskp repo (include the pyWrskp part)
 
 User = ''
 
