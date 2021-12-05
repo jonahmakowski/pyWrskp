@@ -2,6 +2,8 @@ from flask import request, render_template, redirect
 from app import app
 import sys
 
+pyWrkspLoc = '/home/jonah/Python-Code/Github-Files/pyWrskp' #change this to the loc of the pyWrskp repo (include the pyWrskp part)
+
 User = ''
 
 blogPosts_list = [
@@ -105,7 +107,7 @@ def caculator_sender():
         except:
             num2 = None
         import sys
-        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/home')
+        sys.path.append(pyWrkspLoc + '/src/other/home')
 
         from caculator import use
         
@@ -120,7 +122,7 @@ def passwords():
     if request.method == "POST":
         from random import randint
         
-        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/password_maker')
+        sys.path.append(pyWrkspLoc + '/src/password_maker')
 
         from Creater import create
         
@@ -151,7 +153,7 @@ def login():
 def turtle():
     if request.method == "POST":
         
-        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/home')
+        sys.path.append(pyWrkspLoc + '/src/other/home')
         
         try:
             from noah_and_me_turtle import run
@@ -164,7 +166,7 @@ def turtle():
 @app.route('/pygame/draw', methods=['GET', 'POST'])
 def draw():
     if request.method == "POST":
-        sys.path.append('/home/jonah/Python-Code/Github-Files/pyWrskp/src/other/classes')
+        sys.path.append(pyWrkspLoc + '/src/other/classes')
         
         from Class_one import draw
         
