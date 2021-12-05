@@ -17,6 +17,6 @@ while True:
         break
     message += '\n'
     mess += message
-final_message = ('{}\n\nSent by: {}'.format(mess, user))
+final_message = ('{}\n\nSent by: @{}'.format(mess, user))
 
 client.chat_postMessage(channel='#general', text=final_message)
