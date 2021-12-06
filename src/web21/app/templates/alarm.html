@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form action="{{ url_for("alarm")}}" method="post">
+    <hr>
+    <label for="hour">Hour (1 to 24)</label>
+    <input type="text" id="hour" name="hour" placeholder="1 - 24">
+    <hr>
+    <label for="min">Min (0 to 59)</label>
+    <input type="text" id="min" name="min" placeholder="0 - 59">
+    <hr>
+    <form method="post"><button name="go" type="submit">Start</button></form>
+        
+{% endblock %}
