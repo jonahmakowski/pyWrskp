@@ -185,3 +185,15 @@ def feedback():
 @app.route('/fire', methods=['GET', 'POST'])
 def fire():
     return render_template('fire.html', title='Fire')
+
+@app.route('/alarm', methods=['GET', 'POST'])
+def alarm():
+    if request.method == 'POST':
+        sys.path.append(pyWrkspLoc + '/src/alarm')
+        
+        from time_only import work
+        
+        work(request.form.get('hour'), request.form.get('min'), print_info=False)
+        
+        return '<h1>DING-DONG</h1> <a href="/">return to home page</a>'
+    return render_template('alarm.html', title='Alarm clock!')
