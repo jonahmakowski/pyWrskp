@@ -119,4 +119,4 @@ class Game:
             print('GOOD JOB!')
             print('You killed the block with {} health to spare!'.format(self.health))
 
-User = Game() # add debug=True for debug info
+User = Game() # add debug = True for debug info
