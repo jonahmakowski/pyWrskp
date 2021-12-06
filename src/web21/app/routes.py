@@ -74,6 +74,10 @@ def post(creator):
         return render_template('Blog_outline.html', title=post['creator']['username'] + "'s blog post", post=post)
 
 @app.route('/home/blogposts/small', methods=['POST', 'GET'])
+@app.route('/home/blogposts/small/', methods=['POST', 'GET'])
+@app.route('/blogposts/small', methods=['POST', 'GET'])
+@app.route('/blogposts+small', methods=['POST', 'GET'])
+@app.route('/home/blogposts+small', methods=['POST', 'GET'])
 def blog_post_small():
     return render_template('posts_small.html', title='blog posts', posts=blogPosts_list)
 
