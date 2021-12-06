@@ -1,20 +1,31 @@
 from time import sleep
 
 class Game:
-    def __init__(self, debug=False, health=100):
+    def __init__(self, debug=False, health=100, jonah=True):
         self.number = 1
         self.health = health
         self.attacks = [{'name':'blast', 'damage min':1, 'damage max':20}, {'name':'punch', 'damage min':5, 'damage max':10}]
         self.debug = debug
         self.name = input('What is your name?\n')
+        
+        if jonah == True and self.name == 'Jonah':
+            self.health = health * 3
+            for item in self.attacks:
+                item['damage min'] = item['damage min'] * 10
+                item['damage max'] = item['damage max'] * 10
+        
         self.print_info()
+        
         if self.debug:
             print('debug info: self.print_info, done')
+        
         sleep(2)
         while True:
             self.choose_bad()
+            
             if self.debug:
                 print('debug info: self.choose_bad, done \nnum {}'.format(self.number))
+                
             self.number += 1
     def print_info(self):
         print('Hello {}!'.format(self.name))
@@ -28,8 +39,7 @@ class Game:
     def choose_bad(self):
         from random import randint
         
-        #num = randint(1,2)
-        num = 1
+        num = randint(1,2)
         if self.debug:
             print('debug info: num in self.choose_bad is {}'.format(num))
         if num == 1:
