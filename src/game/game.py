@@ -3,6 +3,7 @@ from time import sleep
 class Game:
     def __init__(self, debug=False, health=100, jonah=True):
         self.number = 1
+        self.number_killed = 1
         self.health = health
         self.attacks = [{'name':'blast', 'damage min':1, 'damage max':20}, {'name':'punch', 'damage min':5, 'damage max':10}]
         self.debug = debug
@@ -44,8 +45,10 @@ class Game:
             print('debug info: num in self.choose_bad is {}'.format(num))
         if num == 1:
             self.glop()
+            self.number_killed += 1
         elif num == 2:
             self.block()
+            self.number_killed += 1
         elif self.debug:
             print('debug info: issue, code could not find nums nessary\nsection: self.choose_bad')
         print('\n')
@@ -80,10 +83,12 @@ class Game:
         if self.health <= 0:
             print('you died!')
             print('GAME OVER')
+            print('You killed {} bad guys'.format(self.number_killed))
             exit()
         else:
             print('GOOD JOB!')
             print('You killed the Glop with {} health to spare!'.format(self.health))
+            print('You killed {} bad guys so far'.format(self.number_killed))
     def block(self):
         from random import randint
         monster_health = 20
@@ -115,9 +120,11 @@ class Game:
         if self.health <= 0:
             print('you died!')
             print('GAME OVER')
+            print('You killed {} bad guys'.format(self.number_killed))
             exit()
         else:
             print('GOOD JOB!')
             print('You killed the block with {} health to spare!'.format(self.health))
+            print('You killed {} bad guys so far'.format(self.number_killed))
 
 User = Game() # add debug = True for debug info
