@@ -1,7 +1,6 @@
 import turtle
 import extra_turtle_stuff
 def run():
-
     t = turtle.Turtle()
     t.speed(0)
 
