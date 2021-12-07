@@ -5,15 +5,19 @@ class Game:
         self.number = 1
         self.number_killed = 1
         self.health = health
-        self.attacks = [{'name':'blast', 'damage min':1, 'damage max':20}, {'name':'punch', 'damage min':5, 'damage max':10}]
+        self.attacks = [{'name':'blast', 'damage min':1, 'damage max':20},
+                        {'name':'punch', 'damage min':5, 'damage max':10},
+                        {'name':'super blast', 'damage min':-100, 'damage max':300}]
         self.debug = debug
         self.name = input('What is your name?\n')
         
         if jonah == True and self.name == 'Jonah':
             self.health = health * 3
             for item in self.attacks:
-                item['damage min'] = item['damage min'] * 10
-                item['damage max'] = item['damage max'] * 10
+                if item['damage min'] > 0:
+                    item['damage min'] = item['damage min'] * 10
+                if item['damage max'] > 0:
+                    item['damage max'] = item['damage max'] * 10
         
         self.print_info()
         
@@ -59,6 +63,7 @@ class Game:
         while monster_health > 0 and self.health > 0:
             skip = False
             attack = input('What attack do you use {}? \nplease input in lowercase'.format(self.name))
+            attack = attack.lower()
             if self.debug:
                 print('debug info: attack input = {}'.format(attack))
             for item in self.attacks:
@@ -96,6 +101,7 @@ class Game:
         while monster_health > 0 and self.health > 0:
             skip = False
             attack = input('What attack do you use {}? \nplease input in lowercase'.format(self.name))
+            attack = attack.lower()
             if self.debug:
                 print('debug info: attack input = {}'.format(attack))
             for item in self.attacks:
