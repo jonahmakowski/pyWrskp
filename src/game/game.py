@@ -1,7 +1,7 @@
 from time import sleep
 
 class Game:
-    def __init__(self, debug=False, health=100, jonah=True):
+    def __init__(self, debug=False, health=200, jonah=True):
         self.number = 1
         self.number_killed = 1
         self.health = health
