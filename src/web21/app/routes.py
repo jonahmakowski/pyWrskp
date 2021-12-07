@@ -95,7 +95,7 @@ def ceo_info():
         return redirect(CEO['link'])
     name = 'Name:         ' + CEO ['name']
     email = 'Emails:       {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
-    link = 'Youtube link: ' + CEO['link']
+    link = 'Youtube channel: ' + CEO['link']
     print(name + '\n' + email + '\n' + link)
     return render_template('CEO_info.html', title='CEO info', name = name, email=email, link=link)
 
