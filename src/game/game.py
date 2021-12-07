@@ -74,6 +74,9 @@ class Game:
                     attack_dic = False
             if attack_dic == False:
                 print('{} is not an attack name'.format(attack))
+                print('Printing info again:')
+                print('\n')
+                self.print_info()
                 skip = True
             
             if not skip:
@@ -112,6 +115,9 @@ class Game:
                     attack_dic = False
             if attack_dic == False:
                 print('{} is not an attack name'.format(attack))
+                print('Printing info again:')
+                print(']n')
+                self.print_info()
                 skip = True
             
             if not skip:
