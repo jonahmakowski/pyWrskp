@@ -62,7 +62,7 @@ class Game:
         print('you meet a Glop!')
         while monster_health > 0 and self.health > 0:
             skip = False
-            attack = input('What attack do you use {}? \nplease input in lowercase'.format(self.name))
+            attack = input('What attack do you use {}? \n'.format(self.name))
             attack = attack.lower()
             if self.debug:
                 print('debug info: attack input = {}'.format(attack))
@@ -103,7 +103,7 @@ class Game:
         print('you meet a block!')
         while monster_health > 0 and self.health > 0:
             skip = False
-            attack = input('What attack do you use {}? \nplease input in lowercase'.format(self.name))
+            attack = input('What attack do you use {}? \n'.format(self.name))
             attack = attack.lower()
             if self.debug:
                 print('debug info: attack input = {}'.format(attack))
