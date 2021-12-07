@@ -45,9 +45,10 @@ class Game:
         if num == 1:
             self.glop()
         elif num == 2:
-            self.block
+            self.block()
         elif self.debug:
             print('debug info: issue, code could not find nums nessary\nsection: self.choose_bad')
+        print('\n')
     def glop(self):
         from random import randint
         monster_health = 50
