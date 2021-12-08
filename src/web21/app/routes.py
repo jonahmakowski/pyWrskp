@@ -201,3 +201,7 @@ def alarm():
         
         return '<h1>DING-DONG</h1> <a href="/">return to home page</a>'
     return render_template('alarm.html', title='Alarm clock!')
+
+@app.route('/lola', methods=['GET', 'POST'])
+def lola():
+    return render_template('lola.html', title='Lola Image')
