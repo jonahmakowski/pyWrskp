@@ -7,6 +7,7 @@ try:
    pyWrskpLoc = os.environ["PYWRKSP"]
 except KeyError: 
    pyWrkspLoc = '/home/jonah/pyWrskp' # change this to the loc of the pyWrskp repo (include the pyWrskp part)
+   print('Note: you have not created the PYWRSKP env var')
 
 User = ''
 
