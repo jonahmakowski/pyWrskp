@@ -3,11 +3,11 @@ from app import app
 import sys
 import os
 
-try:  
+try:
    pyWrskpLoc = os.environ["PYWRKSP"]
-except KeyError: 
-   pyWrkspLoc = '/home/jonah/pyWrskp' # change this to the loc of the pyWrskp repo (include the pyWrskp part)
-   print('Note: you have not created the PYWRSKP env var')
+   
+except KeyError:
+   pyWrkspLoc = input('Enter the pwd for the pyWrskp repo') # change this to the loc of the pyWrskp repo (include the pyWrskp part)
 
 User = ''
 
