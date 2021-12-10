@@ -1,6 +1,6 @@
 class coder_decoder:
     def __init__(self, message=None, key=None, code_decode=None):
-        self.abcs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        self.abcs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ']
         if message == None:
             message = input('What is your message?\n')
         if key == None:
@@ -28,12 +28,9 @@ class coder_decoder:
         new_message_str = ''
         
         for i in range(len(message)):
-            if message[i] != ' ':
-                for l in range(len(self.abcs)):
-                    if self.abcs[l] == message[i]:
-                        new_message.append(self.abcs[l + self.key])
-            elif message[i] == ' ':
-                new_message.append(' ')
+            for l in range(len(self.abcs)):
+                if self.abcs[l] == message[i]:
+                    new_message.append(self.abcs[l + self.key])
         
         for item in new_message:
             new_message_str += item
@@ -48,12 +45,9 @@ class coder_decoder:
         new_message_str = ''
         
         for i in range(len(message)):
-            if message[i] != ' ':
-                for l in range(len(self.abcs)):
-                    if self.abcs[l] == message[i]:
-                        new_message.append(self.abcs[l - self.key])
-            elif message[i] == ' ':
-                new_message.append(' ')
+            for l in range(len(self.abcs)):
+                if self.abcs[l] == message[i]:
+                    new_message.append(self.abcs[l - self.key])
         
         for item in new_message:
             new_message_str += item
