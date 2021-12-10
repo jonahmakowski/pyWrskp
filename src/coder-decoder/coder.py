@@ -4,7 +4,7 @@ class coder_decoder:
         if message == None:
             message = input('What is your message?\n')
         if key == None:
-            key = int(input('what is the key?\n'))
+            key = int(input('what is the key? (from 1 to 36)\n'))
         if code_decode == None:
             code_decode = input('Would you like to code or decode (code/decode)\n')
         
@@ -28,9 +28,12 @@ class coder_decoder:
         new_message_str = ''
         
         for i in range(len(message)):
-            for l in range(len(self.abcs)):
-                if self.abcs[l] == message[i]:
-                    new_message.append(self.abcs[l + self.key])
+            if message[i] != ' ':
+                for l in range(len(self.abcs)):
+                    if self.abcs[l] == message[i]:
+                        new_message.append(self.abcs[l + self.key])
+            elif message[i] == ' ':
+                new_message.append(' ')
         
         for item in new_message:
             new_message_str += item
@@ -45,12 +48,16 @@ class coder_decoder:
         new_message_str = ''
         
         for i in range(len(message)):
-            for l in range(len(self.abcs)):
-                if self.abcs[l] == message[i]:
-                    new_message.append(self.abcs[l - self.key])
+            if message[i] != ' ':
+                for l in range(len(self.abcs)):
+                    if self.abcs[l] == message[i]:
+                        new_message.append(self.abcs[l - self.key])
+            elif message[i] == ' ':
+                new_message.append(' ')
         
         for item in new_message:
             new_message_str += item
         
         print('your decoded message is {}'.format(new_message_str))
+
 code = coder_decoder()
