@@ -26,16 +26,11 @@ class coder_decoder:
         message = list(self.message)
         new_message = []
         new_message_str = ''
-        not_hit = 0
         
         for i in range(len(message)):
             for l in range(len(self.abcs)):
-                not_hit += 1
                 if self.abcs[l] == message[i]:
                     new_message.append(self.abcs[l + self.key])
-                    not_hit = 0
-                if not_hit == len(self.abcs):
-                    new_message.append(message[i])
         
         for item in new_message:
             new_message_str += item
@@ -46,5 +41,4 @@ class coder_decoder:
         
     def decode(self):
         pass
-
 code = coder_decoder()
