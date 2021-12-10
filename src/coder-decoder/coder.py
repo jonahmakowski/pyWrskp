@@ -40,5 +40,17 @@ class coder_decoder:
         print('message: {}\ncode: {}'.format(new_message_str, self.key))
         
     def decode(self):
-        pass
+        message = list(self.message)
+        new_message = []
+        new_message_str = ''
+        
+        for i in range(len(message)):
+            for l in range(len(self.abcs)):
+                if self.abcs[l] == message[i]:
+                    new_message.append(self.abcs[l - self.key])
+        
+        for item in new_message:
+            new_message_str += item
+        
+        print('your decoded message is {}'.format(new_message_str))
 code = coder_decoder()
