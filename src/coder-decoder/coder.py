@@ -13,7 +13,7 @@ class coder_decoder:
                         print('inccorrect number')
             if code_decode == None:
                 code_decode = input('Would you like to code or decode (code/decode)\n')
-                    
+        
         self.message = message.upper()
         self.key = key
         self.code_decode = code_decode
@@ -37,7 +37,9 @@ class coder_decoder:
                     try:
                         new_message.append(self.abcs[l + self.key])
                     except:
-                        pass
+                        if (l + self.key) >= len(self.abcs):
+                            loc = (l + self.key) - len(self.abcs)
+                            new_message.append(self.abcs[loc])
         for item in new_message:
             new_message_str += item
         
@@ -55,7 +57,10 @@ class coder_decoder:
         for i in range(len(message)):
             for l in range(len(self.abcs)):
                 if self.abcs[l] == message[i]:
-                    new_message.append(self.abcs[l - self.key])
+                    try:
+                        new_message.append(self.abcs[l - self.key])
+                    except:
+                        pass
         
         for item in new_message:
             new_message_str += item
