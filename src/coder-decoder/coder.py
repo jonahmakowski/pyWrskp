@@ -26,6 +26,7 @@ class coder_decoder:
         else:
             print('Incorrect code/decode')
             print('exiting code')
+            exit()
     def code(self):
         message = list(self.message)
         new_message = []
