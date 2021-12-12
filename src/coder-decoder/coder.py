@@ -1,6 +1,6 @@
 class coder_decoder:
     def __init__(self, message=None, key=None, code_decode=None, print_info=True):
-        self.abcs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '.', ',', '[', ']', '{', '}', ':', ';', "'", '"']
+        self.abcs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '.', ',', '[', ']', '{', '}', ':', ';', "'", '"']
         if print_info:
             if message == None:
                 message = input('What is your message?\n')
@@ -14,7 +14,7 @@ class coder_decoder:
             if code_decode == None:
                 code_decode = input('Would you like to code or decode (code/decode)\n')
         
-        self.message = message.upper()
+        self.message = message
         self.key = key
         self.code_decode = code_decode
         self.finished = ''
