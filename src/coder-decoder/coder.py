@@ -1,4 +1,4 @@
-class coder_decoder:
+class coderDecoder:
     def __init__(self, message=None, key=None, code_decode=None, print_info=True):
         self.abcs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '.', ',', '[', ']', '{', '}', ':', ';', "'", '"']
         if print_info:
@@ -71,4 +71,4 @@ class coder_decoder:
             print('your decoded message is {}'.format(new_message_str))
         return new_message_str
 
-code = coder_decoder()
+code = coderDecoder()
