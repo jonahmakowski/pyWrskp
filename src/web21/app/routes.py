@@ -111,6 +111,7 @@ def page():
 @app.route('/cac', methods=['POST', 'GET'])
 def caculator_sender():
     if request.method == "POST":
+        global pyWrkspLoc
         try:
             num2 = int(request.form.get("num2"))
         except:
@@ -129,6 +130,7 @@ def caculator_sender():
 @app.route('/passwords', methods=['GET', 'POST'])
 def passwords():
     if request.method == "POST":
+        global pyWrkspLoc
         from random import randint
         
         sys.path.append(pyWrkspLoc + '/src/password_maker')
@@ -149,6 +151,7 @@ def passwords():
 def login():
     global User
     if request.method == "POST":
+        global pyWrkspLoc
         password = request.form.get("password")
         User = request.form.get("username")
         if User == 'WhiteSwine' and password == 'LOLA IS THE BEST':
@@ -161,6 +164,7 @@ def login():
 @app.route('/turtle', methods=['GET', 'POST'])
 def turtle():
     if request.method == "POST":
+        global pyWrkspLoc
         
         sys.path.append(pyWrkspLoc + '/src/other/home')
         
@@ -175,6 +179,7 @@ def turtle():
 @app.route('/pygame/draw', methods=['GET', 'POST'])
 def draw():
     if request.method == "POST":
+        global pyWrkspLoc
         sys.path.append(pyWrkspLoc + '/src/other/classes')
         
         from Class_one import draw
@@ -194,6 +199,7 @@ def fire():
 @app.route('/alarm', methods=['GET', 'POST'])
 def alarm():
     if request.method == 'POST':
+        global pyWrkspLoc
         sys.path.append(pyWrkspLoc + '/src/alarm')
         
         from time_only import work
@@ -206,3 +212,22 @@ def alarm():
 @app.route('/lola', methods=['GET', 'POST'])
 def lola():
     return render_template('lola.html', title='Lola Image')
+
+@app.route('/code', methods=['GET', 'POST'])
+def code():
+    if request.method == 'POST':
+        global pyWrkspLoc
+        sys.path.append(pyWrkspLoc + '/src/coder-decoder')
+        
+        from coder import coderDecoder
+        
+        key = request.form.get('key')
+        coder_decoder = request.form.get('type')
+        
+        coder = coderDecoder(message=request.form.get('message'), key=key, print_info=False)
+        if coder_decoder == 'code':
+            message = coder.code()
+        elif coder_decoder == 'decode':
+            message = coder.decode()
+        return render_template('coder_show.html', title='coder decoder show', message=message, key=key)
+    return render_template('coder.html', title='coder decoder')
