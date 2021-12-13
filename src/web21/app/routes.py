@@ -7,8 +7,7 @@ try:
    pyWrskpLoc = os.environ["PYWRKSP"]
    
 except KeyError:
-   pyWrkspLoc = input('Enter the pwd for the pyWrskp repo') # change this to the loc of the pyWrskp repo (include the pyWrskp part)
-
+   pyWrkspLoc = os.environ["HOME"] + input('Enter the pwd for the pyWrskp repo not including the "home" section')
 User = ''
 
 blogPosts_list = [
