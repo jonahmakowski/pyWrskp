@@ -1,5 +1,5 @@
 class coderDecoder:
-    def __init__(self, message=None, key=None, code_decode=None, print_info=True):
+    def __init__(self, message=None, key=None, print_info=True):
         self.abcs = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ' ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '.', ',', '[', ']', '{', '}', ':', ';', "'", '"']
         if print_info:
             if message == None:
@@ -16,17 +16,8 @@ class coderDecoder:
         
         self.message = message
         self.key = key
-        self.code_decode = code_decode
         self.finished = ''
         self.print_info = print_info
-        if self.code_decode == 'code':
-            self.code()
-        elif self.code_decode == 'decode':
-            self.decode()
-        else:
-            print('Incorrect code/decode')
-            print('exiting code')
-            exit()
 
     def code(self):
         message = list(self.message)
@@ -72,3 +63,8 @@ class coderDecoder:
         return new_message_str
 
 code = coderDecoder()
+code_decode = input('Would you like to code or decode?')
+if code_decode == 'code':
+    code.code()
+elif code_decode == 'decode':
+    code.decode()
