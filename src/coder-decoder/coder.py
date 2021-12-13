@@ -49,19 +49,3 @@ class coderDecoder:
         if self.print_info:
             print('your decoded message is {}'.format(new_message_str))
         return new_message_str
-
-message = input('What is your message?\n')
-while True:
-    key = int(input('what is the key? (from 1 to {})\n'.format(len(self.abcs))))
-    if key >= 1 and key < len(self.abcs):
-        break
-    else:
-        print('inccorrect number')
-code_decode = input('Would you like to code or decode (code/decode)\n')
-
-code = coderDecoder(message, key)
-code_decode = input('Would you like to code or decode?')
-if code_decode == 'code':
-    code.code()
-elif code_decode == 'decode':
-    code.decode()
