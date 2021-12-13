@@ -5,7 +5,7 @@ class Game:
     def __init__(self):
         self.max = int(input('What would you like the max of the nums\n'))
         self.min = int(input('What would you like the min of the nums\n'))
-        self.neg = input('Would you like negitive fractions and decimal numbers? (y/n)\n')
+        self.neg = input('Would you like negitive numbers and decimal numbers? (y/n)\n')
         self.money = 0
         self.wrong = 0
         self.correct = 0
