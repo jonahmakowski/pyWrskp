@@ -3,8 +3,18 @@ from random import randint as r
 
 class Game:
     def __init__(self):
-        self.max = int(input('What would you like the max of the nums\n'))
-        self.min = int(input('What would you like the min of the nums\n'))
+        while True:
+            try:
+                self.max = int(input('What would you like the max of the nums\n'))
+                break
+            except:
+                print('ERROR: this is not a number, try again')
+        while True:
+            try:
+                self.min = int(input('What would you like the min of the nums\n'))
+                break
+            except:
+                print('ERROR: this is not a number, try again')
         self.neg = input('Would you like negitive numbers and decimal numbers? (y/n)\n')
         self.money = 0
         self.wrong = 0
@@ -24,7 +34,13 @@ class Game:
     
     def add(self):
         num1, num2, a = game_extras.add(self.max, self.min)
-        ask = int(input('What is {} + {}?\n'.format(num1, num2)))
+        
+        while True:
+            try:
+                ask = int(input('What is {} + {}?\n'.format(num1, num2)))
+                break
+            except:
+                print('ERROR: this is not a number, try again')
         print(num1, num2, a, ask)
         if ask == a:
             self.correct += 1
@@ -39,7 +55,12 @@ class Game:
     
     def sub(self):
         num1, num2, a = game_extras.sub(self.max, self.min, self.neg)
-        ask = int(input('What is {} - {}?\n'.format(num1, num2)))
+        while True:
+            try:
+                ask = int(input('What is {} - {}?\n'.format(num1, num2)))
+                break
+            except:
+                print('ERROR: this is not a number, try again')
         print(num1, num2, a, ask)
         if ask == a:
             self.correct += 1
@@ -54,7 +75,12 @@ class Game:
     
     def multi(self):
         num1, num2, a = game_extras.multi(self.max, self.min)
-        ask = int(input('What is {} * {}?\n'.format(num1, num2)))
+        while True:
+            try:
+                ask = int(input('What is {} * {}?\n'.format(num1, num2)))
+                break
+            except:
+                print('ERROR: this is not a number, try again')
         print(num1, num2, a, ask)
         if ask == a:
             self.correct += 1
@@ -69,7 +95,12 @@ class Game:
     
     def div(self):
         num1, num2, a = game_extras.div(self.max, self.min, self.neg)
-        ask = int(input('What is {} * {}?\n'.format(num1, num2)))
+        while True:
+            try:
+                ask = int(input('What is {} / {}?\n'.format(num1, num2)))
+                break
+            except:
+                print('ERROR: this is not a number, try again')
         print(num1, num2, a, ask)
         if ask == a:
             self.correct += 1
