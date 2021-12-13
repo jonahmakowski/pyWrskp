@@ -221,7 +221,7 @@ def code():
         
         from coder import coderDecoder
         
-        key = request.form.get('key')
+        key = int(request.form.get('key'))
         coder_decoder = request.form.get('type')
         
         coder = coderDecoder(message=request.form.get('message'), key=key, print_info=False)
