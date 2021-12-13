@@ -1,12 +1,12 @@
 from random import randint
 
-def add(max_num, min_num):
+def add(min_num, max_num):
     num1 = randint(max_num, min_num)
     num2 = randint(max_num, min_num)
     a = num1 + num2
     return num1, num2, a
 
-def sub(max_num, min_num, neg):
+def sub(min_num, max_num, neg):
     num1 = randint(max_num, min_num)
     num2 = randint(max_num, min_num)
     a = num1 - num2
@@ -22,13 +22,13 @@ def sub(max_num, min_num, neg):
             a = sub(max_num, min_num, neg)
     return num1, num2, a
 
-def multi(max_num, min_num):
+def multi(min_num, max_num):
     num1 = randint(max_num, min_num)
     num2 = randint(max_num, min_num)
     a = num1 * num2
     return num1, num2, a
 
-def div(max_num, min_num, dec):
+def div(min_num, max_num, dec):
     num1 = randint(max_num, min_num)
     num2 = randint(max_num, min_num)
     a = num1 / num2
