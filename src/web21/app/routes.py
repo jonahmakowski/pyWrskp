@@ -230,3 +230,11 @@ def code():
             message = coder.decode()
         return render_template('coder_show.html', title='coder decoder show', message=message, key=key)
     return render_template('coder.html', title='coder decoder')
+
+@app.route('/file', methods=['GET', 'POST'])
+def file():
+    if request.method == 'POST':
+        file = open(request.form.get('file'), 'r')
+        info = file.read()
+        return render_template('show_file.html', title='File Uploader', file=info)
+    return render_template('file.html', title='File Uploader')
