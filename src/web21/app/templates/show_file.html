@@ -2,5 +2,7 @@
 
 {% block content %}
     <h1>File</h1>
-    <p>{{ file }}</p>
+    {% for info in file%}
+            <p>{{ info }}</p>
+    {% endfor %}
 {% endblock %}

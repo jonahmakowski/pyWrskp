@@ -236,5 +236,6 @@ def file():
     if request.method == 'POST':
         file = open(request.form.get('file'), 'r')
         info = file.read()
+                    
         return render_template('show_file.html', title='File Uploader', file=info)
     return render_template('file.html', title='File Uploader')
