@@ -3,6 +3,8 @@ from app import app
 import sys
 import os
 
+pyWrskpLoc = ''
+
 try:
    pyWrskpLoc = os.environ["PYWRKSP"]
    
@@ -219,8 +221,6 @@ def code():
     from coder import coderDecoder
     
     if request.method == 'POST':
-        global pyWrkspLoc
-        
         key = int(request.form.get('key'))
         coder_decoder = request.form.get('type')
         
@@ -236,8 +236,12 @@ def code():
 @app.route('/file', methods=['GET', 'POST'])
 def file():
     if request.method == 'POST':
-        file = open(request.form.get('file'), 'r')
-        info = file.read()
-                    
-        return render_template('show_file.html', title='File Uploader', file=info)
+        try:
+            file = open(request.form.get('file'), 'r')
+            info = file.read()
+        
+            return render_template('show_file.html', title='File Uploader', file=info)
+        except:
+            print('Wrong file user')
+            return redirect('/file')
     return render_template('file.html', title='File Uploader')
