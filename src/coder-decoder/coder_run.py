@@ -1,6 +1,6 @@
 from coder import coderDecoder
 
-info = coderDecoder('hello', 3)
+code = coderDecoder()
 
 message = input('What is your message?\n')
 while True:
@@ -10,7 +10,7 @@ while True:
     else:
         print('inccorrect number')
 
-code = coderDecoder(message, key)
+code.add_vars(message, key)
 
 code_decode = input('Would you like to code or decode?')
 if code_decode == 'code':
