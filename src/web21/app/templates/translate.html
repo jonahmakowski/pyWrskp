@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form action="{{ url_for("translater")}}" method="post">
+    <label for="text">Text:</label>
+    <input type="text" id="text" name="text" placeholder="ABCd">
+    <hr>
+    <label for="language">language (short form)</label>
+        <select name="language">
+        <option value="en" selected>English</option>
+        <option value="es">Spanish</option>
+        <option value="pt">Portuguese</option>
+        <option value="zh">Chinese</option>
+    </select>
+    <hr>
+    <button type="submit">Translate</button>
+{% endblock %}

@@ -236,3 +236,14 @@ def code():
 @app.route('/fun', methods=['GET', 'POST'])
 def fun():
     return render_template('fun.html', title='Fun')
+
+@app.route('/translater', methods=['GET', 'POST'])
+def translater():
+    if request.method == 'POST':
+        langage = request.form.get('language')
+        text = request.form.get('text')
+        from translate import Translator
+        translator= Translator(to_lang=langage)
+        trans = translator.translate(text)
+        return trans
+    return render_template('translate.html', title='translater')
