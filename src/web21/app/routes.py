@@ -232,3 +232,7 @@ def code():
             message = coder.decode()
         return render_template('coder_show.html', title='coder decoder show', message=message, key=key)
     return render_template('coder.html', title='coder decoder')
+
+@app.route('/fun', methods=['GET', 'POST'])
+def fun():
+    return render_template('fun.html', title='Fun')
