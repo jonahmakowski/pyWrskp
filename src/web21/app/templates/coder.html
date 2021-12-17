@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form action="{{ url_for("code")}}" method="post">
+    <label for="message">Message</label>
+    <input type="text" id="message" name="message" placeholder="ABCD">
+    <label for="key">Message</label>
+    <input type="text" id="key" name="key" placeholder="ABCD">
+    <hr>
+    <label for="type">Type:</label>
+    <select name="type">
+        <option value="decode" selected>Code</option>
+        <option value="code">Decode</option>
+    <form action="/code" method="post"><button name="code" type="submit">Code or decode</button></form>
+{% endblock %}
