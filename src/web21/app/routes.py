@@ -216,11 +216,10 @@ def lola():
 
 @app.route('/code', methods=['GET', 'POST'])
 def code():
-    sys.path.append(pyWrkspLoc + '/src/coder-decoder')
-        
-    from coder import coderDecoder
-    
     if request.method == 'POST':
+        sys.path.append(pyWrkspLoc + '/src/coder-decoder')
+        
+        from coder import coderDecoder
         key = int(request.form.get('key'))
         coder_decoder = request.form.get('type')
         
