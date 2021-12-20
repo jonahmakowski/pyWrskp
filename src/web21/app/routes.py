@@ -244,5 +244,8 @@ def translater():
         from translate import Translator
         translator= Translator(to_lang=langage)
         trans = translator.translate(text)
-        return trans
+        if text != trans:
+            return trans
+        elif text == trans:
+            return '<h1>Language not supported</h1> <p>This language you used is not one of the languages supported on this translater</p>'
     return render_template('translate.html', title='translater')
