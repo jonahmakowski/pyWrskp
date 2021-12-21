@@ -1,8 +1,0 @@
-{% extends "layout.html" %}
-
-{% block content %}
-    <form action="{{ url_for("file")}}" method="post">
-    <label for="file">file pwd:</label>
-    <input type="text" id="file" name="file" placeholder="/home/user/abc/pyWrskp">
-    <button type="submit">upload</button>
-{% endblock %}
