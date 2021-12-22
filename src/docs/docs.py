@@ -7,17 +7,18 @@ class docs:
         print(file.read())
         return file
     
-    def create(self, pr=True, add=None):
+    def create(self, pr=True, add=None, text=None):
         text = ''
         file = open(self.file_name, 'w')
         if pr:
             print('What would you like to write in your file')
-        while True:
-            temp_text = input('')
-            if temp_text == ' ':
-                break
-            ttemp_text = temp_text + '\n'
-            text += ttemp_text
+        if text != None:
+            while True:
+                temp_text = input('')
+                if temp_text == ' ':
+                    break
+                ttemp_text = temp_text + '\n'
+                text += ttemp_text
         if add != None:
             text += add.read()
         file.write(text)
