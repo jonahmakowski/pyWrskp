@@ -250,6 +250,6 @@ def translater():
             return '<h1>Language not supported</h1> <p>This language you used is not one of the languages supported on this translater</p>'
     return render_template('translate.html', title='translater')
 
-@app.route('/christmas')
+@app.route('/christmas', methods=['GET', 'POST'])
 def christmas_tree():
     return render_template('christmas_tree.html', title='Christmas')
