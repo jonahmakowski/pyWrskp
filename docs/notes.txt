@@ -1,0 +1,83 @@
+Diverse notes.
+
+conda --------------------------------------------
+see: https://docs.conda.io/projects/conda/en/latest/user-guide/index.html
+
+Interaction through the cmd-line (terminal)
+Lines that start with the $ are actual (but without $) exec-commands
+
+Configure conda's priority channel (recommended); it modifies ~/.condarc)
+$ conda config --prepend channels conda-forge
+
+Update the conda base:
+$ conda update --all
+$ conda update -d --all
+the second line (-d option) is a dry run (i.e., only shows what would be done
+without -d option)
+
+For actual work it is recommended to create a conda environment. Such env
+can be used not only by python/pycharm but also by many other apps. All
+apps/libs/packages are installed in a selected env. As long as there is no
+conflict between versions of the installed elements, one env can be used for
+many projects.
+
+To create env:
+$ conda create --name pyWrksp
+(other names can be used; preferably a name should be easily associated with
+a set of py-projects)
+
+
+To list created env:
+$ conda info --env
+
+To start working in an (e.g., pyWrksp) env:
+$ conda activate pyWrksp
+to leave the env:
+$ conda deactivate
+
+After an env is activated, the prompt should show it. E.g,:
+(your prompt will be different; it depends on the shell, set-up, usr-name, etc)
+Ba4:~ marek$ conda activate pyWrksp
+(pyWrksp) Ba4:~ marek$
+
+To list packages available in an env:
+$ conda list
+(a newly created env will have no packages)
+
+Packages are installed by:
+$conda install xxx
+where xxx is/are the name/names of packages to be installed.
+I suggest to install the following (each will install the newest but
+compatible version; also the minimum set of needed packages):
+$ conda install python
+At any point of the installation you can run:
+$ conda list
+to see all installed packages
+$conda install jupyter
+(installation of jupyter will slightly downgrade python; this is necessary
+to keep them working together)
+
+The below will install package you will sooner or later need:
+$ conda install numpy pandas plotly scipy seaborn dash
+
+From time to time check for updates of packages (see the commands above)
+
+If a package cannot be installed by conda install, then install it
+(within an active conda env!) by pip; this will ensure that versions of
+all packages are compatible.
+
+
+Pycharm -------------------------------------------------------------------
+
+To add py-interpreter from a conda env to the selected project
+- go (within existing project) to
+	pycharm/preferences/project/project interpreter
+- click "the wheel" (small icon right to the list of Python interprets)
+- select Add...
+- select Conda Environemnt  (left side of the new panel)
+- select: Existing environment
+- in the list find the location of the pyWrksp, e.g.:
+	~/anaconda3/envs/pyWrksp/bin/python3.10
+- wait until the list of packages will be complete (Last version displayed)
+- click Apply
+- click OK
