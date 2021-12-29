@@ -1,3 +1,5 @@
+# This is a simple caculator in the shell
+
 def use(num1, num2, type):
         try:
             if type == '+':
