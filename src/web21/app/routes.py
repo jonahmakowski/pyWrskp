@@ -3,10 +3,10 @@ from app import app
 import sys
 import os
 
-pyWrskpLoc = ''
+pyWrkspLoc = ''
 
 try:
-    pyWrskpLoc = os.environ["PYWRKSP"]
+    pyWrkspLoc = os.environ["PYWRKSP"]
    
 except KeyError:
     pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
@@ -133,16 +133,41 @@ def calculator():
             num2 = int(request.form.get("num2"))
         except ValueError:
             num2 = None
-        import sys
-        sys.path.append(pyWrkspLoc + '/src/other/home')
-
-        from caculator import use
-        
-        q, a = use(int(request.form.get("num1")),
-                   num2,
-                   request.form.get("type"))
-        return render_template('caculator.html', title='Calculator', a=a, q=q)
-    return render_template('caculator_redirect.html', title='Calculator Sender')
+        num1 = int(request.form.get('num1'))
+        t = request.form.get('type')
+        try:
+            num1 = float(num1)
+            num2 = float(num2)
+            if t == '+':
+                a = num1 + num2
+                q = '{} + {}'.format(num1, num2)
+            elif t == '-':
+                a = num1 - num2
+                q = '{} - {}'.format(num1, num2)
+            elif t == '*':
+                a = num1 * num2
+                q = '{} * {}'.format(num1, num2)
+            elif t == '/':
+                a = num1 / num2
+                q = '{} / {}'.format(num1, num2)
+            elif t == '**':
+                a = num1 ** num2
+                q = '{} ** {}'.format(num1, num2)
+            elif t == '^':
+                from math import sqrt
+                a = sqrt(num1)
+                q = '√{}'.format(num1)
+            else:
+                a = "ISSUE CODE CAN NOT FIND NUMBERS NECESSARY, TALK TO THE OWNER OF THIS WEBSITE"
+                q = a
+        except AssertionError as error:
+            q = error
+            a = 'The linux_interaction() function was not executed'
+        except ValueError as error:
+            q = error
+            a = 'The first or other string is not a int or float'
+        return render_template('calculator.html', title='Calculator', a=a, q=q)
+    return render_template('calculator_redirect.html', title='Calculator Sender')
 
 
 @app.route('/passwords', methods=['GET', 'POST'])
