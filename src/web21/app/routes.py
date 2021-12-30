@@ -24,7 +24,7 @@ blogPosts_list = [
     {
         'creator': {'username': "Mr. Payne's 4/5 class 2020-21", 'user': "Mr.Payne's+45+class+2020-21"},
         'content': 'Why in-person school is better then the online version',
-        'info': "In-person school is sooooooooooo much better than online school "
+        'info': "In-person school is so much better than online school "
                 "because when we are in person we can chat, and eat together "
                 "(note this was not written by Mr.Payne's class, it was written by Jonah)",
         'link': "/post/Mr.Payne's+45+class"
@@ -131,7 +131,7 @@ def calculator():
         global pyWrkspLoc
         try:
             num2 = int(request.form.get("num2"))
-        except:
+        except ValueError:
             num2 = None
         import sys
         sys.path.append(pyWrkspLoc + '/src/other/home')
@@ -190,7 +190,7 @@ def turtle():
         try:
             from noah_and_me_turtle import run
             run()
-        except:
+        except:  # I know there is a warning here, but I am not sure how to fix it, if you know how please do
             return redirect('/')
         return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'
     return render_template('turtle.html', title='Noah and me turtle')
