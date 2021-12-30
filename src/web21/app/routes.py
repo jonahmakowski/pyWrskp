@@ -9,7 +9,9 @@ try:
     pyWrskpLoc = os.environ["PYWRKSP"]
    
 except KeyError:
-    pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var \nPlease enter the pwd for the pyWrskp repo not including the "home" section')
+    pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
+                                            '\nPlease enter the pwd for the pyWrskp repo not including the '
+                                            '"home" section')
 User = ''
 
 blogPosts_list = [
@@ -22,7 +24,9 @@ blogPosts_list = [
     {
         'creator': {'username': "Mr. Payne's 4/5 class 2020-21", 'user': "Mr.Payne's+45+class+2020-21"},
         'content': 'Why in-person school is better then the online version',
-        'info': "In-person school is sooooooooooo much better than online school because when we are in person we can chat, and eat together (note this was not written by Mr.Payne's class, it was written by Jonah)",
+        'info': "In-person school is sooooooooooo much better than online school "
+                "because when we are in person we can chat, and eat together "
+                "(note this was not written by Mr.Payne's class, it was written by Jonah)",
         'link': "/post/Mr.Payne's+45+class"
         },
     {
@@ -34,7 +38,8 @@ blogPosts_list = [
     {
         'creator': {'username': 'Jonah', 'user': 'Jonah2'},
         'content': 'How to show the CEO info',
-        'info': 'in your web address bar, remove "/link/Jonah2", and put "/ceo+info" instead, then press enter, and bingo, you got the CEO info!',
+        'info': 'in your web address bar, remove "/link/Jonah2", and put "/ceo+info" '
+                'instead, then press enter, and bingo, you got the CEO info!',
         'link': '/post/Jonah2'
         }]
 
@@ -73,7 +78,7 @@ def post(creator):
             break
     if not usr:
         error_code = '404'
-        error='{} error'.format(str(error_code))
+        error = '{} error'.format(str(error_code))
         title = error
         return render_template('error.html', title=title, error=error)
     else:
@@ -273,7 +278,8 @@ def translater():
         if text != trans:
             return trans
         elif text == trans:
-            return '<h1>Language not supported</h1> <p>This language you used is not one of the languages supported on this translater</p>'
+            return '<h1>Language not supported</h1> ' \
+                   '<p>This language you used is not one of the languages supported on this translater</p>'
     return render_template('translate.html', title='translater')
 
 
