@@ -314,6 +314,7 @@ def christmas_tree():
 
 
 '''
+@app.route('/txt', methods=['GET', 'POST'])  # This code is not working
 def txt():
     if request.method == 'POST':
         import tkinter as tk
