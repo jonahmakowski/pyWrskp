@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form action="{{ url_for("txt")}}" method="post">
+    <form method="get"><button name="write" type="submit">Write</button></form>
+{% endblock %}
