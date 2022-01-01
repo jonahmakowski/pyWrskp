@@ -3,8 +3,6 @@ from app import app
 import sys
 import os
 
-pyWrkspLoc = ''
-
 try:
     pyWrkspLoc = os.environ["PYWRKSP"]
    
@@ -12,6 +10,7 @@ except KeyError:
     pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
                                             '\nPlease enter the pwd for the pyWrskp repo not including the '
                                             '"home" section')
+    #pyWrskpLoc = '/Users/jonahmakowski/Desktop/Github/pyWrskp'  #for debuging, so you don't have to enter info
 User = ''
 
 blogPosts_list = [
@@ -360,7 +359,7 @@ def txt():
         df_name = 'testing' # you can change def save name
         root = tk.Tk()
         root.title('Text Editer')
-        root.rowconfigure(0, minsize=800, weight = 1)
+        root.rowconfigure(0, minsize=800, weight=1)
         root.columnconfigure(1, minsize=600, weight=1)
         app = class_4_pt_1.Application(df_name, df_save_loc, master=root)
         app.mainloop()
