@@ -205,6 +205,7 @@ def login():
     return render_template('login.html', title='login')
 
 
+@app.route('/noah')
 @app.route('/turtle', methods=['GET', 'POST'])
 def turtle():
     if request.method == "POST":
@@ -282,7 +283,6 @@ def code():
             print('error within code')
             print('coder_decoder did not equal code or decode, exiting')
             message = 'error within code\ncoder_decoder did not equal code or decode, exiting'
-            exit()
         return render_template('coder_show.html', title='coder decoder show', message=message, key=key)
     return render_template('coder.html', title='coder decoder')
 
@@ -311,3 +311,22 @@ def translater():
 @app.route('/christmas', methods=['GET', 'POST'])
 def christmas_tree():
     return render_template('christmas_tree.html', title='Christmas')
+
+
+'''
+def txt():
+    if request.method == 'POST':
+        import tkinter as tk
+        sys.path.append(pyWrkspLoc + '/src/other/classes')
+        from class_4_pt_1 import Application
+        df_save_loc = '/Users/jonahmakowski/Desktop'  # change to folder name where you want auto saves as def
+        df_name = 'Untitled'  # you can change def save name
+        root = tk.Tk()
+        root.title('Text Editer')
+        root.rowconfigure(0, minsize=800, weight=1)
+        root.columnconfigure(1, minsize=600, weight=1)
+        app = Application(df_name, df_save_loc, master=root)
+        app.mainloop()
+        return redirect('/')
+    return render_template('txt.html', title='text editer')
+'''
