@@ -1,28 +1,31 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
+
 class Application(tk.Frame):
     def __init__(self, name, save_loc, master=None):
         super().__init__(master)
         self.master = master
         self.pack()
-        self.createWidgets()
+        self.createwidgets()
         self.fp = save_loc + name
-    def createWidgets(self):
+
+    def createwidgets(self):
         self.txtEdit = tk.Text(self)
         self.btnFrame = tk.Frame(self)
-        self.btnOpen = tk.Button(self.btnFrame, text='Open', command=self.openFile)
-        self.btnSaveas = tk.Button(self.btnFrame, text='Save as', command = self.saveFile)
-        self.btnquit = tk.Button(self.btnFrame, text='Close', command = self.master.destroy)
-        self.btnsave = tk.Button(self.btnFrame, text = 'save', command = self.save)
+        self.btnOpen = tk.Button(self.btnFrame, text='Open', command=self.openfile)
+        self.btnSaveas = tk.Button(self.btnFrame, text='Save as', command=self.saveFile)
+        self.btnquit = tk.Button(self.btnFrame, text='Close', command=self.master.destroy())
+        self.btnsave = tk.Button(self.btnFrame, text='save', command=self.save)
         
         self.txtEdit.grid(row=0, column=1, sticky='nsew')
-        self.btnFrame.grid(row = 0, column=0, sticky='ns')
-        self.btnOpen.grid(row=0, column=0, sticky= 'ew')
-        self.btnSaveas.grid(row=1, column=0, sticky= 'ew')
-        self.btnsave.grid(row=2, column=0, sticky= 'ew')
+        self.btnFrame.grid(row=0, column=0, sticky='ns')
+        self.btnOpen.grid(row=0, column=0, sticky='ew')
+        self.btnSaveas.grid(row=1, column=0, sticky='ew')
+        self.btnsave.grid(row=2, column=0, sticky='ew')
         self.btnquit.grid(row=4, column=0, sticky='ew')
-    def openFile(self):
+
+    def openfile(self):
         testing = askopenfilename(filetypes=[('all files that work with this code', ['*.py', '*.txt', '*.docx']), ('Text Files', '*.txt'), ('Python Files', '*.py'), ('All Files', '*.*')])
         if not testing:
             return
@@ -32,7 +35,8 @@ class Application(tk.Frame):
         with open(self.fp, 'r') as inFile:
             txt = inFile.read()
             self.txtEdit.insert(tk.END, txt)
-    def saveFile(self, force_name=False, forced_name = None):
+
+    def savefile(self):
         testing = asksaveasfilename(filetypes=[('all files that work with this code', ['*.py', '*.txt', '*.docx']), ('Text Files', '*.txt'), ('Python Files', '*.py'), ('All Files', '*.*')])
         if not testing:
             return
@@ -48,5 +52,6 @@ class Application(tk.Frame):
                 f.write(txt)
             except:
                 print('FYI, your file did not save')
+
     def enter(self, info):
         self.txtEdit.insert(tk.END, info)
