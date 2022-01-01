@@ -108,11 +108,15 @@ def calendar():
 def ceo_info():
     if request.method == "POST":
         return redirect(CEO['link'])
-    name = 'Name:         ' + CEO['name']
-    email = 'Emails:       {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
-    link = 'Youtube channel: ' + CEO['link']
-    print(name + '\n' + email + '\n' + link)
-    return render_template('CEO_info.html', title='CEO info', name=name, email=email, link=link)
+    elif request.method == 'GET':
+        name = 'Name:         ' + CEO['name']
+        email = 'Emails:       {}, {}, {}'.format(CEO['emails']['1'], CEO['emails']['2'], CEO['emails']['3'])
+        link = 'Youtube channel: ' + CEO['link']
+        print(name + '\n' + email + '\n' + link)
+        return render_template('CEO_info.html', title='CEO info', name=name, email=email, link=link)
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/youtube', methods=['POST', 'GET'])
@@ -167,7 +171,11 @@ def calculator():
             q = error
             a = 'The first or other string is not a int or float'
         return render_template('calculator.html', title='Calculator', a=a, q=q)
-    return render_template('calculator_redirect.html', title='Calculator Sender')
+    elif request.method == 'GET':
+        return render_template('calculator_redirect.html', title='Calculator Sender')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/passwords', methods=['GET', 'POST'])
@@ -187,7 +195,11 @@ def passwords():
                           'n',
                           False)
         return render_template('password_show.html', title='Passwords', password=password)
-    return render_template('passwords.html', title='Passwords')
+    elif request.method == 'GET':
+        return render_template('passwords.html', title='Passwords')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -201,8 +213,11 @@ def login():
             return render_template('logged_in.html', title='logged in!', user=User)
         else:
             return '<h1>INCORRECT</h1>'
-        
-    return render_template('login.html', title='login')
+    elif request.method == 'GET':
+        return render_template('login.html', title='login')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/noah')
@@ -219,7 +234,11 @@ def turtle():
         except:  # I know there is a warning here, but I am not sure how to fix it, if you know how please do
             return redirect('/')
         return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'
-    return render_template('turtle.html', title='Noah and me turtle')
+    elif request.method == 'GET':
+        return render_template('turtle.html', title='Noah and me turtle')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/pygame/draw', methods=['GET', 'POST'])
@@ -232,7 +251,11 @@ def draw():
         
         draw()
         return '<h1>Done</h1> <p>if nothing is happening, you have an error</p> <a href="/">return to home page</a>'
-    return render_template('pygame_draw.html', title='DRAW!')
+    elif request.method == 'GET':
+        return render_template('pygame_draw.html', title='DRAW!')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/feedback', methods=['GET', 'POST'])
@@ -256,7 +279,11 @@ def alarm():
         work(request.form.get('hour'), request.form.get('min'), print_info=False)
         
         return '<h1>DING-DONG</h1> <a href="/">return to home page</a>'
-    return render_template('alarm.html', title='Alarm clock!')
+    elif request.method == 'GET':
+        return render_template('alarm.html', title='Alarm clock!')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/lola', methods=['GET', 'POST'])
@@ -284,7 +311,11 @@ def code():
             print('coder_decoder did not equal code or decode, exiting')
             message = 'error within code\ncoder_decoder did not equal code or decode, exiting'
         return render_template('coder_show.html', title='coder decoder show', message=message, key=key)
-    return render_template('coder.html', title='coder decoder')
+    elif request.method == 'GET':
+        return render_template('coder.html', title='coder decoder')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/fun', methods=['GET', 'POST'])
@@ -305,7 +336,11 @@ def translater():
         elif text == trans:
             return '<h1>Language not supported</h1> ' \
                    '<p>This language you used is not one of the languages supported on this translater</p>'
-    return render_template('translate.html', title='translater')
+    elif request.method == 'GET':
+        return render_template('translate.html', title='translater')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/christmas', methods=['GET', 'POST'])
