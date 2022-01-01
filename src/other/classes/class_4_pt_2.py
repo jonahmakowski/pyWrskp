@@ -1,4 +1,5 @@
 import class_4_pt_1
+import tkinter as tk
 df_save_loc = '/home/jonah/Thonny files/TXT_files/' # change to folder name where you want auto saves as def
 df_name = 'testing' # you can chnage def save name
 root = tk.Tk()
