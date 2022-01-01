@@ -14,8 +14,8 @@ class Application(tk.Frame):
         self.txtEdit = tk.Text(self)
         self.btnFrame = tk.Frame(self)
         self.btnOpen = tk.Button(self.btnFrame, text='Open', command=self.openfile)
-        self.btnSaveas = tk.Button(self.btnFrame, text='Save as', command=self.saveFile)
-        self.btnquit = tk.Button(self.btnFrame, text='Close', command=self.master.destroy())
+        self.btnSaveas = tk.Button(self.btnFrame, text='Save as', command=self.savefile)
+        self.btnquit = tk.Button(self.btnFrame, text='Close', command=self.master.destroy)
         self.btnsave = tk.Button(self.btnFrame, text='save', command=self.save)
         
         self.txtEdit.grid(row=0, column=1, sticky='nsew')
