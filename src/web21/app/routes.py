@@ -10,7 +10,7 @@ except KeyError:
     pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
                                             '\nPlease enter the pwd for the pyWrskp repo not including the '
                                             '"home" section')
-    #pyWrskpLoc = '/Users/jonahmakowski/Desktop/Github/pyWrskp'  #for debuging, so you don't have to enter info
+    # pyWrskpLoc = '/Users/jonahmakowski/Desktop/Github/pyWrskp'  #for debug, so you don't have to enter info
 User = ''
 
 blogPosts_list = [
@@ -345,6 +345,23 @@ def translater():
 @app.route('/christmas', methods=['GET', 'POST'])
 def christmas_tree():
     return render_template('christmas_tree.html', title='Christmas')
+
+
+@app.route('/notes/write', methods=['GET', 'POST'])
+def notes_write():
+    if request.method == 'POST':
+        import json
+        sys.path.append(pyWrkspLoc + '/src/notes')
+        from notes import Notes
+        n = Notes(name=pyWrkspLoc + '/docs/txt-files/data4.txt')
+        n.add_note(request.form.get('note'))
+        n.save_notes()
+        return 'Your note {} was saved'.format(request.form.get('note'))
+    elif request.method == 'GET':
+        return render_template('notes.html', title='Notes writer')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 '''
