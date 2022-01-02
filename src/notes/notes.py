@@ -1,4 +1,6 @@
 import json
+
+
 class Notes:
     def __init__(self, name='data3.txt'):
         self.notes = []
@@ -7,18 +9,17 @@ class Notes:
     def add_note(self, note):
         self.notes.append(note)
 
-    def print_notes(self, print=True):
+    def print_notes(self):
         try:
             with open(self.name) as json_file:
                 self.notes += json.load(json_file)
         except:
             pass
-        if print:
-            if self.notes != []:
-                for item in self.notes:
-                    print('{}'.format(item))
-            if self.notes == []:
-                    print("you don't have any notes saved!")
+        if self.notes != []:
+            for item in self.notes:
+                print('{}'.format(item))
+        if self.notes == []:
+            print("you don't have any notes saved!")
 
     def save_notes(self):
         with open(self.name, 'w') as outfile:
