@@ -364,6 +364,18 @@ def notes_write():
         exit(5)
 
 
+@app.route('/notes/read', methods=['GET', 'POST'])
+def notes_read():
+    import json
+    try:
+        with open(pyWrkspLoc + '/docs/txt-files/data4.txt') as json_file:
+            notes = json.load(json_file)
+    except:
+        notes = ['You have 0 notes']
+    print(notes)
+    return render_template('notes_read.html', title='Notes reader', notes=notes)
+
+
 '''
 # This code is not working, not sure why, this is the same code as in the orginal page.
 @app.route('/txt', methods=['GET', 'POST'])
