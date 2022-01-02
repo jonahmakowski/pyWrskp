@@ -6,7 +6,7 @@ class notes:
     def add_note(self, note):
         self.notes.append(note)
 
-    def print_notes():
+    def print_notes(self):
         try:
             with open('data3.txt') as json_file:
                 self.notes += json.load(json_file)
@@ -18,7 +18,7 @@ class notes:
         if self.notes == []:
             print("you don't have any notes saved!")
 
-    def save_notes():
+    def save_notes(self):
         with open('data3.txt', 'w') as outfile:
             json.dump(self.notes, outfile)
 
