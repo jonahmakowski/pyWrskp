@@ -9,7 +9,7 @@ class Schedule:
         elif info == 'p':
             self.show()
         elif info == 'e':
-            self.remove()
+            self.empty()
     
     def create(self):
         start_time = input('What is the start time for this event?\nplease use 24hr clock')
@@ -40,7 +40,7 @@ class Schedule:
             for item in events:
                 print('{}\t\t{}\t\t{}'.format(item['name'], item['start time'], item['end time']))
 
-    def remove(self):
+    def empty(self):
         with open('data5.txt', 'w') as outfile:
             json.dump([], outfile)
 
