@@ -26,6 +26,7 @@ class Schedule:
         try:
             with open('data5.txt') as json_file:
                 info = json.load(json_file)
+            info = sorted(info, key=lambda i: i['start time'], reverse=True)
         except:
             info = None
         
@@ -36,9 +37,9 @@ class Schedule:
         if events is None or events == []:
             print('you have no events saved')
         else:
-            print('Name:\t\tstart:\t\tend:')
+            print('Name, start, end')
             for item in events:
-                print('{}\t\t{}\t\t{}'.format(item['name'], item['start time'], item['end time']))
+                print('{}, {}, {}'.format(item['name'], item['start time'], item['end time']))
 
     def empty(self):
         with open('data5.txt', 'w') as outfile:
