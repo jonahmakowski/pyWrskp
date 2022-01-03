@@ -1,8 +1,16 @@
+import os
 import json
 
 
 class Schedule:
     def __init__(self):
+        try:
+            self.pyWrskp = os.environ["PYWRKSP"]
+        except KeyError:
+            self.pyWrksp = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
+                                                    '\nPlease enter the pwd for the pyWrskp repo not including the '
+                                                    '"home" section')
+        self.name = self.pyWrksp + '/docs/txt-files/data5.txt'
         info = input('What would you like to do? \noptions: print, create, or empty (p/c/e)')
         if info == 'c':
             self.create()
@@ -19,12 +27,12 @@ class Schedule:
         if all_events is None:
             all_events = []
         all_events.append({'start time': start_time, 'end time': end_time, 'name': name})
-        with open('data5.txt', 'w') as outfile:
+        with open(self.name, 'w') as outfile:
             json.dump(all_events, outfile)
     
     def read(self):
         try:
-            with open('data5.txt') as json_file:
+            with open(self.name) as json_file:
                 info = json.load(json_file)
             info = sorted(info, key=lambda i: i['start time'], reverse=True)
         except:
@@ -42,7 +50,7 @@ class Schedule:
                 print('{}, {}, {}'.format(item['name'], item['start time'], item['end time']))
 
     def empty(self):
-        with open('data5.txt', 'w') as outfile:
+        with open(self.name, 'w') as outfile:
             json.dump([], outfile)
 
 
