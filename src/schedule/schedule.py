@@ -10,7 +10,7 @@ class Schedule:
             self.pyWrksp = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
                                                     '\nPlease enter the pwd for the pyWrskp repo not including the '
                                                     '"home" section')
-        self.name = self.pyWrksp + '/docs/txt-files/data5.txt'
+        self.name = self.pyWrksp + '/docs/txt-files/schedule_data.txt'
         info = input('What would you like to do? \noptions: print, create, or empty (p/c/e)')
         if info == 'c':
             self.create()

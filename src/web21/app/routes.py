@@ -353,7 +353,7 @@ def notes_write():
         import json
         sys.path.append(pyWrkspLoc + '/src/notes')
         from notes import Notes
-        n = Notes(name=pyWrkspLoc + '/docs/txt-files/data4.txt')
+        n = Notes(name=pyWrkspLoc + '/docs/txt-files/web21_notes.txt')
         n.add_note(request.form.get('note'))
         n.save_notes()
         return 'Your note {} was saved'.format(request.form.get('note'))
@@ -368,7 +368,7 @@ def notes_write():
 def notes_read():
     import json
     try:
-        with open(pyWrkspLoc + '/docs/txt-files/data4.txt') as json_file:
+        with open(pyWrkspLoc + '/docs/txt-files/web21_notes.txt') as json_file:
             notes = json.load(json_file)
     except:
         notes = ['You have 0 notes']
