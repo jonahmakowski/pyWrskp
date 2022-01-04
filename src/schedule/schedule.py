@@ -27,7 +27,7 @@ class Schedule:
         all_events = self.read()
         if all_events is None:
             all_events = []
-        all_events.append({'start time': start_time, 'end time': end_time, 'name': name})
+        all_events.append({'start_time': start_time, 'end_time': end_time, 'name': name})
         with open(self.name, 'w') as outfile:
             json.dump(all_events, outfile)
 
@@ -35,7 +35,7 @@ class Schedule:
         all_events = self.read()
         if all_events is None:
             all_events = []
-        all_events.append({'start time': start_time, 'end time': end_time, 'name': name})
+        all_events.append({'start_time': start_time, 'end_time': end_time, 'name': name})
         with open(self.name, 'w') as outfile:
             json.dump(all_events, outfile)
     
@@ -43,15 +43,9 @@ class Schedule:
         try:
             with open(self.name) as json_file:
                 info = json.load(json_file)
-            info = sorted(info, key=lambda i: i['start time'], reverse=True)
+            info = sorted(info, key=lambda i: i['start_time'], reverse=True)
         except:
             info = None
-
-        if not isinstance(info, list):
-            if info is not None:
-                self.empty()
-                info = None
-        
         return info
     
     def show(self):
@@ -61,7 +55,7 @@ class Schedule:
         else:
             print('Name, start, end')
             for item in events:
-                print('{}, {}, {}'.format(item['name'], item['start time'], item['end time']))
+                print('{}, {}, {}'.format(item['name'], item['start_time'], item['end_time']))
 
     def empty(self):
         with open(self.name, 'w') as outfile:
