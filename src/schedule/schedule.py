@@ -11,7 +11,7 @@ class Schedule:
                                                       '\nPlease enter the pwd for the pyWrskp repo not including the '
                                                       '"home" section')
         self.name = self.pyWrskp + '/docs/txt-files/' + name
-        if not show():
+        if show:
             info = input('What would you like to do? \noptions: print, create, or empty (p/c/e)')
             if info == 'c':
                 self.create_built_in()
@@ -20,9 +20,10 @@ class Schedule:
             elif info == 'e':
                 self.empty()
     
-    def create_built_in(self, start_time=input('What is the start time for this event?\nplease use 24hr clock'),
-               end_time=input('What is the end time for this event?\nplease use 24hr clock'),
-               name=input('What is the name of this event?')):
+    def create_built_in(self):
+        end_time = input('What is the end time for this event?\nplease use 24hr clock')
+        name = input('What is the name of this event?')
+        start_time = input('What is the start time for this event?\nplease use 24hr clock')
         all_events = self.read()
         if all_events is None:
             all_events = []
