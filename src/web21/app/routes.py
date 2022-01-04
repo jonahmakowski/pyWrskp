@@ -383,9 +383,9 @@ def schedule_create():
         import schedule
 
         s = schedule.Schedule(show=False, name='web21_schedule_data.txt')
-        start_time = request.method.get('start_hr') + ':' + request.method.get('start_min')
-        end_time = request.method.get('end_hr') + ':' + request.method.get('end_min')
-        name = request.method.get('name')
+        start_time = '{}:{}'.format(request.form.get('start hr'), request.form.get('start min'))
+        end_time = '{}:{}'.format(request.form.get('end hr'), request.form.get('end min'))
+        name = request.form.get('name')
 
         s.create(start_time, end_time, name)
         return redirect('/schedule/read')
