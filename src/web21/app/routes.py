@@ -407,6 +407,18 @@ def schedule_read():
     return render_template('schedule_read.html', title='schedule read', schedule=info)
 
 
+@app.route('/schedule/empty', methods=['GET', 'POST'])
+def schedule_empty():
+    sys.path.append(pyWrkspLoc + '/src/schedule')
+    import schedule
+
+    s = schedule.Schedule(show=False, name='web21_schedule_data.txt')
+
+    s.empty()
+
+    return redirect('/schedule/create')
+
+
 '''
 # This code is not working, not sure why, this is the same code as in the orginal page.
 @app.route('/txt', methods=['GET', 'POST'])
