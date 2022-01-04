@@ -8,8 +8,8 @@ class Schedule:
             self.pyWrskp = os.environ["PYWRKSP"]
         except KeyError:
             self.pyWrskp = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
-                                                    '\nPlease enter the pwd for the pyWrskp repo not including the '
-                                                    '"home" section')
+                                                      '\nPlease enter the pwd for the pyWrskp repo not including the '
+                                                      '"home" section')
         self.name = self.pyWrskp + '/docs/txt-files/schedule_data.txt'
         info = input('What would you like to do? \noptions: print, create, or empty (p/c/e)')
         if info == 'c':
@@ -37,6 +37,11 @@ class Schedule:
             info = sorted(info, key=lambda i: i['start time'], reverse=True)
         except:
             info = None
+
+        if not isinstance(info, list):
+            if info is not None:
+                self.empty()
+                info = None
         
         return info
     
