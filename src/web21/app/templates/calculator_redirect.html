@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+    <form action="{{ url_for("calulator")}}" method="post">
     <label for="num1">First number:</label>
     <input type="text" id="num1" name="num1" placeholder="first number">
     <hr>

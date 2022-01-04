@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form action="{{ url_for("schedule_create")}}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="ABCd">
+    <hr>
+    <label for="start hr">start hr:</label>
+    <input type="text" id="start hr" name="start hr" placeholder="123">
+    <label for="start min">start min:</label>
+    <input type="text" id="start min" name="start min" placeholder="123">
+    <hr>
+    <label for="end hr">end hr:</label>
+    <input type="text" id="end hr" name="end hr" placeholder="123">
+    <label for="end min">end min:</label>
+    <input type="text" id="end min" name="end min" placeholder="123">
+    <hr>
+    <button type="submit">Create</button>
+{% endblock %}
