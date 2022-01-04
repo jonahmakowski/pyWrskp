@@ -372,8 +372,24 @@ def notes_read():
             notes = json.load(json_file)
     except:
         notes = ['You have 0 notes']
-    print(notes)
+    #print(notes)
     return render_template('notes_read.html', title='Notes reader', notes=notes)
+
+
+@app.route('/schedule/create', methods=['GET', 'POST'])
+def schedule_create():
+    if request.method == 'POST':
+        sys.path.append(pyWrkspLoc + '/src/schedule')
+        import schedule
+
+        s = schedule.Schedule(show=False, name='web21_schedule_data.txt')
+        start_time = request.method.get('start_hr') + ':' + request.method.get('start_min')
+        end_time = request.method.get('end_hr') + ':' + request.method.get('end_min')
+        name = request.method.get('name')
+
+        s.create(start_time, end_time, name)
+        return redirect('/schedule/read')
+    return render_template('schedule.html', title='schedule creater')
 
 
 '''
