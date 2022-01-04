@@ -76,10 +76,7 @@ def post(creator):
             usr = True
             break
     if not usr:
-        error_code = '404'
-        error = '{} error'.format(str(error_code))
-        title = error
-        return render_template('error.html', title=title, error=error)
+        return redirect('/', code=404)
     else:
         return render_template('Blog_outline.html', title=post['creator']['username'] + "'s blog post", post=post)
 
