@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<p>name, start, end</p>
+
+{% for event in schedule%}
+    <div>
+        <p>{{ event.name }}, {{ event.start_time }}, {{ event.end_time }}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}
