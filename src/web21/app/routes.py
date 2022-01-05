@@ -369,7 +369,7 @@ def notes_read():
             notes = json.load(json_file)
     except:
         notes = ['You have 0 notes']
-    #print(notes)
+    # print(notes)
     return render_template('notes_read.html', title='Notes reader', notes=notes)
 
 
