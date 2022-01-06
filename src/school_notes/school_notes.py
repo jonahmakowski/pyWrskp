@@ -13,9 +13,9 @@ except KeyError:
 
 
 class SchoolNotes:
-    def __init__(self, pywrskploc):
+    def __init__(self, pywrskploc, name='school_notes.txt'):
         self.pywrskploc = pywrskploc
-        self.name = pywrskploc + '/docs/txt-files/school_notes.txt'
+        self.name = pywrskploc + '/docs/txt-files/' + name
 
     def add(self):
         now = datetime.datetime.now()
@@ -28,7 +28,6 @@ class SchoolNotes:
         teacher = input("What is the teacher's name?\n")
         self.group = {'date': date, 'current_time': current_time, 'note': note, 'teacher': teacher}
         self.save()
-
 
     def save(self, custom=False):
         if not custom:
@@ -46,20 +45,27 @@ class SchoolNotes:
     def p(self):
         self.read()
         self.all_events = sorted(self.all_events, key=lambda i: i['date'], reverse=True)
-        print('date, time, teacher, note')
-        for item in self.all_events:
-            print('{}, {}, {}, {}'.format(item['date'], item['current_time'], item['note'], item['teacher']))
+        if self.all_events is []:
+            print('date, time, teacher, note')
+            for item in self.all_events:
+                print('{}, {}, {}, {}'.format(item['date'], item['current_time'], item['note'], item['teacher']))
+        elif self.all_events is not []:
+            print('There is nothing in this list')
+            info = input('Would you like to add a new event (y/n)?')
+            if info == 'y':
+                self.add()
 
     def empty(self):
         self.all_events = []
         self.save(custom=True)
 
 
-s = SchoolNotes(pywrskploc=pyWrksp)
-do = input('Would you like to add, print or empty?')
-if do == 'add':
-    s.add()
-elif do == 'print':
-    s.p()
-elif do == 'empty':
-    s.empty()
+if __name__ == "__main__":
+    s = SchoolNotes(pywrskploc=pyWrksp)
+    do = input('Would you like to add, print or empty?')
+    if do == 'add':
+        s.add()
+    elif do == 'print':
+        s.p()
+    elif do == 'empty':
+        s.empty()
