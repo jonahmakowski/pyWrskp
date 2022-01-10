@@ -1,6 +1,6 @@
-from coder import coderDecoder
+from coder import CoderDecoder
 
-code = coderDecoder()
+code = CoderDecoder()
 
 message = input('What is your message?\n')
 while True:
