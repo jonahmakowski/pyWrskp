@@ -2,15 +2,22 @@ class MathClickerGame:
     def __init__(self):
         self.coin = 0
         self.owned_power_ups = []
+        self.other_power_ups = [{'name': 'double coin income', 'price': 10}]
         self.mainloop()
 
     def mainloop(self):
         i = 1
         while True:
+            double = self.if_inside_list(self.owned_power_ups, 'double coin income')
             info = int(input('What is {} + {}'.format(i, i)))
             if info == i + i:
-                print('you got 1 coin')
-                self.coin += 1
+                if double:
+                    print('you got 2 coins')
+                    self.coin += 2
+                elif not double:
+                    print('you got 1 coin')
+                    self.coin += 1
+
                 print('you now have ' + str(self.coin) + ' coins')
             elif info != i + i:
                 print('mrrrrrrrrrrrrrr')
@@ -24,11 +31,9 @@ class MathClickerGame:
             i += 1
 
     def shop(self):
-        power_ups = [{'name': 'Testing', 'price': 1}]
-
         print('name, price')
 
-        for item in power_ups:
+        for item in self.other_power_ups:
             print(item['name'], ', ', item['price'])
 
         buy = input('What would you like to buy? (name or none)')
@@ -37,23 +42,32 @@ class MathClickerGame:
             print('closing shop')
             return
 
-        for i in range(len(power_ups)):
-            if buy == power_ups[i]['name']:
+        for i in range(len(self.other_power_ups)):
+            if buy == self.other_power_ups[i]['name']:
                 print('are you sure?')
-                print('This costs {} coin(s)'.format(power_ups[i]['price']))
+                print('This costs {} coin(s)'.format(self.other_power_ups[i]['price']))
                 sure = input('y/n')
                 if sure == 'y':
-                    if self.coin < power_ups[i]['price']:
+                    if self.coin < self.other_power_ups[i]['price']:
                         print('you do not have enough money')
                         return
                     print('item bought')
                     print('the power up(s) you have now are:')
-                    self.owned_power_ups.append(power_ups[i]['name'])
+                    self.owned_power_ups.append(self.other_power_ups[i]['name'])
+                    self.coin -= self.other_power_ups[i]['price']
                     for item in self.owned_power_ups:
                         print(item)
+                    del self.other_power_ups[i]
                 else:
                     print('ok, closing shop')
                     return
 
+    def if_inside_list(self, lis, item):
+        for i in lis:
+            if i == item:
+                return True
+        return False
 
-game = MathClickerGame()
+
+if __name__ == "__main__":
+    game = MathClickerGame()
