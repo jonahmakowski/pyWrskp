@@ -1,12 +1,8 @@
-import datetime
-
 class MathClickerGame:
     def __init__(self):
         self.coin = 0
         self.owned_power_ups = []
-        self.other_power_ups = [{'name': 'double coin income', 'price': 10},
-                                {'name': 'auto clicker', 'price': 100}]
-        self.time = datetime.datetime.now()
+        self.other_power_ups = [{'name': 'double coin income', 'price': 10}]
         self.mainloop()
 
     def mainloop(self):
@@ -32,10 +28,6 @@ class MathClickerGame:
             if shop == 'c':
                 self.shop()
 
-            if self.if_inside_list(self.owned_power_ups, 'auto clicker'):
-                current_time = datetime.datetime.now()
-
-
             i += 1
 
     def shop(self):
@@ -50,7 +42,7 @@ class MathClickerGame:
             print('closing shop')
             return
 
-        for i in range(len(self.other_power_ups)):
+        for i in range(len(self.other_power_ups) - 1):
             if buy == self.other_power_ups[i]['name']:
                 print('are you sure?')
                 print('This costs {} coin(s)'.format(self.other_power_ups[i]['price']))
