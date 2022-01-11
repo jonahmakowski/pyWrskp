@@ -42,7 +42,7 @@ class MathClickerGame:
             print('closing shop')
             return
 
-        for i in range(len(self.other_power_ups) - 1):
+        for i in range(len(self.other_power_ups)):
             if buy == self.other_power_ups[i]['name']:
                 print('are you sure?')
                 print('This costs {} coin(s)'.format(self.other_power_ups[i]['price']))
