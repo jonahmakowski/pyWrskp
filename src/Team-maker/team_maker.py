@@ -3,12 +3,23 @@ I know I have an older team maker, but I thought I would use what I have learned
 
 Here it is:
 """
+import os
+
+try:
+    pyWrkspLoc = os.environ["PYWRKSP"]
+
+except KeyError:
+    pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
+                                            '\nPlease enter the pwd for the pyWrskp repo not including the '
+                                            '"home" section')
 
 from random import randint
+import json
 
 
 class TeamMaker:
-    def __init__(self, t=None, d=None, pr=True):
+    def __init__(self, loc, t=None, d=None, pr=True):
+        self.name = loc + '/docs/txt-files/team_maker_save.txt'
         if t is None:
             t = self.ask_t()
         if d is None:
@@ -38,12 +49,20 @@ class TeamMaker:
 
     def ask_l(self):
         d = []
-        print("Enter a list of the people's names if nothing is inputed, the list will stop")
-        while True:
-            l_add = input('')
-            if l_add == '':
-                break
-            d.append(l_add)
+        load = input('would you like to load the list? (y/n)')
+        if load == 'n':
+            print("Enter a list of the people's names if nothing is inputed, the list will stop")
+            while True:
+                l_add = input('')
+                if l_add == '':
+                    break
+                d.append(l_add)
+            save = input('would you like to save this list? (y/n)')
+            if save == 'y':
+                self.save_list(d)
+
+        elif load == 'y':
+            d = self.load()
         return d
 
     def two_teams(self):
@@ -120,6 +139,19 @@ class TeamMaker:
             print('I am making a group of three')
             self.teams[0].append(self.d[0])
 
+    def load(self):
+        try:
+            with open(self.name) as json_file:
+                j = json.load(json_file)
+        except FileNotFoundError:
+            print('This file does not exist')
+            exit(5)
+        return j
+
+    def save_list(self, d):
+        with open(self.name, 'w') as outfile:
+            json.dump(d, outfile)
+
     def show(self):
         team_num = 1
         for item_large in self.teams:
@@ -131,4 +163,4 @@ class TeamMaker:
 
 
 if __name__ == "__main__":
-    teams = TeamMaker()
+    teams = TeamMaker(pyWrkspLoc)
