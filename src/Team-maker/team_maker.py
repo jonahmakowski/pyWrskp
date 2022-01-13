@@ -27,6 +27,11 @@ class TeamMaker:
             if pr:
                 self.show()
 
+        if t == 'partners':
+            self.partners()
+            if pr:
+                self.show()
+
     def ask_t(self):
         t = input('What type would you like?\n')
         return t
@@ -98,12 +103,30 @@ class TeamMaker:
         self.teams.append(team_3)
         self.teams.append(team_4)
 
+    def partners(self):
+        while len(self.d) > 2:
+            person1 = randint(0, len(self.d) - 1)
+            person_1_name = self.d[person1]
+            del self.d[person1]
+
+            person2 = randint(0, len(self.d) - 1)
+            person_2_name = self.d[person2]
+            del self.d[person2]
+
+            self.teams.append([person_1_name, person_2_name])
+
+        if len(self.d) == 1:
+            print('You have an uneven amount of people')
+            print('I am making a group of three')
+            self.teams[0].append(self.d[0])
+
     def show(self):
         team_num = 1
         for item_large in self.teams:
             print('Team {}'.format(team_num))
             for item in item_large:
                 print(item)
+            print('\n\n')
             team_num += 1
 
 
