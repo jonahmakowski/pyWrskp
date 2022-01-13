@@ -126,7 +126,7 @@ class TeamMaker:
             print('Team {}'.format(team_num))
             for item in item_large:
                 print(item)
-            print('\n\n')
+            print('\n')
             team_num += 1
 
 
