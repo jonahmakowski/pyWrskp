@@ -22,6 +22,11 @@ class TeamMaker:
             if pr:
                 self.show()
 
+        if t == '4 teams':
+            self.four_teams()
+            if pr:
+                self.show()
+
     def ask_t(self):
         t = input('What type would you like?\n')
         return t
@@ -54,6 +59,45 @@ class TeamMaker:
         self.teams.append(team_1)
         self.teams.append(team_2)
 
+    def four_teams(self):
+        team_1 = []
+        team_2 = []
+        team_3 = []
+        team_4 = []
+        while len(self.d) > 3:
+            person1 = randint(0, len(self.d) - 1)
+            team_1.append(self.d[person1])
+            del self.d[person1]
+
+            person2 = randint(0, len(self.d) - 1)
+            team_2.append(self.d[person2])
+            del self.d[person2]
+
+            person3 = randint(0, len(self.d) - 1)
+            team_3.append(self.d[person3])
+            del self.d[person3]
+
+            person4 = randint(0, len(self.d) - 1)
+            team_4.append(self.d[person4])
+            del self.d[person4]
+
+        if len(self.d) == 1:
+            team_1.append(self.d[0])
+
+        elif len(self.d) == 2:
+            team_1.append(self.d[0])
+            team_2.append(self.d[1])
+
+        elif len(self.d) == 3:
+            team_1.append(self.d[0])
+            team_2.append(self.d[1])
+            team_3.append(self.d[2])
+
+        self.teams.append(team_1)
+        self.teams.append(team_2)
+        self.teams.append(team_3)
+        self.teams.append(team_4)
+
     def show(self):
         team_num = 1
         for item_large in self.teams:
@@ -63,4 +107,5 @@ class TeamMaker:
             team_num += 1
 
 
-teams = TeamMaker()
+if __name__ == "__main__":
+    teams = TeamMaker()
