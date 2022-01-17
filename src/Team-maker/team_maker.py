@@ -3,7 +3,10 @@ I know I have an older team maker, but I thought I would use what I have learned
 
 Here it is:
 """
+
 import os
+from random import randint
+import json
 
 try:
     pyWrkspLoc = os.environ["PYWRKSP"]
@@ -12,9 +15,6 @@ except KeyError:
     pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
                                             '\nPlease enter the pwd for the pyWrskp repo not including the '
                                             '"home" section')
-
-from random import randint
-import json
 
 
 class TeamMaker:
@@ -51,7 +51,7 @@ class TeamMaker:
         d = []
         load = input('would you like to load the list? (y/n)')
         if load == 'n':
-            print("Enter a list of the people's names if nothing is inputed, the list will stop")
+            print("Enter a list of the people's names if nothing is entered, the list will stop")
             while True:
                 l_add = input('')
                 if l_add == '':
@@ -63,6 +63,11 @@ class TeamMaker:
 
         elif load == 'y':
             d = self.load()
+
+        else:
+            print('{} is an word/char that this code does not allow'.format(load))
+            exit(404)
+
         return d
 
     def two_teams(self):
