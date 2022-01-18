@@ -353,7 +353,8 @@ def notes_write():
         n = Notes(name=pyWrkspLoc + '/docs/txt-files/web21_notes.txt')
         n.add_note(request.form.get('note'))
         n.save_notes()
-        return 'Your note {} was saved'.format(request.form.get('note'))
+        note = request.form.get('note')
+        return 'Your note {} was saved'.format(note)
     elif request.method == 'GET':
         return render_template('notes.html', title='Notes writer')
     else:
