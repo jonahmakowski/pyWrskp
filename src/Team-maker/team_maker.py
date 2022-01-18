@@ -33,13 +33,31 @@ class TeamMaker:
             if pr:
                 self.show()
 
-        if t == '4 teams':
+        elif t == '4 teams':
             self.four_teams()
             if pr:
                 self.show()
 
-        if t == 'partners':
+        elif t == 'partners':
             self.partners()
+            if pr:
+                self.show()
+
+        elif t == '2 teams + captions':
+            self.two_teams()
+            self.chose_caption()
+            if pr:
+                self.show()
+
+        elif t == '4 teams + captions':
+            self.four_teams()
+            self.chose_caption()
+            if pr:
+                self.show()
+
+        elif t == 'partners + captions':
+            self.partners()
+            self.chose_caption()
             if pr:
                 self.show()
 
@@ -143,6 +161,13 @@ class TeamMaker:
             print('You have an uneven amount of people')
             print('I am making a group of three')
             self.teams[0].append(self.d[0])
+
+    def chose_caption(self):
+        for item in self.teams:
+            caption_num = randint(0, len(item) - 1)
+            caption_name = item[caption_num]
+            del item[caption_num]
+            item.append(caption_name + ' is Caption of the team')
 
     def load(self):
         try:
