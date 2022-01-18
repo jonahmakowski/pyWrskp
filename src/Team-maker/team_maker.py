@@ -69,12 +69,15 @@ class TeamMaker:
         d = []
         load = input('would you like to load the list? (y/n)')
         if load == 'n':
-            print("Enter a list of the people's names if nothing is entered, the list will stop")
+            print("Enter a list of the people's names if nothing is entered, the list will stop, you must include "
+                  "more than one name")
             while True:
                 l_add = input('')
                 if l_add == '':
-                    break
-                d.append(l_add)
+                    if len(d) != 1:
+                        break
+                elif l_add != '':
+                    d.append(l_add)
             save = input('would you like to save this list? (y/n)')
             if save == 'y':
                 self.save_list(d)
