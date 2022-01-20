@@ -20,46 +20,69 @@ except KeyError:
 class TeamMaker:
     def __init__(self, loc, t=None, d=None, pr=True):
         self.name = loc + '/docs/txt-files/team_maker_save.txt'
+        change_t = False
         if t is None:
-            t = self.ask_t()
+            change_t = True
+        while True:
+            if change_t:
+                t = self.ask_t()
+
+            if t == '2 teams':
+                self.two_teams()
+                if pr:
+                    self.show()
+                break
+
+            elif t == '4 teams':
+                self.four_teams()
+                if pr:
+                    self.show()
+                break
+
+            elif t == 'partners':
+                self.partners()
+                if pr:
+                    self.show()
+                break
+
+            elif t == '2 teams + captions':
+                self.two_teams()
+                self.chose_caption()
+                if pr:
+                    self.show()
+                break
+
+            elif t == '4 teams + captions':
+                self.four_teams()
+                self.chose_caption()
+                if pr:
+                    self.show()
+                break
+
+            elif t == 'partners + captions':
+                self.partners()
+                self.chose_caption()
+                if pr:
+                    self.show()
+                break
+
+            else:
+                if change_t is False:
+                    print("As this option can't be changed, ending program")
+                    exit()
+                print('This value is not allowed, please try again')
+                print('The options are:')
+                print('"2 teams"')
+                print('"4 teams"')
+                print('"partners"')
+                print('or if you add "+ captions" to any of them you will get one caption per team')
+                print('asking again\n\n')
+
         if d is None:
             d = self.ask_l()
 
         self.d = d
         self.teams = []
-
-        if t == '2 teams':
-            self.two_teams()
-            if pr:
-                self.show()
-
-        elif t == '4 teams':
-            self.four_teams()
-            if pr:
-                self.show()
-
-        elif t == 'partners':
-            self.partners()
-            if pr:
-                self.show()
-
-        elif t == '2 teams + captions':
-            self.two_teams()
-            self.chose_caption()
-            if pr:
-                self.show()
-
-        elif t == '4 teams + captions':
-            self.four_teams()
-            self.chose_caption()
-            if pr:
-                self.show()
-
-        elif t == 'partners + captions':
-            self.partners()
-            self.chose_caption()
-            if pr:
-                self.show()
 
     def ask_t(self):
         t = input('What type would you like?\n')
@@ -149,7 +172,7 @@ class TeamMaker:
         self.teams.append(team_4)
 
     def partners(self):
-        while len(self.d) > 2:
+        while len(self.d) >= 2:
             person1 = randint(0, len(self.d) - 1)
             person_1_name = self.d[person1]
             del self.d[person1]
