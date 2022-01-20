@@ -2,7 +2,7 @@ import json
 
 
 class Notes:
-    def __init__(self, name='data3.txt'):
+    def __init__(self, name='data3.jonahtext'):
         self.notes = []
         self.name = name
 
