@@ -1,1 +1,1 @@
-This is the main dir for Noah's files
+This is the main dir for Noah's programs since he does not want his own repo, doing the same things here as in the start of the pyWrskp repo
