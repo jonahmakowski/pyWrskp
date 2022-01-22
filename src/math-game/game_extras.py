@@ -33,5 +33,5 @@ def div(min_num, max_num, dec):
     num2 = randint(max_num, min_num)
     a = num1 / num2
     if dec == 'n' and isinstance(a, float):
-        a = div(max_num, min_num, dec)
+        num1, num2, a = div(max_num, min_num, dec)
     return num1, num2, a
