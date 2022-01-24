@@ -1,16 +1,22 @@
 a = []
 print('WELCOME TO MY SMARTNESS TEST')
-def q(qu, a):
-    q = input(qu + '\n')
-    if q == a:
+
+
+def q(qu, ae):
+    qe = input(qu + '\n')
+    if qe == ae:
         return True
-    if q != a:
+    if qe != ae:
         return False
-c = '' # question
-d = '' # question (3 * 3)
+
+
+c = ''  # question
+d = ''  # question (3 * 3)
+
+
 def q_idea():
     from random import randint as r
-    num = r(2,3)
+    num = r(2, 3)
     nums = []
     if num == 2:
         num_1 = r(10, 100)
@@ -24,13 +30,14 @@ def q_idea():
         nums.append(num_1)
         nums.append(num_2)
         nums.append(num_3)
-    def question_def(op):
+
+    def question_def(opr):
         if len(nums) == 2:
-            question = ('What is ' + str(nums[0]) + op + str(nums[1]) + '?')
+            questionr = ('What is ' + str(nums[0]) + opr + str(nums[1]) + '?')
         if len(nums) == 3:
-            question = ('What is ' + str(nums[0]) + op + str(nums[1]) + op + str(nums[2]) + '?')
-        return question
-    op = r(1,4)
+            questionr = ('What is ' + str(nums[0]) + opr + str(nums[1]) + opr + str(nums[2]) + '?')
+        return questionr
+    op = r(1, 4)
     if op == 1:
         question = question_def(' + ')
     elif op == 2:
@@ -60,13 +67,15 @@ def q_idea():
             d = nums[0] * nums[1] * nums[2]
         if op == 4:
             d = nums[0] / nums[1] / nums[2]
+
+
 for i in range(9):
     q_idea()
     a.append(q(c, d))
 i = 0
 for item in a:
-   if item:
-       i += 1
+    if item:
+        i += 1
 rank = 'terrible.'
 if i >= 1:
     rank = 'bad.'
