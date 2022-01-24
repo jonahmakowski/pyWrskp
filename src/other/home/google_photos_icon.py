@@ -1,8 +1,9 @@
 import turtle
+from time import sleep
 
 t = turtle.Turtle()
 
-colors = ['yellow','green','blue','red']
+colors = ['yellow', 'green', 'blue', 'red']
 curve = 3
 t.speed(0)
 color = 0
@@ -14,7 +15,7 @@ for i in range(len(colors)):
     t.begin_fill()
     t.goto(0, 0)
     t.color(colors[i])
-    for i in range(50):
+    for c in range(50):
         t.left(curve)
         t.forward(5)
     t.goto(0, 0)
@@ -27,3 +28,5 @@ for i in range(len(colors)):
         heading += 90
 t.penup()
 t.goto(1000, 1000)
+
+sleep(10)
