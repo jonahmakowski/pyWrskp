@@ -1,4 +1,13 @@
 from random import randint
+import os
+
+try:
+    pyWrkspLoc = os.environ["PYWRKSP"]
+
+except KeyError:
+    pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
+                                            '\nPlease enter the pwd for the pyWrskp repo not including the '
+                                            '"home" section')
 
 
 def create(letter, num, sc, super_c, length, save, print_info):
@@ -29,7 +38,7 @@ def create(letter, num, sc, super_c, length, save, print_info):
         for i in range(length):
             loc = randint(0, len(chars) - 1)
             password += chars[loc]
-    elif create == False:
+    elif not create:
         password = 'Sorry, you have put no in all the questions, so there are no options'
     if print_info:
         print(password)
@@ -38,10 +47,11 @@ def create(letter, num, sc, super_c, length, save, print_info):
         website = input('what website will this password be used by?')
         from password_saver import add_password, save_passwords
         add_password(password, website)
-        save_passwords()
+        save_passwords(pyWrkspLoc)
         if print_info:
             print('your password, {} has been added to your saved passwords!'.format(password))
     return password
+
 
 if __name__ == "__main__":
     create(input('Would you like letters? (ex. A, b, c)'),
