@@ -1,4 +1,8 @@
 import tkinter as tk
+from time import sleep
+from random import randint
+import os
+
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -12,22 +16,22 @@ class Application(tk.Frame):
     
     def create_widgets(self):
         self.btnFrame = tk.Frame(self)
+
+        self.btns = [tk.Button(self.btnFrame, text='1', command=self.one),
+                     tk.Button(self.btnFrame, text='2', command=self.two),
+                     tk.Button(self.btnFrame, text='3', command=self.three),
+                     tk.Button(self.btnFrame, text='4', command=self.four),
+                     tk.Button(self.btnFrame, text='send', command=self.send),
+                     tk.Button(self.btnFrame, text='del', command=self.d)]
         
-        self.btn1 = tk.Button(self.btnFrame, text='1', command=self.one)
-        self.btn2 = tk.Button(self.btnFrame, text='2', command=self.two)
-        self.btn3 = tk.Button(self.btnFrame, text='3', command=self.three)
-        self.btn4 = tk.Button(self.btnFrame, text='4', command=self.four)
-        self.btnsend = tk.Button(self.btnFrame, text='send', command=self.send)
-        self.btndel = tk.Button(self.btnFrame, text='del', command=self.d)
-        self.btns = [self.btn1, self.btn2, self.btn3, self.btn4, self.btnsend, self.btndel]
-        
-        self.btnFrame.grid(row = 0, column=0, sticky='ns')
+        self.btnFrame.grid(row=0, column=0, sticky='ns')
         r, c = 0, 0
         for item in self.btns:
             item.grid(row=r, column=c, sticky='ew')
             r += 1
+
     def one(self):
-        if self.active == False:
+        if not self.active:
             print('Enter the code')
             self.active = True
         else:
@@ -35,28 +39,28 @@ class Application(tk.Frame):
             self.code += '1'
     
     def two(self):
-        if self.active == True:
+        if self.active:
             print('2')
             self.code += '2'
         else:
             print('Error Wrong Button')
     
     def three(self):
-        if self.active == True:
+        if self.active:
             print('3')
             self.code += '3'
         else:
             print('Error Wrong Button')
         
     def four(self):
-        if self.active == True:
+        if self.active:
             print('4')
             self.code += '4'
         else:
             print('Error Wrong Button')
     
     def d(self):
-        if self.active == True:
+        if self.active:
             self.code = self.code[:len(self.code)-1]
             print(self.code)
             print('del')
@@ -70,16 +74,18 @@ class Application(tk.Frame):
             print('FAIL, SYSTEM SHUTTING DOWN')
             exit()
 
+
 root = tk.Tk()
 root.title('Login')
 
-root.rowconfigure(0, minsize =800, weight = 1)
-root.columnconfigure(1, minsize =600, weight=1)
+root.rowconfigure(0, minsize=800, weight=1)
+root.columnconfigure(1, minsize=600, weight=1)
 
 app = Application(master=root)
 app.mainloop()
 
-class system(tk.Frame):
+
+class System(tk.Frame):
     def __init__(self, usr, master=None):
         super().__init__(master)
         self.master = master
@@ -87,19 +93,22 @@ class system(tk.Frame):
         self.usr = usr
         self.create_buttons_btns()
         self.runtime = 0
+
     def create_buttons_btns(self):
         self.btnFrame = tk.Frame(self)
 
         self.btns = [
-            {'loc':[10,10], 'item':tk.Button(self.btnFrame, text='log out', command=self.master.destroy)},
-            {'loc':[0,0], 'item':tk.Button(self.btnFrame, text='Info', command=self.info)}]
+            {'loc': [10, 10], 'item': tk.Button(self.btnFrame, text='log out', command=self.master.destroy)},
+            {'loc': [0, 0], 'item': tk.Button(self.btnFrame, text='Info', command=self.info)}]
         self.create_buttons()
+
     def create_buttons(self):
-        self.btnFrame.grid(row = 0, column=0, sticky='ns')
+        self.btnFrame.grid(row=0, column=0, sticky='ns')
         for item in self.btns:
             r = item['loc'][0]
             c = item['loc'][1]
             item['item'].grid(row=r, column=c, sticky='ew')
+
     def info(self):
         if self.runtime >= 1:
             print('\n\n\n\n\n\n\n')
@@ -110,15 +119,12 @@ class system(tk.Frame):
         print('~~~~~~~~~~~~~~~~~~         ~~~~~~~~~~~~~~~~~~')
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 
-from time import sleep
-from random import randint
-import os
 
-if app.active == True and app.pas == app.code:
+if app.active and app.pas == app.code:
     os.system('clear')
     print('system active')
     print('setting up system')
-    sleep(randint(1,10))
+    sleep(randint(1, 10))
     
     print('~~~~~~~~~~~~~~~~~~~~~~~~')
     print('~~~~~~~~   Hi   ~~~~~~~~')
@@ -149,10 +155,10 @@ if app.active == True and app.pas == app.code:
         root2 = tk.Tk()
         root2.title('System')
 
-        root2.rowconfigure(0, minsize =800, weight = 1)
-        root2.columnconfigure(1, minsize =600, weight=1)
+        root2.rowconfigure(0, minsize=800, weight=1)
+        root2.columnconfigure(1, minsize=600, weight=1)
 
-        system = system(name, master=root2)
+        system = System(name, master=root2)
         system.mainloop()
     else:
         exit()
