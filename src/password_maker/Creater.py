@@ -57,7 +57,8 @@ if __name__ == "__main__":
     create(input('Would you like letters? (ex. A, b, c)'),
            input('Would you like numbers? (ex. 1, 2, 3)'),
            input('Would you like special chars? (ex. @, %, -)'),
-           input('Would you like super special chars (ex. ←, ↑, →), \nsome websites may not allow this, if it does not work turn this off'),
+           input('Would you like super special chars (ex. ←, ↑, →), '
+                 '\nsome websites may not allow this, if it does not work turn this off'),
            int(input('how long would you like your password to be?')),
-           input('Would you like to save your password to data2.txt? (y/n)'),
+           input('Would you like to save your password to passwords.txt? (y/n)'),
            True)
