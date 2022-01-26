@@ -12,8 +12,10 @@ except KeyError:
 
 def create(letter, num, sc, super_c, length, save, print_info):
     chars = []
-    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-               'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+               'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+               'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+               'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
     scs = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '~', '`', '{', '}', '[', ']', ';', ':',
            '"', "'", '<', '>', '?', ',', '.', '/', '|']
@@ -21,7 +23,7 @@ def create(letter, num, sc, super_c, length, save, print_info):
                  '∞', '™', '¼', '½', '¾', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î',
                  'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'æ', 'Ħ', 'ĳ', 'Œ',
                  'œ', '☚', '☛', '★', '☆', '♠', '♣', '♥', '♦', '♪', '♫', '♀']
-    create = True
+    make = True
     if letter == 'y':
         chars += letters
     if num == 'y':
@@ -31,14 +33,14 @@ def create(letter, num, sc, super_c, length, save, print_info):
     if super_c == 'y':
         chars += super_s_c
     if (letter == 'n' and num == 'n') and (sc == 'n' and super_c == 'n'):
-        create = False
+        make = False
 
     password = ''
-    if create:
+    if make:
         for i in range(length):
             loc = randint(0, len(chars) - 1)
             password += chars[loc]
-    elif not create:
+    elif not make:
         password = 'Sorry, you have put no in all the questions, so there are no options'
     if print_info:
         print(password)
