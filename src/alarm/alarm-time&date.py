@@ -31,5 +31,5 @@ while True:
         print('DING-DONG')
         print('Time up!')
         break
-    #print('Now ' + str(now))
-    #print('Then ' + str(past_time))
+    # print('Now ' + str(now))
+    # print('Then ' + str(past_time))
