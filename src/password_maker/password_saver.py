@@ -11,29 +11,29 @@ except KeyError:
 passwords = []
 
 
-def add_password(password, website):
+def add_password(passw, web):
     global passwords
-    passwords.append({'website':website, 'password':password})
+    passwords.append({'website': web, 'password': passw})
 
 
-def print_passwords(pyWrskp):
+def print_passwords(pywrskp):
     global passwords
     try:
-        with open(pyWrskp + '/docs/txt-files/passwords.txt') as json_file:
+        with open(pywrskp + '/docs/txt-files/passwords.txt') as json_file:
             passwords += json.load(json_file)
-    except:
+    except FileNotFoundError:
         pass
 
-    if passwords != []:
+    if passwords is []:
         for item in passwords:
             print('{}:   {}'.format(item['website'], item['password']))
 
-    if passwords == []:
+    if passwords is []:
         print("you don't have any passwords saved!")
 
 
-def save_passwords(pyWrskp):
-    with open(pyWrskp + '/docs/txt-files/passwords.txt', 'w') as outfile:
+def save_passwords(pywrskp):
+    with open(pywrskp + '/docs/txt-files/passwords.txt', 'w') as outfile:
         json.dump(passwords, outfile)
 
 

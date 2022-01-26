@@ -8,8 +8,6 @@ def work(hour, mint, print_info=True):
     past_time = datetime.datetime(now.year, now.month, now.day, hour, mint)
     past_time = past_time.strftime("%X")
 
-    now = now.strftime("%X")
-
     while True:
         now = datetime.datetime.now()
         now = now.strftime("%X")
