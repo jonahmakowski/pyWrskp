@@ -44,7 +44,7 @@ class Schedule:
             with open(self.name) as json_file:
                 info = json.load(json_file)
             info = sorted(info, key=lambda i: i['start_time'], reverse=True)
-        except:
+        except FileNotFoundError:
             info = None
         return info
     
