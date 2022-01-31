@@ -41,11 +41,11 @@ class AnimalChoser:
             for item in self.options:
                 print(item['name'])
 
-            print('debug info:')
+            '''print('debug info:')
             print('self.correct_atturbites:')
             print(self.correct_atturbites)
             print('self.options:')
-            print(self.options)
+            print(self.options)'''
 
 
 game = AnimalChoser()
