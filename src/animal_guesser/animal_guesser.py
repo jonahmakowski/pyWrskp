@@ -1,18 +1,31 @@
+import os
+import json
+
+try:
+    pyWrkspLoc = os.environ["PYWRKSP"]
+
+except KeyError:
+    pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
+                                            '\nPlease enter the pwd for the pyWrskp repo not including the '
+                                            '"home" section')
+
+
 class AnimalChoser:
-    def __init__(self):
-        self.options = [{'name': 'bulldog', 'info': ['fur', 'pet', 'dog', 'short snout']},
-                        {'name': 'human', 'info': ['hair', 'two legs', 'short snout']}]
-        self.atturbites = [{'name': 'fur', 'y/n': ''},
-                           {'name': 'pet', 'y/n': ''},
-                           {'name': 'dog', 'y/n': ''},
-                           {'name': 'short snout', 'y/n': ''},
-                           {'name': 'hair', 'y/n': ''},
-                           {'name': 'two legs', 'y/n': ''}]
+    def __init__(self, pywrskp):
+        self.name_1 = pywrskp + '/docs/txt-files/animal_chooser_options.txt'
+        self.name_2 = pywrskp + '/docs/txt-files/animal_chooser_atturbites.txt'
+        self.options = []
+        self.atturbites = []
+        self.load()
         self.correct_atturbites = []
-        print('The current options for this game are:')
-        for item in self.options:
-            print(item['name'])
-        self.guess()
+        do = input('would you like to add or play?')
+        if do == 'play':
+            print('The current options for this game are:')
+            for item in self.options:
+                print(item['name'])
+            self.guess()
+        else:
+            self.add()
 
     def guess(self):
         for item in self.atturbites:
@@ -47,5 +60,47 @@ class AnimalChoser:
             print('self.options:')
             print(self.options)'''
 
+    def load(self):
+        try:
+            with open(self.name_1) as json_file:
+                self.options = json.load(json_file)
+        except FileNotFoundError:
+            print('This file does not exist (num1)')
+            exit(5)
 
-game = AnimalChoser()
+        try:
+            with open(self.name_2) as json_file:
+                self.atturbites = json.load(json_file)
+        except FileNotFoundError:
+            print('This file does not exist (num2)')
+            exit(5)
+
+    def add(self):
+        new_name = input('What is the name of this animal?')
+        new = {"name": new_name, "info": []}
+        new_attrbs = []
+        print('What are the atturbuites?')
+        while True:
+            attrb = input()
+            if attrb == '':
+                break
+            new_attrbs.append(attrb)
+            new["info"].append(attrb)
+
+        for item in new_attrbs:
+            for atra in self.atturbites:
+                if item == atra:
+                    del item
+
+        for item in new_attrbs:
+            self.atturbites.append({'name': item, "y/n": ""})
+
+        self.options.append(new)
+
+        with open(self.name_1, 'w') as outfile:
+            json.dump(self.options, outfile)
+        with open(self.name_2, 'w') as outfile:
+            json.dump(self.atturbites, outfile)
+
+
+game = AnimalChoser(pyWrkspLoc)
