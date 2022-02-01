@@ -1,0 +1,1 @@
+[{"name": "fur", "y/n": ""}, {"name": "pet", "y/n": ""}, {"name": "dog", "y/n": ""}, {"name": "short snout", "y/n": ""}, {"name": "hair", "y/n": ""}, {"name": "two legs", "y/n": ""}, {"name": "long neck", "y/n": ""}, {"name": "four legs", "y/n": ""}, {"name": "tall", "y/n": ""}, {"name": "spots", "y/n": ""}, {"name": "herbivore", "y/n": ""}]
