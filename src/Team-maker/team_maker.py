@@ -200,7 +200,8 @@ class TeamMaker:
             with open(self.name) as json_file:
                 j = json.load(json_file)
         except FileNotFoundError:
-            print('This file does not exist')
+            print('This file, where the save is does not exist, to use this program make a file at {}.'
+                  .format(self.name))
             exit(5)
         return j
 
