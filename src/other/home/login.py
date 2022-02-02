@@ -110,14 +110,22 @@ class System(tk.Frame):
             item['item'].grid(row=r, column=c, sticky='ew')
 
     def info(self):
-        if self.runtime >= 1:
-            print('\n\n\n\n\n\n\n')
-        self.runtime += 1
+        print('\n\n\n\n\n\n\n')
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         print('~~~~~~~~~~~~~~~~~~         ~~~~~~~~~~~~~~~~~~')
         print('~~~~~~~~~~~~~~~~~~  Hello  ~~~~~~~~~~~~~~~~~~')
         print('~~~~~~~~~~~~~~~~~~         ~~~~~~~~~~~~~~~~~~')
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        sleep(5)
+        print('\n\n\n\n\n\n\n')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~~~                                                ~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~~~ This system is owned and run by Jonah Makowski ~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~~~                                                ~~~~~~~~~~~~~~~~~~~~~~')
+        print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        sleep(4)
+        print('\n\n\n\n\n\n\n')
+        print('as you know the passcode is {}'.format(app.pas))
 
 
 if app.active and app.pas == app.code:
