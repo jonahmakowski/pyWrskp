@@ -1,7 +1,7 @@
 # This char "#" makes the rest of the line a comment and the computer ignores it
 
-"""This is a diffrent way to right comments
-as this can be multipale lines"""
+"""This is a other way to right comments
+as this can be many lines"""
 
 print()  # prints the item in the bracket
 
