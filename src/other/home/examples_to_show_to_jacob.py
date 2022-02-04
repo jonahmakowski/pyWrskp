@@ -9,17 +9,17 @@ var1 = input()  # takes input from the question put in the bracket (this saves a
 
 var2 = int(input())
 '''takes input from the question put in the bracket (this saves as a int), the int() part takes the
- input and turns it into an int, if it is a word, like "Hello", it will return an error, if it is a float like "0.5" it 
+ input and turns it into an int, if it is a word, like "Hello", it will return an error, if it is a float like 0.5 it 
  will also return an error'''
 
 var3 = float(input())
 '''takes input from the question put in the bracket (this saves as a float), the float() part takes the input and turns
- it into a float, if it is a word, like "Hello", it will return an error, if it is a int like "1" it will make the int,
-  "1" into "1.0"'''
+ it into a float, if it is a word, like "Hello", it will return an error, if it is a int like 1 it will make the int,
+  1 into 1.0'''
 
 var4 = str(1 + 2)  # this will add 1 + 2 and save it as a string, so this would look like "3" in string form
 
-var5 = 0  # makes a var that is = to the integer "0"
+var5 = 0  # makes a var that is = to the integer 0
 
 var6 = 'Hello World'  # makes a var that is = to the string "Hello world"
 
