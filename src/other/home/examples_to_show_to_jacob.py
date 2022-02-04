@@ -5,17 +5,17 @@ as this can be many lines"""
 
 print()  # prints the item in the bracket
 
-var1 = input()  # takes input from the question put in the bracket (this saves as a string)
+var1 = input('? str')  # takes input from the question put in the bracket in this case '? str' (this saves as a string)
 
-var2 = int(input())
-'''takes input from the question put in the bracket (this saves as a int), the int() part takes the
+var2 = int(input('? int'))
+'''takes input from the question put in the bracket in this case '? int' (this saves as a int), the int() part takes the
  input and turns it into an int, if it is a word, like "Hello", it will return an error, if it is a float like 0.5 it 
  will also return an error'''
 
-var3 = float(input())
-'''takes input from the question put in the bracket (this saves as a float), the float() part takes the input and turns
- it into a float, if it is a word, like "Hello", it will return an error, if it is a int like 1 it will make the int,
-  1 into 1.0'''
+var3 = float(input('? float'))
+'''takes input from the question put in the bracket in this case '? float' (this saves as a float), the float() part
+takes the input and turns it into a float, if it is a word, like "Hello", it will return an error, if it is a int
+like 1 it will make the int, 1 into 1.0'''
 
 var4 = str(1 + 2)  # this will add 1 + 2 and save it as a string, so this would look like "3" in string form
 
@@ -34,3 +34,9 @@ for i in range(3):  # means do 3 times "i" is a counter
 
 for item in var8:  # means for every item in var8 (a list), do this, item is the current item that is going through
     print(item)
+
+while True: # this is a while statment and True can be reaplaced with other objects
+    var5 += 1 # adds and equals 1
+    if var5 == len(var9): # many things here, if statments are just as they sound, len() counts the number of objects in a list
+        print('the number of objects in var9 are {}'.format(var5)) # .format replaces {} with the object in the brakets
+        break # this cuts out of a loop
