@@ -32,7 +32,7 @@ var9 = [var1, var2, var3, var4, var5, var6, var7, var8]  # This makes a var = to
 for i in range(3):  # means do 3 times "i" is a counter
     print('hi')
 
-for item in var8:  # means for every item in var8 (a list), do this, item is the current item that is going through
+for item in var8:  # means for every item in var9 (a list), do this, item is the current item that is going through
     print(item)
 
 while True: # this is a while statment and True can be reaplaced with other objects
