@@ -1,1 +1,1 @@
-[{"name": "bulldog", "info": ["fur", "pet", "dog", "short snout", "four legs"]}, {"name": "human", "info": ["hair", "two legs", "short snout"]}, {"name": "giraffe", "info": ["long neck", "four legs", "tall", "spots", "herbivore"]}]
+[{"name": "bulldog", "info": ["fur", "pet", "dog", "short snout", "four legs"]}, {"name": "human", "info": ["hair", "two legs", "short snout"]}, {"name": "giraffe", "info": ["long neck", "four legs", "tall", "spots", "herbivore", "fur"]}]
