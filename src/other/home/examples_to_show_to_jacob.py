@@ -23,9 +23,11 @@ var5 = 0  # makes a var that is = to the integer 0
 
 var6 = 'Hello World'  # makes a var that is = to the string "Hello world"
 
-var7 = 0.5  # makes a var that is = to the float "0.5"
+var7 = 0.5  # makes a var that is = to the float 0.5
 
-var8 = [var1, var2, var3, var4, var5, var6, var7]  # This makes a var = to a list of all of the other vars
+var8 = True # this is a boolean value, True or False (it has to start with a capitol in python)
+
+var9 = [var1, var2, var3, var4, var5, var6, var7]  # This makes a var = to a list of all of the other vars
 
 for i in range(3):  # means do 3 times "i" is a counter
     print('hi')
