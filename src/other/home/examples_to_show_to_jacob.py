@@ -27,16 +27,30 @@ var7 = 0.5  # makes a var that is = to the float 0.5
 
 var8 = True # this is a boolean value, True or False (it has to start with a capitol in python)
 
-var9 = [var1, var2, var3, var4, var5, var6, var7, var8]  # This makes a var = to a list of all of the other vars
+var9 = {'first name': 'Jonah',
+        'middle name': 'Werner',
+        'last name': 'Makowski',
+        'age': 11,
+        'grade': 6,
+        'firends': ['Jacob',
+                    'Phinn',
+                    'Liam',
+                    'Rafa',
+                    'Ben G',
+                    'Hannah']}
+'''This is a dictonary, what it is is like a list with a key that is instead of a number what is in the string
+the item the key is = to is anything, a list, a string, a int, a list, a dictonary, or a float.'''
+
+var10 = [var1, var2, var3, var4, var5, var6, var7, var8]  # This makes a var = to a list of all of the other vars
 
 for i in range(3):  # means do 3 times "i" is a counter
     print('hi')
 
-for item in var8:  # means for every item in var9 (a list), do this, item is the current item that is going through
+for item in var10:  # means for every item in var10 (a list), do this, item is the current item that is going through
     print(item)
 
 while True: # this is a while statment and True can be reaplaced with other objects
     var5 += 1 # adds and equals 1
-    if var5 == len(var9): # many things here, if statments are just as they sound, len() counts the number of objects in a list
+    if var5 == len(var10): # many things here, if statments are just as they sound, len() counts the number of objects in a list
         print('the number of objects in var9 are {}'.format(var5)) # .format replaces {} with the object in the brakets
         break # this cuts out of a loop
