@@ -1,3 +1,5 @@
+import json # this is a library
+
 # This char "#" makes the rest of the line a comment and the computer ignores it
 
 """This is a other way to right comments
@@ -54,3 +56,26 @@ while True: # this is a while statment and True can be reaplaced with other obje
     if var5 == len(var10): # many things here, if statments are just as they sound, len() counts the number of objects in a list
         print('the number of objects in var9 are {}'.format(var5)) # .format replaces {} with the object in the brakets
         break # this cuts out of a loop
+
+with open('hello.txt', 'w') as outfile: # how to save a file to the file named "hello.txt"
+    json.dump('Testing message', outfile) # this will save "Testing message" to a txt file
+
+with open('hello.txt') as json_file:
+    print(json.load(json_file)) # this will print the info in a file
+
+def fuction(): # this is a fuction in the () you can put in info so that it can get info
+    print('fuction testing') # you have to start the fuction name with a lowercase letter
+
+fuction() # this is how to call up a fuction
+
+class Testing: # this is how to make a class
+    def __init__(self, info): # this is needed in any class it is what happens when the class is first called on info is a paremater
+        self.info = info # this saves info as a file that you can use anyware in the class
+    
+    def print_info(self): # this is a fuction that prints self.info
+        print(self.info)
+
+
+testing = Testing('Hello') # this is how to call a class
+testing.print_info() # this is how to call a class fuction
+        
