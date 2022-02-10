@@ -25,7 +25,6 @@ class app(tk.Frame):
             i += 1
     def paint(self):
         import Class_one
-        import class_1_extras
         if self.i != 0:
             Class_one.draw()
         self.i += 1
