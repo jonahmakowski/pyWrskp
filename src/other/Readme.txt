@@ -1,1 +1,1 @@
-this dir has some old code, created before Github.
+This is a folder with random items with only one file for the project
