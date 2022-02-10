@@ -1,4 +1,4 @@
-import json # this is a library
+import json  # this is a library
 
 # This char "#" makes the rest of the line a comment and the computer ignores it
 
@@ -27,7 +27,7 @@ var6 = 'Hello World'  # makes a var that is = to the string "Hello world"
 
 var7 = 0.5  # makes a var that is = to the float 0.5
 
-var8 = True # this is a boolean value, True or False (it has to start with a capitol in python)
+var8 = True  # this is a boolean value, True or False (it has to start with a capitol in python)
 
 var9 = {'first name': 'Jonah',
         'middle name': 'Werner',
@@ -51,31 +51,36 @@ for i in range(3):  # means do 3 times "i" is a counter
 for item in var10:  # means for every item in var10 (a list), do this, item is the current item that is going through
     print(item)
 
-while True: # this is a while statment and True can be reaplaced with other objects
-    var5 += 1 # adds and equals 1
-    if var5 == len(var10): # many things here, if statments are just as they sound, len() counts the number of objects in a list
-        print('the number of objects in var9 are {}'.format(var5)) # .format replaces {} with the object in the brakets
-        break # this cuts out of a loop
+while True:  # this is a while statment and True can be reaplaced with other objects
+    var5 += 1  # adds and equals 1
+    if var5 == len(var10):
+        # many things here, if statments are just as they sound, len() counts the number of objects in a list
+        print('the number of objects in var9 are {}'.format(var5))  # .format replaces {} with the object in the brakets
+        break  # this cuts out of a loop
 
-with open('hello.txt', 'w') as outfile: # how to save a file to the file named "hello.txt"
-    json.dump('Testing message', outfile) # this will save "Testing message" to a txt file
+with open('hello.txt', 'w') as outfile:  # how to save a file to the file named "hello.txt"
+    json.dump('Testing message', outfile)  # this will save "Testing message" to a txt file
 
 with open('hello.txt') as json_file:
-    print(json.load(json_file)) # this will print the info in a file
+    print(json.load(json_file))  # this will print the info in a file
 
-def fuction(): # this is a fuction in the () you can put in info so that it can get info
-    print('fuction testing') # you have to start the fuction name with a lowercase letter
 
-fuction() # this is how to call up a fuction
+def fuction():  # this is a fuction in the () you can put in info so that it can get info
+    print('fuction testing')  # you have to start the fuction name with a lowercase letter
 
-class Testing: # this is how to make a class
-    def __init__(self, info): # this is needed in any class it is what happens when the class is first called on info is a paremater
-        self.info = info # this saves info as a file that you can use anyware in the class
+
+fuction()  # this is how to call up a fuction
+
+
+class Testing:  # this is how to make a class
+    def __init__(self, info):
+        # this is needed in any class it is what happens when the class is first called on info is a paremater
+        self.info = info  # this saves info as a file that you can use anyware in the class
     
-    def print_info(self): # this is a fuction that prints self.info
+    def print_info(self):  # this is a fuction that prints self.info
         print(self.info)
 
 
-testing = Testing('Hello') # this is how to call a class
-testing.print_info() # this is how to call a class fuction
+testing = Testing('Hello')  # this is how to call a class
+testing.print_info()  # this is how to call a class fuction
         
