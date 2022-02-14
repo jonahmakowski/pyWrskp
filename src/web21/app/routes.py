@@ -378,7 +378,7 @@ def notes_read():
 @app.route('/schedule/create', methods=['GET', 'POST'])
 def schedule_create():
     if request.method == 'POST':
-        sys.path.append(pyWrkspLoc + '/src/schedule')
+        sys.path.append(pyWrkspLoc + '/src/other')
         import schedule
 
         s = schedule.Schedule(show=False, name='web21_schedule_data.txt')
@@ -393,7 +393,7 @@ def schedule_create():
 
 @app.route('/schedule/read', methods=['GET', 'POST'])
 def schedule_read():
-    sys.path.append(pyWrkspLoc + '/src/schedule')
+    sys.path.append(pyWrkspLoc + '/src/other')
     import schedule
 
     s = schedule.Schedule(show=False, name='web21_schedule_data.txt')
@@ -408,7 +408,7 @@ def schedule_read():
 
 @app.route('/schedule/empty', methods=['GET', 'POST'])
 def schedule_empty():
-    sys.path.append(pyWrkspLoc + '/src/schedule')
+    sys.path.append(pyWrkspLoc + '/src/other')
     import schedule
 
     s = schedule.Schedule(show=False, name='web21_schedule_data.txt')
