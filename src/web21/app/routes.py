@@ -189,7 +189,8 @@ def passwords():
                           request.form.get("super_c"),
                           int(request.form.get("length")),
                           'n',
-                          False)
+                          False,
+                          pyWrkspLoc)
         return render_template('password_show.html', title='Passwords', password=password)
     elif request.method == 'GET':
         return render_template('passwords.html', title='Passwords')
@@ -222,7 +223,7 @@ def turtle():
     if request.method == "POST":
         global pyWrkspLoc
         
-        sys.path.append(pyWrkspLoc + '/src/other/home')
+        sys.path.append(pyWrkspLoc + '/src/other/Other_from_2020-2021/home')
         
         try:
             from noah_and_me_turtle import run
@@ -241,7 +242,7 @@ def turtle():
 def draw():
     if request.method == "POST":
         global pyWrkspLoc
-        sys.path.append(pyWrkspLoc + '/src/other/classes')
+        sys.path.append(pyWrkspLoc + '/src/other/Other_from_2020-2021/classes')
         
         from Class_one import draw
         
