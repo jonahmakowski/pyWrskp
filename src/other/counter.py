@@ -9,9 +9,16 @@ else:
     string = input('Paste what you want to count\n')
     string = list(string)
     
-    for item in string:
-        if item == ' ':
-            del item
+    count = 0
+    length = len(string)
     
+    for i in range(len(string)):
+        item = string[count]
+        if item == ' ':
+            del string[count]
+            print(string)
+        else:
+            count += 1
+
     print('Here is the length of your text:')
     print(len(string))
