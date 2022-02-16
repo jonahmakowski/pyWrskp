@@ -16,7 +16,7 @@ else:
         item = string[count]
         if item == ' ':
             del string[count]
-            print(string)
+            # print(string) # uncommenting this will make the current list print
         else:
             count += 1
 
