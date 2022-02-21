@@ -58,8 +58,7 @@ class Game:
     def choose_bad(self):
         from random import randint
         
-        #num = randint(1,3)
-        num = 3
+        num = randint(1,3)
         if self.debug:
             print('debug info: num in self.choose_bad is {}'.format(num))
         if num == 1:
@@ -104,7 +103,10 @@ class Game:
                 monster_health -= damage
                 print('The {} now has {} health'.format(name, monster_health))
                 if monster_health > 0:
-                    damage = randint(attack_min, attack_max)
+                    if attack_min == attack_max:
+                        damage = attack_max
+                    else:
+                        damage = randint(attack_min, attack_max)
                     print('The {} did {} damage'.format(name, damage))
                     self.health -= damage
                     print('You now have {} health'.format(self.health))
