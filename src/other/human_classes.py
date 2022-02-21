@@ -61,5 +61,12 @@ class House:
                             'city': address_city,
                             'province': address_province,
                             'country': address_country}
+    def day_or_night(self):
+        now_hour = int(datetime.now().hour)
+        if now_hour >= 20:
+            print('night')
+        else:
+            print('day')
 
 oakville = House(our_family, 449, 'Valley', 'Dr', 'Oakville', 'Ontario', 'Canada')
+oakville.day_or_night()
