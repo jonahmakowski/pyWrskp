@@ -1,5 +1,6 @@
 from time import sleep
 
+
 class Game:
     def __init__(self, debug=False, health=200, jonah=True):
         self.number = 1
@@ -16,8 +17,15 @@ class Game:
             for item in self.attacks:
                 if item['damage min'] > 0:
                     item['damage min'] = item['damage min'] * 10
+                if item['damage min'] < 0:
+                    item['damage min'] = item['damage max'] - 1
                 if item['damage max'] > 0:
                     item['damage max'] = item['damage max'] * 10
+                if item['damage max'] < 0:
+                    item['damage max'] = item['damage min'] - 1
+                
+            if self.debug:
+                print('debug info: self.name == Jonah, so cheat mode has been enabled')
         
         self.print_info()
         
@@ -32,15 +40,17 @@ class Game:
                 print('debug info: self.choose_bad, done \nnum {}'.format(self.number))
                 
             self.number += 1
+    
     def print_info(self):
         print('Hello {}!'.format(self.name))
         print('You have {} health'.format(self.health))
         print('Weapons you can use:')
         for item in self.attacks:
-            print('\t{} ({}-{} damage)'.format(item['name'], item['damage min'], item['damage max']))
+            print('\t{} ({} - {} damage)'.format(item['name'], item['damage min'], item['damage max']))
         print('Bad Guys:')
         print('\tGLOP - 10-20 attack damage - 50 health')
         print('\tBlock - 50 attack damage - 20 health')
+    
     def choose_bad(self):
         from random import randint
         
@@ -56,6 +66,7 @@ class Game:
         elif self.debug:
             print('debug info: issue, code could not find nums nessary\nsection: self.choose_bad')
         print('\n')
+    
     def glop(self):
         from random import randint
         monster_health = 50
@@ -97,6 +108,7 @@ class Game:
             print('GOOD JOB!')
             print('You killed the Glop with {} health to spare!'.format(self.health))
             print('You killed {} bad guys so far'.format(self.number_killed))
+    
     def block(self):
         from random import randint
         monster_health = 20
@@ -139,4 +151,5 @@ class Game:
             print('You killed the block with {} health to spare!'.format(self.health))
             print('You killed {} bad guys so far'.format(self.number_killed))
 
-User = Game() # add debug = True for debug info
+
+User = Game(debug=True) # add debug = True for debug info
