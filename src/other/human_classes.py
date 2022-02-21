@@ -1,4 +1,5 @@
 from datetime import datetime
+from random import randint
 
 
 class Human:
@@ -9,6 +10,27 @@ class Human:
         self.birth_year = birth_year
         current_year = datetime.now().year
         self.age = current_year - birth_year
+    
+    def talk(self, text):
+        print('{} {}: {}'.format(self.first_name, self.last_name, text))
+    
+    def good_thing(self):
+        options = ['Lola is the best',
+                   'I had PE at school today',
+                   'I played Roblox with my friends today',
+                   'We went sledding',
+                   'I had fun with my students today',
+                   'We went to Bronte today']
+        rad = randint(0, len(options) - 1)
+        txt = 'Good thing: {}'.format(options[rad])
+        self.talk(txt)
+    
+    def bad_thing(self):
+        options = ['We went to Bronte today',
+                   'I had to wake up at 6:00 am today for swimming']
+        rad = randint(0, len(options) - 1)
+        txt = 'Bad thing: {}'.format(options[rad])
+        self.talk(txt)
 
 Jonah = Human('male', 'Jonah', 'Makowski', 2010)
 Noah = Human('male', 'Noah', 'Makowski', 2013)
@@ -20,6 +42,12 @@ class Family:
         self.members = members
     def add(self, person):
         self.members.append(person)
+    def good_thing_bad_thing(self):
+        for i in range(len(self.members)):
+            self.members[i].good_thing()
+            print('\n')
+            self.members[i].bad_thing()
+            print('\n\n')
 
 our_family = Family(members=[Jonah, Noah, Papa, Mama])
 
