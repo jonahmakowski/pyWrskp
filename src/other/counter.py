@@ -6,6 +6,7 @@ if count_type == 'with spaces':
     print('Here is the length of your text:')
     print(len(string))
 else:
+    print('you have choosen not including spaces')
     string = input('Paste what you want to count\n')
     string = list(string)
     
@@ -22,3 +23,11 @@ else:
 
     print('Here is the length of your text:')
     print(len(string))
+    print()
+    print('your text without spaces is:')
+    
+    stri = ''
+    for item in string:
+        stri += item
+    
+    print(stri)
