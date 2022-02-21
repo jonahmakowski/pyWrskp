@@ -2,7 +2,7 @@ from time import sleep
 
 
 class Game:
-    def __init__(self, debug=False, health=200, jonah=True):
+    def __init__(self, debug=False, health=200, cheat=True):
         self.number = 1
         self.number_killed = 1
         self.health = health
@@ -12,8 +12,8 @@ class Game:
         self.debug = debug
         self.name = input('What is your name?\n')
         
-        if jonah == True and self.name == 'Jonah':
-            self.health = health * 3
+        if cheat == True and self.name == 'Jonah':
+            self.health = health * 10
             self.attacks.append({'name':'total destruction', 'damage min':999999999999998, 'damage max':999999999999999})
             for item in self.attacks:
                 if item['damage min'] > 0:
@@ -22,8 +22,16 @@ class Game:
                     item['damage min'] = item['damage max'] - 1
                 if item['damage max'] > 0:
                     item['damage max'] = item['damage max'] * 10
-                if item['damage max'] < 0:
-                    item['damage max'] = item['damage min'] - 1
+        
+        if cheat == True and self.name == 'Noah':
+            self.health = health * 3
+            for item in self.attacks:
+                if item['damage min'] > 0:
+                    item['damage min'] = item['damage min'] * 3
+                if item['damage min'] < 0:
+                    item['damage min'] = item['damage max'] - 1
+                if item['damage max'] > 0:
+                    item['damage max'] = item['damage max'] * 3
                 
             if self.debug:
                 print('debug info: self.name == Jonah, so cheat mode has been enabled')
