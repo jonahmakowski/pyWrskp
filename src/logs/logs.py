@@ -16,14 +16,18 @@ class Log:
         else:
             print('your options are:')
             try:
-                for i in range(len(self.save_locs - 1)):
+                for i in range(len(self.save_locs)):
                     print('Option number: {}, loc: {}'.format(i, self.save_locs[i]))
             except:
                 print("you don't have options saved termianting")
                 exit(0)
             save_num = int(input('What is the save number?'))
             self.name = self.save_locs[save_num]
-            self.log = self.load(self.name)
+            try:
+                self.log = self.load(self.name)
+                print('loading info')
+            except FileNotFoundError:
+                print('Creating new txt file')
         self.save(save_loc, self.save_locs)
         self.mainloop()
     
