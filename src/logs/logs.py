@@ -2,30 +2,39 @@ import os
 import json
 import datetime
 
-try:
-    pyWrksp = os.environ["PYWRKSP"]
-
-except KeyError:
-    pyWrksp = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
-                                         '\nPlease enter the pwd for the pyWrskp repo not including the '
-                                         '"home" section')
-
 
 class Log:
-    def __init__(self, pywrskp):
+    def __init__(self):
+        save_loc = os.getcwd() + '/save_loc.txt'
+        self.save_locs = self.load(save_loc)
         self.log = []
-        self.loc = pywrskp
-        self.name = self.loc + '/docs/txt-files/logs.txt'
-        self.load()
+        self.loc = os.environ["HOME"]
+        new_or_old = input('Do you need a new txt file?')
+        if new_or_old == 'new':
+            self.name = self.loc + input('Where do you want the logs to be stored?')
+            self.save_locs.append(self.name)
+        else:
+            print('your options are:')
+            try:
+                for i in range(len(self.save_locs - 1)):
+                    print('Option number: {}, loc: {}'.format(i, self.save_locs[i]))
+            except:
+                print("you don't have options saved termianting")
+                exit(0)
+            save_num = int(input('What is the save number?'))
+            self.name = self.save_locs[save_num]
+            self.log = self.load(self.name)
+        self.save(save_loc, self.save_locs)
         self.mainloop()
     
-    def load(self):
-        with open(self.name) as json_file:
-            self.log = json.load(json_file)
+    def load(self, loc):
+        with open(loc) as json_file:
+            item = json.load(json_file)
+        return item
     
-    def save(self):
-        with open(self.name, 'w') as outfile:
-            json.dump(self.log, outfile)
+    def save(self, loc, item):
+        with open(loc, 'w') as outfile:
+            json.dump(item, outfile)
     
     def mainloop(self):
         while True:
@@ -51,14 +60,14 @@ class Log:
                 'year': datetime.datetime.now().year}
         current_log = {'time': time, 'date': date, 'info': log_info}
         self.log.append(current_log)
-        self.save()
+        self.save(self.name, self.log)
         post_date = '{}-{}-{}'.format(current_log['date']['month'],
                                       current_log['date']['day'],
                                       current_log['date']['year'])
         print('your message, {} and the time and date, {}, {}, have been saved!'.format(log_info, post_date, time))
     
     def read(self):
-        self.load()
+        self.log = self.load(self.name)
         print('Date\ttime\tInfo')
         unreadable = 0
         for item in self.log:
@@ -74,4 +83,4 @@ class Log:
                   'the txt file'.format(unreadable))
 
 
-log = Log(pyWrksp)
+log = Log()
