@@ -1,6 +1,7 @@
 import os
 import json
 import datetime
+from dateutil import parser
 
 try:
     pyWrksp = os.environ["PYWRKSP"]
@@ -10,12 +11,13 @@ except KeyError:
                                          '\nPlease enter the pwd for the pyWrskp repo not including the '
                                          '"home" section')
 
+
 class Log:
-    def __init__(self, pyWrskp):
+    def __init__(self, pywrskp):
         self.log = []
-        self.load()
-        self.loc = pyWrskp
+        self.loc = pywrskp
         self.name = self.loc + '/docs/txt-files/logs.txt'
+        self.load()
         self.mainloop()
     
     def load(self):
@@ -44,12 +46,13 @@ class Log:
         now = str(datetime.datetime.now())
         self.log.append({'time': now, 'info': log_info})
         self.save()
+        print('your message, {} and the time and date, {}, have been saved!'.format(log_info, now))
     
     def read(self):
         self.load()
-        print('Time\t\t\tInfo')
+        print('Date\tTime\tInfo')
         for item in self.log:
-            print('{}\t\t\t{}'.format(item['time'], item['info']))
+            print('{}\t{}\t{}'.format(item['time'], item['info']))
 
 
 log = Log(pyWrksp)
