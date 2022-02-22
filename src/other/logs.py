@@ -1,7 +1,6 @@
 import os
 import json
 import datetime
-from dateutil import parser
 
 try:
     pyWrksp = os.environ["PYWRKSP"]
@@ -43,16 +42,36 @@ class Log:
     
     def add(self):
         log_info = input('What do you want to add to the log?\n')
-        now = str(datetime.datetime.now())
-        self.log.append({'time': now, 'info': log_info})
+        time = datetime.datetime.now()
+        time = time.strftime("%d/%m/%y %H:%M")
+        time = datetime.datetime.strptime(time, "%d/%m/%y %H:%M")
+        time = "{:d}:{:02d}".format(time.hour, time.minute)
+        date = {'day': datetime.datetime.now().day,
+                'month': datetime.datetime.now().month,
+                'year': datetime.datetime.now().year}
+        current_log = {'time': time, 'date': date, 'info': log_info}
+        self.log.append(current_log)
         self.save()
-        print('your message, {} and the time and date, {}, have been saved!'.format(log_info, now))
+        post_date = '{}-{}-{}'.format(current_log['date']['month'],
+                                      current_log['date']['day'],
+                                      current_log['date']['year'])
+        print('your message, {} and the time and date, {}, {}, have been saved!'.format(log_info, post_date, time))
     
     def read(self):
         self.load()
-        print('Date\tTime\tInfo')
+        print('Date\ttime\tInfo')
+        unreadable = 0
         for item in self.log:
-            print('{}\t{}\t{}'.format(item['time'], item['info']))
+            try:
+                post_date = '{}-{}-{}'.format(item['date']['month'], item['date']['day'], item['date']['year'])
+                print('{}\t{}\t{}'.format(post_date, item['time'], item['info']))
+            except KeyError:
+                unreadable += 1
+                # print('No information can be taken from this log entry, this might be from an older version')
+        if unreadable > 0:
+            print('\n\n')
+            print('There are {} log entries that were either from an older version, or were entered directly into '
+                  'the txt file'.format(unreadable))
 
 
 log = Log(pyWrksp)
