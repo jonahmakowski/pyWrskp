@@ -15,12 +15,13 @@ class Log:
             self.save_locs.append(self.name)
         else:
             print('your options are:')
-            try:
+            if len(self.save_locs) > 0:
                 for i in range(len(self.save_locs)):
                     print('Option number: {}, loc: {}'.format(i, self.save_locs[i]))
-            except:
-                print("you don't have options saved termianting")
-                exit(0)
+            else:
+                print('There are no options')
+                print('Ending program')
+                exit(404)
             save_num = int(input('What is the save number?'))
             self.name = self.save_locs[save_num]
             try:
