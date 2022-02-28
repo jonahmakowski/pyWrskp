@@ -18,5 +18,5 @@ class IsItAWord:
             print('So it does not work')
 
 
-is_it_a_word = IsItAWord('add')
+is_it_a_word = IsItAWord(input('What word would you like to check?'))
 is_it_a_word.check()
