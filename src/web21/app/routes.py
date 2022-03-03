@@ -388,7 +388,11 @@ def schedule_create():
 
         s.create(start_time, end_time, name)
         return redirect('/schedule/read')
-    return render_template('schedule.html', title='schedule creater')
+    elif request.method == 'GET':
+        return render_template('schedule.html', title='schedule creater')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
 
 
 @app.route('/schedule/read', methods=['GET', 'POST'])
@@ -416,3 +420,18 @@ def schedule_empty():
     s.empty()
 
     return redirect('/schedule/create')
+
+
+@app.route('/is-it-the-word', methods=['GET', 'POST'])
+def is_it_the_word():
+    sys.path.append(pyWrkspLoc + '/src/other')
+    from is_it_the_word import IsItAWord
+    if request.method == 'POST':
+        is_it_the_word = IsItAWord(request.form.get('w'))
+        info = is_it_the_word.check_blind()
+        return render_template('is_it_a_word_a.html', title='Is It The Word', info=info)
+    elif request.method == 'GET':
+        return render_template('is_it_the_word.html', title='Is It The Word')
+    else:
+        print('request.method is not get or post it is {}'.format(request.method))
+        exit(5)
