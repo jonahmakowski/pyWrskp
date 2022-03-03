@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form action="{{ url_for("is_it_the_word")}}" method="post">
+    <label for="w">The word you want to check</label>
+    <input type="text" id="w" name="w" placeholder="AbC">
+    <hr>
+    <button type="submit">Check</button>
+{% endblock %}

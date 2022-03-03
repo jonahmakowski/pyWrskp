@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <p>{{ info }}</p>
+    <form action="/is-it-the-word" method="get"><button name="reload" type="submit">Reload</button></form>
+{% endblock %}
