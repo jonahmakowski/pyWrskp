@@ -5,6 +5,7 @@ class Classroom:
         self.princaple = ''
         self.school_name = ''
         self.add_roster()
+
     def add_roster(self):
         print('Enter all of the students names:')
         while True:
@@ -17,6 +18,7 @@ class Classroom:
         self.princaple = input("What is your princaple's name?")
         
         self.school_name = input('What is your school called?')
+
     def team_maker(self):
         from random import randint as r
         num_of_teams = input('How many teams would you like?')
