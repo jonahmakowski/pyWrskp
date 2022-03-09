@@ -1,3 +1,6 @@
+from random import randint as r
+
+
 class Classroom:
     def __init__(self):
         self.roster = []
@@ -13,14 +16,8 @@ class Classroom:
             if name == '':
                 break
             self.roster.append(name)
-        
-        self.teacher = input("What is your teacher's name?")
-        self.princaple = input("What is your princaple's name?")
-        
-        self.school_name = input('What is your school called?')
 
     def team_maker(self):
-        from random import randint as r
         num_of_teams = input('How many teams would you like?')
         teams = []
         for i in range(int(num_of_teams)):
@@ -49,6 +46,55 @@ class Classroom:
             team_num += 1
             print('\n\n')
 
+    def math_game(self):
+        print('WELCOME TO')
+        print("JONAH'S MATH GAME!")
+        print('entering nothing will end the game!')
+        coins = 0
+        while True:
+            opration = r(1, 4)
+            num_1 = r(0, 9999999)
+            num_2 = r(0, 9999999)
+            if opration == 1:
+                opration = '+'
+                question = '{} {} {}'.format(num_1, opration, num_2)
+                a = str(num_1 + num_2)
+            elif opration == 2:
+                opration = '-'
+                question = '{} {} {}'.format(num_1, opration, num_2)
+                a = str(num_1 - num_2)
+            elif opration == 3:
+                opration = '*'
+                question = '{} {} {}'.format(num_1, opration, num_2)
+                a = str(num_1 * num_2)
+            elif opration == 4:
+                opration = '/'
+                question = '{} {} {}'.format(num_1, opration, num_2)
+                a = str(num_1 / num_2)
+            else:
+                print('error')
+                question = 'error'  # this is to solve an error found by pycharm
+                a = 'error'  # this is to solve an error found by pycharm
+                exit(404)
+            g = input('What is ' + question + '?')
+            if g == '':
+                break
+            elif g == a:
+                print('Good job you got it correct! you earned 10 coins')
+                coins += 10
+                print('You now have {} coins'.format(coins))
+            else:
+                print('You got it incorrect, you lost 5 coins')
+                coins -= 5
+                print('You now have {} coins'.format(coins))
 
-Mr_Carter_class = Classroom()
-Mr_Carter_class.team_maker()
+        print('GAME OVER')
+        print('You have {} coins right now'.format(coins))
+
+
+testing_class = Classroom()
+do = input('What do you want to do?')
+if do == 'team maker':
+    testing_class.team_maker()
+elif do == 'math game':
+    testing_class.math_game()
