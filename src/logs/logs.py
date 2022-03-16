@@ -4,10 +4,10 @@ import datetime
 
 
 class Log:
-    def __init__(self):
+    def __init__(self, save_loc=None):
+        self.log = []
         save_loc = os.getcwd() + '/save_loc.txt'
         self.save_locs = self.load(save_loc)
-        self.log = []
         self.loc = os.environ["HOME"]
         new_or_old = input('Do you need a new txt file?')
         if new_or_old == 'new':
@@ -50,6 +50,9 @@ class Log:
             elif do == 'read':
                 self.read()
                 break
+            elif do == 'clear':
+                self.clear()
+                break
             else:
                 print('This is not an option')
                 print('Try again')
@@ -86,6 +89,10 @@ class Log:
             print('\n\n')
             print('There are {} log entries that were either from an older version, or were entered directly into '
                   'the txt file'.format(unreadable))
+    
+    def clear(self):
+        self.log = []
+        self.save(self.name, self.log)
 
 
 log = Log()
