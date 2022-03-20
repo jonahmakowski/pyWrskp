@@ -63,7 +63,7 @@ def challange_math_game(people):
             g, coins = math_game(coins)
         scores[current_player] = coins
         del people[0]
-        
+
     print('Final scores:')
     for person in scores:
         print(str(person) + ': ' + str(scores[person]))
