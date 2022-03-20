@@ -1,5 +1,8 @@
 from random import randint as r
 import classroom_tools_extras
+import sys
+sys.path.append('../notes')
+import notes
 
 
 class Classroom:
@@ -53,6 +56,18 @@ class Classroom:
             classroom_tools_extras.basic_math_game()
         elif ty == 'challange':
             classroom_tools_extras.challange_math_game(self.roster)
+    
+    def classroom_log(self):
+        log = notes.Notes(name='log.jonahtext')
+        log.print_notes()
+        add = input('would you like to add a note? (y/n/c)')
+        if add == 'y':
+            info = input('what is your note?')
+            log.add_note(info)
+            log.save_notes()
+            print('your note, "{}" has been added to your saved notes!'.format(info))
+        elif add == 'c':
+            log.clear()
 
 
 testing_class = Classroom()
@@ -61,3 +76,6 @@ if do == 'team maker':
     testing_class.team_maker()
 elif do == 'math game':
     testing_class.math_game()
+elif do == 'classroom log':
+    testing_class.classroom_log()
+    
