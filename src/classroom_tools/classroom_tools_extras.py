@@ -1,4 +1,5 @@
 from random import randint as r
+import time
 
 
 def math_game(coins):
@@ -58,6 +59,7 @@ def challange_math_game(people):
     while len(people) > 0:
         current_player = people[0]
         print('Your turn {}'.format(current_player))
+        time.sleep(1)
         coins = 0
         for i in range(4):
             g, coins = math_game(coins)
