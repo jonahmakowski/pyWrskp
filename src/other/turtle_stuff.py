@@ -47,35 +47,47 @@ class Turtle:
 
     def scribble(self):
 
-        self.t.write('SCRIBBLE!')
+        self.t.shape('turtle')
+        self.t.speed(5)
 
         blue = turtle.Turtle()
         green = turtle.Turtle()
         yellow = turtle.Turtle()
+        pink = turtle.Turtle()
+        purple = turtle.Turtle()
+        black = turtle.Turtle()
 
         blue.color('blue')
         green.color('green')
         yellow.color('yellow')
+        pink.color('pink')
+        purple.color('purple')
 
-        turtles = [blue, green, yellow]
+        turtles = [blue, green, yellow, pink, purple, yellow, black]
 
         colors = ['blue', 'green', 'yellow', 'black', 'purple', 'pink']
 
         while True:
             for item in turtles:
                 item.speed(0)
+
+                item.goto(random.randint(-400, 400), random.randint(-400, 400))
+
+                '''
                 item.forward(random.randint(1, 100))
+
                 if random.randint(1, 2) == 1:
                     item.right(random.randint(1, 360))
                 else:
                     item.left(random.randint(1, 360))
+                
+                '''
 
                 x = item.xcor()
                 y = item.ycor()
 
                 self.t.color(colors[random.randint(0, len(colors) - 1)])
                 self.t.goto(x, y)
-
 
 
 tit = Turtle()
