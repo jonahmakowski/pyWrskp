@@ -9,6 +9,7 @@ class Turtle:
         self.t.speed(0)
 
     def draw_grid(self):
+        self.t.pd()
         def draw(t, length):
             t.pd()
             t.forward(length)
@@ -32,12 +33,13 @@ class Turtle:
         time.sleep(5)
 
     def draw_shape(self):
+        self.t.pd()
         sides = int(input('How many sides?'))
         length = int(input('How long?'))
         corner = 360 / sides
 
         self.t.pu()
-        self.t.goto(-400, 400)
+        self.t.goto(0, 0)
         self.t.pd()
 
         for i in range(sides):
@@ -46,7 +48,7 @@ class Turtle:
         time.sleep(5)
 
     def scribble(self):
-
+        self.t.pd()
         self.t.shape('turtle')
         self.t.speed(5)
 
@@ -73,16 +75,6 @@ class Turtle:
 
                 item.goto(random.randint(-400, 400), random.randint(-400, 400))
 
-                '''
-                item.forward(random.randint(1, 100))
-
-                if random.randint(1, 2) == 1:
-                    item.right(random.randint(1, 360))
-                else:
-                    item.left(random.randint(1, 360))
-                
-                '''
-
                 x = item.xcor()
                 y = item.ycor()
 
@@ -91,4 +83,6 @@ class Turtle:
 
 
 tit = Turtle()
-tit.scribble()
+#tit.draw_grid()
+#tit.draw_shape()
+#tit.scribble()
