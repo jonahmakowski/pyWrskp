@@ -1,5 +1,6 @@
 import turtle
 import time
+import random
 
 
 class Turtle:
@@ -44,6 +45,38 @@ class Turtle:
             self.t.right(corner)
         time.sleep(5)
 
+    def scribble(self):
+
+        self.t.write('SCRIBBLE!')
+
+        blue = turtle.Turtle()
+        green = turtle.Turtle()
+        yellow = turtle.Turtle()
+
+        blue.color('blue')
+        green.color('green')
+        yellow.color('yellow')
+
+        turtles = [blue, green, yellow]
+
+        colors = ['blue', 'green', 'yellow', 'black', 'purple', 'pink']
+
+        while True:
+            for item in turtles:
+                item.speed(0)
+                item.forward(random.randint(1, 100))
+                if random.randint(1, 2) == 1:
+                    item.right(random.randint(1, 360))
+                else:
+                    item.left(random.randint(1, 360))
+
+                x = item.xcor()
+                y = item.ycor()
+
+                self.t.color(colors[random.randint(0, len(colors) - 1)])
+                self.t.goto(x, y)
+
+
 
 tit = Turtle()
-tit.draw_shape()
+tit.scribble()
