@@ -3,14 +3,14 @@ import json
 import random
 import os
 sys.path.append('../coder-decoder')
-from coder import CoderDecoder as CD
+from coder import CoderDecoder as Coder
 
 
 class Sender:
     def __init__(self):
-        self.remote_coder = CD(print_info=False)
-        self.remote_coder_2 = CD(print_info=False)
-        self.remote_coder_3 = CD(print_info=False)
+        self.remote_coder = Coder(print_info=False)
+        self.remote_coder_2 = Coder(print_info=False)
+        self.remote_coder_3 = Coder(print_info=False)
 
     def create_note(self):
         print('What would you like the password to be?')
