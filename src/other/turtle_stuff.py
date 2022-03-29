@@ -8,7 +8,7 @@ class Turtle:
         self.t = turtle.Turtle()
         self.t.speed(0)
 
-    def draw_grid(self):
+    def grid(self):
         self.t.pd()
         def draw(t, length):
             t.pd()
@@ -32,7 +32,7 @@ class Turtle:
             draw(self.t, 900)
         time.sleep(5)
 
-    def draw_shape(self):
+    def shape(self):
         self.t.pd()
         sides = int(input('How many sides?'))
         length = int(input('How long?'))
@@ -83,6 +83,13 @@ class Turtle:
 
 
 tit = Turtle()
-#tit.draw_grid()
-#tit.draw_shape()
-#tit.scribble()
+while True:
+    do = input('What do you wish to do?\n')
+    if do == 'grid':
+        tit.grid()
+    elif do == 'shape':
+        tit.shape()
+    elif do == 'scribble':
+        tit.scribble()
+    else:
+        print('That is not an option try again')
