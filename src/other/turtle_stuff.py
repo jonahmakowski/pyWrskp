@@ -64,6 +64,24 @@ class Turtle:
         yellow.color('yellow')
         pink.color('pink')
         purple.color('purple')
+        
+        blue.pu()
+        green.pu()
+        yellow.pu()
+        pink.pu()
+        purple.pu()
+        
+        blue.goto(0, 0)
+        green.goto(-400, 400)
+        yellow.goto(-400, -400)
+        pink.goto(400, 400)
+        purple.goto(400, -400)
+        
+        blue.pd()
+        green.pd()
+        yellow.pd()
+        pink.pd()
+        purple.pd()
 
         turtles = [blue, green, yellow, pink, purple, yellow, black]
 
