@@ -27,7 +27,11 @@ class Sender:
         self.remote_coder_3.add_vars(str(key), 15)
         key = self.remote_coder_3.code()
 
-        save_dic = {'asuydhausdhuashd': password, 'sdifhuegtsydftyas': message, 'asdyatsdftras': key}
+        destroy = input('Would you like the file to be destoryed after reading?\n'
+                        'Will be destroyed either way if password is inputed wrong\n'
+                        'y/n\n')
+
+        save_dic = {'asuydhausdhuashd': password, 'sdifhuegtsydftyas': message, 'asdyatsdftras': key, 'd': destroy}
         with open('message.txt', 'w') as outfile:
             json.dump(save_dic, outfile)
 
@@ -47,6 +51,7 @@ class Sender:
         self.remote_coder_2.add_vars(dic['asuydhausdhuashd'], key)
         password_check = self.remote_coder_2.decode()
 
+
         if password != password_check:
             print('password incorrect deleting file')
             os.remove("message.txt")
@@ -57,8 +62,13 @@ class Sender:
 
         print('The message in this file is:')
         print(message)
-        print('destroying file')
-        os.remove('message.txt')
+
+        if dic['d'] == 'y':
+            print('destroying file')
+            os.remove('message.txt')
+        else:
+            print('The person who sent you this .txt file has decieded that it is not nessary to delete the file,')
+            print('Though you may do so if you it it nessary')
 
 
 if __name__ == '__main__':
