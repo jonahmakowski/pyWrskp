@@ -7,6 +7,7 @@ class Turtle:
     def __init__(self):
         self.t = turtle.Turtle()
         self.t.speed(0)
+        self.border = 500
 
     def grid(self):
         self.t.pd()
@@ -82,13 +83,13 @@ class Turtle:
         red.pu()
         
         blue.goto(0, 0)
-        green.goto(-400, 400)
-        yellow.goto(-400, -400)
-        pink.goto(400, 400)
-        purple.goto(400, -400)
+        green.goto(-self.border, self.border)
+        yellow.goto(-self.border, -self.border)
+        pink.goto(self.border, self.border)
+        purple.goto(self.border, -self.border)
         brown.goto(0, 0)
-        gray.goto(-400, 400)
-        red.goto(-400, -400)
+        gray.goto(-self.border, self.border)
+        red.goto(-self.border, -self.border)
         
         blue.pd()
         green.pd()
@@ -108,7 +109,7 @@ class Turtle:
                 item.shape('circle')
                 item.speed(0)
 
-                item.goto(random.randint(-400, 400), random.randint(-400, 400))
+                item.goto(random.randint(-self.border, self.border), random.randint(-self.border, self.border))
 
                 x = item.xcor()
                 y = item.ycor()
