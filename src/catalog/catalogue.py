@@ -3,6 +3,8 @@
 import json
 import time
 import fuction
+import tkinter as tk
+from fuzzywuzzy import process
 
 class catalog:
     def __init__(self, books):
@@ -10,7 +12,7 @@ class catalog:
         while True:
             new_title = input('Please write the title of your book:   ')
             new_author = input('Please write the name of the author that the book is written by:   ')
-            new_book = {'title':new_title, 'author':new_author}
+            new_book = {'title': new_title, 'author': new_author}
             if new_title == '' and new_author == '':
                 break
             self.books.append(new_book)
@@ -57,12 +59,10 @@ class catalog:
             print(book['title'])
             
     def search(self):
-        from fuzzywuzzy import process
-        
         qs = self.books + self.old_books
         query_t = input('What is the title of the book you are looking for?')
         query_a = input('What author of the book you are looking for?')
-        query = {'title':query_t, 'author':query_a}
+        query = {'title': query_t, 'author': query_a}
         ratios = process.extract(query, qs)
         
         for item in ratios:
