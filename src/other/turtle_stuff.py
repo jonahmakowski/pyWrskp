@@ -105,6 +105,7 @@ class Turtle:
 
         while True:
             for item in turtles:
+                item.shape('circle')
                 item.speed(0)
 
                 item.goto(random.randint(-400, 400), random.randint(-400, 400))
