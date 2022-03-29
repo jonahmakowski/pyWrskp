@@ -58,34 +58,50 @@ class Turtle:
         pink = turtle.Turtle()
         purple = turtle.Turtle()
         black = turtle.Turtle()
+        brown = turtle.Turtle()
+        gray = turtle.Turtle()
+        red = turtle.Turtle()
 
         blue.color('blue')
         green.color('green')
         yellow.color('yellow')
         pink.color('pink')
         purple.color('purple')
+        black.color('black')
+        brown.color('brown')
+        gray.color('gray')
+        red.color('red')
         
         blue.pu()
         green.pu()
         yellow.pu()
         pink.pu()
         purple.pu()
+        brown.pu()
+        gray.pu()
+        red.pu()
         
         blue.goto(0, 0)
         green.goto(-400, 400)
         yellow.goto(-400, -400)
         pink.goto(400, 400)
         purple.goto(400, -400)
+        brown.goto(0, 0)
+        gray.goto(-400, 400)
+        red.goto(-400, -400)
         
         blue.pd()
         green.pd()
         yellow.pd()
         pink.pd()
         purple.pd()
+        brown.pd()
+        gray.pd()
+        red.pd()
 
-        turtles = [blue, green, yellow, pink, purple, yellow, black]
+        turtles = [blue, green, yellow, pink, purple, yellow, black, brown, gray, red]
 
-        colors = ['blue', 'green', 'yellow', 'black', 'purple', 'pink']
+        colors = ['blue', 'green', 'yellow', 'black', 'purple', 'pink', 'brown', 'gray', 'red']
 
         while True:
             for item in turtles:
