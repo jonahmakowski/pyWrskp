@@ -51,7 +51,6 @@ class Sender:
         self.remote_coder_2.add_vars(dic['asuydhausdhuashd'], key)
         password_check = self.remote_coder_2.decode()
 
-
         if password != password_check:
             print('password incorrect deleting file')
             os.remove("message.txt")
