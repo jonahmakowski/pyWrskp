@@ -90,4 +90,3 @@ class SudokuSolver:
                                'colum8': '',
                                'colum9': 1}}
     def check(self):
-        
