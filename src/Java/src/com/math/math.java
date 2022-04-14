@@ -37,7 +37,7 @@ public class math {
 
         else {
             System.out.println("Error you incorrectly inputed the op");
-            System.out.println("It will say the the it is zero, this is the error number");
+            System.exit(0);
         }
 
         System.out.println("Here is " + num1 + ' ' + op + ' ' + num2 + ':');
