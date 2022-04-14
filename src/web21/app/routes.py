@@ -7,10 +7,15 @@ try:
     pyWrkspLoc = os.environ["PYWRKSP"]
    
 except KeyError:
-    pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
-                                            '\nPlease enter the pwd for the pyWrskp repo not including the '
-                                            '"home" section')
+    os_ = input('Would you like to use the "HOME" env varible?')
+    if os_ == 'y':
+        pyWrkspLoc = os.environ["HOME"] + input('Since you do not have the PYWRSKP env var '
+                                                '\nPlease enter the pwd for the pyWrskp repo not including the '
+                                                '"home" section')
+    else:
+        pyWrkspLoc = input('Since you do not have the PYWRSKP env var \nPlease enter the pwd for the pyWrskp repo)')
     # pyWrskpLoc = '/Users/jonahmakowski/Desktop/Github/pyWrskp'  #for debug, so you don't have to enter info
+
 User = ''
 
 blogPosts_list = [
@@ -217,7 +222,7 @@ def login():
         exit(5)
 
 
-@app.route('/noah')
+@app.route('/noah', methods=['GET', 'POST'])
 @app.route('/turtle', methods=['GET', 'POST'])
 def turtle():
     if request.method == "POST":
