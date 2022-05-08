@@ -7,6 +7,8 @@ class CoderDecoder:
                      ']', '{', '}', ':', ';', "'", '"', '?']
         self.finished = ''
         self.print_info = print_info
+        self.key = ''
+        self.message = ''
 
     def add_vars(self, message, key):
         self.message = message
