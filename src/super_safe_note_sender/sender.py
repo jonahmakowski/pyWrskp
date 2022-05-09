@@ -38,22 +38,23 @@ class Sender:
 
         items = []
         for i in range(5):
-            item1 = ''
-            item2 = ''
-            for c in range(6):
-                item1 += self.remote_coder.abcs[random.randint(0, len(self.remote_coder.abcs) - 1)]
-                item2 += self.remote_coder.abcs[random.randint(0, len(self.remote_coder.abcs) - 1)]
-            items.append([item1, item2])
+            item = ''
+            for c in range(random.randint(6, 100)):
+                new_item = ''
+                while (new_item != '}' and new_item != '{') and (new_item != '[' and new_item != ']'):
+                    new_item = self.remote_coder.abcs[random.randint(0, len(self.remote_coder.abcs) - 1)]
+                    item += new_item
+            items.append(item)
 
-        save_dic = {items[0][0]: items[0][1],
+        save_dic = {'dshaidsh': items[0],
                     'asuydhausdhuashd': password,
-                    items[1][0]: items[1][1],
+                    'shadiufad': items[1],
                     'sdifhuegtsydftyas': message,
-                    items[2][0]: items[2][1],
+                    'g': items[2],
                     'asdyatsdftras': key,
-                    items[3][0]: items[3][1],
+                    'asd7r8ushdfuhja': items[3],
                     'd': destroy,
-                    items[4][0]: items[4][1],
+                    'fjgishuagsdiufji': items[4],
                     'gjfosjodjif': key_for_the_key}
 
         print(save_dic)
