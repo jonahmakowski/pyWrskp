@@ -6,6 +6,13 @@ sys.path.append('../coder-decoder')
 from coder import CoderDecoder as Coder
 
 
+'''
+Need to pass a message to your friends?
+Don't want anyone else to see it?
+Use this program!
+'''
+
+
 class Sender:
     def __init__(self):
         self.remote_coder = Coder(print_info=False)
