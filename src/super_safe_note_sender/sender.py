@@ -64,8 +64,6 @@ class Sender:
                     'fjgishuagsdiufji': items[4],
                     'gjfosjodjif': key_for_the_key}
 
-        print(save_dic)
-
         with open('message.txt', 'w') as outfile:
             json.dump(save_dic, outfile)
 
