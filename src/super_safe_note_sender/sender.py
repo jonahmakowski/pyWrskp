@@ -10,6 +10,9 @@ from coder import CoderDecoder as Coder
 Need to pass a message to your friends?
 Don't want anyone else to see it?
 Use this program!
+
+This program when you run the "create" option, will create a message.txt file, if your friend has the program, they can
+decode the message!
 '''
 
 
@@ -19,6 +22,7 @@ class Sender:
         self.remote_coder_2 = Coder(print_info=False)
         self.remote_coder_3 = Coder(print_info=False)
         self.remote_coder_4 = Coder(print_info=False)
+        self.remote_coder_5 = Coder(print_info=False)
 
     def create_note(self):
         print('What would you like the password to be?')
@@ -26,6 +30,9 @@ class Sender:
         message = input('What is the message that you would like to send?')
         key = random.randint(0, len(self.remote_coder.abcs) - 1)
         key_for_the_key = random.randint(0, len(self.remote_coder.abcs) - 1)
+        destroy = input('Would you like the file to be destoryed after reading?\n'
+                        'Will be destroyed either way if password is inputed wrong\n'
+                        'y/n\n')
 
         self.remote_coder.add_vars(message, key)
         message = self.remote_coder.code()
@@ -33,20 +40,19 @@ class Sender:
         self.remote_coder_2.add_vars(password, key)
         password = self.remote_coder_2.code()
 
+        self.remote_coder_5.add_vars(destroy, key)
+        destroy = self.remote_coder_5.code()
+
         self.remote_coder_3.add_vars(str(key), key_for_the_key)
         key = self.remote_coder_3.code()
 
         self.remote_coder_4.add_vars(str(key_for_the_key), 15)
         key_for_the_key = self.remote_coder_4.code()
 
-        destroy = input('Would you like the file to be destoryed after reading?\n'
-                        'Will be destroyed either way if password is inputed wrong\n'
-                        'y/n\n')
-
         items = []
         for i in range(5):
             item = ''
-            for c in range(random.randint(6, 100)):
+            for c in range(random.randint(6, 20)):
                 new_item = ''
                 while (new_item != '}' and new_item != '{') and (new_item != '[' and new_item != ']'):
                     new_item = self.remote_coder.abcs[random.randint(0, len(self.remote_coder.abcs) - 1)]
@@ -76,7 +82,7 @@ class Sender:
             exit(404)
 
         self.remote_coder_4.add_vars(dic['gjfosjodjif'], 15)
-        key_for_the_key = self.remote_coder_4.decode()
+        key_for_the_key = int(self.remote_coder_4.decode())
 
         self.remote_coder_3.add_vars(dic['asdyatsdftras'], key_for_the_key)
         key = int(self.remote_coder_3.decode())
@@ -94,15 +100,18 @@ class Sender:
         self.remote_coder.add_vars(dic['sdifhuegtsydftyas'], key)
         message = self.remote_coder.decode()
 
+        self.remote_coder_5.add_vars(dic['d'], key)
+        destroy = self.remote_coder_5.decode()
+
         print('The message in this file is:')
         print(message)
 
-        if dic['d'] == 'y':
+        if destroy == 'y':
             print('destroying file')
             os.remove('message.txt')
         else:
             print('The person who sent you this .txt file has decieded that it is not nessary to delete the file,')
-            print('Though you may do so if you it it nessary')
+            print('Though you may do so if you want')
 
 
 if __name__ == '__main__':
