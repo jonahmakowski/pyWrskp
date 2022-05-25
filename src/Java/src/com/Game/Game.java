@@ -21,7 +21,7 @@ public class Game {
         int monster_health = 100;
         System.out.println("The monster has " + monster_health + " hp.");
 
-        String attack= "";
+        String attack;
 
         while (monster_health > 0 && health > 0) {
             System.out.println("What attack do you want to use?");
@@ -32,6 +32,7 @@ public class Game {
             }
             health = health - 10;
             System.out.println("The monster did 10 damage");
+            System.out.println("You now have " + health);
         }
     }
 }
