@@ -7,7 +7,7 @@ class Turtle:
     def __init__(self):
         self.t = turtle.Turtle()
         self.t.speed(0)
-        self.border = 500
+        self.border = 250
 
     def grid(self):
         self.t.pd()
@@ -48,10 +48,11 @@ class Turtle:
             self.t.right(corner)
         time.sleep(5)
 
-    def scribble(self):
+    def scribble(self, stamp):
         self.t.pd()
         self.t.shape('turtle')
-        self.t.speed(5)
+        self.t.speed(0)
+        self.t.pensize(2)
 
         blue = turtle.Turtle()
         green = turtle.Turtle()
@@ -106,7 +107,11 @@ class Turtle:
 
         while True:
             for item in turtles:
+                item.pensize(random.randint(1, 5))
+                self.t.pensize(random.randint(1, 10))
                 item.shape('circle')
+                if stamp == True:
+                    item.stamp()
                 item.speed(0)
 
                 item.goto(random.randint(-self.border, self.border), random.randint(-self.border, self.border))
@@ -126,6 +131,10 @@ while True:
     elif do == 'shape':
         tit.shape()
     elif do == 'scribble':
-        tit.scribble()
+        stamp = input('Would you like to stamp? (y/n)\n')
+        if stamp == 'y':
+            tit.scribble(True)
+        else:
+            tit.scribble(False)
     else:
         print('That is not an option try again')
