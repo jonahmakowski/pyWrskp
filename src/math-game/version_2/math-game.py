@@ -1,9 +1,11 @@
 from random import randint
 from time import sleep
+import json
+from datetime import datetime
 
 
 class MathGame:
-    def __init__(self, high, low, fl=False, end=10):
+    def __init__(self, high, low, fl=False, end=10, save=True):
         self.high = high
         self.low = low
         self.money = 0
@@ -12,6 +14,9 @@ class MathGame:
         self.end = end
         self.fl = fl
         self.error = False
+        self.total_questions = 0
+        self.temp_dic = {}
+        self.save = save
     
     def mainloop(self):
         while self.incorrect < self.end:
@@ -28,13 +33,43 @@ class MathGame:
                 self.divide()
 
             if not self.error:
+                self.total_questions += 1
                 print('STATS:')
                 print('\tMoney: {}'.format(self.money))
                 print('\tCorrect: {}'.format(self.correct))
                 print('\tIncorrect: {}'.format(self.incorrect))
+                print('\tAmount of questions: {}'.format(self.total_questions))
                 sleep(3)
                 print('\n')
                 print('\n')
+
+        print('Good Job!')
+        print('You finished the game!')
+        print('Out of the {} questions you did, {} were right, and {} were wrong!'.format(self.total_questions,
+                                                                                          self.correct,
+                                                                                          self.incorrect))
+        print('The percentage you got correct is:')
+
+        percentage = (self.correct / self.total_questions) * 100
+        print('{}%'.format(percentage))
+
+        print('You also earned {} money!'.format(self.money))
+
+        if self.save:
+            print('This score is now being saved!')
+
+            n = datetime.now()
+
+            self.temp_dic = {'money': self.money,
+                             'percentage': percentage,
+                             'total': self.total_questions,
+                             'correct': self.correct,
+                             'incorrect': self.incorrect,
+                             'max number': self.high,
+                             'min number': self.low,
+                             'date': n.strftime("%d/%m/%Y"),
+                             'time': n.strftime('%H:%M:%S')}
+            self.save_score()
     
     def add(self):
         num1 = randint(self.low, self.high)
@@ -168,8 +203,17 @@ class MathGame:
             self.money -= earned
             sleep(0.5)
 
+    def save_score(self):
+        with open('../../../docs/txt-files/math-game_scores.txt') as json_file:
+            lis = json.load(json_file)
+        lis.append(self.temp_dic)
+        with open('../../../docs/txt-files/math-game_scores.txt', 'w') as outfile:
+            json.dump(lis, outfile)
+
 
 math = MathGame(int(input('What would you like the largest number to be?')),
                 int(input('What would you like the lowest number to be?')),
-                fl=True)
+                fl=True,  # this is if you want floats and negitive numbers
+                end=1,  # this is the amount of wrong questions you need to finish the game!
+                save=True)  # this is if or if not to save the score
 math.mainloop()
