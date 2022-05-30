@@ -1,6 +1,7 @@
 from random import randint
 from time import sleep
 
+
 class MathGame:
     def __init__(self, high, low, fl=False, end=10):
         self.high = high
@@ -10,9 +11,11 @@ class MathGame:
         self.incorrect = 0
         self.end = end
         self.fl = fl
+        self.error = False
     
     def mainloop(self):
         while self.incorrect < self.end:
+            self.error = False
             num = randint(1, 4)
             
             if num == 1:
@@ -23,28 +26,30 @@ class MathGame:
                 self.multiply()
             elif num == 4:
                 self.divide()
-            
-            print('STATS:')
-            print('\tMoney: {}'.format(self.money))
-            print('\tCorrect: {}'.format(self.correct))
-            print('\tIncorrect: {}'.format(self.incorrect))
-            sleep(3)
-            print('\n')
-            print('\n')
+
+            if not self.error:
+                print('STATS:')
+                print('\tMoney: {}'.format(self.money))
+                print('\tCorrect: {}'.format(self.correct))
+                print('\tIncorrect: {}'.format(self.incorrect))
+                sleep(3)
+                print('\n')
+                print('\n')
     
     def add(self):
         num1 = randint(self.low, self.high)
         num2 = randint(self.low, self.high)
         a = num1 + num2
         
-        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+        if (isinstance(a, float) and self.fl) or (a < 0 and self.fl):
+            self.error = True
             return
         
         while True:
             try:
                 ask = int(input('What is {} + {}?\n'.format(num1, num2)))
                 break
-            except:
+            except ValueError:
                 print('That is not a number!')
         
         earned = randint(1, 5)
@@ -56,27 +61,27 @@ class MathGame:
             self.correct += 1
             sleep(0.5)
         else:
-            print('Inccorect!')
-            print('The correct awnser is {}'.format(a))
-            self.incorect += 1
+            print('Incorrect!')
+            print('The correct answer is {}'.format(a))
+            self.incorrect += 1
             print('You lost {} money'.format(earned))
             self.money -= earned
             sleep(0.5)
             
-    
     def subtract(self):
         num1 = randint(self.low, self.high)
         num2 = randint(self.low, self.high)
         a = num1 - num2
         
-        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+        if (isinstance(a, float) and self.fl) or (a < 0 and self.fl):
+            self.error = True
             return
         
         while True:
             try:
                 ask = int(input('What is {} - {}?\n'.format(num1, num2)))
                 break
-            except:
+            except ValueError:
                 print('That is not a number!')
         
         earned = randint(1, 7)
@@ -88,9 +93,9 @@ class MathGame:
             self.correct += 1
             sleep(0.5)
         else:
-            print('Inccorect!')
-            print('The correct awnser is {}'.format(a))
-            self.incorect += 1
+            print('incorrect!')
+            print('The correct answer is {}'.format(a))
+            self.incorrect += 1
             print('You lost {} money'.format(earned))
             self.money -= earned
             sleep(0.5)
@@ -100,14 +105,15 @@ class MathGame:
         num2 = randint(self.low, self.high)
         a = num1 * num2
         
-        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+        if (isinstance(a, float) and self.fl) or (a < 0 and self.fl):
+            self.error = True
             return
         
         while True:
             try:
                 ask = int(input('What is {} * {}?\n'.format(num1, num2)))
                 break
-            except:
+            except ValueError:
                 print('That is not a number!')
         
         earned = randint(1, 10)
@@ -119,31 +125,31 @@ class MathGame:
             self.correct += 1
             sleep(0.5)
         else:
-            print('Inccorect!')
-            print('The correct awnser is {}'.format(a))
-            self.incorect += 1
+            print('incorrect!')
+            print('The correct answer is {}'.format(a))
+            self.incorrect += 1
             print('You lost {} money'.format(earned))
             self.money -= earned
             sleep(0.5)
     
     def divide(self):
         num1 = randint(self.low, self.high)
-        
-        num2 = 10
+
         while True:
             num2 = randint(self.low, self.high)
             if num2 != 0:
                 break
         a = num1 / num2
         
-        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+        if (isinstance(a, float) and self.fl) or (a < 0 and self.fl):
+            self.error = True
             return
         
         while True:
             try:
                 ask = int(input('What is {} / {}?\n'.format(num1, num2)))
                 break
-            except:
+            except ValueError:
                 print('That is not a number!')
         
         earned = randint(1, 15)
@@ -155,12 +161,15 @@ class MathGame:
             self.correct += 1
             sleep(0.5)
         else:
-            print('Inccorect!')
-            print('The correct awnser is {}'.format(a))
-            self.incorect += 1
+            print('incorrect!')
+            print('The correct answer is {}'.format(a))
+            self.incorrect += 1
             print('You lost {} money'.format(earned))
             self.money -= earned
             sleep(0.5)
 
-math = MathGame(int(input('What would you like the largest number to be?')), int(input('What would you like the lowest number to be?')), fl=True)
+
+math = MathGame(int(input('What would you like the largest number to be?')),
+                int(input('What would you like the lowest number to be?')),
+                fl=True)
 math.mainloop()
