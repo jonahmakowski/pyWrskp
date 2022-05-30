@@ -2,13 +2,14 @@ from random import randint
 from time import sleep
 
 class MathGame:
-    def __init__(self, high, low, end=10):
+    def __init__(self, high, low, fl=False, end=10):
         self.high = high
         self.low = low
         self.money = 0
         self.correct = 0
         self.incorrect = 0
         self.end = end
+        self.fl = fl
     
     def mainloop(self):
         while self.incorrect < self.end:
@@ -35,6 +36,10 @@ class MathGame:
         num1 = randint(self.low, self.high)
         num2 = randint(self.low, self.high)
         a = num1 + num2
+        
+        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+            return
+        
         while True:
             try:
                 ask = int(input('What is {} + {}?\n'.format(num1, num2)))
@@ -63,6 +68,10 @@ class MathGame:
         num1 = randint(self.low, self.high)
         num2 = randint(self.low, self.high)
         a = num1 - num2
+        
+        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+            return
+        
         while True:
             try:
                 ask = int(input('What is {} - {}?\n'.format(num1, num2)))
@@ -90,6 +99,10 @@ class MathGame:
         num1 = randint(self.low, self.high)
         num2 = randint(self.low, self.high)
         a = num1 * num2
+        
+        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+            return
+        
         while True:
             try:
                 ask = int(input('What is {} * {}?\n'.format(num1, num2)))
@@ -115,8 +128,17 @@ class MathGame:
     
     def divide(self):
         num1 = randint(self.low, self.high)
-        num2 = randint(self.low, self.high)
+        
+        num2 = 10
+        while True:
+            num2 = randint(self.low, self.high)
+            if num2 != 0:
+                break
         a = num1 / num2
+        
+        if (isinstance(a, float) and self.fl == True) or (a < 0 and self.fl == True):
+            return
+        
         while True:
             try:
                 ask = int(input('What is {} / {}?\n'.format(num1, num2)))
@@ -140,5 +162,5 @@ class MathGame:
             self.money -= earned
             sleep(0.5)
 
-math = MathGame(int(input('What would you like the largest number to be?')), int(input('What would you like the lowest number to be?')))
+math = MathGame(int(input('What would you like the largest number to be?')), int(input('What would you like the lowest number to be?')), fl=True)
 math.mainloop()
