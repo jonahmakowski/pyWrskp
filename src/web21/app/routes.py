@@ -52,7 +52,7 @@ CEO = {'name': 'Jonah Makowski',
         '1': 'jonah.kmjn@gmail.com',
         '2': 'jonah@makowski.ca',
         '3': 'jonah@makowski.at'},
-       'link': 'https://www.youtube.com/channel/UC1ti62i-uMnBVAh9b_Pp3UA/'}
+       'link': 'https://www.youtube.com/channel/UC1ti62i-uMnBVAh9b_Pp3UA?sub_confirmation=1'}
 
 
 @app.route('/', methods=['POST', 'GET'])
