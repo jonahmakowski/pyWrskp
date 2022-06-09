@@ -1,8 +1,7 @@
-import os
-  
-shutdown = input("Do you wish to shutdown your computer ? (yes / no): ")
-  
-if shutdown == 'no':
-    exit()
-else:
-    os.system("shutdown")
+def f():
+    x = 1
+    y = 1
+    print(x, y)
+    x = 2
+
+f()
