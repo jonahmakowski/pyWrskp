@@ -7,6 +7,11 @@ class RockPaperScissors:
         self.player_name = input('What is your name?\n')
         print('Welcome to Rock Paper Scissors!')
 
+        self.cheat = 'n'
+
+        if self.player_name == 'Jonah':
+            self.cheat = input('would you like to cheat? (y/n)')
+
         self.computer_choice = ''
         self.player_choice = ''
 
@@ -41,6 +46,8 @@ class RockPaperScissors:
             self.computer_choice = 'scissors'
         s(2)
         print('the computer has chosen')
+        if self.cheat == 'y':
+            print('The computer choose {}'.format(self.computer_choice))
 
     def player_choose(self):
         print('its you turn to choose, {}!'.format(self.player_name))
@@ -63,8 +70,14 @@ class RockPaperScissors:
             print('You win')
             s(2)
             print('the computer choose {} and you choose {}'.format(self.computer_choice, self.player_choice))
+        elif self.computer_choice == self.player_choice:
+            print('This is a tie, would you like to play again?')
+            again = input('y/n')
+            if again == 'y':
+                self.setup()
         else:
             print('The code failed to figure out who won')
+            print('The computer choose {} and you choose {}'.format(self.computer_choice, self.player_choice))
 
 
 play = RockPaperScissors()
