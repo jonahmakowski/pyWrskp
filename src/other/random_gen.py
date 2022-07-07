@@ -2,6 +2,8 @@ from random import randint as r
 from time import sleep as wait
 
 # RANDOM GEN
+
+
 class RandomGen:
     def __init__(self, version):
         self.lis = []
@@ -25,9 +27,10 @@ class RandomGen:
     
     def names(self):
         current_num = r(0, len(self.lis) - 1)
-        current_name = self.lis[current_num]
+        current_name = str(self.lis[current_num])
         print('THE LUCKY WINNER IS: {}'.format(current_name.upper()))
         wait(5)
         print('Name was entered as {}'.format(current_name))
         
+
 Random = RandomGen(input('What version'))
