@@ -43,7 +43,7 @@ class ShoppingList:
     def rm(self):
         item = input('What is the name of teh item you would like to remove, make sure this is right')
         if item == 'all':
-            self.list =[]
+            self.list = []
         else:
             for i in range(len(self.list)):
                 if self.list[i] == item:
