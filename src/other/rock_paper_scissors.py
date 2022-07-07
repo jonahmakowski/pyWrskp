@@ -72,6 +72,7 @@ class RockPaperScissors:
             print('the computer choose {} and you choose {}'.format(self.computer_choice, self.player_choice))
         elif self.computer_choice == self.player_choice:
             print('This is a tie, would you like to play again?')
+            print('You both choose {}.'.format(self.computer_choice))
             again = input('y/n')
             if again == 'y':
                 self.setup()
