@@ -64,11 +64,11 @@ class Grid:
         if xcor > 20 or ycor > 20:
             print('number too high')
             return
-        elif xcor < 0 or ycor < 0:
+        elif xcor < 1 or ycor < 1:
             print('number too low')
             return
         xcor = xcor * 20 - 400
-        ycor = ycor * 20
+        ycor = ycor * 20 - 20
         self.t.shape('circle')
         self.t.penup()
         self.t.goto(xcor, ycor)
@@ -89,10 +89,10 @@ class Grid:
 
             self.t.goto(self.found_cors[0][0], self.found_cors[0][1])
 
-            for i in self.found_cors:
-                del i
         elif len(self.found_cors) == 1:
             print('There is only one dot, so this does not work')
+            self.t.pensize(1)
+            return
         elif len(self.found_cors) == 2:
             self.t.penup()
             self.t.goto(self.found_cors[0][0], self.found_cors[0][1])
@@ -100,18 +100,17 @@ class Grid:
             self.t.goto(self.found_cors[1][0], self.found_cors[1][1])
         self.t.pensize(1)
 
+        for i in range(len(self.found_cors)):
+            del self.found_cors[i - 1]
+
 
 C = Grid()
 
-C.find_cor(4, 10)
-C.find_cor(10, 4)
-C.find_cor(1, 4)
-C.draw()
-
-C.find_cor(6, 20)
-C.find_cor(20, 6)
-C.find_cor(3, 4)
-C.find_cor(20, 20)
-C.draw()
-
-input('Press enter to finish program')
+while True:
+    do = input('Would you like to draw or find location?\n')
+    if do == 'find location' or do == 'find':
+        xcor = int(input('What would you like the xcor to be?'))
+        ycor = int(input('What would you like the ycor to be?'))
+        C.find_cor(xcor, ycor)
+    elif do == 'draw':
+        C.draw()
