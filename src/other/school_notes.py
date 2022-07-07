@@ -16,6 +16,8 @@ class SchoolNotes:
     def __init__(self, pywrskploc, name='school_notes.txt'):
         self.pywrskploc = pywrskploc
         self.name = pywrskploc + '/docs/txt-files/' + name
+        self.group = {}
+        self.all_events = []
 
     def add(self):
         now = datetime.datetime.now()
