@@ -23,4 +23,12 @@ def white_black(length):
             length -= 0.25
         if length < 1:
             length -= 0.1
+
+def check_password(password):
+    password.decode('utf-8')
+    
+    if password == '118':
+        return True
+    else:
+        return False
     
