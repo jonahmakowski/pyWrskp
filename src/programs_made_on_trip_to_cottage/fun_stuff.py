@@ -35,19 +35,27 @@ class FunStuff:
     def tell_info(self):
         print('Your name is: {} {}'.format(self.info['name']['first'],
                                            self.info['name']['last']))
+        
         print('You are {} years old'.format(self.info['age']))
+        
         print('Your gender is {}'.format(self.info['gender']))
+        
         print('Your address is {} {} {} {} {}'.format(self.info['address']['number'],
                                                       self.info['address']['street'],
                                                       self.info['address']['city'],
                                                       self.info['address']['province'],
                                                       self.info['address']['country']))
+        
         if self.info['pet']['has_pet']:
             print('you have pet')
+            
             print('The pet is called {}'.format(self.info['pet']['name']))
+            
             print('He/She is a {}'.format(self.info['pet']['type']))
         else:
             print("You don't have a pet")
+            
             print("You should get one though")
+
 
 fun = FunStuff()
