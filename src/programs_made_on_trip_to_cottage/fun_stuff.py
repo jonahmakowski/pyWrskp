@@ -1,8 +1,6 @@
 class FunStuff:
     def __init__(self):
         self.info = {}
-        self.collect_info()
-        self.tell_info()
     
     def collect_info(self):
         first_name = input('What is your first name?')
@@ -57,5 +55,7 @@ class FunStuff:
             
             print("You should get one though")
 
-
-fun = FunStuff()
+if __name__ == '__main__':
+    fun = FunStuff()
+    fun.collect_info()
+    fun.tell_info()
