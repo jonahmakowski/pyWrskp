@@ -3,17 +3,17 @@ import datetime
 import json
 import sys
 sys.path.append('../../src/coder-decoder')
-import coder
+import coder # my program that can code and encode text
 
 class Phone:
     def __init__(self):
         self.log = {}
-        self.fetch_log()
+        self.fetch_log() # gets info from the log
         self.password = self.log['password']
         self.username = self.log['username']
         self.name = self.log['name']
-        self.login()
-        self.do()
+        self.login() # asks for password
+        self.do() # asks what you want to do
     
     def login(self):
         passtest = input('What is your phone password?')
