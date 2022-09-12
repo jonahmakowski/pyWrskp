@@ -1,5 +1,6 @@
 class IsItAWord:
     def __init__(self, word):
+        word = word.lower()
         self.word = word
         self.word_list = list(word)
         self.rever = ''
