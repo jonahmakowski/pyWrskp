@@ -440,3 +440,14 @@ def is_it_the_word():
     else:
         print('request.method is not get or post it is {}'.format(request.method))
         exit(5)
+
+
+@app.route('/noah-info', methods=['GET', 'POST'])
+def noah_info():
+    emails = [{'email_name': '.kmjn', 'email':'noah.kmjn@gmail.com'},
+              {'email_name': '@makowski.ca', 'email': 'noah@makowski.ca'},
+              {'email_name': '@makowski.at', 'email': 'noah@makowski.at'}]
+    return render_template('noah_info.html',
+                           title="Noah's Info",
+                           name='Noah Makowski',
+                           emails=emails)
