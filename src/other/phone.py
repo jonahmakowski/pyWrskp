@@ -76,6 +76,6 @@ class Phone:
         self.send_uncoded_message(message=coded_message)
     
     def tell_noah_to_kick_his_butt(self):
-        print('Noah, {} as told you to kick your butt!'.format(self.username))
+        print('Noah, {} has told you to kick your butt!'.format(self.username))
 
 Jphone = Phone()
