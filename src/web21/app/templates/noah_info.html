@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <p>info printed in shell and here it is too:</p>
+    <p>{{ name }}</p>
+    {% for email in emails%}
+    <div>
+        <p>{{ email.email_name }}: {{ email.email }}</p>
+    </div>
+{% endfor %}
+    <a href="/">return to home page</a>
+{% endblock %}

@@ -1,1 +1,1 @@
-this dir has some old code, created before Github.
+This dir has some old code, most of which was created before I had Github.
