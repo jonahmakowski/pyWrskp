@@ -34,10 +34,13 @@ class Phone:
         self.log['loginDate'].append(str(now))
         self.push_log()
         option = input('What would you like to do?')
+        option = option.lower()
         if option == 'send uncoded message' or option == 'sum':
              self.send_uncoded_message()
         elif option == 'send coded message' or option == 'scm':
             self.send_coded_message()
+        elif option == 'tell noah to kick his butt' or option == 'tntkhb':
+            self.tell_noah_to_kick_his_butt()
          
     def fetch_log(self):
         with open('../../docs/txt-files/phone_log.txt') as json_file:
@@ -71,5 +74,8 @@ class Phone:
         cod.add_vars(message, key)
         coded_message = cod.code()
         self.send_uncoded_message(message=coded_message)
+    
+    def tell_noah_to_kick_his_butt(self):
+        print('Noah, {} has told you to kick your butt!'.format(self.username))
 
 Jphone = Phone()
