@@ -20,23 +20,33 @@ class Quiz:
         self.wrong = 0
 
     def print_words(self):
-        self.reset_a()
-
-        print('WORDS')
-        while len(self.a) != 0:
-            ra = r(0, len(self.a) - 1)
-            print(self.a[ra]['w'])
-            del self.a[ra]
-
-        self.reset_a()
+        print('\n\nWORDS')
+        printed = ['']
+        for item in self.a:
+            countinue = False
+            while True:
+                ra = r(0, len(self.a) - 1)
+                for i in printed:
+                    if self.a[ra] == i:
+                        countinue = True
+                if not countinue:
+                    print(self.a[ra]['w'])
+                    printed.append(self.a[ra])
+                    break
 
         print('\n\nDEFINITIONS')
-        while len(self.a) != 0:
-            ra = r(0, len(self.a) - 1)
-            print(self.a[ra]['d'])
-            del self.a[ra]
-
-        self.reset_a()
+        printed = ['']
+        for item in self.a:
+            countinue = True
+            while True:
+                ra = r(0, len(self.a) - 1)
+                for i in printed:
+                    if self.a[ra] == i:
+                        countinue = True
+                if not countinue:
+                    print(self.a[ra]['d'])
+                    printed.append(self.a[ra])
+                    break
 
     def vocab_quiz(self):
         i = 1
@@ -82,29 +92,6 @@ class Quiz:
                 i = 2
             else:
                 i = 1
-
-
-    def reset_a(self):
-        self.a = [{'w': 'Scavengers', 'd': 'an animal or other organism that feeds on dead organic matter.'},
-                  {'w': 'Photosynthesis',
-                   'd': 'the complex process by which carbon dioxide, water, and certain inorganic salts are converted into carbohydrates by green plants, algae, and certain bacteria, using energy from the sun and chlorophyll.'},
-                  {'w': 'Detritivores',
-                   'd': 'an organism that uses organic waste as a food source, as certain insects.'},
-                  {'w': 'Tertiary consumers',
-                   'd': 'a carnivore at the topmost level in a food chain that feeds on other carnivores; an animal that feeds only on secondary consumers.'},
-                  {'w': 'Ecosystem',
-                   'd': 'a system, or a group of interconnected elements, formed by the interaction of a community of organisms with their environment'},
-                  {'w': 'Biome',
-                   'd': 'a complex biotic community characterized by distinctive plant and animal species and maintained under the climatic conditions of the region, especially such a community that has developed to climax.'},
-                  {'w': 'Population',
-                   'd': 'the assemblage of a specific type of organism living in a given area OR all the individuals of one species in a given area.'},
-                  {'w': 'Primary Consumers', 'd': 'an animal that feeds on plants; a herbivore.'},
-                  {'w': 'Decomposers',
-                   'd': 'an organism, usually a bacterium or fungus, that breaks down the cells of dead plants and animals into simpler substances.'},
-                  {'w': 'Community', 'd': 'an assemblage of interacting populations occupying a given area.'},
-                  {'w': 'Producers',
-                   'd': 'an organism, as a plant, that is able to produce its own food from inorganic substances.'},
-                  {'w': 'Secondary Consumers', 'd': 'a carnivore that feeds only on herbivores.'}]
 
 
 q = Quiz()
