@@ -29,5 +29,20 @@ class Dino:
             pygame.display.flip()
             
             y -= 1
+            if y < 100:
+                break
+        
+        while True:
+            self.display.fill(self.BLACK)
+            
+            pygame.draw.rect(self.display, self.BLUE, pygame.Rect(90, y, 60, 120))
+            pygame.draw.rect(self.display, self.RED, pygame.Rect(30, y, 60, 120))
+            pygame.display.flip()
+            
+            y += 1
+            time.sleep(0.01)
+            if y == 175:
+                break
+        
 
 Test = Dino()
