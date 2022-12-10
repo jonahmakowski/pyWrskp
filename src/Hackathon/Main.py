@@ -8,11 +8,10 @@ class Dino:
     def __init__(self):
         self.RED = (255, 0, 0)
         self.BLUE = (0, 0, 255)
-        self.screen = pygame.display.set_mode([1375,750])
-        redRectangle = pygame.Rect((0, 0), (50, 50))
-        blueRectangle = pygame.Rect((0, 0), (50, 50))
-        pygame.draw.rect(screen, self.RED, redRectangle)
-        pygame.draw.rect(screen, self.BLUE, blueRectangle)
-        pygame.display.update()
+        self.display = pygame.display.set_mode((400, 300))
+        
+        pygame.draw.rect(self.display, self.BLUE, pygame.Rect(90, 30, 60, 120))
+        pygame.draw.rect(self.display, self.RED, pygame.Rect(30, 30, 60, 120))
+        pygame.display.flip()
 
 Test = Dino()
