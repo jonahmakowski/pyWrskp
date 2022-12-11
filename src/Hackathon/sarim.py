@@ -1,51 +1,42 @@
 import pygame
 import time
 import random
-import os
 import sys
-import math
+import os
+
 
 
 pygame.init()
 
-bg = pygame.image.load(os.path.join('images','bg.png')).convert()
-bgX = 0
-bgX2 = bg.get_width()
+
+x = 50
+y = 50
+width = 40
+height = 60
+vel = 5
 
 run = True
-speed = 30  # NEW
 
 while run:
-    clock.tick(speed)  # NEW
-    bgX -= 1.4  # Move both background images back
-    bgX2 -= 1.4
+    pygame.time.delay(100)
 
-    if bgX < bg.get_width() * -1:  # If our bg is at the -width then reset its position
-        bgX = bg.get_width()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    keys = pygame.key.get_pressed()
     
-    if bgX2 < bg.get_width() * -1:
-        bgX2 = bg.get_width()
+    if keys[pygame.K_LEFT]:
+        x -= vel
 
-    for event in pygame.event.get():  
-        if event.type == pygame.QUIT: 
-            run = False    
-            pygame.quit() 
-            quit()
+    if keys[pygame.K_RIGHT]:
+        x += vel
 
-width = 650
-height = 750
+    if keys[pygame.K_UP]:
+        y -= vel
 
-pixel = 64
+    if keys[pygame.K_DOWN]:
+        y += vel
+    
 
-screen = pygame.display.set_mode((width,height))
-cactus = pygame.image.load("cactus.png")
 
-playerimage = pygame.image.load("dino4python.png")
-
-playerxposition = (width/2) - (pixel/2)
-playerxpositionCHANGE = 0
-playeryposition = height-pixel-10
-
-cactusxposition = random.randint(0, (width - pixel))
-
-pygame.display.flip()
