@@ -21,7 +21,6 @@ class Dino:
         pygame.draw.rect(self.display, self.RED, pygame.Rect(30, 180, 60, 120))
         pygame.display.flip()
         
-   
         
         while True:
             for event in pygame.event.get():
