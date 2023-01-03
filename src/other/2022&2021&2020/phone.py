@@ -2,7 +2,7 @@ import time
 import datetime
 import json
 import sys
-sys.path.append('../../src/coder-decoder')
+sys.path.append('../../coder-decoder')
 import coder # my program that can code and encode text
 
 class Phone:
@@ -43,11 +43,11 @@ class Phone:
             self.tell_noah_to_kick_his_butt()
          
     def fetch_log(self):
-        with open('../../docs/txt-files/phone_log.txt') as json_file:
+        with open('../../../docs/txt-files/phone_log.txt') as json_file:
                 self.log = json.load(json_file)
     
     def push_log(self):
-        with open('../../docs/txt-files/phone_log.txt', 'w') as outfile:
+        with open('../../../docs/txt-files/phone_log.txt', 'w') as outfile:
             json.dump(self.log, outfile)
     
     def send_uncoded_message(self, message=None, location=None):
