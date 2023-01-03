@@ -31,7 +31,7 @@ class Person:
     
     def save_info(self):
         try:
-            with open('../../docs/txt-files/people.txt') as json_file:
+            with open('../../../docs/txt-files/people.txt') as json_file:
                 info = json.load(json_file)
         except:
             info = []
@@ -40,7 +40,7 @@ class Person:
                      'age':self.age,
                      'gender':self.gender,
                      'annoying':self.annoying_percent})
-        with open('../../docs/txt-files/people.txt', 'w') as outfile:
+        with open('../../../docs/txt-files/people.txt', 'w') as outfile:
             json.dump(info, outfile)
         
 Jonah = Person('Jonah', 'Makowski', 12, 'male')        
