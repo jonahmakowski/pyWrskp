@@ -1,5 +1,6 @@
 import socket
 import threading
+import tkinter as tk
 
 # Create a socket object
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,12 +18,35 @@ server_socket.listen(5)
 # Create a dictionary to store the connections and usernames of all the clients
 clients = {}
 
+# Create a Tkinter window
+window = tk.Tk()
+window.title("Server")
+
+# Create a function to send a message to all the clients
+def send():
+    message_text = message.get()
+    for conn, name in clients.items():
+        conn.send((username + ": " + message_text).encode())
+
+# Create a variable to store the message
+message = tk.StringVar()
+
+# Create an input field for the user to type their message
+message_entry = tk.Entry(window, textvariable=message)
+message_entry.pack()
+
+# Create a send button
+send_button = tk.Button(window, text="Send", command=send)
+send_button.pack()
+
+# Enter the username
+username = input("Enter your username: ")
+
+# Run the Tkinter event loop
+window.mainloop()
 
 # Create a function to handle a new client
 def handle_client(connection, address):
-    # Send a message to the client asking for their username
-    connection.send("Enter your username: ".encode())
-
     # Receive the username from the client
     username = connection.recv(1024).decode()
 
@@ -53,7 +77,6 @@ def handle_client(connection, address):
     # Close the connection
     connection.close()
 
-
 # Create a loop to accept new connections
 while True:
     # Accept a new connection
@@ -63,5 +86,5 @@ while True:
     client_thread = threading.Thread(target=handle_client, args=(connection, address))
     client_thread.start()
 
-# Close the server socket
-server_socket.close()
+    # Close the server socket
+    server_socket.close()
