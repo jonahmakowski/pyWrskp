@@ -1,84 +1,133 @@
-import cv2
+import matplotlib.pyplot as plt
+
+import io
+import os
+import datetime
 import numpy as np
-import tkinter as tk
-from tkinter import messagebox
-from PIL import Image, ImageTk
 
-# Loading the pre-trained emotion detector model
-model = cv2.dnn.readNetFromCaffe("deploy.prototxt.txt", "res10_300x300_ssd_iter_140000.caffemodel")
+import PySimpleGUI as sg
 
-# Define the emotions
-emotions = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
+import cv2
 
-# Defining the function to predict emotions
-def predict_emotion(frame):
-    (h, w) = frame.shape[:2]
-    blob = cv2.dnn.blobFromImage(cv2.resize(frame, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
+from feat import Detector
 
-    model.setInput(blob)
-    detections = model.forward()
+from pathlib import Path
 
-    for i in range(0, detections.shape[2]):
-        # extract the confidence (i.e., probability) associated with the prediction
-        confidence = detections[0, 0, i, 2]
+def main():
+   
+    #downloads_path = str(Path.home()) + "/Downloads" + "/pyFeatData/" + datetime.datetime.now().isoformat()
+    downloads_path = os.path.join(Path.home(), "pyWrskp/src/immran-like-code/data" + datetime.datetime.now().strftime('%Y%m%d %H%M%S'))
+    os.mkdir(downloads_path)
 
-        # filter out weak detections by ensuring the confidence is greater than the minimum confidence
-        if confidence > 0.5:
-            # compute the (x, y)-coordinates of the bounding box for the object
-            box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-            (startX, startY, endX, endY) = box.astype("int")
+    sg.theme("DarkBlue")
 
-            # extract the ROI of the face and then pass the ROI through our emotion detection model to
-            # determine the probabilty of each emotion being expressed
-            face = frame[startY:endY, startX:endX]
+ 
 
-            # Create the recognizer and load the trained model
-            recognizer = cv2.face.LBPHFaceRecognizer_create()
-            recognizer.read("emotion_recognizer.yml")
+    # define the window layout New Window with Emotion Text Holer, Video and Exit Button
 
-            # Perform classification to recognize the emotion
-            preds = recognizer.predict(face)
+    layout = [[sg.Text("Emotion Detection Demo", size=(40, 1), justification="center", font="Helvetica 20")],[sg.Image(filename="", key="analysis1")],[sg.Image(filename="", key="analysis2")]]
 
-            # Return the emotion label
-            return emotions[preds[0]]
-    return "Unknown"
+ 
 
-# GUI code
-root = tk.Tk()
-root.title("Emotion Detector")
+    # create the window and show it without the plot
 
-# Create a label to display the video feed
-label = tk.Label(root)
-label.pack()
+    window = sg.Window('Demo Application - Emotion Detection',layout, location=(800, 400))
 
-# Start the video capture
-cap = cv2.VideoCapture(0)
+ 
 
+    # Start Video Capture
 
-# Update the GUI with the video feed
-def update_frame():
-    ret, frame = cap.read()
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    frame = Image.fromarray(frame)
-    frame = ImageTk.PhotoImage(frame)
-    label.config(image=frame)
-    label.image = frame
-    root.after(30, update_frame)
+    cap = cv2.VideoCapture(0,  cv2.CAP_DSHOW)
 
+    cap.set(3,640) # set Width
 
-# Predict the emotion
-def predict_emotion_on_click():
-    ret, frame = cap.read()
-    emotion = predict_emotion(frame)
-    messagebox.showinfo("Emotion", "Your emotion is: " + emotion)
+    cap.set(4,480) # set Height
 
+   
 
-# Add a button to trigger emotion prediction
-predict_button = tk.Button(root, text="Predict Emotion", command=predict_emotion_on_click)
-#Pack the button and start the GUI
-predict_button.pack()
-root.after(30, update_frame)
-root.mainloop()
+    #initialize the emotion detector
 
-#Release the video capture when the GUI is closed
-cap.release()
+    #detector
+
+ 
+
+    i = 10000
+
+    # Capture frames and detect emotion. Exit if "Exit" button is clicked
+
+    while True:
+
+        event, values = window.read(timeout=20)
+
+        if event == sg.WIN_CLOSED:
+
+            return
+
+        ret, frame = cap.read()
+
+        imgPath = downloads_path +  "\\frameIn" +  str(i) + ".png"
+
+        cv2.imwrite(imgPath, frame)
+
+        detector = Detector(          
+            face_model="retinaface",
+            landmark_model="mobilefacenet",
+            au_model="xgb",
+            emotion_model="resmasknet",
+            facepose_model="img2pose")
+
+        multi_face_prediction = detector.detect_image(imgPath)
+
+ 
+
+        detected_faces = detector.detect_faces(frame)
+
+        detected_landmarks = detector.detect_landmarks(frame, detected_faces)
+       
+        detected_aus = detector.detect_aus(frame, detected_landmarks)
+
+        detected_emotions = detector.detect_emotions(frame, detected_faces, detected_landmarks)
+
+ 
+
+        figs = multi_face_prediction.plot_detections(add_titles=True, muscles=True)
+       
+        outputPath = downloads_path + "\\frameOut" + str(i) + ".png"
+
+        plt.savefig(outputPath)
+
+        with io.BytesIO() as buffer:  # use buffer memory
+
+            plt.savefig(buffer, format='png')
+
+            buffer.seek(0)
+
+            pltImg = buffer.getvalue()
+
+            window["analysis1"].update(pltImg)
+
+ 
+
+        plt.close(figs[0])
+
+        #window["analysis2"].update(figs[1])
+
+        i=i+1
+
+        # Another way to exit
+
+        k = cv2.waitKey(30) & 0xff
+
+        if k == 27: # press 'ESC' to quit
+
+            break
+
+    # Release camera
+
+    cap.release()
+
+    cv2.destroyAllWindows()
+
+ 
+
+main()
