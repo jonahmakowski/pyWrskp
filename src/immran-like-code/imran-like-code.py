@@ -16,7 +16,8 @@ from pathlib import Path
 def main():
    
     #downloads_path = str(Path.home()) + "/Downloads" + "/pyFeatData/" + datetime.datetime.now().isoformat()
-    downloads_path = os.path.join(Path.home(), "pyWrskp/src/immran-like-code/data" + datetime.datetime.now().strftime('%Y%m%d %H%M%S'))
+    downloads_path = os.path.join(Path.home(), "Desktop/Github/pyWrskp/src/immran-like-code/data/" + datetime.datetime.now().strftime('%Y%m%d %H%M%S'))
+    os.makedirs("data/", exist_ok=True)
     os.mkdir(downloads_path)
 
     sg.theme("DarkBlue")
@@ -65,7 +66,7 @@ def main():
 
         ret, frame = cap.read()
 
-        imgPath = downloads_path +  "\\frameIn" +  str(i) + ".png"
+        imgPath = downloads_path + "\\frameIn" + str(i) + ".png"
 
         cv2.imwrite(imgPath, frame)
 
@@ -112,7 +113,7 @@ def main():
 
         #window["analysis2"].update(figs[1])
 
-        i=i+1
+        i+=1
 
         # Another way to exit
 
