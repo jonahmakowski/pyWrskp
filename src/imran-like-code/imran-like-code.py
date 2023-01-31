@@ -16,7 +16,7 @@ from pathlib import Path
 def main():
    
     #downloads_path = str(Path.home()) + "/Downloads" + "/pyFeatData/" + datetime.datetime.now().isoformat()
-    downloads_path = os.path.join(Path.home(), "Desktop/Github/pyWrskp/src/immran-like-code/data/" + datetime.datetime.now().strftime('%Y%m%d %H%M%S'))
+    downloads_path = os.path.join(Path.home(), "Desktop/Github/pyWrskp/src/imran-like-code/data/" + datetime.datetime.now().strftime('%Y%m%d %H%M%S'))
     os.makedirs("data/", exist_ok=True)
     os.mkdir(downloads_path)
 
@@ -38,7 +38,7 @@ def main():
 
     # Start Video Capture
 
-    cap = cv2.VideoCapture(0,  cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
     cap.set(3,640) # set Width
 
@@ -61,7 +61,6 @@ def main():
         event, values = window.read(timeout=20)
 
         if event == sg.WIN_CLOSED:
-
             return
 
         ret, frame = cap.read()
