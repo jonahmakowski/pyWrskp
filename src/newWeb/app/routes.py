@@ -29,7 +29,7 @@ def print_web_info():
         print('HTML File: {}'.format(item['html']))
         print()
         print()
-    return render_template('info.html', title='Pages Info')
+    return render_template('info.html', title='Pages Info', website=pages)
 
 
 @app.route('/youtube')

@@ -1,5 +1,12 @@
 {% extends "main_layout.html" %}
 
 {% block content %}
-    <h1>Info is in your shell</h1>
+    <h1>Here is Some Information</h1>
+    <p>For more information look in your shell</p>
+    <hr>
+    {% for site in website%}
+        <p>Name: {{ site.name }}</p>
+        <p>HTML File: {{ site.html }}</p>
+        <hr>
+    {% endfor %}
 {% endblock %}
