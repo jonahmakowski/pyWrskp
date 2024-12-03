@@ -334,7 +334,6 @@ aesir
 aesop
 aetat
 aetna
-aetos
 aevia
 aevum
 aface
@@ -3484,7 +3483,6 @@ cavum
 cavus
 cawed
 cawky
-cawny
 cawra
 caxon
 cayos
@@ -5244,7 +5242,6 @@ didym
 diego
 diene
 dieri
-dieta
 diets
 diety
 dietz
@@ -5448,7 +5445,6 @@ dogma
 dogra
 doigt
 doily
-doina
 doing
 doits
 dojos
@@ -7146,7 +7142,6 @@ flynn
 flype
 flyte
 fmail
-fmeta
 fmfaq
 fmipa
 fmmol
@@ -12492,7 +12487,6 @@ mazut
 mbank
 mbase
 mbaya
-mbeta
 mbira
 mblga
 mblog
@@ -14365,7 +14359,6 @@ omega
 omeka
 omens
 omers
-omina
 omits
 omkar
 omlah
@@ -14540,7 +14533,6 @@ oshea
 oside
 osiek
 osier
-osint
 oskar
 oskol
 osmac
@@ -14561,8 +14553,6 @@ ossia
 ostar
 osteo
 ostia
-ostic
-osung
 osvdb
 otaku
 otary
@@ -14948,27 +14938,19 @@ payne
 payni
 payor
 pazar
-pbcsi
 pblog
 pbook
 pbxes
 pcall
 pcapy
-pcbbs
 pcert
-pcfix
 pcgen
 pchan
 pchar
-pcipb
 pclab
-pclos
 pcmag
 pconf
-pcopy
-pcpow
 pcpro
-pcscb
 pcweb
 pdesk
 pdfng
@@ -15126,7 +15108,6 @@ pewdy
 pewee
 pewit
 pfalz
-pfctl
 pfeil
 pfire
 pflag
@@ -15216,7 +15197,6 @@ picae
 pical
 picas
 picea
-pichi
 picka
 picks
 picky
@@ -20110,7 +20090,6 @@ thump
 thund
 thung
 thunk
-thuoc
 thurl
 thurm
 thurt
