@@ -14779,7 +14779,6 @@ ships
 shipt
 shire
 shirk
-shirl
 shirr
 shirt
 shish
@@ -306676,7 +306675,6 @@ shirkers
 shirky
 shirking
 shirks
-shirl
 shirlcock
 shirley
 shirpit
@@ -1346389,7 +1346387,6 @@ shirkers
 shirking
 shirks
 shirky
-shirl
 shirlcock
 shirley
 shirpit
@@ -1426434,7 +1426431,6 @@ pteriidae
 pterois
 ptloris
 ptsd
-ptyas
 puffingl
 puglia
 pulassan
