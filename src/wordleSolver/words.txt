@@ -6568,10 +6568,8 @@ duomo
 duped
 duper
 dupes
-dupla
 duple
 duply
-duppa
 duppy
 dural
 duras
@@ -6609,7 +6607,6 @@ dwang
 dwarf
 dwell
 dwelt
-dwyka
 dwine
 eably
 eager
@@ -112523,7 +112520,6 @@ dupes
 duping
 dupion
 dupioni
-dupla
 duplation
 duple
 duplet
@@ -112572,7 +112568,6 @@ duplone
 dupondidii
 dupondii
 dupondius
-duppa
 dupped
 dupper
 duppy
@@ -112837,7 +112832,6 @@ dwellings
 dwells
 dwelt
 dwight
-dwyka
 dwindle
 dwindled
 dwindlement
@@ -980429,7 +980423,6 @@ dvd
 dvdlife1
 dvds
 dvduck1
-dvdva
 dvdvcd
 dventure
 dventure1
@@ -1162594,7 +1162587,6 @@ dupery
 dupes
 duping
 dupion
-dupla
 duplation
 duple
 duplet
@@ -1162898,7 +1162890,6 @@ dwined
 dwines
 dwining
 dwyer
-dwyka
 dyable
 dyad
 dyadic
