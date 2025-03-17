@@ -1,10 +1,12 @@
 import os
 import subprocess
 from pyWrkspPackage import load_from_file
-from ollama import Client
+import openai
 
-# AI model endpoint (Ollama, Llama.cpp, or API)
-AI_ENDPOINT = "http://192.168.86.4:11434"
+# Configuration
+CUSTOM_API_URL = "http://192.168.86.4:4001"  # Set your custom API endpoint here
+OPENAI_API_KEY = os.getenv("API_KEY")  # Your OpenAI API key or other service's API key
+MODEL_NAME = "codestral-latest"  # or other appropriate model name
 
 # Get list of modified files in the last commit
 git_diff_cmd = "git diff --name-only HEAD~1"
@@ -12,13 +14,13 @@ modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlin
 
 print("Modified files:", modified_files)
 
-# Filter files from /src/ that are Python or C++
+# Filter files from /src/ that are Python or C++ source_files
 source_files = [f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".cpp", ".js"))]
 
 print(f"{len(source_files)}; Source files:", source_files)
 
-documentation_files = [os.path.join(dirpath,f) for (dirpath, dirnames, filenames) in os.walk('docs/ai_docs/') for f in filenames]
-
+documentation_files = [os.path.join(dirpath, f) for (dirpath, dirnames, filenames) in os.walk('docs/ai_docs/') for f in
+                       filenames]
 print(f"{len(documentation_files)}; Documentation files:", documentation_files)
 
 # Remove old documentation for files that have been deleted
@@ -33,8 +35,10 @@ if not source_files:
     print("No source files modified. Skipping doc generation.")
     exit(0)
 
-client = Client(
-    host=AI_ENDPOINT,
+# Initialize OpenAI client with custom API URL
+client = openai.OpenAI(
+    api_key=OPENAI_API_KEY,
+    base_url=CUSTOM_API_URL
 )
 
 for file_num, file in enumerate(source_files):
@@ -43,15 +47,27 @@ for file_num, file in enumerate(source_files):
         continue
 
     print(f"{file_num} Generating docs for: {file}")
-
     # Read the source code
     with open(file, "r") as f:
         code = f.read()
 
-    # Send the code to AI for documentation
+    # Send the code to API for documentation
     prompt = load_from_file("src/docGeneration/prompt.md")
-    
-    documentation = client.generate('llama3.2', prompt + code)['response']
+
+    # Create chat completion request
+    messages = [
+        {"role": "system", "content": prompt},
+        {"role": "user", "content": code}
+    ]
+
+    response = client.chat.completions.create(
+        model=MODEL_NAME,
+        messages=messages,
+        temperature=0.7,
+        max_tokens=1000
+    )
+
+    documentation = response.choices[0].message.content
 
     if not documentation:
         print(f"⚠️ No documentation generated for {file}")
