@@ -51,10 +51,11 @@ generate_docs:
   variables:
     GIT_DEPTH: 0
   before_script:
-    - pip install ollama
+    - pip install openai
     - pip install --upgrade pyWrkspPackage --trusted-host 192.168.86.4 --index-url http://192.168.86.4:8929/api/v4/projects/4/packages/pypi/simple
     - apk add git
   script:
+    - export API_KEY=${AI_API_KEY}
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI Docs Bot"
     - git checkout main
