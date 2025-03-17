@@ -1,120 +1,117 @@
 # Documentation for src/docGeneration/generate.py
 
-**Python Script Documentation**
-=============================
+# Python Script Documentation
 
-### Program Overview
+## Program Overview
 
-The provided Python script is designed to generate documentation for source code files. It uses the Ollama API to analyze the code and produce high-quality documentation.
+The provided Python script is designed to automate the generation and management of documentation for modified source files. It identifies files that have been changed in the last commit, filters them based on their file type (Python, C++, or JavaScript), and then uses an OpenAI model to generate documentation for these files. The generated documentation is saved in a mirrored directory structure under `docs/ai_docs/`.
 
-### Table of Contents
+## Table of Contents
 
-*   [Function 1](#function-1): `load_from_file`
-    *   Description: Loads a prompt from a file.
-    *   Parameters:
-        *   `file_path` (str): The path to the file containing the prompt.
-    *   Returns: The loaded prompt.
+- [Configuration](#configuration)
+- [Modified Files Identification](#modified-files-identification)
+- [Source Files Filtering](#source-files-filtering)
+- [Documentation Files Management](#documentation-files-management)
+- [Documentation Generation](#documentation-generation)
+- [Example Usage](#example-usage)
 
-*   [Class 1](#class-1): `Client`
-    *   Description: A client class for interacting with the Ollama API.
-    *   [Method 1](##method-1): `generate`
-        *   Description: Generates documentation for a given source code file.
-        *   Parameters:
-            *   `model_name` (str): The name of the AI model to use.
-            *   `prompt` (str): The prompt for the AI model to generate documentation from.
-            *   `source_code` (str): The source code to be analyzed and documented.
+## Configuration
 
-### Detailed Function Descriptions
+The script starts with several configuration variables:
 
-#### Function 1: `load_from_file`
-
-**Description**: Loads a prompt from a file.
-
-**Parameters**
-
-*   `file_path` (str, required): The path to the file containing the prompt.
-
-**Returns**: The loaded prompt.
+- `CUSTOM_API_URL`: The custom API endpoint for the OpenAI service.
+- `OPENAI_API_KEY`: The API key for the OpenAI service, retrieved from the environment variable `API_KEY`.
+- `MODEL_NAME`: The name of the model to be used for documentation generation.
 
 ```python
-def load_from_file(file_path):
-    """
-    Loads a prompt from a file.
-
-    Args:
-        file_path (str): The path to the file containing the prompt.
-
-    Returns:
-        str: The loaded prompt.
-    """
-    with open(file_path, "r") as f:
-        return f.read()
+CUSTOM_API_URL = "http://192.168.86.4:4001"
+OPENAI_API_KEY = os.getenv("API_KEY")
+MODEL_NAME = "codestral-latest"
 ```
 
-#### Function 1: `generate`
+## Modified Files Identification
 
-**Description**: Generates documentation for a given source code file.
-
-**Parameters**
-
-*   `model_name` (str, required): The name of the AI model to use.
-*   `prompt` (str, required): The prompt for the AI model to generate documentation from.
-*   `source_code` (str, required): The source code to be analyzed and documented.
-
-**Returns**: The generated documentation.
+The script uses the `git diff` command to identify files that have been modified in the last commit.
 
 ```python
-class Client:
-    def __init__(self, host):
-        """
-        Initializes a client object for interacting with the Ollama API.
-
-        Args:
-            host (str): The endpoint URL of the Ollama API.
-        """
-        self.host = host
-
-    def generate(self, model_name, prompt, source_code):
-        """
-        Generates documentation for a given source code file.
-
-        Args:
-            model_name (str): The name of the AI model to use.
-            prompt (str): The prompt for the AI model to generate documentation from.
-            source_code (str): The source code to be analyzed and documented.
-
-        Returns:
-            str: The generated documentation.
-        """
-        # Construct API request payload
-        payload = {
-            "prompt": prompt + source_code,
-            "model_name": model_name
-        }
-
-        # Send API request
-        response = requests.post(self.host, json=payload)
-
-        # Extract and return generated documentation
-        if response.status_code == 200:
-            return response.json()["response"]
-        else:
-            raise Exception(f"Failed to generate documentation: {response.text}")
+git_diff_cmd = "git diff --name-only HEAD~1"
+modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlines()
+print("Modified files:", modified_files)
 ```
 
-### Example Usage
+## Source Files Filtering
+
+The script filters the modified files to include only those located in the `src/` directory and with extensions `.py`, `.cpp`, or `.js`.
 
 ```python
-# Load prompt from file
-prompt = load_from_file("src/docGeneration/prompt.md")
-
-# Create client object for Ollama API
-client = Client("http://192.168.86.4:11434")
-
-# Generate documentation for source code file
-generated_docs = client.generate("llama3.2", prompt, open("source_code.py").read())
-
-# Save generated documentation to file
-with open("documentation.md", "w") as f:
-    f.write(generated_docs)
+source_files = [f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".cpp", ".js"))]
+print(f"{len(source_files)}; Source files:", source_files)
 ```
+
+## Documentation Files Management
+
+The script identifies existing documentation files in the `docs/ai_docs/` directory and removes any documentation files that correspond to source files that no longer exist.
+
+```python
+documentation_files = [os.path.join(dirpath, f) for (dirpath, dirnames, filenames) in os.walk('docs/ai_docs/') for f in filenames]
+print(f"{len(documentation_files)}; Documentation files:", documentation_files)
+
+for doc_file in documentation_files:
+    corresponding_source_file = doc_file.replace("docs/ai_docs/", "src/").replace(".md", ".py")
+    if not os.path.exists(corresponding_source_file):
+        print(f"Removing outdated documentation: {doc_file}")
+        os.remove(doc_file)
+```
+
+## Documentation Generation
+
+The script initializes an OpenAI client with the custom API URL and API key. For each source file, it reads the file's content, sends it to the OpenAI model for documentation generation, and saves the generated documentation in the `docs/ai_docs/` directory.
+
+```python
+if not source_files:
+    print("No source files modified. Skipping doc generation.")
+    exit(0)
+
+client = openai.OpenAI(
+    api_key=OPENAI_API_KEY,
+    base_url=CUSTOM_API_URL
+)
+
+for file_num, file in enumerate(source_files):
+    if not os.path.exists(file):
+        print(f"{file_num} ⚠️ Source file not found: {file}")
+        continue
+
+    print(f"{file_num} Generating docs for: {file}")
+    with open(file, "r") as f:
+        code = f.read()
+
+    prompt = load_from_file("src/docGeneration/prompt.md")
+
+    messages = [
+        {"role": "system", "content": prompt},
+        {"role": "user", "content": code}
+    ]
+
+    response = client.chat.completions.create(
+        model=MODEL_NAME,
+        messages=messages,
+        temperature=0.7,
+        max_tokens=1000
+    )
+
+    documentation = response.choices[0].message.content
+
+    if not documentation:
+        print(f"⚠️ No documentation generated for {file}")
+        continue
+
+    doc_path = file.replace("src/", "docs/ai_docs/").replace(".py", ".md").replace(".cpp", ".md").replace(".js", ".md")
+    os.makedirs(os.path.dirname(doc_path), exist_ok=True)
+
+    with open(doc_path, "w") as f:
+        f.write(f"# Documentation for {file}\n\n{documentation}")
+
+    print(f"✅ Saved docs: {doc_path}")
+```
+
