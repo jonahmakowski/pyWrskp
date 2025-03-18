@@ -2,8 +2,6 @@ from llama_ai import llama_result
 import commands
 import audio
 import helpers
-from random import randint
-from time import sleep
 import tkinter as tk
 
 
@@ -46,12 +44,6 @@ class CommandExecution:
                 commands.open_webpage(helpers.remove_keyword(command, 'WEBSITE'))
             elif 'GOOGLE' in command:
                 commands.google_search(helpers.remove_keyword(command, 'GOOGLE'))
-            elif 'IMAGE' in command:
-                print("\nI'm generating an image for you! The prompt is {}"
-                      .format(helpers.remove_keyword(command, 'IMAGE')))
-                audio.speak("I'm generating an image for you! The prompt is {}"
-                            .format(helpers.remove_keyword(command, 'IMAGE')))
-                commands.image_generation(helpers.remove_keyword(command, 'IMAGE'))
             speak_index += 1
         print()
 
