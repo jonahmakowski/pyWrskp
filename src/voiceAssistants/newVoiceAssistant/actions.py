@@ -1,0 +1,150 @@
+from subprocess import run
+import os
+from pyWrkspPackage import run_terminal_command
+
+APPLICATION_PATHS = ['{}/Applications/'.format(os.path.expanduser("~")),
+                     '/System/Volumes/Preboot/Cryptexes/App/System/Applications/',
+                     '/System/Applications/', '/System/Library/CoreServices/Applications/',
+                     '/Applications/']
+PATHS = [os.path.expanduser("~")]
+
+def hide_app(app_name: str) -> None:
+    """
+    Hide the specified application using AppleScript.
+
+    Parameters:
+    app_name (str): The name of the application to hide.
+    """
+    applescript = f"""
+    tell application "{app_name}"
+        activate
+        delay 0.2
+        tell application "System Events" to keystroke "h" using {{command down}}
+    end tell
+    """
+    run(['osascript', '-e', applescript])
+
+def find_path_app(app: str) -> str|bool:
+    """
+    Find the path of an application using the `mdfind` command.
+
+    Parameters:
+    app (str): The name of the application to find.
+
+    Returns:
+    str|bool: The path of the application if found, False otherwise.
+    """
+    search = run_terminal_command('mdfind "{}"'.format(app))
+    search = search.split('\n')
+    for result in search:
+        if ((((result.startswith(APPLICATION_PATHS[0]) or result.startswith(APPLICATION_PATHS[1])) or
+             (result.startswith(APPLICATION_PATHS[2]) or result.startswith(APPLICATION_PATHS[3])))) or
+                result.startswith(APPLICATION_PATHS[4]) and result.endswith('.app')):
+            return result
+    return False
+
+def open_directory_in_finder(directory: str) -> bool:
+    """
+    Open a directory in Finder.
+
+    Parameters:
+    directory (str): The path of the directory to open.
+
+    Returns:
+    bool: True if the directory was successfully opened, False otherwise.
+    """
+    if os.path.isdir(directory):
+        run(['open', directory])
+        return True
+    else:
+        return False
+
+def open_app(app: str) -> bool:
+    """
+    Open an application by its name.
+
+    Parameters:
+    app (str): The name of the application to open.
+
+    Returns:
+    bool: True if the application was successfully opened, False otherwise.
+    """
+    app_path = find_path_app(app)
+    if not app_path:
+        return False
+    else:
+        run(['open', app_path])
+        return True
+
+def find_path(file: str) -> str|bool:
+    """
+    Find the path of a file using the `mdfind` command.
+
+    Parameters:
+    file (str): The name of the file to find.
+
+    Returns:
+    str|bool: The path of the file if found, False otherwise.
+    """
+    file = file.split()
+    file_new = ''
+    for part in file:
+        file_new += part
+    file = file_new
+
+    search = run_terminal_command('mdfind "{}"'.format(file))
+    if search is None:
+        return False
+    search = search.split('\n')
+
+    in_path_searches = []
+
+    for result in search:
+        for path in PATHS:
+            if result.startswith(path):
+                in_path_searches.append(result)
+
+    if len(in_path_searches) == 0:
+        return False
+    elif len(in_path_searches) == 1:
+        return in_path_searches[0]
+    else:
+        print('The file has multiple locations. I haven\'t implemented this yet.')
+        return False
+
+
+def open_file(file: str) -> bool:
+    """
+    Open a file using the default application.
+
+    Parameters:
+    file (str): The name of the file to open.
+
+    Returns:
+    bool: True if the file was successfully opened, False otherwise.
+    """
+    path = find_path(file)
+    if not path:
+        return False
+    else:
+        os.system('open "{}"'.format(path))
+        return True
+
+def pause() -> None:
+    """
+    Pause the music on Spotify.
+    """
+    run(['osascript', '-e', 'tell application "Spotify" to pause'])
+
+
+def play(open_spotify=True) -> None:
+    """
+    Play music on Spotify.
+
+    Parameters:
+    open_spotify (bool): If True, open the Spotify application before playing music.
+    """
+    if open_spotify:
+        open_app('Spotify')
+    run(['osascript', '-e', 'tell application "Spotify" to play'])
+    hide_app('Spotify')
