@@ -4,48 +4,107 @@
 
 ## Program Overview
 
-The provided Python script is designed to set up the environment for interacting with an AI model. It loads environment variables, retrieves an AI token, and defines constants for the AI model and its URL. This documentation will provide an overview of the script's setup and how to use it.
+The provided Python script is designed to create a voice-activated assistant that listens for a specific keyword, plays a sound, takes a voice command, sends it to an AI model for processing, and prints the AI's response. This document will provide an overview of the script's functions and classes, along with explanations and examples.
 
 ## Table of Contents
 
-- [Environment Setup](#environment-setup)
-  - [Description](#description)
-  - [Parameters](#parameters)
-  - [Returns](#returns)
-- [Example Usage](#example-usage)
+- [Function 1](#play_sound)
+  - Description: Plays a sound from 'audio.mp3'.
+  - Parameters: `hold (bool)` - If True, the function will block until the sound finishes playing.
+  - Returns: None
+
+- [Function 2](#take_command)
+  - Description: Captures and recognizes voice input from the microphone.
+  - Parameters: None
+  - Returns: Recognized text from the voice input.
+
+- [Function 3](#get_message_list)
+  - Description: Manages a list of messages, ensuring it does not exceed a specified size.
+  - Parameters: `cur_list (list)`, `message (str)`, `max_size (int)` - Default is 10.
+  - Returns: Updated list of messages.
+
+- [Function 4](#main)
+  - Description: Main function to run the voice-activated assistant.
+  - Parameters: None
+  - Returns: None
 
 ## Detailed Function Descriptions
 
-### Environment Setup
+### play_sound
 
-#### Description
+**Description:** Plays a sound from 'audio.mp3'.
 
-The script sets up the environment by loading environment variables, retrieving an AI token, and defining constants for the AI model and its URL. This setup is essential for interacting with the AI model.
+**Parameters:**
+- `hold (bool)`: If True, the function will block until the sound finishes playing.
 
-#### Parameters
+**Returns:** None
 
-None
+### take_command
 
-#### Returns
+**Description:** Captures and recognizes voice input from the microphone.
 
-None
+**Parameters:** None
 
-### Example Usage
+**Returns:** Recognized text from the voice input.
 
-Usage example for setting up the environment:
+### get_message_list
+
+**Description:** Manages a list of messages, ensuring it does not exceed a specified size.
+
+**Parameters:**
+- `cur_list (list)`: The current list of messages.
+- `message (str)`: The new message to be added to the list.
+- `max_size (int)`: The maximum size of the message list. Default is 10.
+
+**Returns:** Updated list of messages.
+
+### main
+
+**Description:** Main function to run the voice-activated assistant.
+
+**Parameters:** None
+
+**Returns:** None
+
+## Example Usage
+
+### Example Usage for `play_sound`
 
 ```python
-from os import getenv
-from pyWrkspPackage import *
+# Play the sound without blocking
+play_sound(False)
 
-# General Setup
-load_dotenv()
-AI_KEY = getenv('AI_TOKEN')
-if AI_KEY is None:
-    raise ValueError('AI_TOKEN is not set')
-
-AI_MODEL = 'mistral-large-latest'
-AI_URL = 'http://192.168.86.4:4001'
+# Play the sound and block until it finishes
+play_sound(True)
 ```
 
-In this example, the script loads environment variables, retrieves the AI token, and defines constants for the AI model and its URL. The `load_dotenv()` function is used to load environment variables from a `.env` file, and `getenv('AI_TOKEN')` retrieves the AI token from the environment variables. If the AI token is not set, the script raises a `ValueError`. The `AI_MODEL` and `AI_URL` constants are then defined for use in interacting with the AI model.
+### Example Usage for `take_command`
+
+```python
+# Capture and recognize voice input
+command = take_command()
+print(f"Recognized command: {command}")
+```
+
+### Example Usage for `get_message_list`
+
+```python
+# Initialize an empty message list
+message_list = []
+
+# Add a new message to the list
+message_list = get_message_list(message_list, "Hello, how can I help you?")
+
+# Print the updated message list
+print(message_list)
+```
+
+### Example Usage for `main`
+
+```python
+# Run the voice-activated assistant
+if __name__ == '__main__':
+    main()
+```
+
+This documentation provides a comprehensive overview of the script's functions and how to use them. For more detailed information, refer to the inline comments and docstrings within the script.
