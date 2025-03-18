@@ -1,4 +1,6 @@
 import time
+from subprocess import run
+from openai import OpenAI
 
 def int_input(prompt: str) -> int:
     """
@@ -75,3 +77,37 @@ def timestamp_print(*args, sep=' ', end='\n') -> None:
     for arg in args:
         print(arg, end=sep)
     print(end, end='')
+
+def run_terminal_command(command: str) -> str|None:
+    """
+    Run a terminal command and capture its output.
+
+    Parameters:
+    command (str): The terminal command to run.
+
+    Returns:
+    str|None: The output of the command if it was successful, None otherwise.
+    """
+    result = run('{}'.format(command), shell=True, capture_output=True, text=True)
+    if result.returncode == 0:
+        return result.stdout.strip()
+    else:
+        return None
+
+def ai_response(messages: list, model: str, url: str, key: str) -> tuple:
+    """
+    Generate a response from the AI model.
+
+    Args:
+        messages (list): A list of message dictionaries to send to the AI model.
+        model (str): The model name to use for generating the response.
+        url (str): The base URL of the AI service.
+        key (str): The API key for authenticating with the AI service.
+
+    Returns:
+        tuple: A tuple containing the AI response content and the updated messages list.
+    """
+    client = OpenAI(api_key=key, base_url=url)
+    completion = client.chat.completions.create(model=model, messages=messages)
+    messages.append({"role": "assistant", "content": completion.choices[0].message.content})
+    return completion.choices[0].message.content, messages
