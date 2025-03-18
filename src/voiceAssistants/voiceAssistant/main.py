@@ -4,7 +4,6 @@ import audio
 import helpers
 import tkinter as tk
 
-
 class CommandExecution:
     def __init__(self):
         self.username_write = ''
