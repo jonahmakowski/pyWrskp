@@ -94,20 +94,24 @@ def run_terminal_command(command: str) -> str|None:
     else:
         return None
 
-def ai_response(messages: list, model: str, url: str, key: str) -> tuple:
+def ai_response(messages: list, model: str, url: str, key: str, stream=False):
     """
-    Generate a response from the AI model.
+    Get a response from the OpenAI API.
 
     Args:
-        messages (list): A list of message dictionaries to send to the AI model.
-        model (str): The model name to use for generating the response.
-        url (str): The base URL of the AI service.
-        key (str): The API key for authenticating with the AI service.
+        messages (list): A list of message dictionaries to send to the API.
+        model (str): The model to use for the completion.
+        url (str): The base URL for the OpenAI API.
+        key (str): The API key for authentication.
+        stream (bool, optional): Whether to stream the response. Defaults to False.
 
     Returns:
-        tuple: A tuple containing the AI response content and the updated messages list.
+        tuple: The content of the response and the updated messages list.
     """
     client = OpenAI(api_key=key, base_url=url)
-    completion = client.chat.completions.create(model=model, messages=messages)
-    messages.append({"role": "assistant", "content": completion.choices[0].message.content})
-    return completion.choices[0].message.content, messages
+    completion = client.chat.completions.create(model=model, messages=messages, stream=stream)
+    if not stream:
+        messages.append({"role": "assistant", "content": completion.choices[0].message.content})
+        return completion.choices[0].message.content, messages
+    else:
+        return completion
