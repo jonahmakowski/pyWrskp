@@ -67,7 +67,7 @@ def load_from_env(variable: str) -> str:
         str: The value of the specified environment variable as a string.
     """
     load_dotenv()
-    return str(os.getenv(variable))
+    return os.getenv(variable)
 
 def list_to_str(list, sep='') -> str:
     """
