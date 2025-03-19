@@ -4,7 +4,7 @@
 
 ## Program Overview
 
-The provided Python script includes various utility functions and a decorator for timing function execution. The script also includes functionality for interacting with the OpenAI API. This document will provide an overview of the script's functions and classes, along with explanations and examples.
+The provided Python script includes various utility functions and a decorator for timing function execution. These utilities are designed to handle user input, measure execution time, print messages with timestamps, run terminal commands, and interact with the OpenAI API. This document will provide an overview of the script's functions and classes, along with explanations and examples.
 
 ## Table of Contents
 
@@ -24,7 +24,8 @@ The provided Python script includes various utility functions and a decorator fo
 **Parameters**:
 - `prompt (str)`: The message to display when asking for input.
 
-**Returns**: `int`: The integer value entered by the user.
+**Returns**:
+- `int`: The integer value entered by the user.
 
 ### float_input
 
@@ -33,7 +34,8 @@ The provided Python script includes various utility functions and a decorator fo
 **Parameters**:
 - `prompt (str)`: The message to display when asking for input.
 
-**Returns**: `float`: The floating-point number entered by the user.
+**Returns**:
+- `float`: The floating-point number entered by the user.
 
 ### timer
 
@@ -42,7 +44,8 @@ The provided Python script includes various utility functions and a decorator fo
 **Parameters**:
 - `func (callable)`: The function to be decorated.
 
-**Returns**: `callable`: The wrapped function that prints its execution time.
+**Returns**:
+- `callable`: The wrapped function that prints its execution time.
 
 ### timestamp_print
 
@@ -53,7 +56,7 @@ The provided Python script includes various utility functions and a decorator fo
 - `sep (str, optional)`: Separator between arguments. Defaults to a single space.
 - `end (str, optional)`: String appended after the last value. Defaults to a newline.
 
-**Example**:
+**Example Usage**:
 ```python
 timestamp_print("Hello", "world")
 # Output: [2023-10-05 14:23:45] Hello world
@@ -66,7 +69,8 @@ timestamp_print("Hello", "world")
 **Parameters**:
 - `command (str)`: The terminal command to run.
 
-**Returns**: `str|None`: The output of the command if it was successful, `None` otherwise.
+**Returns**:
+- `str|None`: The output of the command if it was successful, None otherwise.
 
 ### ai_response
 
@@ -77,27 +81,28 @@ timestamp_print("Hello", "world")
 - `model (str)`: The model to use for the completion.
 - `url (str)`: The base URL for the OpenAI API.
 - `key (str)`: The API key for authentication.
-- `stream (bool, optional)`: Whether to stream the response. Defaults to `False`.
+- `stream (bool, optional)`: Whether to stream the response. Defaults to False.
 
-**Returns**: `tuple`: The content of the response and the updated messages list.
+**Returns**:
+- `tuple`: The content of the response and the updated messages list.
 
 ## Example Usage
 
-### Example Usage for `int_input`
+### int_input
 
 ```python
-number = int_input("Enter an integer: ")
-print(f"You entered: {number}")
+age = int_input("Enter your age: ")
+print(f"You are {age} years old.")
 ```
 
-### Example Usage for `float_input`
+### float_input
 
 ```python
-number = float_input("Enter a floating-point number: ")
-print(f"You entered: {number}")
+height = float_input("Enter your height in meters: ")
+print(f"You are {height} meters tall.")
 ```
 
-### Example Usage for `timer`
+### timer
 
 ```python
 @timer
@@ -108,30 +113,28 @@ example_function()
 # Output: example_function took 2.0000 seconds
 ```
 
-### Example Usage for `timestamp_print`
+### timestamp_print
 
 ```python
-timestamp_print("Hello", "world")
-# Output: [2023-10-05 14:23:45] Hello world
+timestamp_print("This is a test message.")
+# Output: [2023-10-05 14:23:45] This is a test message.
 ```
 
-### Example Usage for `run_terminal_command`
+### run_terminal_command
 
 ```python
-output = run_terminal_command("echo Hello, World!")
+output = run_terminal_command("ls")
 print(output)
-# Output: Hello, World!
 ```
 
-### Example Usage for `ai_response`
+### ai_response
 
 ```python
-messages = [{"role": "user", "content": "Hello, AI!"}]
+messages = [{"role": "user", "content": "Hello, how are you?"}]
 model = "gpt-3.5-turbo"
 url = "https://api.openai.com/v1"
 key = "your_api_key_here"
 
 response, updated_messages = ai_response(messages, model, url, key)
 print(response)
-# Output: The response from the OpenAI API
 ```
