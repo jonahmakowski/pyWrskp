@@ -1,5 +1,5 @@
 import time
-from subprocess import run
+from subprocess import run, CalledProcessError
 from openai import OpenAI
 
 def int_input(prompt: str) -> int:
@@ -88,10 +88,11 @@ def run_terminal_command(command: str) -> str|None:
     Returns:
     str|None: The output of the command if it was successful, None otherwise.
     """
-    result = run('{}'.format(command), shell=True, capture_output=True, text=True)
-    if result.returncode == 0:
+    try:
+        result = run(command, shell=True, capture_output=True, text=True, check=True)
         return result.stdout.strip()
-    else:
+    except CalledProcessError as e:
+        print(f"Command '{command}' failed with error: {e.stderr}")
         return None
 
 def ai_response(messages: list, model: str, url: str, key: str, stream=False):
