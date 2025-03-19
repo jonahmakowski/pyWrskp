@@ -1,94 +1,81 @@
 # Documentation for src/helpfulPackage/setup.py
 
 # pyWrkspPackage Documentation
+=====================================
 
 ## Overview
 
-The `pyWrkspPackage` is a Python package designed to provide a set of helpful functions for various tasks. This package is built using the `setuptools` library and includes functionalities that can be useful in different Python projects. The package is licensed under the MIT License and is compatible with Python 3.10 and above.
+The `pyWrkspPackage` is a Python package designed to provide a collection of helpful functions. This package is intended to simplify common tasks and enhance productivity for Python developers. Below is a detailed documentation of the setup script used to create and distribute this package.
 
-## Installation
+## Table of Contents
 
-To install the `pyWrkspPackage`, you can use `pip`. Open your terminal and run:
+* [Setup Script](#setup-script)
+    * [Description](#description)
+    * [Parameters](#parameters)
+    * [Returns](#returns)
 
-```sh
-pip install pyWrkspPackage
-```
+## Detailed Function Descriptions
 
-## Usage
+### Setup Script
 
-Here is an example of how to use the `pyWrkspPackage` in your Python project:
+The setup script is used to configure the package distribution. It specifies metadata about the package, such as its name, version, description, and dependencies. This script is essential for packaging and distributing the `pyWrkspPackage`.
 
-```python
-import pyWrkspPackage
+#### Description
 
-# Example usage of functions from the package
-# (Note: Replace with actual functions from the package)
-result = pyWrkspPackage.some_function()
-print(result)
-```
+The setup script configures the package distribution for `pyWrkspPackage`. It reads the long description from a README file, specifies the package name, version, description, and other metadata. It also defines the dependencies required for the package.
 
-## Functions
+#### Parameters
 
-### find_packages
+The setup script uses several parameters to configure the package distribution. Here are the key parameters:
 
-**Description**: Discovers all packages and sub-packages in the specified directory.
+* `name`: The name of the package.
+* `version`: The version of the package.
+* `description`: A brief description of the package.
+* `package_dir`: The directory where the package is located.
+* `packages`: The list of packages to include in the distribution.
+* `long_description`: The long description of the package, read from a README file.
+* `long_description_content_type`: The content type of the long description.
+* `url`: The URL of the package's repository.
+* `author`: The author of the package.
+* `author_email`: The email address of the author.
+* `license`: The license under which the package is distributed.
+* `classifiers`: A list of classifiers that describe the package.
+* `install_requires`: A list of dependencies required for the package.
+* `extras_require`: Additional dependencies required for development.
+* `python_requires`: The Python version required for the package.
 
-**Parameters**:
-    *   `where` (str): The directory to search for packages.
+#### Returns
 
-**Returns**: A list of all Python packages found in the specified directory.
-
-### setup
-
-**Description**: Configures the package metadata and dependencies for installation.
-
-**Parameters**:
-    *   `name` (str): The name of the package.
-    *   `version` (str): The version of the package.
-    *   `description` (str): A brief description of the package.
-    *   `package_dir` (dict): A mapping of package names to directories.
-    *   `packages` (list): A list of all packages to include in the distribution.
-    *   `long_description` (str): A longer description of the package, typically read from a README file.
-    *   `long_description_content_type` (str): The content type of the long description (e.g., "text/markdown").
-    *   `url` (str): The URL of the project's homepage.
-    *   `author` (str): The name of the package author.
-    *   `author_email` (str): The email address of the package author.
-    *   `license` (str): The license under which the package is distributed.
-    *   `classifiers` (list): A list of classifiers for the package.
-    *   `install_requires` (list): A list of dependencies required for the package.
-    *   `extras_require` (dict): A dictionary of extra dependencies for different environments (e.g., development).
-    *   `python_requires` (str): The version of Python required to run the package.
-
-**Returns**: None
+The setup script does not return any values. Its primary purpose is to configure the package distribution.
 
 ## Example Usage
 
-Here is an example of how to use the `setup` function in a `setup.py` file:
+Here is an example of how to use the setup script to configure and distribute the `pyWrkspPackage`:
 
 ```python
 from setuptools import find_packages, setup
 
-with open("README.md", "r") as f:
+with open("app/README.md", "r") as f:
     long_description = f.read()
 
 setup(
-    name="examplePackage",
-    version="0.1.0",
-    description="An example package",
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
+    name="pyWrkspPackage",
+    version="0.4.6",
+    description="A group of helpful functions for Python",
+    package_dir={"": "app"},
+    packages=find_packages(where="app"),
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/examplePackage",
-    author="Your Name",
-    author_email="your.email@example.com",
+    url="https://github.com/jonahmakowski/pyWrskp",
+    author="Jonah Makowski",
+    author_email="jonah@makowski.ca",
     license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
     ],
-    install_requires=['requests'],
+    install_requires=['python-dotenv', 'openai'],
     extras_require={
         "dev": ["twine>=4.0.2"],
     },
@@ -96,18 +83,4 @@ setup(
 )
 ```
 
-## License
-
-This package is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-## Contributing
-
-Contributions are welcome! Please see the [CONTRIBUTING](CONTRIBUTING.md) file for more details.
-
-## Contact
-
-For any questions or support, please contact Jonah Makowski at [jonah@makowski.ca](mailto:jonah@makowski.ca).
-
-## Project Link
-
-You can find the project on GitHub: [pyWrkspPackage](https://github.com/jonahmakowski/pyWrskp)
+This setup script reads the long description from the `README.md` file located in the `app` directory. It then configures the package distribution with the specified metadata and dependencies. The `install_requires` parameter specifies the dependencies required for the package, while the `extras_require` parameter specifies additional dependencies required for development. The `python_requires` parameter specifies the Python version required for the package.
