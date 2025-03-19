@@ -1,78 +1,44 @@
 # Documentation for src/helpfulPackage/setup.py
 
-# pyWrkspPackage Documentation
+# pyWrkspPackage Setup Script
 
-## Overview
-
-The `pyWrkspPackage` is a Python package that provides a collection of helpful functions designed to streamline various tasks in Python development. This package is particularly useful for developers who need to manage environment variables, interact with the OpenAI API, and more.
+This script is used to set up the `pyWrkspPackage` Python package. It configures package metadata, dependencies, and other settings required for distribution and installation.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Functions](#functions)
-- [Classes](#classes)
-- [Contributing](#contributing)
-- [License](#license)
+* [Setup Function](#setup-function)
+    * Description: Configures the package metadata and dependencies.
+    * Parameters: Lists the parameters used to configure the package.
+    * Returns: None.
 
-## Installation
+## Detailed Function Descriptions
 
-To install the `pyWrkspPackage`, you can use `pip`:
+### Setup Function
 
-```sh
-pip install pyWrkspPackage
-```
-
-## Usage
-
-Here is a basic example of how to use the `pyWrkspPackage`:
-
-```python
-from pyWrkspPackage import some_function
-
-result = some_function()
-print(result)
-```
-
-## Functions
-
-### `some_function`
-
-Description: This function is a placeholder for the actual functions provided by the package. Replace this with the actual functions and their descriptions.
+Description: The `setup` function from the `setuptools` module is used to configure the package metadata and dependencies. This function sets up the package name, version, description, and other details required for distribution.
 
 Parameters:
-- None
+    * `name` (str): The name of the package.
+    * `version` (str): The version of the package.
+    * `description` (str): A brief description of the package.
+    * `package_dir` (dict): A dictionary mapping package names to directories.
+    * `packages` (list): A list of all packages to be included in the distribution.
+    * `long_description` (str): A longer description of the package, typically read from a README file.
+    * `long_description_content_type` (str): The content type of the long description (e.g., "text/markdown").
+    * `url` (str): The URL of the package's homepage.
+    * `author` (str): The name of the package author.
+    * `author_email` (str): The email address of the package author.
+    * `license` (str): The license under which the package is distributed.
+    * `classifiers` (list): A list of classifiers that describe the package.
+    * `install_requires` (list): A list of dependencies required for the package to function.
+    * `extras_require` (dict): A dictionary of additional dependencies required for different environments (e.g., development).
+    * `python_requires` (str): The Python version required to use the package.
 
-Returns:
-- None
+Returns: None.
 
-## Classes
+## Example Usage
 
-### `SomeClass`
-
-Description: This class is a placeholder for the actual classes provided by the package. Replace this with the actual classes and their descriptions.
-
-#### `some_method`
-
-Description: This method is a placeholder for the actual methods provided by the class. Replace this with the actual methods and their descriptions.
-
-Parameters:
-- None
-
-Returns:
-- None
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Setup Script
-
-The `setup.py` script is used to package and distribute the `pyWrkspPackage`. Below is the content of the `setup.py` script:
+Usage example for the setup script:
 
 ```python
 from setuptools import find_packages, setup
@@ -82,7 +48,7 @@ with open("app/README.md", "r") as f:
 
 setup(
     name="pyWrkspPackage",
-    version="0.4.1",
+    version="0.4.3",
     description="A group of helpful functions for Python",
     package_dir={"": "app"},
     packages=find_packages(where="app"),
@@ -105,33 +71,4 @@ setup(
 )
 ```
 
-### Detailed Setup Script Descriptions
-
-- **name**: The name of the package.
-- **version**: The version of the package.
-- **description**: A brief description of the package.
-- **package_dir**: The directory where the package is located.
-- **packages**: The packages to include in the distribution.
-- **long_description**: The long description of the package, read from the `README.md` file.
-- **long_description_content_type**: The content type of the long description.
-- **url**: The URL of the package's homepage.
-- **author**: The author of the package.
-- **author_email**: The email address of the author.
-- **license**: The license of the package.
-- **classifiers**: A list of classifiers for the package.
-- **install_requires**: A list of dependencies required by the package.
-- **extras_require**: Additional dependencies required for development.
-- **python_requires**: The Python version required by the package.
-
-## Example Usage
-
-Here is an example of how to use the `pyWrkspPackage` in a Python script:
-
-```python
-from pyWrkspPackage import some_function
-
-result = some_function()
-print(result)
-```
-
-This example demonstrates how to import and use a function from the `pyWrkspPackage`. Replace `some_function` with the actual function you want to use.
+This script reads the long description from a README file, configures the package metadata, and sets up the dependencies required for the package. The `setup` function is called with various parameters to configure the package, including its name, version, description, and dependencies. The `install_requires` parameter specifies the dependencies required for the package to function, while the `extras_require` parameter specifies additional dependencies required for different environments. The `python_requires` parameter specifies the Python version required to use the package.
