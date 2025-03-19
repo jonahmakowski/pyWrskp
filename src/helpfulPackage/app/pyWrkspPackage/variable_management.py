@@ -69,21 +69,21 @@ def load_from_env(variable: str) -> str:
     load_dotenv()
     return os.getenv(variable)
 
-def list_to_str(list, sep='') -> str:
+def list_to_str(lis: list, sep='') -> str:
     """
     Converts a list of items into a single string with each item separated by a specified separator.
 
     Args:
-        list (list): The list of items to be converted to a string.
+        lis (list): The list of items to be converted to a string.
         sep (str, optional): The separator to be used between items. Defaults to an empty string.
 
     Returns:
         str: A single string with all items from the list separated by the specified separator.
     """
     out = ''
-    for item in list:
+    for item in lis:
         out += str(item+sep)
-    return out
+    return out.strip()
 
 def make_matrix(rows: int, cols: int, default=None) -> list:
     """
