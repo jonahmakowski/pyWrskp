@@ -1,95 +1,113 @@
 # Documentation for src/helpfulPackage/setup.py
 
-# pyWrkspPackage Setup Script
-
-This document provides a comprehensive overview of the setup script for the `pyWrkspPackage` Python package. The script is written using `setuptools`, which is a library in Python that facilitates packaging Python projects.
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Dependencies](#dependencies)
-- [Setup Configuration](#setup-configuration)
-  - [Package Metadata](#package-metadata)
-  - [Package Description](#package-description)
-  - [Package Dependencies](#package-dependencies)
-  - [Extras Dependencies](#extras-dependencies)
-  - [Python Version Requirement](#python-version-requirement)
-- [Example Usage](#example-usage)
+# pyWrkspPackage Documentation
 
 ## Overview
 
-The `pyWrkspPackage` is a collection of helpful functions designed to assist Python developers. This setup script is used to package the `pyWrkspPackage` for distribution, making it easy to install and use in other projects.
+The `pyWrkspPackage` is a Python package designed to provide a set of helpful functions for various tasks. This package is built using the `setuptools` library and includes functionalities that can be useful in different Python projects. The package is licensed under the MIT License and is compatible with Python 3.10 and above.
 
-## Dependencies
+## Installation
 
-The setup script relies on the following dependencies:
+To install the `pyWrkspPackage`, you can use `pip`. Open your terminal and run:
 
-- `setuptools`: A library for packaging Python projects.
-- `python-dotenv`: A library to load environment variables from a `.env` file.
-- `openai`: A library to interact with the OpenAI API.
+```sh
+pip install pyWrkspPackage
+```
 
-## Setup Configuration
+## Usage
 
-The setup script is configured with various metadata and dependencies to ensure the package is correctly packaged and installed.
+Here is an example of how to use the `pyWrkspPackage` in your Python project:
 
-### Package Metadata
+```python
+import pyWrkspPackage
 
-The package metadata includes:
+# Example usage of functions from the package
+# (Note: Replace with actual functions from the package)
+result = pyWrkspPackage.some_function()
+print(result)
+```
 
-- **Name**: `pyWrkspPackage`
-- **Version**: `0.4.4`
-- **Description**: `A group of helpful functions for Python`
-- **URL**: `https://github.com/jonahmakowski/pyWrskp`
-- **Author**: `Jonah Makowski`
-- **Author Email**: `jonah@makowski.ca`
-- **License**: `MIT`
-- **Classifiers**: Specifies the license, programming language, and operating system compatibility.
+## Functions
 
-### Package Description
+### find_packages
 
-The package description is read from the `README.md` file located in the `app` directory. This file provides a detailed overview of the package, its features, and how to use it.
+**Description**: Discovers all packages and sub-packages in the specified directory.
 
-### Package Dependencies
+**Parameters**:
+    *   `where` (str): The directory to search for packages.
 
-The package depends on the following libraries:
+**Returns**: A list of all Python packages found in the specified directory.
 
-- `python-dotenv`: For loading environment variables.
-- `openai`: For interacting with the OpenAI API.
+### setup
 
-### Extras Dependencies
+**Description**: Configures the package metadata and dependencies for installation.
 
-Additional dependencies for development purposes are specified under the `extras_require` key:
+**Parameters**:
+    *   `name` (str): The name of the package.
+    *   `version` (str): The version of the package.
+    *   `description` (str): A brief description of the package.
+    *   `package_dir` (dict): A mapping of package names to directories.
+    *   `packages` (list): A list of all packages to include in the distribution.
+    *   `long_description` (str): A longer description of the package, typically read from a README file.
+    *   `long_description_content_type` (str): The content type of the long description (e.g., "text/markdown").
+    *   `url` (str): The URL of the project's homepage.
+    *   `author` (str): The name of the package author.
+    *   `author_email` (str): The email address of the package author.
+    *   `license` (str): The license under which the package is distributed.
+    *   `classifiers` (list): A list of classifiers for the package.
+    *   `install_requires` (list): A list of dependencies required for the package.
+    *   `extras_require` (dict): A dictionary of extra dependencies for different environments (e.g., development).
+    *   `python_requires` (str): The version of Python required to run the package.
 
-- `twine>=4.0.2`: A utility for publishing Python packages to PyPI.
-
-### Python Version Requirement
-
-The package requires Python version `>=3.10`.
+**Returns**: None
 
 ## Example Usage
 
-To use the setup script, follow these steps:
+Here is an example of how to use the `setup` function in a `setup.py` file:
 
-1. Ensure you have `setuptools` installed:
+```python
+from setuptools import find_packages, setup
 
-```bash
-pip install setuptools
+with open("README.md", "r") as f:
+    long_description = f.read()
+
+setup(
+    name="examplePackage",
+    version="0.1.0",
+    description="An example package",
+    package_dir={"": "src"},
+    packages=find_packages(where="src"),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/yourusername/examplePackage",
+    author="Your Name",
+    author_email="your.email@example.com",
+    license="MIT",
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.10",
+        "Operating System :: OS Independent",
+    ],
+    install_requires=['requests'],
+    extras_require={
+        "dev": ["twine>=4.0.2"],
+    },
+    python_requires=">=3.10",
+)
 ```
 
-2. Navigate to the directory containing the setup script.
+## License
 
-3. Run the setup script to install the package:
+This package is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-```bash
-python setup.py install
-```
+## Contributing
 
-4. To upload the package to PyPI, use `twine`:
+Contributions are welcome! Please see the [CONTRIBUTING](CONTRIBUTING.md) file for more details.
 
-```bash
-pip install twine
-python setup.py sdist bdist_wheel
-twine upload dist/*
-```
+## Contact
 
-This setup script ensures that the `pyWrkspPackage` is correctly packaged and can be easily installed and distributed.
+For any questions or support, please contact Jonah Makowski at [jonah@makowski.ca](mailto:jonah@makowski.ca).
+
+## Project Link
+
+You can find the project on GitHub: [pyWrkspPackage](https://github.com/jonahmakowski/pyWrskp)
