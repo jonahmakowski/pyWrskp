@@ -1,6 +1,8 @@
 from subprocess import run
 import os
 from pyWrkspPackage import run_terminal_command
+from webbrowser import open as web_open
+from urllib.parse import quote
 
 APPLICATION_PATHS = ['{}/Applications/'.format(os.path.expanduser("~")),
                      '/System/Volumes/Preboot/Cryptexes/App/System/Applications/',
@@ -148,3 +150,32 @@ def play(open_spotify=True) -> None:
         open_app('Spotify')
     run(['osascript', '-e', 'tell application "Spotify" to play'])
     hide_app('Spotify')
+
+def open_webpage(page: str, https=True) -> None:
+    """
+    Open a webpage in the default web browser.
+
+    Parameters:
+    page (str): The URL or page to open.
+    https (bool): If True, prepend 'https://' to the page URL. Defaults to True.
+    """
+    if https:
+        web_open('https://' + page)
+    else:
+        web_open(page)
+
+def search(query:str) -> str:
+    """
+    Search for a query on Google.
+
+    Parameters:
+    query (str): The search query.
+
+    Returns:
+    str: The final URL used for the search.
+    """
+    base_url = "https://www.duckduckgo.com/?q="
+    final_url = base_url + quote(query)
+    open_webpage(final_url, https=False)
+    return final_url
+
