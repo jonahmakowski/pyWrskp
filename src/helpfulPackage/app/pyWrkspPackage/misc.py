@@ -88,7 +88,7 @@ def run_terminal_command(command: str) -> str|None:
     Returns:
     str|None: The output of the command if it was successful, None otherwise.
     """
-    result = run(str(command), shell=True, capture_output=True, text=True)
+    result = run('{}'.format(command), shell=True, capture_output=True, text=True)
     if result.returncode == 0:
         return result.stdout.strip()
     else:
