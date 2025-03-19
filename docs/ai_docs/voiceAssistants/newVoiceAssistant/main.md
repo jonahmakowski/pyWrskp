@@ -1,56 +1,56 @@
 # Documentation for src/voiceAssistants/newVoiceAssistant/main.py
 
-# Python Script Documentation
+# Voice Assistant Script Documentation
 
 ## Program Overview
 
-The provided Python script is designed to create a voice-activated assistant that can perform various tasks based on voice commands. The script leverages several libraries and APIs to handle voice detection, speech recognition, and text-to-speech functionalities. It also integrates with an AI model to interpret user commands and execute appropriate actions.
+This Python script implements a voice assistant that listens for a wake word, captures voice commands, processes them using an AI model, and performs corresponding actions. The script leverages various libraries for audio processing, text-to-speech, and AI interaction.
 
 ## Table of Contents
 
 - [Function 1](#play_sound)
     - Description: Play a sound file using the mixer module.
-    - Parameters: `hold (bool)`, `sound (str, optional)`
+    - Parameters: `hold` (bool), `sound` (str, optional)
     - Returns: None
 
 - [Function 2](#take_command)
     - Description: Listens for a voice command and returns the recognized text.
     - Parameters: None
-    - Returns: `str`
+    - Returns: str
 
 - [Function 3](#get_message_list)
     - Description: Update the message list with a new user message.
-    - Parameters: `cur_list (list)`, `message (str)`, `max_size (int, optional)`
-    - Returns: `list`
+    - Parameters: `cur_list` (list), `message` (str), `max_size` (int, optional)
+    - Returns: list
 
 - [Function 4](#speak)
     - Description: Convert text to speech and play it through the speakers.
-    - Parameters: `message (str)`, `voice (int, optional)`
+    - Parameters: `message` (str), `voice` (int, optional)
     - Returns: None
 
 - [Function 5](#parse_command)
-    - Description: Parse the user command and execute the corresponding action.
-    - Parameters: `message (str)`
-    - Returns: `tuple[str, bool]`
+    - Description: Parse the command from the message and execute the corresponding action.
+    - Parameters: `message` (str), `message_list` (list)
+    - Returns: tuple[str, bool]
 
 - [Function 6](#main)
-    - Description: Main function to run the voice-activated assistant.
+    - Description: The main function to run the voice assistant.
     - Parameters: None
     - Returns: None
 
 ## Detailed Function Descriptions
 
-### Function 1: `play_sound`
+### play_sound
 
 **Description:** Play a sound file using the mixer module.
 
 **Parameters:**
-- `hold (bool)`: If True, the function will block until the sound finishes playing.
-- `sound (str, optional)`: The path to the sound file to play. Defaults to 'audio.mp3'.
+- `hold` (bool): If True, the function will block until the sound finishes playing.
+- `sound` (str, optional): The path to the sound file to play. Defaults to 'audio.mp3'.
 
 **Returns:** None
 
-### Function 2: `take_command`
+### take_command
 
 **Description:** Listens for a voice command and returns the recognized text.
 
@@ -58,41 +58,42 @@ This function uses the `speech_recognition` library to capture audio from the mi
 
 **Parameters:** None
 
-**Returns:** `str`: The recognized text from the audio input.
+**Returns:** str: The recognized text from the audio input.
 
-### Function 3: `get_message_list`
+### get_message_list
 
 **Description:** Update the message list with a new user message.
 
 **Parameters:**
-- `cur_list (list)`: The current list of messages.
-- `message (str)`: The new user message to add.
-- `max_size (int, optional)`: The maximum size of the message list. Defaults to 10.
+- `cur_list` (list): The current list of messages.
+- `message` (str): The new user message to add.
+- `max_size` (int, optional): The maximum size of the message list. Defaults to 10.
 
-**Returns:** `list`: The updated message list.
+**Returns:** list: The updated message list.
 
-### Function 4: `speak`
+### speak
 
 **Description:** Convert text to speech and play it through the speakers.
 
 **Parameters:**
-- `message (str)`: The text message to be spoken.
-- `voice (int, optional)`: The index of the voice to use. Defaults to 132.
+- `message` (str): The text message to be spoken.
+- `voice` (int, optional): The index of the voice to use. Defaults to 132.
 
 **Returns:** None
 
-### Function 5: `parse_command`
+### parse_command
 
-**Description:** Parse the user command and execute the corresponding action.
+**Description:** Parse the command from the message and execute the corresponding action.
 
 **Parameters:**
-- `message (str)`: The user command to parse.
+- `message` (str): The message containing the command.
+- `message_list` (list): The current list of messages.
 
-**Returns:** `tuple[str, bool]`: A tuple containing the parsed message and a boolean indicating if the assistant is in question mode.
+**Returns:** tuple[str, bool]: The remaining message and a boolean indicating if the assistant is in question mode.
 
-### Function 6: `main`
+### main
 
-**Description:** Main function to run the voice-activated assistant.
+**Description:** The main function to run the voice assistant.
 
 **Parameters:** None
 
@@ -110,7 +111,7 @@ play_sound(True, 'bootup.mp3')
 ### Example Usage for `take_command`
 
 ```python
-# Listen for a voice command and print the recognized text
+# Capture a voice command and print the recognized text
 command = take_command()
 print(command)
 ```
@@ -119,7 +120,7 @@ print(command)
 
 ```python
 # Update the message list with a new user message
-message_list = get_message_list([], "Hello, how can I help you?")
+message_list = get_message_list([], "Hello, how are you?")
 print(message_list)
 ```
 
@@ -127,23 +128,25 @@ print(message_list)
 
 ```python
 # Convert text to speech and play it through the speakers
-speak("Hello, Jonah! How can I assist you today?")
+speak("Hello, this is a test message.")
 ```
 
 ### Example Usage for `parse_command`
 
 ```python
-# Parse a user command and execute the corresponding action
-message, question_mode = parse_command("open-app$Google Chrome")
-print(message, question_mode)
+# Parse a command from the message and execute the corresponding action
+message = "open-app$notepad"
+message_list = []
+result, question_mode = parse_command(message, message_list)
+print(result, question_mode)
 ```
 
 ### Example Usage for `main`
 
 ```python
-# Run the voice-activated assistant
+# Run the voice assistant
 if __name__ == '__main__':
     main()
 ```
 
-This documentation provides a comprehensive overview of the script's functions and classes, along with examples of how to use them.
+This documentation provides a comprehensive overview of the functions and classes in the script, along with examples of how to use them.
