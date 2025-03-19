@@ -1,4 +1,4 @@
-from pyWrkspPackage import *
+from pyWrkspPackage import list_to_str, ai_response, load_from_file
 from os import getenv
 from dotenv import load_dotenv
 import pvporcupine
@@ -9,6 +9,7 @@ import pyttsx3
 import actions
 import speech_recognition as sr
 from datetime import datetime
+from pandas.io.clipboard import paste
 
 # General Setup
 load_dotenv()
@@ -17,11 +18,12 @@ VOICE_KEY = getenv('VOICE_DETECTION_TOKEN')
 AI_MODEL = 'mistral-large-latest'
 AI_URL = 'http://192.168.86.4:4001'
 SYS_PROMPT = load_from_file('prompt.md')
+# Commands dictionary format: {ai_command: [function, requires_arguments]}
 COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.search, True],
             'open-file': [actions.open_file, True], 'play-music': [actions.play, False],
             'pause-music': [actions.pause, False], 'open-webpage': [actions.open_webpage, True],
             'open-folder': [actions.open_directory_in_finder, True], 'hide-application': [actions.hide_app, True],
-            'question-mode': ['Question Mode', False]}
+            'question-mode': ['Question Mode', False], 'clipboard-contents': [paste, False]}
 USER_NAME = 'Jonah'
 
 # Setting up Audio Systems
@@ -95,7 +97,7 @@ def get_message_list(cur_list: list, message: str, max_size=10) -> list:
     cur_list.append({"role": "user", "content": message})
     return cur_list
 
-def speak(message: str, voice=132) -> None:
+def speak(message: str, voice=132, hold=True) -> None:
     """
     Convert text to speech and play it through the speakers.
 
@@ -108,7 +110,7 @@ def speak(message: str, voice=132) -> None:
     engine.say(message)
     engine.runAndWait()
 
-def parse_command(message: str) -> tuple[str, bool]:
+def parse_command(message: str, message_list: list) -> tuple[str, bool]:
     split_message = message.split('$')
     command = None
     for chunk in split_message:
@@ -124,6 +126,13 @@ def parse_command(message: str) -> tuple[str, bool]:
     func = command[0][0]
     if func == 'Question Mode':
         return list_to_str(split_message), True
+    elif func == paste:
+        print('Ran command {} without arguments'.format(key))
+        speak(list_to_str(command[1].split()[1:], sep=' '))
+        print(list_to_str(command[1].split()[1:], sep=' '))
+        message_list = get_message_list(message_list, 'AUTOMATED RESPONSE: Clipboard contents: {}'.format(func()))
+        response, message_list = ai_response(message_list, AI_MODEL, AI_URL, AI_KEY, stream=False)
+        return response, False
     elif command[0][1]:
         print('Ran command {} with arguments "{}"'.format(key, list_to_str(command[1].split()[1:], sep=' ')))
         func(list_to_str(command[1].split()[1:], sep=' '))
@@ -158,7 +167,7 @@ def main():
                 message_list = get_message_list(message_list, inp)
                 message, message_list = ai_response(message_list, AI_MODEL, AI_URL, AI_KEY)
                 print(message)
-                speak_version, question_mode = parse_command(message)
+                speak_version, question_mode = parse_command(message, message_list)
 
                 speak(speak_version)
 
