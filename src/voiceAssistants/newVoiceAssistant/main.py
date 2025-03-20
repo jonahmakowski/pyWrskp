@@ -89,11 +89,11 @@ def get_message_list(cur_list: list, message: str, max_size=10) -> list:
     cur_date = current_datetime.strftime("%B %d, %Y")
     cur_time = current_datetime.strftime("%I:%M %p")
     if not cur_list:
-        return [{"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME)},
+        return [{"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)},
                 {"role": "user", "content": message}]
     while len(cur_list) > max_size:
         cur_list.pop(1)
-    cur_list[0] = {"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME)}
+    cur_list[0] = {"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)}
     cur_list.append({"role": "user", "content": message})
     return cur_list
 
@@ -128,9 +128,11 @@ def parse_command(message: str, message_list: list) -> tuple[str, bool]:
         return list_to_str(split_message), True
     elif func == paste:
         print('Ran command {} without arguments'.format(key))
-        speak(list_to_str(command[1].split()[1:], sep=' '))
-        print(list_to_str(command[1].split()[1:], sep=' '))
-        message_list = get_message_list(message_list, 'AUTOMATED RESPONSE: Clipboard contents: {}'.format(func()))
+        speak(command[1].split()[0])
+        clipboard = str(paste())
+        print(clipboard)
+        message_list = get_message_list(message_list, 'AUTOMATED RESPONSE: Clipboard contents: {}'.format(clipboard))
+        print(message_list)
         response, message_list = ai_response(message_list, AI_MODEL, AI_URL, AI_KEY, stream=False)
         return response, False
     elif command[0][1]:

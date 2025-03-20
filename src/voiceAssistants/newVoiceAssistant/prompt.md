@@ -37,3 +37,5 @@ The current date is {}
 The current time is {}
 
 The user's name is {}
+
+Your model is {}
