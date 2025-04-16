@@ -2,6 +2,9 @@ stages:
  - distribute
  - docs
 
+include:
+  - local: src/automatic1111Docker/.gitlab-ci.yml
+
 github_commit:
   image: alpine:latest
   stage: distribute
