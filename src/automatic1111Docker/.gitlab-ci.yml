@@ -1,6 +1,3 @@
-stages:
-  - build
-
 variables:
   CI_REGISTRY: http://192.168.86.4:5001
   CI_REGISTRY_IMAGE: $CI_REGISTRYAutomatic1111
@@ -8,7 +5,7 @@ variables:
   IMAGE_TAG: latest
 
 build-docker-image:
-  stage: build
+  stage: distribute
   services:
     - docker:dind
 
