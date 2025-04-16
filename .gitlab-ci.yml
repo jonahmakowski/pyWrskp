@@ -17,6 +17,11 @@ docker_build:
   services:
     - docker:dind
   script:
+    - |
+      echo "Waiting for docker daemon on tcp://docker:2375..."
+      apk add --no-cache docker-cli # Add docker client if needed in docker:latest
+      timeout 60 sh -c 'while ! docker info > /dev/null 2>&1; do echo -n "."; sleep 1; done;' # Increased timeout
+      echo "Docker daemon is ready!"
     - echo "Checking Dockerfiles for changes..."
     - |
       find . -type f -name Dockerfile | while read dockerfile; do
@@ -34,8 +39,8 @@ docker_build:
             echo "No changes detected in $dir_path"
           else
             echo "Changes detected in $dir_path, building..."
-            docker build -t "$CI_REGISTRY/$CI_PROJECT_PATH/$dockername" .
-            docker push "$CI_REGISTRY/$CI_PROJECT_PATH/$dockername"
+            docker build -t "$CI_REGISTRY/${CI_PROJECT_PATH,,}/$dockername" .
+            docker push "$CI_REGISTRY/${CI_PROJECT_PATH,,}/$dockername"
           fi
           
           cd -
