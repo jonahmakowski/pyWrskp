@@ -1,21 +1,3 @@
-stages:
-  - build
-
-variables:
-  # Define DOCKER_HOST to ensure the client connects to the dind service
-  DOCKER_HOST: tcp://docker:2375 # Use 2376 if using TLS, but 2375 is common for dind without explicit TLS setup in CI
-  # Disable TLS verification with dind service if not explicitly configured
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_DRIVER: overlay2 # Optional: Recommended driver for dind
-
-  CI_REGISTRY: http://192.168.86.4:5001 # Your GitLab instance address + port
-  # Correct registry image path format: <registry_url>/<namespace>/<project_name>
-  CI_REGISTRY_IMAGE: $CI_REGISTRY_HOST/$CI_PROJECT_PATH/Automatic1111
-  DOCKERFILE_PATH: src/automatic1111Docker/Dockerfile # Path relative to repo root
-  IMAGE_TAG: latest
-
-image: docker:latest
-
 build_automatic1111:
   <<: *docker_build_definition # Use the template
   variables:
