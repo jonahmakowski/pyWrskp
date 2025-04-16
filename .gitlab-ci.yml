@@ -8,6 +8,13 @@ docker_build:
     - main
   image: docker:latest
   services:
+    - name: docker:dind
+      alias: docker
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ''
+    DOCKER_DRIVER: overlay2
+  services:
     - docker:dind
   script:
     - echo "Checking Dockerfiles for changes..."
