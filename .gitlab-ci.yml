@@ -2,35 +2,41 @@ stages:
  - distribute
  - docs
 
-#include:
-  #- local: src/automatic1111Docker/.gitlab-ci.yml
-
-variables:
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_DRIVER: overlay2
-  CI_REGISTRY: http://192.168.86.4:5001
-
-services:
-  - name: docker:dind
-    alias: docker
-
-#.docker_build_template: &docker_build_definition # YAML anchor for re-use
-#  stage: distribute # Default stage, can be overridden
-#  image: docker:latest
-#  script:
-#    - echo "Waiting for docker daemon..."
-#    - timeout 30 sh -c 'while ! docker info > /dev/null 2>&1; do echo -n "."; sleep 1; done;'
-#    - echo "Docker daemon is ready!"
-#    - docker info
-#    - echo "Logging in to GitLab Container Registry: $CI_REGISTRY_HOST"
-#    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY_HOST
-#    - echo "Building Docker image $IMAGE_NAME from $DOCKERFILE_PATH"
-#    - docker build -t $IMAGE_NAME:latest --file $DOCKERFILE_PATH .
-#    - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
-#    - echo "Pushing image to registry: $IMAGE_NAME"
-#    - docker push $IMAGE_NAME:latest
-#    - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+docker_build:
+  stage: distribute
+  only:
+    - main
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Checking Dockerfiles for changes..."
+    - |
+      find . -type f -name Dockerfile | while read dockerfile; do
+        dir_path=$(dirname $dockerfile)
+        dockername_file="$dir_path/DOCKERNAME.txt"
+        
+        if [ -f "$dockername_file" ]; then
+          dockername=$(cat "$dockername_file")
+          echo "Using Docker name: $dockername for directory: $dir_path"
+          
+          echo "Changing to directory: $dir_path"
+          cd "$dir_path"
+          
+          if docker build --no-cache -q . > /dev/null; then
+            echo "No changes detected in $dir_path"
+          else
+            echo "Changes detected in $dir_path, building..."
+            docker build -t "$CI_REGISTRY/$CI_PROJECT_PATH/$dockername" .
+            docker push "$CI_REGISTRY/$CI_PROJECT_PATH/$dockername"
+          fi
+          
+          cd -
+        else
+          echo "Error: DOCKERNAME.txt not found in $dir_path"
+          exit 1
+        fi
+      done
 
 github_commit:
   image: alpine:latest
