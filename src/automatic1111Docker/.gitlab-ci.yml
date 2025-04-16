@@ -1,5 +1,5 @@
 build_automatic1111:
-  <<: *docker_build_definition # Use the template
+  extends: .docker_build_template
   variables:
     IMAGE_NAME: $CI_REGISTRY_HOST/$CI_PROJECT_PATH/automatic1111 # Specific image name
     DOCKERFILE_PATH: ./src/automatic1111Docker/Dockerfile # Path to its Dockerfile
