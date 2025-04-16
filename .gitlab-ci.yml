@@ -34,7 +34,6 @@ docker_build:
           cd -
         else
           echo "Error: DOCKERNAME.txt not found in $dir_path"
-          exit 1
         fi
       done
 
