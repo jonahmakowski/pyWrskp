@@ -997,7 +997,6 @@ anova
 ansae
 ansan
 ansar
-ansel
 anser
 ansir
 anson
@@ -3256,6 +3255,7 @@ calls
 cally
 calms
 calmy
+calor
 calos
 calpe
 calum
@@ -3334,6 +3334,7 @@ carat
 carbo
 carbs
 carby
+cardo
 cards
 cared
 caren
@@ -4502,6 +4503,7 @@ crura
 cruse
 crush
 crust
+cruth
 crwth
 cryal
 crypt
@@ -5394,6 +5396,7 @@ dogma
 dogra
 doigt
 doily
+doina
 doing
 doits
 dojos
@@ -5759,7 +5762,6 @@ dupla
 duple
 duplo
 duply
-duppa
 duppy
 dural
 duran
@@ -5799,7 +5801,6 @@ duvel
 duvet
 duxes
 duzon
-dvdva
 dvigu
 dwale
 dwall
@@ -5814,7 +5815,6 @@ dwnld
 dwodm
 dwodp
 dwyer
-dwyka
 dyads
 dyana
 dyaus
@@ -5859,7 +5859,6 @@ eased
 easel
 easer
 eases
-eason
 easts
 eaten
 eater
@@ -6366,6 +6365,7 @@ esrog
 essai
 essam
 essay
+essed
 essee
 essen
 esses
@@ -9860,7 +9860,6 @@ jamod
 janan
 jandk
 jandp
-janem
 janes
 janet
 janey
@@ -11320,6 +11319,7 @@ lelia
 leman
 lemel
 lemma
+lemme
 lemmy
 lemna
 lemon
@@ -13544,6 +13544,7 @@ neese
 neeze
 nefas
 neffy
+neger
 negev
 negro
 negus
@@ -14217,6 +14218,7 @@ omega
 omeka
 omens
 omers
+omina
 omits
 omkar
 omlah
@@ -15046,6 +15048,7 @@ picae
 pical
 picas
 picea
+pichi
 picka
 picks
 picky
@@ -17060,6 +17063,7 @@ samek
 samel
 samen
 samer
+sames
 samho
 samia
 samin
@@ -17093,6 +17097,7 @@ sanes
 sanga
 sangh
 sango
+sangs
 sangu
 sania
 sanit
@@ -17253,10 +17258,13 @@ scary
 scase
 scats
 scatt
+scaul
 scaum
 scaup
 scaur
 scaut
+scawd
+scawl
 sccto
 sceat
 scelp
@@ -17736,6 +17744,7 @@ shira
 shire
 shiri
 shirk
+shirl
 shiro
 shirr
 shirt
@@ -17759,6 +17768,7 @@ shoad
 shoal
 shoat
 shock
+shode
 shoed
 shoer
 shoes
@@ -18538,6 +18548,7 @@ sospc
 soter
 sotho
 soths
+sotie
 sotik
 sotol
 soton
@@ -18810,6 +18821,7 @@ staid
 staig
 stail
 stain
+staio
 stair
 stake
 stale
@@ -19804,6 +19816,7 @@ theca
 theda
 theek
 theer
+thees
 theet
 theft
 thegn
@@ -19888,6 +19901,7 @@ thump
 thund
 thung
 thunk
+thuoc
 thurl
 thurm
 thurt
@@ -20789,6 +20803,7 @@ unice
 unico
 unifi
 unify
+uninn
 union
 uniqe
 unism
