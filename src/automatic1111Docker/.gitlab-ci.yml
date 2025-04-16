@@ -1,0 +1,37 @@
+stages:
+  - build
+
+variables:
+  CI_REGISTRY: http://192.168.86.4:5001
+  CI_REGISTRY_IMAGE: $CI_REGISTRYAutomatic1111
+  DOCKERFILE_PATH: src/automatic1111Docker/Dockerfile
+  IMAGE_TAG: latest
+
+build-docker-image:
+  stage: build
+  services:
+    - docker:dind
+
+  script:
+    - echo "Logging in to GitLab Container Registry"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+    - echo "Building Docker image"
+    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_TAG --file $DOCKERFILE_PATH .
+
+    - echo "Tagging image with commit reference"
+    - docker tag $CI_REGISTRY_IMAGE:$IMAGE_TAG $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_ID
+
+    - echo "Pushing image to registry"
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_ID
+
+    - echo "Logging out of GitLab Container Registry"
+    - docker logout
+
+  #rules:
+  #  - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  #    when: always
+
+  only:
+    - main
