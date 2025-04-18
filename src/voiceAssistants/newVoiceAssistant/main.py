@@ -1,84 +1,35 @@
 from pyWrkspPackage import list_to_str, ai_response, load_from_file
-from os import getenv, remove
+from helper import *
+import actions
+from os import getenv
 from dotenv import load_dotenv
 import pvporcupine
 from pvrecorder import PvRecorder
-from pygame import mixer
-from time import sleep
-import pyttsx3
-import actions
 import speech_recognition as sr
 from datetime import datetime
 from pandas.io.clipboard import paste
-import whisper
+import spotify_runner
 
 # General Setup
 load_dotenv()
 AI_KEY = getenv('AI_TOKEN')
 VOICE_KEY = getenv('VOICE_DETECTION_TOKEN')
-AI_MODEL = 'mistral-large-latest'
-AI_URL = 'http://192.168.86.4:4001'
+AI_MODEL = getenv('AI_MODEL')
+AI_URL = getenv('AI_URL')
 SYS_PROMPT = load_from_file('prompt.md')
 # Commands dictionary format: {ai_command: [function, requires_arguments]}
 COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.search, True],
-            'open-file': [actions.open_file, True], 'play-music': [actions.play, False],
-            'pause-music': [actions.pause, False], 'open-webpage': [actions.open_webpage, True],
+            'open-file': [actions.open_file, True], 'spotify': [spotify_runner.do_spotify, True, True], 'open-webpage': [actions.open_webpage, True],
             'open-folder': [actions.open_directory_in_finder, True], 'hide-application': [actions.hide_app, True],
             'question-mode': ['Question Mode', False], 'clipboard-contents': [paste, False], 'terminate': [actions.terminate, False],
             'quit-application': [actions.quit_app, True]}
 USER_NAME = 'Jonah'
-
-# Setting up Audio Systems
-mixer.init() # mp3 player init
-engine = pyttsx3.init() # text to speech init
-engine.setProperty('rate', 150)  # Speed of speech
-engine.setProperty('volume', 1)  # Volume level (0.0 to 1.0)
-model = whisper.load_model('base.en') # Whisper model init
 
 # Confirming env variables are set
 if AI_KEY is None or VOICE_KEY is None:
     raise ValueError('An environment variable (AI_KEY or VOICE_DETECTION_TOKEN) is not set')
 
 # Define Functions
-def play_sound(hold: bool, sound='audio.mp3') -> None:
-    """
-    Play a sound file using the mixer module.
-
-    Args:
-        hold (bool): If True, the function will block until the sound finishes playing.
-        sound (str, optional): The path to the sound file to play. Defaults to 'audio.mp3'.
-    """
-    mixer.music.load(sound)
-    mixer.music.play()
-    if hold:
-        while mixer.music.get_busy():
-            sleep(0.001)
-
-def take_command() -> str:
-    """
-    Listens for a voice command and returns the recognized text.
-
-    This function uses the `speech_recognition` library to capture audio from the microphone,
-    then processes the audio to recognize and return the spoken text.
-
-    Returns:
-        str: The recognized text from the audio input.
-    """
-    r = sr.Recognizer()
-
-    with sr.Microphone() as source:
-        print("Listening...")
-        r.pause_threshold = 2
-        audio = r.listen(source)
-
-    print("Recognizing...")
-    with open("temp_audio.wav", "wb") as f:
-        f.write(audio.get_wav_data())
-    transcription = model.transcribe("temp_audio.wav")['text']
-    remove("temp_audio.wav")
-
-    return transcription
-
 def get_message_list(cur_list: list, message: str, max_size=10) -> list:
     """
     Update the message list with a new user message.
@@ -103,19 +54,6 @@ def get_message_list(cur_list: list, message: str, max_size=10) -> list:
     cur_list.append({"role": "user", "content": message})
     return cur_list
 
-def speak(message: str, voice=132, hold=True) -> None:
-    """
-    Convert text to speech and play it through the speakers.
-
-    Args:
-        message (str): The text message to be spoken.
-        voice (int, optional): The index of the voice to use. Defaults to 132.
-    """
-    voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[voice].id)  # Changing index changes voices
-    engine.say(message)
-    engine.runAndWait()
-
 def parse_command(message: str, message_list: list) -> tuple[str, bool]:
     split_message = message.split('$')
     command = None
@@ -132,6 +70,8 @@ def parse_command(message: str, message_list: list) -> tuple[str, bool]:
     func = command[0][0]
     if func == 'Question Mode':
         return list_to_str(split_message), True
+    elif len(command[0]) == 3:
+        func(list_to_str(split_message))
     elif func == paste:
         print('Ran command {} without arguments'.format(key))
         speak(command[1].split()[0])
@@ -165,12 +105,15 @@ def main():
             keyword_index = porcupine.process(recoder.read())
             if keyword_index >= 0 or question_mode:
                 recoder.stop()
-                play_sound(False)
+                prev_volume = actions.get_current_volume()
+                play_sound(True)
+                actions.set_volume(0)
                 try:
                     inp = take_command()
                 except sr.UnknownValueError:
                     recoder.start()
                     continue
+                actions.set_volume(prev_volume)
 
                 message_list = get_message_list(message_list, inp)
                 message, message_list = ai_response(message_list, AI_MODEL, AI_URL, AI_KEY)

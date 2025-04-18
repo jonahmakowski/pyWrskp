@@ -198,3 +198,25 @@ def quit_app(app: str) -> None:
     end tell
     """
     run(['osascript', '-e', applescript])
+
+def set_volume(percentage:int) -> None:
+    """
+    Set the system volume to a specified percentage.
+
+    Parameters:
+    percentage (int): The desired volume level as a percentage (0-100).
+    """
+    if 0 <= percentage <= 100:
+        run(['osascript', '-e', f'set volume output volume {percentage}'])
+    else:
+        raise ValueError("Volume percentage must be between 0 and 100.")
+
+def get_current_volume() -> int:
+    """
+    Get the current system volume level.
+
+    Returns:
+    int: The current volume level as a percentage (0-100).
+    """
+    volume = run_terminal_command('osascript -e "output volume of (get volume settings)"')
+    return int(volume)
