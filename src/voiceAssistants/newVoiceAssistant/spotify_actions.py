@@ -23,8 +23,8 @@ SCOPE = (
 
 # Check if the redirect URI is set correctly
 redirect_uri = os.getenv('SPOTIPY_REDIRECT_URI')
-if redirect_uri != 'http://localhost:8888/callback':
-    print("Warning: Make sure SPOTIPY_REDIRECT_URI in your .env file is set to 'http://localhost:8888/callback'.")
+if redirect_uri != 'http://127.0.0.1:8888/callback':
+    print("Warning: Make sure SPOTIPY_REDIRECT_URI in your .env file is set to 'http://127.0.0.1:8888/callback'.")
 
 # Authenticate using SpotifyOAuth flow
 try:
@@ -39,8 +39,79 @@ except Exception as e:
 
 # --- Helper Functions ---
 
-def find_track(name):
-    """Searches for a track and returns its URI and ID. Spotify's search has some inherent fuzziness."""
+def get_currently_playing() -> dict:
+    """
+    Retrieves information about the currently playing track on Spotify.
+
+    This function uses the Spotify Web API to fetch details about the track
+    currently being played on the user's active device. If no track is playing
+    or an error occurs, an empty dictionary is returned.
+
+    Returns:
+        dict: A dictionary containing the following keys if a track is playing:
+            - 'track_name' (str): The name of the track.
+            - 'artist_name' (str): The name of the artist(s).
+            - 'album_name' (str): The name of the album.
+            - 'track_uri' (str): The Spotify URI of the track.
+            - 'track_id' (str): The Spotify ID of the track.
+            - 'is_playing' (bool): Whether the track is currently playing.
+            - 'progress_ms' (int): The current playback position in milliseconds.
+            - 'duration_ms' (int): The total duration of the track in milliseconds.
+            Returns an empty dictionary if no track is playing or an error occurs.
+
+    Notes:
+        - Ensure that the `sp` object (Spotipy client) is properly authenticated before calling this function.
+        - The user must have an active Spotify session for this function to return meaningful data.
+    """
+    try:
+        current_playback = sp.current_playback()
+        if not current_playback or not current_playback.get('item'):
+            return {}
+
+        track = current_playback['item']
+        track_name = track['name']
+        artist_name = ', '.join(artist['name'] for artist in track['artists'])
+        album_name = track['album']['name']
+        track_uri = track['uri']
+        track_id = track['id']
+        is_playing = current_playback['is_playing']
+        progress_ms = current_playback['progress_ms']
+        duration_ms = track['duration_ms']
+
+        print(f"Currently playing: '{track_name}' by {artist_name} from the album '{album_name}'.")
+        return {
+            'track_name': track_name,
+            'artist_name': artist_name,
+            'album_name': album_name,
+            'track_uri': track_uri,
+            'track_id': track_id,
+            'is_playing': is_playing,
+            'progress_ms': progress_ms,
+            'duration_ms': duration_ms
+        }
+
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Error retrieving currently playing track: {e}")
+        return {}
+
+
+def find_track(name: str) -> tuple:
+    """
+    Searches for a track on Spotify by its name and returns its URI and ID.
+
+    Args:
+        name (str): The name of the track to search for.
+
+    Returns:
+        tuple: A tuple containing the track's URI and ID if found, or (None, None) if not found or an error occurs.
+
+    Raises:
+        spotipy.exceptions.SpotifyException: If an error occurs during the Spotify API request.
+
+    Notes:
+        - The function uses the global `sp` object to interact with the Spotify API.
+        - If multiple tracks match the search query, only the first result is returned.
+    """
     try:
         results = sp.search(q=name, type='track', limit=1)
         items = results['tracks']['items']
@@ -57,10 +128,33 @@ def find_track(name):
         print(f"Error searching for track: {e}")
         return None, None
 
-def find_playlist_fuzzy(name, similarity_threshold=75):
+def find_playlist_fuzzy(name:str, similarity_threshold=75) -> tuple:
     """
-    Searches within the user's playlists using fuzzy matching and returns the best match's URI and ID.
-    Prioritizes playlists created by the user.
+    Perform a fuzzy search to find a Spotify playlist matching the given name.
+
+    This function retrieves all playlists associated with the current user, 
+    separates them into user-created and other playlists, and performs a fuzzy 
+    search to find the best match for the given playlist name. The search uses 
+    a similarity threshold to determine acceptable matches.
+
+    Args:
+        name (str): The name of the playlist to search for.
+        similarity_threshold (int, optional): The minimum similarity score (0-100) 
+            required for a match. Defaults to 75.
+
+    Returns:
+        tuple: A tuple containing the URI and ID of the matched playlist. 
+                Returns (None, None) if no match is found or an error occurs.
+
+    Raises:
+        spotipy.exceptions.SpotifyException: If an error occurs while interacting 
+            with the Spotify API.
+
+    Notes:
+        - The function prioritizes user-created playlists over other playlists 
+            when combining results.
+        - The fuzzy search is case-insensitive and uses the `fuzz.WRatio` scorer 
+            from the `fuzzywuzzy` library.
     """
     print(f"Fuzzy searching for playlist matching '{name}'...")
     try:
@@ -115,9 +209,21 @@ def find_playlist_fuzzy(name, similarity_threshold=75):
         print(f"Error searching for playlist: {e}")
         return None, None
 
-def list_user_playlists():
-    """Lists the current user's playlists."""
-    print("\n--- Your Playlists ---")
+def list_user_playlists() -> list:
+    """
+    Fetches the current user's Spotify playlists.
+
+    This function retrieves all playlists associated with the current Spotify user
+    using the Spotify Web API. It handles pagination to ensure all playlists are fetched.
+
+    Returns:
+        list: A list of dictionaries, where each dictionary contains the following keys:
+            - 'name' (str): The name of the playlist.
+            - 'user' (str): The display name of the playlist's owner.
+
+    Raises:
+        spotipy.exceptions.SpotifyException: If an error occurs while fetching playlists.
+    """
     try:
         playlists = []
         offset = 0
@@ -133,19 +239,36 @@ def list_user_playlists():
                 break
 
         if not playlists:
-            print("No playlists found.")
-            return
+            return {}
+
+        playlists_out = []
 
         for i, playlist in enumerate(playlists):
             owner = playlist['owner']['display_name']
-            print(f"{i+1}. {playlist['name']} (by {owner})")
-        print(f"--- Found {len(playlists)} playlists ---")
+            playlists_out.append({'name': playlist['name'], 'user': owner})
+        return playlists_out
 
     except spotipy.exceptions.SpotifyException as e:
         print(f"Error fetching playlists: {e}")
 
 def get_active_device():
-    """Gets the ID of the first available active device."""
+    """
+    Retrieves the active Spotify device ID or the first available device ID if no active device is found.
+
+    This function uses the Spotify Web API to fetch the list of devices associated with the user's account.
+    If an active device is found, its ID is returned. If no active device is found but devices are available,
+    the ID of the first available device is returned. If no devices are found or an error occurs, `None` is returned.
+
+    Returns:
+        str or None: The ID of the active Spotify device, the first available device, or `None` if no devices are found.
+
+    Exceptions:
+        Handles `spotipy.exceptions.SpotifyException` and prints an error message if an exception occurs.
+
+    Notes:
+        - Ensure that the `sp` object (Spotipy client) is properly authenticated before calling this function.
+        - The user must have at least one Spotify device connected to use this function.
+    """
     try:
         devices = sp.devices()
         if not devices or not devices['devices']:
@@ -160,7 +283,7 @@ def get_active_device():
         elif devices['devices']:
              device = devices['devices'][0]
              print(f"No active device detected, using first available: '{device['name']}' ({device['type']})")
-             return device['id']
+             return device
         else:
              print("No devices found.")
              return None
@@ -170,7 +293,28 @@ def get_active_device():
         return None
 
 def play_item(uri, device_id):
-    """Plays a track or playlist URI on the specified device."""
+    """
+    Plays a Spotify track or playlist on a specified device.
+
+    Args:
+        uri (str): The Spotify URI of the item to play. This can be a track or playlist URI.
+        device_id (str): The Spotify device ID where playback should occur.
+
+    Returns:
+        None
+
+    Prints:
+        - Error messages if `device_id` or `uri` is not provided.
+        - Playback status messages indicating the type of item being played (track or playlist).
+        - Error details if playback fails, including potential reasons such as:
+            - Lack of Spotify Premium account for playback control.
+            - Device unavailability.
+            - Invalid URI.
+
+    Raises:
+        spotipy.exceptions.SpotifyException: If an error occurs during playback, with additional
+        details about the HTTP status and error context.
+    """
     if not device_id:
         print("Cannot play: No device ID provided.")
         return
@@ -201,7 +345,23 @@ def play_item(uri, device_id):
              print(f"NOTE: Bad request. URI might be invalid: {uri}")
 
 def stop_playback(device_id):
-    """Stops playback on the specified device."""
+    """
+    Stops playback on the specified Spotify device.
+
+    Args:
+        device_id (str): The unique identifier of the Spotify device where playback should be stopped.
+
+    Returns:
+        None
+
+    Prints:
+        - A success message if playback is stopped successfully.
+        - An error message if no device ID is provided or if an exception occurs.
+
+    Notes:
+        - If the Spotify API returns a 403 error, it may indicate that playback control requires a Spotify Premium account.
+        - If the Spotify API returns a 404 error with "Device not found," it may indicate that the device is unavailable or needs to be reselected.
+    """
     if not device_id:
         print("Cannot stop: No device ID provided.")
         return
@@ -218,7 +378,21 @@ def stop_playback(device_id):
              print("NOTE: Device might have become unavailable. Try selecting a device again.")
 
 def like_song(track_id):
-    """Adds a track to the user's 'Liked Songs'."""
+    """
+    Adds a song to the user's Liked Songs on Spotify.
+
+    Parameters:
+        track_id (str): The Spotify track ID of the song to be liked. 
+                        Must be a valid non-empty string.
+
+    Behavior:
+        - If the track ID is invalid or empty, a message is printed, and the function returns.
+        - If the song is already in the user's Liked Songs, a message is printed, and no action is taken.
+        - If the song is not already liked, it is added to the user's Liked Songs, and a confirmation message is printed.
+
+    Exceptions:
+        - Handles `spotipy.exceptions.SpotifyException` and prints an error message if an issue occurs while interacting with the Spotify API.
+    """
     if not track_id:
         print("Cannot like song: Invalid track ID provided.")
         return
@@ -234,7 +408,29 @@ def like_song(track_id):
         print(f"Could not like song: {e}")
 
 def add_track_to_playlist(track_uri, playlist_name):
-    """Adds a track URI to a specified playlist by name (using fuzzy search)."""
+    """
+    Adds a track to a Spotify playlist by its URI.
+
+    This function checks if the provided track URI is valid and whether the track
+    is already present in the specified playlist. If the track is not already in
+    the playlist, it adds the track to the playlist.
+
+    Args:
+        track_uri (str): The Spotify URI of the track to be added.
+        playlist_name (str): The name of the playlist to which the track should be added.
+
+    Returns:
+        None
+
+    Raises:
+        spotipy.exceptions.SpotifyException: If there is an issue with the Spotify API.
+        Exception: For any other unexpected errors.
+
+    Notes:
+        - The function uses a fuzzy search to find the playlist by name.
+        - If the playlist is not found, the function exits without making changes.
+        - If the track is already in the playlist, it does not add it again.
+    """
     if not track_uri:
          print("Cannot add track: Invalid track URI provided.")
          return
@@ -262,108 +458,3 @@ def add_track_to_playlist(track_uri, playlist_name):
         print(f"Could not add track to playlist: {e}")
     except Exception as e:
         print(f"Track added, but couldn't confirm playlist name. Error: {e}")
-
-# --- Main Command Loop ---
-
-def run_cli():
-    """Runs the command-line interface loop."""
-    print("\nAvailable commands:")
-    print("  playsong <song name>          - Play a track")
-    print("  playplaylist <playlist name>  - Play a playlist")
-    print("  stop                          - Stop playback")
-    print("  like <song name>              - Add a song to your Liked Songs")
-    print("  add <song name> to <playlist name> - Add song to fuzzy matched playlist")
-    print("  playlists                     - List all your playlists")
-    print("  device                        - Show and select active device")
-    print("  quit                          - Exit the application")
-    print("-" * 20)
-
-    active_device_id = get_active_device()
-
-    while True:
-        command_line = input("> ").strip()
-        if not command_line:
-            continue
-
-        parts = command_line.lower().split()
-        action = parts[0]
-
-        if action == "quit":
-            print("Exiting Spotify Controller.")
-            break
-
-        elif action == "device":
-            active_device_id = get_active_device()
-
-        elif action == "playlists":
-            list_user_playlists()
-
-        elif action == "playsong":
-            if len(parts) < 2:
-                print("Usage: playsong <song name>")
-                continue
-            song_query = " ".join(parts[1:])
-            track_uri, _ = find_track(song_query)
-            if track_uri:
-                 if not active_device_id:
-                      print("No active device selected. Trying to find one...")
-                      active_device_id = get_active_device()
-                 if active_device_id:
-                      play_item(track_uri, active_device_id)
-                 else:
-                      print("Playback failed: Could not find an active device.")
-
-        elif action == "playplaylist":
-            if len(parts) < 2:
-                print("Usage: playplaylist <playlist name>")
-                continue
-            playlist_query = " ".join(parts[1:])
-            playlist_uri, _ = find_playlist_fuzzy(playlist_query)
-            if playlist_uri:
-                 if not active_device_id:
-                      print("No active device selected. Trying to find one...")
-                      active_device_id = get_active_device()
-                 if active_device_id:
-                      play_item(playlist_uri, active_device_id)
-                 else:
-                      print("Playback failed: Could not find an active device.")
-
-        elif action == "stop":
-            if not active_device_id:
-                print("No active device selected. Trying to find one...")
-                active_device_id = get_active_device()
-            if active_device_id:
-                stop_playback(active_device_id)
-            else:
-                print("Could not stop playback: No active device found.")
-
-        elif action == "like":
-            if len(parts) < 2:
-                print("Usage: like <song name>")
-                continue
-            song_query = " ".join(parts[1:])
-            _, track_id = find_track(song_query)
-            if track_id:
-                like_song(track_id)
-
-        elif action == "add":
-            try:
-                to_index = parts.index("to")
-                if to_index == 1 or to_index == len(parts) - 1:
-                    raise ValueError
-                song_query = " ".join(parts[1:to_index])
-                playlist_query = " ".join(parts[to_index+1:])
-
-                track_uri, _ = find_track(song_query)
-                if track_uri:
-                   add_track_to_playlist(track_uri, playlist_query)
-
-            except ValueError:
-                print("Invalid 'add' format. Use: add <song name> to <playlist name>")
-
-        else:
-            print(f"Unknown command: '{action}'. Type 'quit' to exit.")
-
-# --- Run the Application ---
-if __name__ == "__main__":
-    run_cli()
