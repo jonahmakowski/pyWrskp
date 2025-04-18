@@ -1,5 +1,5 @@
 from pyWrkspPackage import list_to_str, ai_response, load_from_file
-from os import getenv
+from os import getenv, remove
 from dotenv import load_dotenv
 import pvporcupine
 from pvrecorder import PvRecorder
@@ -10,6 +10,7 @@ import actions
 import speech_recognition as sr
 from datetime import datetime
 from pandas.io.clipboard import paste
+import whisper
 
 # General Setup
 load_dotenv()
@@ -23,7 +24,8 @@ COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.sea
             'open-file': [actions.open_file, True], 'play-music': [actions.play, False],
             'pause-music': [actions.pause, False], 'open-webpage': [actions.open_webpage, True],
             'open-folder': [actions.open_directory_in_finder, True], 'hide-application': [actions.hide_app, True],
-            'question-mode': ['Question Mode', False], 'clipboard-contents': [paste, False]}
+            'question-mode': ['Question Mode', False], 'clipboard-contents': [paste, False], 'terminate': [actions.terminate, False],
+            'quit-application': [actions.quit_app, True]}
 USER_NAME = 'Jonah'
 
 # Setting up Audio Systems
@@ -31,6 +33,7 @@ mixer.init() # mp3 player init
 engine = pyttsx3.init() # text to speech init
 engine.setProperty('rate', 150)  # Speed of speech
 engine.setProperty('volume', 1)  # Volume level (0.0 to 1.0)
+model = whisper.load_model('base.en') # Whisper model init
 
 # Confirming env variables are set
 if AI_KEY is None or VOICE_KEY is None:
@@ -65,13 +68,16 @@ def take_command() -> str:
 
     with sr.Microphone() as source:
         print("Listening...")
-        r.pause_threshold = 1
+        r.pause_threshold = 2
         audio = r.listen(source)
 
     print("Recognizing...")
-    query = r.recognize_google(audio, language='en-in')
+    with open("temp_audio.wav", "wb") as f:
+        f.write(audio.get_wav_data())
+    transcription = model.transcribe("temp_audio.wav")['text']
+    remove("temp_audio.wav")
 
-    return query
+    return transcription
 
 def get_message_list(cur_list: list, message: str, max_size=10) -> list:
     """
@@ -92,7 +98,7 @@ def get_message_list(cur_list: list, message: str, max_size=10) -> list:
         return [{"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)},
                 {"role": "user", "content": message}]
     while len(cur_list) > max_size:
-        cur_list.pop(1)
+        cur_list.pop(0)
     cur_list[0] = {"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)}
     cur_list.append({"role": "user", "content": message})
     return cur_list

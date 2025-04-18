@@ -179,3 +179,22 @@ def search(query:str) -> str:
     open_webpage(final_url, https=False)
     return final_url
 
+def terminate() -> None:
+    """
+    Terminate the program.
+    """
+    raise KeyboardInterrupt
+
+def quit_app(app: str) -> None:
+    """
+    Quit an application using AppleScript.
+
+    Parameters:
+    app (str): The name of the application to quit.
+    """
+    applescript = f"""
+    tell application "{app}"
+        quit
+    end tell
+    """
+    run(['osascript', '-e', applescript])
