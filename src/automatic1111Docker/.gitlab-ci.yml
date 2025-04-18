@@ -1,8 +1,0 @@
-build_automatic1111:
-  extends: .docker_build_template
-  variables:
-    IMAGE_NAME: $CI_REGISTRY_HOST/$CI_PROJECT_PATH/automatic1111 # Specific image name
-    DOCKERFILE_PATH: ./src/automatic1111Docker/Dockerfile # Path to its Dockerfile
-  #rules:
-  #  # Run only for scheduled pipelines
-  #  - if: $CI_PIPELINE_SOURCE == "schedule"
