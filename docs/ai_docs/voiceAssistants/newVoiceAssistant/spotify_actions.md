@@ -2,118 +2,148 @@
 
 # Spotify Controller Script Documentation
 
-## Overview
-
-This Python script provides a command-line interface (CLI) to control Spotify playback, manage playlists, and interact with user's Spotify library. It leverages the `spotipy` library for Spotify API interactions and `thefuzz` for fuzzy matching of track and playlist names.
+This Python script is designed to interact with the Spotify Web API using the Spotipy library. It provides various functionalities such as retrieving the currently playing track, searching for tracks and playlists, listing user playlists, controlling playback, and more.
 
 ## Table of Contents
 
-- [Configuration and Authentication](#configuration-and-authentication)
-- [Helper Functions](#helper-functions)
-  - [find_track](#find_track)
-  - [find_playlist_fuzzy](#find_playlist_fuzzy)
-  - [list_user_playlists](#list_user_playlists)
-  - [get_active_device](#get_active_device)
-  - [play_item](#play_item)
-  - [stop_playback](#stop_playback)
-  - [like_song](#like_song)
-  - [add_track_to_playlist](#add_track_to_playlist)
-- [Main Command Loop](#main-command-loop)
-  - [run_cli](#run_cli)
-- [Example Usage](#example-usage)
+* [Configuration and Authentication](#configuration-and-authentication)
+* [Helper Functions](#helper-functions)
+    * [get_currently_playing](#get_currently_playing)
+    * [find_track](#find_track)
+    * [find_playlist_fuzzy](#find_playlist_fuzzy)
+    * [list_user_playlists](#list_user_playlists)
+    * [get_active_device](#get_active_device)
+    * [play_item](#play_item)
+    * [stop_playback](#stop_playback)
+    * [like_song](#like_song)
+    * [add_track_to_playlist](#add_track_to_playlist)
 
 ## Configuration and Authentication
 
-### Environment Variables
-
-The script uses environment variables for configuration. Ensure you have a `.env` file with the following variables:
-
-- `SPOTIPY_CLIENT_ID`: Your Spotify API client ID.
-- `SPOTIPY_CLIENT_SECRET`: Your Spotify API client secret.
-- `SPOTIPY_REDIRECT_URI`: The redirect URI for Spotify authentication (should be `http://localhost:8888/callback`).
-
-### Authentication
-
-The script authenticates using Spotify's OAuth flow. It checks if the redirect URI is set correctly and prints a warning if not.
-
-```python
-redirect_uri = os.getenv('SPOTIPY_REDIRECT_URI')
-if redirect_uri != 'http://localhost:8888/callback':
-    print("Warning: Make sure SPOTIPY_REDIRECT_URI in your .env file is set to 'http://localhost:8888/callback'.")
-
-try:
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=SCOPE))
-    user_info = sp.current_user()
-    print(f"--- Authenticated as {user_info['display_name']} ({user_info['id']}) ---")
-    print("--- Spotify Controller Ready ---")
-except Exception as e:
-    print(f"Error during authentication: {e}")
-    print("Please check your .env file and Spotify Developer Dashboard settings.")
-    sys.exit(1)
-```
+The script starts by loading environment variables from a `.env` file using the `dotenv` library. It then sets up the necessary scopes for the Spotify API and checks if the redirect URI is set correctly. The script uses the `SpotifyOAuth` flow to authenticate the user and create a Spotipy client object.
 
 ## Helper Functions
 
-### find_track
+### get_currently_playing
 
-Searches for a track and returns its URI and ID.
+**Description:** Retrieves information about the currently playing track on Spotify.
 
-**Parameters:**
-- `name` (str): The name of the track to search for.
+**Parameters:** None
 
-**Returns:**
-- `tuple`: A tuple containing the track URI and ID, or `(None, None)` if not found.
+**Returns:** A dictionary containing details about the currently playing track, or an empty dictionary if no track is playing or an error occurs.
+
+**Example Usage:**
 
 ```python
-def find_track(name):
-    try:
-        results = sp.search(q=name, type='track', limit=1)
-        items = results['tracks']['items']
-        if items:
-            track = items[0]
-            track_name = track['name']
-            artist_names = ', '.join(artist['name'] for artist in track['artists'])
-            print(f"Found track: '{track_name}' by {artist_names}")
-            return track['uri'], track['id']
-        else:
-            print(f"Track '{name}' not found.")
-            return None, None
-    except spotipy.exceptions.SpotifyException as e:
-        print(f"Error searching for track: {e}")
-        return None, None
+current_track = get_currently_playing()
+if current_track:
+    print(f"Currently playing: {current_track['track_name']} by {current_track['artist_name']}")
+else:
+    print("No track is currently playing.")
+```
+
+### find_track
+
+**Description:** Searches for a track on Spotify by its name and returns its URI and ID.
+
+**Parameters:**
+* `name` (str): The name of the track to search for.
+
+**Returns:** A tuple containing the track's URI and ID if found, or `(None, None)` if not found or an error occurs.
+
+**Example Usage:**
+
+```python
+track_uri, track_id = find_track("Shape of You")
+if track_uri:
+    print(f"Found track: {track_uri}")
+else:
+    print("Track not found.")
 ```
 
 ### find_playlist_fuzzy
 
-Searches within the user's playlists using fuzzy matching and returns the best match's URI and ID.
+**Description:** Performs a fuzzy search to find a Spotify playlist matching the given name.
 
 **Parameters:**
-- `name` (str): The name of the playlist to search for.
-- `similarity_threshold` (int, optional): The minimum similarity score for a match. Defaults to 75.
+* `name` (str): The name of the playlist to search for.
+* `similarity_threshold` (int, optional): The minimum similarity score (0-100) required for a match. Defaults to 75.
 
-**Returns:**
-- `tuple`: A tuple containing the playlist URI and ID, or `(None, None)` if not found.
+**Returns:** A tuple containing the URI and ID of the matched playlist, or `(None, None)` if no match is found or an error occurs.
+
+**Example Usage:**
 
 ```python
-def find_playlist_fuzzy(name, similarity_threshold=75):
-    print(f"Fuzzy searching for playlist matching '{name}'...")
-    try:
-        all_playlists = []
-        offset = 0
-        limit = 50
-        while True:
-            results = sp.current_user_playlists(limit=limit, offset=offset)
-            if not results or not results['items']:
-                break
-            all_playlists.extend(results['items'])
-            if results['next']:
-                offset += limit
-            else:
-                break
+playlist_uri, playlist_id = find_playlist_fuzzy("My Favorite Songs")
+if playlist_uri:
+    print(f"Found playlist: {playlist_uri}")
+else:
+    print("Playlist not found.")
+```
 
-        if not all_playlists:
-             print("You don't seem to have any playlists.")
-             return None, None
+### list_user_playlists
 
-        user_playlists = [p for p in all_playlists if p['owner']['id'] == user_info['id']]
-        other_playlists = [p for
+**Description:** Fetches the current user's Spotify playlists.
+
+**Parameters:** None
+
+**Returns:** A list of dictionaries, where each dictionary contains the name and owner of a playlist.
+
+**Example Usage:**
+
+```python
+playlists = list_user_playlists()
+for playlist in playlists:
+    print(f"Playlist: {playlist['name']} by {playlist['user']}")
+```
+
+### get_active_device
+
+**Description:** Retrieves the active Spotify device ID or the first available device ID if no active device is found.
+
+**Parameters:** None
+
+**Returns:** The ID of the active Spotify device, the first available device, or `None` if no devices are found.
+
+**Example Usage:**
+
+```python
+device_id = get_active_device()
+if device_id:
+    print(f"Active device ID: {device_id}")
+else:
+    print("No active device found.")
+```
+
+### play_item
+
+**Description:** Plays a Spotify track or playlist on a specified device.
+
+**Parameters:**
+* `uri` (str): The Spotify URI of the item to play. This can be a track or playlist URI.
+* `device_id` (str): The Spotify device ID where playback should occur.
+
+**Returns:** None
+
+**Example Usage:**
+
+```python
+play_item("spotify:track:4uLU6hMCjMI75M1A2tKUQC", "device_id")
+```
+
+### stop_playback
+
+**Description:** Stops playback on the specified Spotify device.
+
+**Parameters:**
+* `device_id` (str): The unique identifier of the Spotify device where playback should be stopped.
+
+**Returns:** None
+
+**Example Usage:**
+
+```python
+stop_playback("device_id")
+```
+
+### like
