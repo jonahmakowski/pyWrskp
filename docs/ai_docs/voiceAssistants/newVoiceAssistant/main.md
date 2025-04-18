@@ -4,142 +4,104 @@
 
 ## Program Overview
 
-The provided Python script is designed to create a voice-activated assistant that can perform various tasks based on voice commands. The assistant uses speech recognition to listen for commands, processes these commands using an AI model, and executes corresponding actions. The script integrates several libraries and modules to handle audio playback, speech recognition, and AI responses.
+This Python script is designed to create a voice-activated assistant that can perform various commands based on user input. The assistant uses speech recognition to listen for commands, processes these commands using an AI model, and executes corresponding actions. The script leverages several libraries and modules, including `pyWrkspPackage`, `helper`, `actions`, `pvporcupine`, `pvrecorder`, `speech_recognition`, and `spotify_runner`.
 
 ## Table of Contents
 
-- [Function 1](#play_sound)
-    - Description: Play a sound file using the mixer module.
-    - Parameters: `hold (bool)`, `sound (str, optional)`
-    - Returns: None
-- [Function 2](#take_command)
-    - Description: Listens for a voice command and returns the recognized text.
-    - Parameters: None
-    - Returns: `str`
-- [Function 3](#get_message_list)
-    - Description: Update the message list with a new user message.
-    - Parameters: `cur_list (list)`, `message (str)`, `max_size (int, optional)`
-    - Returns: `list`
-- [Function 4](#speak)
-    - Description: Convert text to speech and play it through the speakers.
-    - Parameters: `message (str)`, `voice (int, optional)`, `hold (bool, optional)`
-    - Returns: None
-- [Function 5](#parse_command)
-    - Description: Parse the command and execute the corresponding action.
-    - Parameters: `message (str)`, `message_list (list)`
-    - Returns: `tuple[str, bool]`
-- [Function 6](#main)
-    - Description: Main function to run the voice-activated assistant.
-    - Parameters: None
-    - Returns: None
+- [General Setup](#general-setup)
+- [Functions](#functions)
+  - [get_message_list](#get_message_list)
+  - [parse_command](#parse_command)
+- [Main Function](#main-function)
 
-## Detailed Function Descriptions
+## General Setup
 
-### play_sound
+The script begins by importing necessary modules and setting up environment variables. It loads environment variables from a `.env` file and checks if the required tokens are set. The script also defines a dictionary of commands that map AI commands to corresponding functions.
 
-Description: Play a sound file using the mixer module.
+```python
+from pyWrkspPackage import list_to_str, ai_response, load_from_file
+from helper import *
+import actions
+from os import getenv
+from dotenv import load_dotenv
+import pvporcupine
+from pvrecorder import PvRecorder
+import speech_recognition as sr
+from datetime import datetime
+from pandas.io.clipboard import paste
+import spotify_runner
 
-Parameters:
-    - `hold (bool)`: If True, the function will block until the sound finishes playing.
-    - `sound (str, optional)`: The path to the sound file to play. Defaults to 'audio.mp3'.
+# General Setup
+load_dotenv()
+AI_KEY = getenv('AI_TOKEN')
+VOICE_KEY = getenv('VOICE_DETECTION_TOKEN')
+AI_MODEL = getenv('AI_MODEL')
+AI_URL = getenv('AI_URL')
+SYS_PROMPT = load_from_file('prompt.md')
+COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.search, True],
+            'open-file': [actions.open_file, True], 'spotify': [spotify_runner.do_spotify, True, True], 'open-webpage': [actions.open_webpage, True],
+            'open-folder': [actions.open_directory_in_finder, True], 'hide-application': [actions.hide_app, True],
+            'question-mode': ['Question Mode', False], 'clipboard-contents': [paste, False], 'terminate': [actions.terminate, False],
+            'quit-application': [actions.quit_app, True]}
+USER_NAME = 'Jonah'
 
-Returns: None
+# Confirming env variables are set
+if AI_KEY is None or VOICE_KEY is None:
+    raise ValueError('An environment variable (AI_KEY or VOICE_DETECTION_TOKEN) is not set')
+```
 
-### take_command
-
-Description: Listens for a voice command and returns the recognized text. This function uses the `speech_recognition` library to capture audio from the microphone, then processes the audio to recognize and return the spoken text.
-
-Parameters: None
-
-Returns: `str`: The recognized text from the audio input.
+## Functions
 
 ### get_message_list
 
-Description: Update the message list with a new user message.
+**Description**: Updates the message list with a new user message.
 
-Parameters:
-    - `cur_list (list)`: The current list of messages.
-    - `message (str)`: The new user message to add.
-    - `max_size (int, optional)`: The maximum size of the message list. Defaults to 10.
+**Parameters**:
+- `cur_list` (list): The current list of messages.
+- `message` (str): The new user message to add.
+- `max_size` (int, optional): The maximum size of the message list. Defaults to 10.
 
-Returns: `list`: The updated message list.
+**Returns**: The updated message list.
 
-### speak
-
-Description: Convert text to speech and play it through the speakers.
-
-Parameters:
-    - `message (str)`: The text message to be spoken.
-    - `voice (int, optional)`: The index of the voice to use. Defaults to 132.
-    - `hold (bool, optional)`: If True, the function will block until the speech finishes. Defaults to True.
-
-Returns: None
+```python
+def get_message_list(cur_list: list, message: str, max_size=10) -> list:
+    current_datetime = datetime.now()
+    cur_date = current_datetime.strftime("%B %d, %Y")
+    cur_time = current_datetime.strftime("%I:%M %p")
+    if not cur_list:
+        return [{"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)},
+                {"role": "user", "content": message}]
+    while len(cur_list) > max_size:
+        cur_list.pop(0)
+    cur_list[0] = {"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)}
+    cur_list.append({"role": "user", "content": message})
+    return cur_list
+```
 
 ### parse_command
 
-Description: Parse the command and execute the corresponding action.
+**Description**: Parses the command from the message and executes the corresponding function.
 
-Parameters:
-    - `message (str)`: The command message to parse.
-    - `message_list (list)`: The current list of messages.
+**Parameters**:
+- `message` (str): The message containing the command.
+- `message_list` (list): The current list of messages.
 
-Returns: `tuple[str, bool]`: A tuple containing the processed message and a boolean indicating if the assistant is in question mode.
-
-### main
-
-Description: Main function to run the voice-activated assistant.
-
-Parameters: None
-
-Returns: None
-
-## Example Usage
-
-### Example Usage for `play_sound`
+**Returns**: A tuple containing the updated message and a boolean indicating if the command is in question mode.
 
 ```python
-# Play a sound file and wait until it finishes
-play_sound(hold=True, sound='bootup.mp3')
-```
+def parse_command(message: str, message_list: list) -> tuple[str, bool]:
+    split_message = message.split('$')
+    command = None
+    for chunk in split_message:
+        for key in COMMANDS.keys():
+            if key in chunk:
+                del split_message[split_message.index(chunk)]
+                command = (COMMANDS[key], chunk)
+                break
 
-### Example Usage for `take_command`
+    if command is None:
+        return message, '?' in message
 
-```python
-# Listen for a voice command and print the recognized text
-command = take_command()
-print(command)
-```
-
-### Example Usage for `get_message_list`
-
-```python
-# Update the message list with a new user message
-message_list = get_message_list([], "Hello, how can I help you?")
-print(message_list)
-```
-
-### Example Usage for `speak`
-
-```python
-# Convert text to speech and play it through the speakers
-speak("Hello, Jonah. How can I assist you today?")
-```
-
-### Example Usage for `parse_command`
-
-```python
-# Parse a command and execute the corresponding action
-message_list = []
-response, question_mode = parse_command("open-app$Google Chrome", message_list)
-print(response)
-print(question_mode)
-```
-
-### Example Usage for `main`
-
-```python
-# Run the voice-activated assistant
-if __name__ == '__main__':
-    main()
-```
-
+    func = command[0][0]
+    if func == 'Question Mode':
+        return list
