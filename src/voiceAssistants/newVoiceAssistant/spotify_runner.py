@@ -39,7 +39,7 @@ def do_spotify(prompt: str) -> bool:
     print(response)
 
     if "stop-playback" in response:
-        stop_playback()
+        stop_playback(device)
     elif "like-song" in response:
         like_song(get_currently_playing()['track_id'])
     elif "play-song" in response:
