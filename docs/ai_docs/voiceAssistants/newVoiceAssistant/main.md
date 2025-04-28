@@ -2,100 +2,118 @@
 
 # Voice Assistant Script Documentation
 
-## Program Overview
+## Overview
 
-The provided Python script is a voice assistant designed to interact with users through voice commands. It leverages the Porcupine wake word detection engine and the PvRecorder for audio input. The assistant can respond to user queries and execute specific actions based on the parsed commands. The script integrates with an AI model to generate responses and perform various actions such as opening applications, searching the web, and managing Spotify.
+This Python script implements a voice-activated assistant that uses wake-word detection, speech recognition, and AI-based responses to perform various tasks. The assistant can execute commands, search the web, manage applications, and interact with Spotify and Google Calendar. The script leverages several external libraries and APIs to achieve its functionality.
 
 ## Table of Contents
 
-- [General Setup](#general-setup)
-- [Commands Dictionary](#commands-dictionary)
-- [Functions](#functions)
+- [Environment Setup](#environment-setup)
+- [Function Descriptions](#function-descriptions)
+  - [get_sys_prompt](#get_sys_prompt)
   - [get_message_list](#get_message_list)
   - [parse_command](#parse_command)
   - [main](#main)
 - [Example Usage](#example-usage)
 
-## General Setup
+## Environment Setup
 
-The script begins by loading environment variables and setting up necessary configurations. It includes the following steps:
+The script requires several environment variables and dependencies to function correctly. Ensure you have the following:
 
-1. Load environment variables from a `.env` file.
-2. Set up API keys and URLs for the AI model and voice detection.
-3. Load a system prompt from a file.
-4. Define a dictionary of commands and their corresponding functions.
-5. Confirm that essential environment variables are set.
+- `AI_TOKEN`: API token for the AI model.
+- `VOICE_DETECTION_TOKEN`: API token for voice detection.
+- `AI_MODEL`: Identifier for the AI model.
+- `AI_URL`: URL for the AI model endpoint.
 
-```python
-load_dotenv()
-AI_KEY = getenv('AI_TOKEN')
-VOICE_KEY = getenv('VOICE_DETECTION_TOKEN')
-AI_MODEL = getenv('AI_MODEL')
-AI_URL = getenv('AI_URL')
-SYS_PROMPT = load_from_file('prompt.md')
-COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.search, True],
-            'open-file': [actions.open_file, True], 'spotify': [spotify_runner.do_spotify, True, True], 'open-webpage': [actions.open_webpage, True],
-            'open-folder': [actions.open_directory_in_finder, True], 'hide-application': [actions.hide_app, True],
-            'question-mode': ['Question Mode', False], 'clipboard-contents': [paste, False], 'terminate': [actions.terminate, False],
-            'quit-application': [actions.quit_app, True]}
-USER_NAME = 'Jonah'
+These variables should be set in a `.env` file in the same directory as the script.
 
-if AI_KEY is None or VOICE_KEY is None:
-    raise ValueError('An environment variable (AI_KEY or VOICE_DETECTION_TOKEN) is not set')
-```
+## Function Descriptions
 
-## Commands Dictionary
+### get_sys_prompt
 
-The `COMMANDS` dictionary maps AI commands to their corresponding functions and specifies whether the command requires arguments.
+Generates a system prompt string containing the current date, time, user name, AI model, and formatted weather information.
+
+**Returns:**
+- `str`: A formatted system prompt string.
+
+**Dependencies:**
+- `datetime.now()`: Retrieves the current date and time.
+- `get_weather()`: Fetches weather data.
+- `ai_weather_display(weather_data)`: Formats the weather data for display.
+- `SYS_PROMPT`: A predefined string template requiring placeholders for date, time, user name, AI model, and weather information.
+- `USER_NAME`: The name of the user.
+- `AI_MODEL`: The name or identifier of the AI model.
 
 ```python
-COMMANDS = {
-    'open-app': [actions.open_app, True],
-    'search-the-web': [actions.search, True],
-    'open-file': [actions.open_file, True],
-    'spotify': [spotify_runner.do_spotify, True, True],
-    'open-webpage': [actions.open_webpage, True],
-    'open-folder': [actions.open_directory_in_finder, True],
-    'hide-application': [actions.hide_app, True],
-    'question-mode': ['Question Mode', False],
-    'clipboard-contents': [paste, False],
-    'terminate': [actions.terminate, False],
-    'quit-application': [actions.quit_app, True]
-}
+def get_sys_prompt() -> str:
+    current_datetime = datetime.now()
+    cur_date = current_datetime.strftime("%B %d, %Y")
+    cur_time = current_datetime.strftime("%I:%M %p")
+    weather_data = get_weather()
+    weather_display = ai_weather_display(weather_data)
+    _, events = get_events(5)
+    return SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL, weather_display, events)
 ```
-
-## Functions
 
 ### get_message_list
 
-**Description:** Update the message list with a new user message.
+Updates the message list with a new user message.
 
 **Parameters:**
 - `cur_list` (list): The current list of messages.
 - `message` (str): The new user message to add.
 - `max_size` (int, optional): The maximum size of the message list. Defaults to 10.
 
-**Returns:** The updated message list.
+**Returns:**
+- `list`: The updated message list.
 
 ```python
 def get_message_list(cur_list: list, message: str, max_size=10) -> list:
-    current_datetime = datetime.now()
-    cur_date = current_datetime.strftime("%B %d, %Y")
-    cur_time = current_datetime.strftime("%I:%M %p")
     if not cur_list:
-        return [{"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)},
+        return [{"role": "system", "content": get_sys_prompt()},
                 {"role": "user", "content": message}]
     while len(cur_list) > max_size:
         cur_list.pop(0)
-    cur_list[0] = {"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)}
+    cur_list[0] = {"role": "system", "content": get_sys_prompt()}
     cur_list.append({"role": "user", "content": message})
     return cur_list
 ```
 
 ### parse_command
 
-**Description:** Parses a given message to identify and execute commands, and returns the processed message along with a flag indicating whether the message is in "Question Mode".
+Parses a given message to identify and execute commands, and returns the processed message along with a flag indicating whether the message is in "Question Mode".
 
 **Parameters:**
 - `message` (str): The input message to be parsed.
-- `message_list
+- `message_list` (list): A list of previous messages for context or processing.
+
+**Returns:**
+- `tuple[str, bool]`: A tuple containing:
+  - The processed message as a string.
+  - A boolean indicating whether the message is in "Question Mode".
+
+```python
+def parse_command(message: str, message_list: list) -> tuple[str, bool]:
+    split_message = message.split('$')
+    command = None
+    for chunk in split_message:
+        for key in COMMANDS.keys():
+            if key in chunk:
+                del split_message[split_message.index(chunk)]
+                command = (COMMANDS[key], chunk)
+                break
+
+    if command is None:
+        return message, '?' in message
+
+    func = command[0][0]
+    if func == 'Question Mode':
+        return list_to_str(split_message), True
+    elif len(command[0]) == 3:
+        func(list_to_str(split_message))
+    elif func == paste:
+        print('Ran command {} without arguments'.format(key))
+        speak(command[1].split()[0])
+        clipboard = str(paste())
+        print(clipboard)
+        message_list = get_message_list(message_list, 'AUTOMATED RESP
