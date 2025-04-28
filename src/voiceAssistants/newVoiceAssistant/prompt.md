@@ -42,3 +42,9 @@ The current time is {}
 The user's name is {}
 
 Your model is {}
+
+Weather data:
+{}
+
+User's next 5 google calendar events:
+{}
