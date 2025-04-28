@@ -2,96 +2,121 @@
 
 # Python Script Documentation
 
-This document provides a comprehensive overview of the provided Python script, which includes functionalities for voice command recognition, sound playback, and text-to-speech conversion. The script utilizes several libraries such as `whisper`, `pyttsx3`, `pygame`, `speech_recognition`, and `os`.
+## Program Overview
+
+The provided Python script is designed to capture voice commands, play sound files, and convert text to speech. This script utilizes several libraries to achieve these functionalities, including `whisper`, `pyttsx3`, `pygame`, and `speech_recognition`. The script also includes a function to format and display weather data.
 
 ## Table of Contents
 
-- [Function 1: `take_command`](#function-1-take_command)
+- [take_command](#take_command)
   - Description: Listens for a voice command and returns the recognized text.
-  - Parameters: None.
-  - Returns: Recognized text from the audio input.
-
-- [Function 2: `play_sound`](#function-2-play_sound)
-  - Description: Plays a sound file using the mixer module.
-  - Parameters: `hold` (bool), `sound` (str, optional).
-  - Returns: None.
-
-- [Function 3: `speak`](#function-3-speak)
-  - Description: Converts text to speech and plays it through the speakers.
-  - Parameters: `message` (str), `voice` (int, optional).
-  - Returns: None.
+  - Parameters: None
+  - Returns: The recognized text from the audio input.
+- [play_sound](#play_sound)
+  - Description: Play a sound file using the mixer module.
+  - Parameters:
+    - `hold` (bool): If True, the function will block until the sound finishes playing.
+    - `sound` (str, optional): The path to the sound file to play. Defaults to 'audio.mp3'.
+  - Returns: None
+- [speak](#speak)
+  - Description: Convert text to speech and play it through the speakers.
+  - Parameters:
+    - `message` (str): The text message to be spoken.
+    - `voice` (int, optional): The index of the voice to use. Defaults to 132.
+  - Returns: None
+- [ai_weather_display](#ai_weather_display)
+  - Description: Formats and displays weather data in a readable string format.
+  - Parameters:
+    - `data` (dict): A dictionary containing weather information.
+  - Returns: A formatted string displaying the current weather and forecast details for each date.
 
 ## Detailed Function Descriptions
 
-### Function 1: `take_command`
+### take_command
 
-**Description:** This function listens for a voice command and returns the recognized text. It uses the `speech_recognition` library to capture audio from the microphone and then processes the audio to recognize and return the spoken text.
+**Description:** Listens for a voice command and returns the recognized text.
 
-**Parameters:** None.
+**Parameters:** None
 
 **Returns:** The recognized text from the audio input.
 
-### Example Usage
+**Example Usage:**
 
 ```python
 command = take_command()
-print(f"Recognized command: {command}")
+print(f"Recognized Command: {command}")
 ```
 
-### Function 2: `play_sound`
+### play_sound
 
-**Description:** This function plays a sound file using the mixer module. It can either play the sound in the background or block until the sound finishes playing.
+**Description:** Play a sound file using the mixer module.
 
 **Parameters:**
 - `hold` (bool): If True, the function will block until the sound finishes playing.
 - `sound` (str, optional): The path to the sound file to play. Defaults to 'audio.mp3'.
 
-**Returns:** None.
+**Returns:** None
 
-### Example Usage
+**Example Usage:**
 
 ```python
-play_sound(hold=True, sound='notification.mp3')
+play_sound(hold=True, sound='audio.mp3')
 ```
 
-### Function 3: `speak`
+### speak
 
-**Description:** This function converts text to speech and plays it through the speakers. It allows for selecting different voices.
+**Description:** Convert text to speech and play it through the speakers.
 
 **Parameters:**
 - `message` (str): The text message to be spoken.
 - `voice` (int, optional): The index of the voice to use. Defaults to 132.
 
-**Returns:** None.
+**Returns:** None
 
-### Example Usage
+**Example Usage:**
 
 ```python
 speak("Hello, how can I assist you today?", voice=132)
 ```
 
-## Additional Setup
+### ai_weather_display
 
-Before using the functions, ensure the following setup is done:
+**Description:** Formats and displays weather data in a readable string format.
+
+**Parameters:**
+- `data` (dict): A dictionary containing weather information. Expected keys:
+  - `current_temp` (str): The current temperature.
+  - `current_weather` (str): The current weather condition.
+  - Other keys representing dates (str), where each date maps to a dictionary with:
+    - `max_temp` (float): The maximum temperature for the date in °C.
+    - `min_temp` (float): The minimum temperature for the date in °C.
+    - `precipitation` (float): The precipitation percentage for the date.
+    - `avg_temp` (float): The average temperature for the date in °C.
+
+**Returns:** A formatted string displaying the current weather and forecast details for each date.
+
+**Example Usage:**
 
 ```python
-from os import remove
-import whisper
-import pyttsx3
-from pygame import mixer
-from time import sleep
-import speech_recognition as sr
+weather_data = {
+    'current_temp': '20°C',
+    'current_weather': 'Sunny',
+    '2023-10-01': {
+        'daily_temps': 25.0,
+        'daily_low_temps': 15.0,
+        'daily_precipitation': 10.0,
+        'daily_avg_temp': 20.0
+    },
+    '2023-10-02': {
+        'daily_temps': 22.0,
+        'daily_low_temps': 14.0,
+        'daily_precipitation': 20.0,
+        'daily_avg_temp': 18.0
+    }
+}
 
-# Setting up Audio Systems
-mixer.init()  # mp3 player init
-engine = pyttsx3.init()  # text to speech init
-engine.setProperty('rate', 150)  # Speed of speech
-engine.setProperty('volume', 1)  # Volume level (0.0 to 1.0)
-model = whisper.load_model('base.en')  # Whisper model init
+formatted_weather = ai_weather_display(weather_data)
+print(formatted_weather)
 ```
 
-This setup initializes the necessary audio systems and loads the Whisper model for voice recognition.
-
----
-
-This documentation should help users understand how to use the provided script effectively. If you have any further questions or need additional assistance, please feel free to ask!
+This documentation provides a comprehensive overview of the script's functionalities, including detailed descriptions of each function and examples of how to use them.
