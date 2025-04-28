@@ -133,3 +133,6 @@ dmypy.json
 
 # nohup
 nohup.out
+
+# Secrets
+.secret-*
