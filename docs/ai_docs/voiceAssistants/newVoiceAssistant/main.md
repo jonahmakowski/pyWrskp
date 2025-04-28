@@ -1,37 +1,32 @@
 # Documentation for src/voiceAssistants/newVoiceAssistant/main.py
 
-# Python Script Documentation
+# Voice Assistant Script Documentation
 
 ## Program Overview
 
-This Python script is designed to create a voice-activated assistant that can perform various commands based on user input. The assistant uses speech recognition to listen for commands, processes these commands using an AI model, and executes corresponding actions. The script leverages several libraries and modules, including `pyWrkspPackage`, `helper`, `actions`, `pvporcupine`, `pvrecorder`, `speech_recognition`, and `spotify_runner`.
+The provided Python script is a voice assistant designed to interact with users through voice commands. It leverages the Porcupine wake word detection engine and the PvRecorder for audio input. The assistant can respond to user queries and execute specific actions based on the parsed commands. The script integrates with an AI model to generate responses and perform various actions such as opening applications, searching the web, and managing Spotify.
 
 ## Table of Contents
 
 - [General Setup](#general-setup)
+- [Commands Dictionary](#commands-dictionary)
 - [Functions](#functions)
   - [get_message_list](#get_message_list)
   - [parse_command](#parse_command)
-- [Main Function](#main-function)
+  - [main](#main)
+- [Example Usage](#example-usage)
 
 ## General Setup
 
-The script begins by importing necessary modules and setting up environment variables. It loads environment variables from a `.env` file and checks if the required tokens are set. The script also defines a dictionary of commands that map AI commands to corresponding functions.
+The script begins by loading environment variables and setting up necessary configurations. It includes the following steps:
+
+1. Load environment variables from a `.env` file.
+2. Set up API keys and URLs for the AI model and voice detection.
+3. Load a system prompt from a file.
+4. Define a dictionary of commands and their corresponding functions.
+5. Confirm that essential environment variables are set.
 
 ```python
-from pyWrkspPackage import list_to_str, ai_response, load_from_file
-from helper import *
-import actions
-from os import getenv
-from dotenv import load_dotenv
-import pvporcupine
-from pvrecorder import PvRecorder
-import speech_recognition as sr
-from datetime import datetime
-from pandas.io.clipboard import paste
-import spotify_runner
-
-# General Setup
 load_dotenv()
 AI_KEY = getenv('AI_TOKEN')
 VOICE_KEY = getenv('VOICE_DETECTION_TOKEN')
@@ -45,23 +40,42 @@ COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.sea
             'quit-application': [actions.quit_app, True]}
 USER_NAME = 'Jonah'
 
-# Confirming env variables are set
 if AI_KEY is None or VOICE_KEY is None:
     raise ValueError('An environment variable (AI_KEY or VOICE_DETECTION_TOKEN) is not set')
+```
+
+## Commands Dictionary
+
+The `COMMANDS` dictionary maps AI commands to their corresponding functions and specifies whether the command requires arguments.
+
+```python
+COMMANDS = {
+    'open-app': [actions.open_app, True],
+    'search-the-web': [actions.search, True],
+    'open-file': [actions.open_file, True],
+    'spotify': [spotify_runner.do_spotify, True, True],
+    'open-webpage': [actions.open_webpage, True],
+    'open-folder': [actions.open_directory_in_finder, True],
+    'hide-application': [actions.hide_app, True],
+    'question-mode': ['Question Mode', False],
+    'clipboard-contents': [paste, False],
+    'terminate': [actions.terminate, False],
+    'quit-application': [actions.quit_app, True]
+}
 ```
 
 ## Functions
 
 ### get_message_list
 
-**Description**: Updates the message list with a new user message.
+**Description:** Update the message list with a new user message.
 
-**Parameters**:
+**Parameters:**
 - `cur_list` (list): The current list of messages.
 - `message` (str): The new user message to add.
 - `max_size` (int, optional): The maximum size of the message list. Defaults to 10.
 
-**Returns**: The updated message list.
+**Returns:** The updated message list.
 
 ```python
 def get_message_list(cur_list: list, message: str, max_size=10) -> list:
@@ -80,28 +94,8 @@ def get_message_list(cur_list: list, message: str, max_size=10) -> list:
 
 ### parse_command
 
-**Description**: Parses the command from the message and executes the corresponding function.
+**Description:** Parses a given message to identify and execute commands, and returns the processed message along with a flag indicating whether the message is in "Question Mode".
 
-**Parameters**:
-- `message` (str): The message containing the command.
-- `message_list` (list): The current list of messages.
-
-**Returns**: A tuple containing the updated message and a boolean indicating if the command is in question mode.
-
-```python
-def parse_command(message: str, message_list: list) -> tuple[str, bool]:
-    split_message = message.split('$')
-    command = None
-    for chunk in split_message:
-        for key in COMMANDS.keys():
-            if key in chunk:
-                del split_message[split_message.index(chunk)]
-                command = (COMMANDS[key], chunk)
-                break
-
-    if command is None:
-        return message, '?' in message
-
-    func = command[0][0]
-    if func == 'Question Mode':
-        return list
+**Parameters:**
+- `message` (str): The input message to be parsed.
+- `message_list

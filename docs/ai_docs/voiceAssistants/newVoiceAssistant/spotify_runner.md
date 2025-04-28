@@ -2,41 +2,62 @@
 
 # Python Script Documentation
 
-## Overview
+## Program Overview
 
-The provided Python script is designed to interact with Spotify based on user prompts. It leverages an AI model to interpret the prompts and perform corresponding Spotify actions such as playing, pausing, liking songs, and adding songs to playlists.
+The provided Python script is designed to interact with Spotify based on user prompts. It utilizes an AI model to interpret the user's request and perform corresponding Spotify actions such as playing, pausing, liking a song, adding a song to a playlist, and more.
 
 ## Table of Contents
 
 - [do_spotify](#do_spotify)
-  - Description: Performs Spotify actions based on the given prompt.
-  - Parameters: List any input parameters required by the function.
-  - Returns: Describe any output or return values produced by the function.
-- [Example Usage](#example-usage)
+  - Description: Perform Spotify actions based on the given prompt.
+  - Parameters:
+    - `prompt` (str): The prompt containing the action to perform.
+  - Returns:
+    - `bool`: True if the action was performed successfully, False otherwise.
 
 ## Detailed Function Descriptions
 
 ### do_spotify
 
-**Description:** This function takes a user prompt, processes it using an AI model to determine the appropriate Spotify action, and then performs that action.
+**Description**: This function takes a user prompt, sends it to an AI model to interpret, and performs the corresponding Spotify action based on the AI's response.
 
-**Parameters:**
-- `prompt` (str): The user prompt containing the action to perform.
+**Parameters**:
+- `prompt` (str): The prompt containing the action to perform.
 
-**Returns:**
-- `bool`: Returns `True` if the action was performed successfully, `False` otherwise.
+**Returns**:
+- `bool`: True if the action was performed successfully, False otherwise.
 
-**Example Usage:**
+**Example Usage**:
 
 ```python
 # Example usage of do_spotify function
-prompt = "Play the song 'Shape of You' by Ed Sheeran"
+prompt = "Play the song 'Shape of You' by Ed Sheeran."
 do_spotify(prompt)
 ```
 
+## Environment Variables
+
+The script uses environment variables to configure the AI model settings. Ensure you have a `.env` file with the following variables:
+
+- `AI_TOKEN`: The API token for the AI model.
+- `AI_MODEL`: The model name to be used.
+- `AI_URL`: The URL of the AI service.
+
+## Dependencies
+
+The script relies on several external libraries and modules. Ensure you have the following dependencies installed:
+
+- `helper`
+- `pyWrkspPackage`
+- `spotify_actions`
+- `actions`
+- `time`
+- `dotenv`
+- `os`
+
 ## Example Usage
 
-Below is an example of how to use the `do_spotify` function in a script:
+Here is an example of how to use the script:
 
 ```python
 from helper import *
@@ -80,7 +101,7 @@ def do_spotify(prompt: str) -> bool:
     print(response)
 
     if "stop-playback" in response:
-        stop_playback()
+        stop_playback(device)
     elif "like-song" in response:
         like_song(get_currently_playing()['track_id'])
     elif "play-song" in response:
@@ -97,8 +118,8 @@ def do_spotify(prompt: str) -> bool:
 if __name__ == "__main__":
     # Example usage
     print('Ready')
-    prompt = input("Enter your prompt: ")
+    prompt = input()
     do_spotify(prompt)
 ```
 
-This script sets up the necessary environment variables, defines the `do_spotify` function, and provides an example of how to use it. The `do_spotify` function processes the user prompt, interacts with the AI model to determine the appropriate action, and then performs that action using Spotify's API.
+This documentation provides a comprehensive overview of the script, including function descriptions, parameters, return values, and example usage. Make sure to set up the required environment variables and dependencies before running the script.
