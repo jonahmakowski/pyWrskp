@@ -9,6 +9,8 @@ import speech_recognition as sr
 from datetime import datetime
 from pandas.io.clipboard import paste
 import spotify_runner
+from weather_get import get_weather
+from google_calendar_api import get_events, get_credentials
 
 # General Setup
 load_dotenv()
@@ -25,9 +27,37 @@ COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.sea
             'quit-application': [actions.quit_app, True]}
 USER_NAME = 'Jonah'
 
+# Verify google calendar credentials
+get_credentials()
+
 # Confirming env variables are set
 if AI_KEY is None or VOICE_KEY is None:
     raise ValueError('An environment variable (AI_KEY or VOICE_DETECTION_TOKEN) is not set')
+
+def get_sys_prompt() -> str:
+    """
+    Generates a system prompt string containing the current date, time, user name, AI model, 
+    and formatted weather information.
+
+    Returns:
+        str: A formatted system prompt string.
+
+    Dependencies:
+        - datetime.now(): Retrieves the current date and time.
+        - get_weather(): Fetches weather data.
+        - ai_weather_display(weather_data): Formats the weather data for display.
+        - SYS_PROMPT: A predefined string template requiring placeholders for date, time, 
+          user name, AI model, and weather information.
+        - USER_NAME: The name of the user.
+        - AI_MODEL: The name or identifier of the AI model.
+    """
+    current_datetime = datetime.now()
+    cur_date = current_datetime.strftime("%B %d, %Y")
+    cur_time = current_datetime.strftime("%I:%M %p")
+    weather_data = get_weather()
+    weather_display = ai_weather_display(weather_data)
+    _, events = get_events(5)
+    return SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL, weather_display, events)
 
 # Define Functions
 def get_message_list(cur_list: list, message: str, max_size=10) -> list:
@@ -42,15 +72,12 @@ def get_message_list(cur_list: list, message: str, max_size=10) -> list:
     Returns:
         list: The updated message list.
     """
-    current_datetime = datetime.now()
-    cur_date = current_datetime.strftime("%B %d, %Y")
-    cur_time = current_datetime.strftime("%I:%M %p")
     if not cur_list:
-        return [{"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)},
+        return [{"role": "system", "content": get_sys_prompt()},
                 {"role": "user", "content": message}]
     while len(cur_list) > max_size:
         cur_list.pop(0)
-    cur_list[0] = {"role": "system", "content": SYS_PROMPT.format(cur_date, cur_time, USER_NAME, AI_MODEL)}
+    cur_list[0] = {"role": "system", "content": get_sys_prompt()}
     cur_list.append({"role": "user", "content": message})
     return cur_list
 
