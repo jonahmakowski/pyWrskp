@@ -55,6 +55,27 @@ def get_message_list(cur_list: list, message: str, max_size=10) -> list:
     return cur_list
 
 def parse_command(message: str, message_list: list) -> tuple[str, bool]:
+    """
+    Parses a given message to identify and execute commands, and returns the processed message 
+    along with a flag indicating whether the message is in "Question Mode".
+
+    Args:
+        message (str): The input message to be parsed.
+        message_list (list): A list of previous messages for context or processing.
+
+    Returns:
+        tuple[str, bool]: A tuple containing:
+            - The processed message as a string.
+            - A boolean indicating whether the message is in "Question Mode".
+    
+    Behavior:
+        - Splits the input message by the '$' delimiter.
+        - Searches for predefined commands in the split message chunks.
+        - Executes the corresponding function for the identified command, if any.
+        - Handles specific cases such as "Question Mode" and clipboard operations.
+        - If no command is identified, returns the original message and a flag indicating 
+          whether the message contains a '?' character.
+    """
     split_message = message.split('$')
     command = None
     for chunk in split_message:
@@ -92,6 +113,34 @@ def parse_command(message: str, message_list: list) -> tuple[str, bool]:
 
 # Running the actual assistant code
 def main():
+    """
+    Main function to initialize and run the voice assistant.
+
+    This function sets up the Porcupine wake word detection engine and the PvRecorder
+    for audio input. It listens for a wake word ("computer") and processes voice commands
+    to interact with an AI model. The assistant can respond to user queries and execute
+    specific actions based on the parsed commands.
+
+    Workflow:
+    1. Initializes the Porcupine engine with the specified wake word.
+    2. Starts the PvRecorder to capture audio input.
+    3. Plays a bootup sound to indicate readiness.
+    4. Continuously listens for the wake word or processes commands in question mode.
+    5. Adjusts system volume during command processing to avoid interference.
+    6. Sends user input to an AI model for generating responses.
+    7. Parses the AI response to determine actions and replies.
+    8. Handles cleanup and resource deallocation on exit.
+
+    Exceptions:
+    - Handles `KeyboardInterrupt` to allow graceful termination.
+    - Handles `sr.UnknownValueError` to skip unrecognized audio input.
+
+    Note:
+    - Requires valid `VOICE_KEY`, `AI_MODEL`, `AI_URL`, and `AI_KEY` for functionality.
+    - Assumes the existence of helper functions like `play_sound`, `take_command`,
+        `get_message_list`, `ai_response`, `parse_command`, `speak`, and `actions`.
+
+    """
     porcupine = pvporcupine.create(access_key=VOICE_KEY, keywords=['computer'])
     recoder = PvRecorder(device_index=-1, frame_length=porcupine.frame_length)
     message_list = []
