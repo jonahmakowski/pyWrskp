@@ -173,7 +173,7 @@ def main():
     message_list = []
     question_mode = False
 
-    play_sound(True, 'bootup.mp3')
+    play_sound(True, 'audio/bootup.mp3')
 
     try:
         recoder.start()

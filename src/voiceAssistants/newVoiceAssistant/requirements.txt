@@ -1,0 +1,16 @@
+google_api_python_client
+google_auth_oauthlib
+openai_whisper
+pandas
+protobuf
+pvporcupine
+pvrecorder
+pygame
+python-dotenv
+python_dateutil
+pyttsx3
+pywrksppackage
+Requests
+SpeechRecognition
+spotipy
+thefuzz
