@@ -1,12 +1,12 @@
 **Create Python Documentation for Script**
 =====================================
 
-As a software developer specializing in writing Python documentation, create a comprehensive documentation for the following Python script. The document should be written in Markdown format.
+As a software developer specializing in writing documentation, create a comprehensive documentation for the following script. The document should be written in Markdown format.
 
 ### Program Overview
 -------------------
 
-The provided Python script is designed to [briefly describe the program's purpose or functionality]. This document will provide an overview of the script's functions and classes, along with explanations and examples.
+The provided script is designed to [briefly describe the program's purpose or functionality]. This document will provide an overview of the script's functions and classes, along with explanations and examples.
 
 ### Table of Contents
 -----------------------------

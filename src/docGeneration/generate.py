@@ -15,7 +15,7 @@ modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlin
 print("Modified files:", modified_files)
 
 # Filter files from /src/ that are Python or C++ source_files
-source_files = [f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".cpp", ".js"))]
+source_files = [f for f in modified_files if f.startswith("src/") and f.endswith((".py", '.gd'))]
 
 print(f"{len(source_files)}; Source files:", source_files)
 
@@ -25,7 +25,7 @@ print(f"{len(documentation_files)}; Documentation files:", documentation_files)
 
 # Remove old documentation for files that have been deleted
 for doc_file in documentation_files:
-    corresponding_source_file = doc_file.replace("docs/ai_docs/", "src/").replace(".md", ".py")
+    corresponding_source_file = doc_file.replace("docs/ai_docs/", "src/").replace(".md", ".py").replace(".md", ".gd")
     if not os.path.exists(corresponding_source_file):
         print(f"Removing outdated documentation: {doc_file}")
         os.remove(doc_file)
@@ -74,7 +74,7 @@ for file_num, file in enumerate(source_files):
         continue
 
     # Convert file path from /src/ to /docs/
-    doc_path = file.replace("src/", "docs/ai_docs/").replace(".py", ".md").replace(".cpp", ".md").replace(".js", ".md")
+    doc_path = file.replace("src/", "docs/ai_docs/").replace(".py", ".md").replace(".gd", ".md")
 
     # Ensure parent directories exist
     os.makedirs(os.path.dirname(doc_path), exist_ok=True)
