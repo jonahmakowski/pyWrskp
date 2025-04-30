@@ -122,4 +122,5 @@ generate_docs:
   rules:
     - changes:
         - "**/*.py"  # Runs only when Python files change
+        - "**/*.gd" # Or 
   
