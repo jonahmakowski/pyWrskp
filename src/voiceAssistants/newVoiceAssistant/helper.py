@@ -37,13 +37,13 @@ def take_command() -> str:
 
     return transcription
 
-def play_sound(hold: bool, sound='audio.mp3') -> None:
+def play_sound(hold: bool, sound='audio/audio.mp3') -> None:
     """
     Play a sound file using the mixer module.
 
     Args:
         hold (bool): If True, the function will block until the sound finishes playing.
-        sound (str, optional): The path to the sound file to play. Defaults to 'audio.mp3'.
+        sound (str, optional): The path to the sound file to play. Defaults to 'audio/audio.mp3'.
     """
     mixer.music.load(sound)
     mixer.music.play()
