@@ -63,32 +63,3 @@ def speak(message: str, voice=132, hold=True) -> None:
     engine.setProperty('voice', voices[voice].id)  # Changing index changes voices
     engine.say(message)
     engine.runAndWait()
-
-def ai_weather_display(data):
-    """
-    Formats and displays weather data in a readable string format.
-    Args:
-        data (dict): A dictionary containing weather information. 
-                     Expected keys:
-                     - 'current_temp' (str): The current temperature.
-                     - 'current_weather' (str): The current weather condition.
-                     - Other keys representing dates (str), where each date maps to a dictionary with:
-                       - 'max_temp' (float): The maximum temperature for the date in °C.
-                       - 'min_temp' (float): The minimum temperature for the date in °C.
-                       - 'precipitation' (float): The precipitation percentage for the date.
-                       - 'avg_temp' (float): The average temperature for the date in °C.
-    Returns:
-        str: A formatted string displaying the current weather and forecast details for each date.
-    """
-    out = f"Current Temperature: {data['current_temp']}\nCurrent Weather: {data['current_weather']}"
-    for date in data:
-        if not isinstance(data[date], dict):
-            continue
-        out += f"Date: {date}\n"
-        out += f"Max Temp: {data[date]['daily_temps']}°C\n"
-        out += f"Min Temp: {data[date]['daily_low_temps']}°C\n"
-        out += f"Chance of Precipitation: {data[date]['daily_precipitation']}%\n"
-        out += f"Avg Temp: {data[date]['daily_avg_temp']}°C\n"
-        out += "\n"
-    
-    return out
