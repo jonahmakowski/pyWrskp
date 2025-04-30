@@ -1,117 +1,132 @@
 # Documentation for src/docGeneration/generate.py
 
-# Python Script Documentation
+# Script Documentation
 
 ## Program Overview
 
-The provided Python script is designed to automate the generation and management of documentation for modified source files. It identifies files that have been changed in the last commit, filters them based on their file type (Python, C++, or JavaScript), and then uses an OpenAI model to generate documentation for these files. The generated documentation is saved in a mirrored directory structure under `docs/ai_docs/`.
+This script automates the process of generating documentation for modified Python and C++ source files in a Git repository. It leverages a custom API endpoint to generate documentation using an AI model. The script identifies modified files, filters out relevant source files, removes outdated documentation, and generates new documentation for the modified files.
 
 ## Table of Contents
 
 - [Configuration](#configuration)
-- [Modified Files Identification](#modified-files-identification)
-- [Source Files Filtering](#source-files-filtering)
-- [Documentation Files Management](#documentation-files-management)
-- [Documentation Generation](#documentation-generation)
+- [Main Script Workflow](#main-script-workflow)
+- [Function Descriptions](#function-descriptions)
+  - [get_modified_files](#get_modified_files)
+  - [filter_source_files](#filter_source_files)
+  - [get_documentation_files](#get_documentation_files)
+  - [remove_outdated_documentation](#remove_outdated_documentation)
+  - [generate_new_documentation](#generate_new_documentation)
 - [Example Usage](#example-usage)
 
 ## Configuration
 
-The script starts with several configuration variables:
+The script requires the following configuration variables:
 
-- `CUSTOM_API_URL`: The custom API endpoint for the OpenAI service.
-- `OPENAI_API_KEY`: The API key for the OpenAI service, retrieved from the environment variable `API_KEY`.
+- `CUSTOM_API_URL`: The URL of the custom API endpoint.
+- `OPENAI_API_KEY`: The API key for the OpenAI service or another service.
 - `MODEL_NAME`: The name of the model to be used for documentation generation.
 
 ```python
-CUSTOM_API_URL = "http://192.168.86.4:4001"
-OPENAI_API_KEY = os.getenv("API_KEY")
-MODEL_NAME = "codestral-latest"
+CUSTOM_API_URL = "http://192.168.86.4:4001"  # Set your custom API endpoint here
+OPENAI_API_KEY = os.getenv("API_KEY")  # Your OpenAI API key or other service's API key
+MODEL_NAME = "codestral-latest"  # or other appropriate model name
 ```
 
-## Modified Files Identification
+## Main Script Workflow
 
-The script uses the `git diff` command to identify files that have been modified in the last commit.
+1. **Get Modified Files**: Retrieve the list of files modified in the last commit.
+2. **Filter Source Files**: Filter the modified files to include only Python and C++ source files located in the `src/` directory.
+3. **Get Documentation Files**: Retrieve the list of existing documentation files.
+4. **Remove Outdated Documentation**: Remove documentation files that correspond to deleted source files.
+5. **Generate New Documentation**: Generate new documentation for the modified source files using the custom API endpoint.
+
+## Function Descriptions
+
+### get_modified_files
+
+**Description**: Retrieves the list of files modified in the last commit.
+
+**Parameters**: None
+
+**Returns**: A list of modified files.
 
 ```python
-git_diff_cmd = "git diff --name-only HEAD~1"
-modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlines()
-print("Modified files:", modified_files)
+def get_modified_files():
+    git_diff_cmd = "git diff --name-only HEAD~1"
+    modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlines()
+    return modified_files
 ```
 
-## Source Files Filtering
+### filter_source_files
 
-The script filters the modified files to include only those located in the `src/` directory and with extensions `.py`, `.cpp`, or `.js`.
+**Description**: Filters the modified files to include only Python and C++ source files located in the `src/` directory.
+
+**Parameters**:
+- `modified_files` (list): A list of modified files.
+
+**Returns**: A list of filtered source files.
 
 ```python
-source_files = [f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".cpp", ".js"))]
-print(f"{len(source_files)}; Source files:", source_files)
+def filter_source_files(modified_files):
+    source_files = [f for f in modified_files if f.startswith("src/") and f.endswith((".py", '.gd'))]
+    return source_files
 ```
 
-## Documentation Files Management
+### get_documentation_files
 
-The script identifies existing documentation files in the `docs/ai_docs/` directory and removes any documentation files that correspond to source files that no longer exist.
+**Description**: Retrieves the list of existing documentation files.
+
+**Parameters**: None
+
+**Returns**: A list of documentation files.
 
 ```python
-documentation_files = [os.path.join(dirpath, f) for (dirpath, dirnames, filenames) in os.walk('docs/ai_docs/') for f in filenames]
-print(f"{len(documentation_files)}; Documentation files:", documentation_files)
-
-for doc_file in documentation_files:
-    corresponding_source_file = doc_file.replace("docs/ai_docs/", "src/").replace(".md", ".py")
-    if not os.path.exists(corresponding_source_file):
-        print(f"Removing outdated documentation: {doc_file}")
-        os.remove(doc_file)
+def get_documentation_files():
+    documentation_files = [os.path.join(dirpath, f) for (dirpath, dirnames, filenames) in os.walk('docs/ai_docs/') for f in filenames]
+    return documentation_files
 ```
 
-## Documentation Generation
+### remove_outdated_documentation
 
-The script initializes an OpenAI client with the custom API URL and API key. For each source file, it reads the file's content, sends it to the OpenAI model for documentation generation, and saves the generated documentation in the `docs/ai_docs/` directory.
+**Description**: Removes documentation files that correspond to deleted source files.
+
+**Parameters**:
+- `documentation_files` (list): A list of documentation files.
+
+**Returns**: None
 
 ```python
-if not source_files:
-    print("No source files modified. Skipping doc generation.")
-    exit(0)
+def remove_outdated_documentation(documentation_files):
+    for doc_file in documentation_files:
+        corresponding_source_file = doc_file.replace("docs/ai_docs/", "src/").replace(".md", ".py").replace(".md", ".gd")
+        if not os.path.exists(corresponding_source_file):
+            print(f"Removing outdated documentation: {doc_file}")
+            os.remove(doc_file)
+```
 
-client = openai.OpenAI(
-    api_key=OPENAI_API_KEY,
-    base_url=CUSTOM_API_URL
-)
+### generate_new_documentation
 
-for file_num, file in enumerate(source_files):
-    if not os.path.exists(file):
-        print(f"{file_num} ⚠️ Source file not found: {file}")
-        continue
+**Description**: Generates new documentation for the modified source files using the custom API endpoint.
 
-    print(f"{file_num} Generating docs for: {file}")
-    with open(file, "r") as f:
-        code = f.read()
+**Parameters**:
+- `source_files` (list): A list of modified source files.
 
-    prompt = load_from_file("src/docGeneration/prompt.md")
+**Returns**: None
 
-    messages = [
-        {"role": "system", "content": prompt},
-        {"role": "user", "content": code}
-    ]
+```python
+def generate_new_documentation(source_files):
+    if not source_files:
+        print("No source files modified. Skipping doc generation.")
+        return
 
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=messages,
-        temperature=0.7,
-        max_tokens=1000
+    client = openai.OpenAI(
+        api_key=OPENAI_API_KEY,
+        base_url=CUSTOM_API_URL
     )
 
-    documentation = response.choices[0].message.content
+    for file_num, file in enumerate(source_files):
+        if not os.path.exists(file):
+            print(f"{file_num} ⚠️ Source file not found: {file}")
+            continue
 
-    if not documentation:
-        print(f"⚠️ No documentation generated for {file}")
-        continue
-
-    doc_path = file.replace("src/", "docs/ai_docs/").replace(".py", ".md").replace(".cpp", ".md").replace(".js", ".md")
-    os.makedirs(os.path.dirname(doc_path), exist_ok=True)
-
-    with open(doc_path, "w") as f:
-        f.write(f"# Documentation for {file}\n\n{documentation}")
-
-    print(f"✅ Saved docs: {doc_path}")
-```
-
+        print(f"{file_num
