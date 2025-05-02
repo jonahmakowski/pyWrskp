@@ -14,18 +14,27 @@ from google_calendar import get_events, get_credentials, do_make_event
 
 # General Setup
 load_dotenv()
-AI_KEY = getenv('AI_TOKEN')
-VOICE_KEY = getenv('VOICE_DETECTION_TOKEN')
-AI_MODEL = getenv('AI_MODEL')
-AI_URL = getenv('AI_URL')
-SYS_PROMPT = load_from_file('prompt.md')
+AI_KEY = getenv("AI_TOKEN")
+VOICE_KEY = getenv("VOICE_DETECTION_TOKEN")
+AI_MODEL = getenv("AI_MODEL")
+AI_URL = getenv("AI_URL")
+SYS_PROMPT = load_from_file("prompt.md")
 # Commands dictionary format: {ai_command: [function, requires_arguments, gets_prompt_as_argument]}
-COMMANDS = {'open-app': [actions.open_app, True], 'search-the-web': [actions.search, True],
-            'open-file': [actions.open_file, True], 'spotify': [spotify.do_spotify, True, True], 'open-webpage': [actions.open_webpage, True],
-            'open-folder': [actions.open_directory_in_finder, True], 'hide-application': [actions.hide_app, True],
-            'question-mode': ['Question Mode', False], 'clipboard-contents': [paste, False], 'terminate': [actions.terminate, False],
-            'quit-application': [actions.quit_app, True], 'make-event': [do_make_event, True, True]}
-USER_NAME = 'Jonah'
+COMMANDS = {
+    "open-app": [actions.open_app, True],
+    "search-the-web": [actions.search, True],
+    "open-file": [actions.open_file, True],
+    "spotify": [spotify.do_spotify, True, True],
+    "open-webpage": [actions.open_webpage, True],
+    "open-folder": [actions.open_directory_in_finder, True],
+    "hide-application": [actions.hide_app, True],
+    "question-mode": ["Question Mode", False],
+    "clipboard-contents": [paste, False],
+    "terminate": [actions.terminate, False],
+    "quit-application": [actions.quit_app, True],
+    "make-event": [do_make_event, True, True],
+}
+USER_NAME = "Jonah"
 
 # Verify google calendar credentials
 get_credentials()
