@@ -1,9 +1,9 @@
 stages:
- - format
- - build
- - docs
- - commit
- - distribute
+- format
+- docs
+- distribute
+- commit
+- build
 
 python_black:
   image: python:alpine
@@ -17,21 +17,18 @@ python_black:
     - git pull
     - echo "Running Black for code formatting..."
     - black . || echo "Black formatting failed but continuing..."
-    - echo "Committing changes to GitLab..."
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
-    - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
-    - rm -r build/ || echo "No build directory to remove"
     - git add .
-    - |
-      # Check if there are any changes
-      if ! git diff --cached --quiet; then
-        git pull
-        git commit -m "🤖 Auto-generated Modifications for latest changes"
-        git push
+    - if git diff --cached --quiet; then
+        echo "No changes to commit from Black.";
       else
-        echo "No changes to commit."
+        echo "Changes detected by Black, storing artifacts...";
+        git diff --cached > .black_changes;
       fi
+  artifacts:
+    paths:
+      - .black_changes
 
 docker_build:
   stage: build
@@ -117,7 +114,7 @@ build_package:
     - twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
   rules:
     - changes:
-      - src/helpfulPackage/setup.py
+        - src/helpfulPackage/setup.py
   artifacts:
     paths:
       - src/helpfulPackage/dist
@@ -140,22 +137,46 @@ generate_docs:
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
     - git pull
     - python src/docGeneration/generate.py  # Runs AI-powered doc generation
-    - echo "Committing changes to GitLab..."
+    - git add .
+    - if git diff --cached --quiet; then
+        echo "No changes to commit from Docs.";
+      else
+        echo "Changes detected by Docs, storing artifacts...";
+        git diff --cached > .docs_changes;
+      fi
+  artifacts:
+    paths:
+      - .docs_changes
+
+commit_and_push:
+  image: python:alpine
+  stage: commit
+  variables:
+    GIT_DEPTH: 0
+  before_script:
     - apk add --no-cache git
+  script:
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
-    - rm -r build/ || echo "No build directory to remove"
-    - git add .
-    - |
-      # Check if there are any changes
-      if ! git diff --cached --quiet; then
-        git pull
-        git commit -m "🤖 Auto-generated Docs for latest changes"
-        git push
+    - git pull
+    - echo "Checking for changes from Black and Docs..."
+    - if [ -f .black_changes ] && [ "$(cat .black_changes)" != "" ]; then
+        echo "Applying changes from Black...";
+        git apply .black_changes;
+      fi
+    - if [ -f .docs_changes ] && [ "$(cat .docs_changes)" != "" ]; then
+        echo "Applying changes from Docs...";
+        git apply .docs_changes;
+      fi
+    - if git diff --cached --quiet; then
+        echo "No changes to commit.";
       else
-        echo "No changes to commit."
+        echo "Committing changes to GitLab...";
+        git pull
+        git commit -m "🤖 Auto-generated Modifications for latest changes"
+        git push
       fi
   rules:
     - changes:
