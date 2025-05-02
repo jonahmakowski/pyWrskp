@@ -11,13 +11,13 @@ python_black:
   before_script:
     - pip install black
   script:
+    - apk add --no-cache git
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
     - git pull
     - echo "Running Black for code formatting..."
     - black . || echo "Black formatting failed but continuing..."
     - echo "Committing changes to GitLab..."
-    - apk add --no-cache git
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
