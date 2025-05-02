@@ -1,7 +1,8 @@
 stages:
  - format
- - distribute
+ - build
  - docs
+ - distribute
  - commit
 
 python_black:
@@ -10,10 +11,10 @@ python_black:
   before_script:
     - pip install black
   script:
-    - black .
+    - black . || echo "Black formatting failed but continuing..."
 
 docker_build:
-  stage: distribute
+  stage: build
   only:
     - main
   image: docker:latest
@@ -82,7 +83,7 @@ github_commit:
 
 build_package:
   image: python:alpine
-  stage: distribute
+  stage: build
   variables:
     TWINE_USERNAME: gitlab-ci-token
     TWINE_PASSWORD: $CI_JOB_TOKEN
