@@ -149,7 +149,7 @@ generate_docs:
       - .docs_changes
 
 commit_and_push:
-  image: python:alpine
+  image: alpine
   stage: commit
   variables:
     GIT_DEPTH: 0
@@ -164,21 +164,16 @@ commit_and_push:
     - echo "Checking for changes from Black and Docs..."
     - if [ -f .black_changes ] && [ "$(cat .black_changes)" != "" ]; then
         echo "Applying changes from Black...";
-        git apply .black_changes;
+        git apply <(sed 's/^[[:space:]]*//;s/[[:space:]]*$//' .black_changes);
       fi
     - if [ -f .docs_changes ] && [ "$(cat .docs_changes)" != "" ]; then
         echo "Applying changes from Docs...";
-        git apply .docs_changes;
+        git apply <(sed 's/^[[:space:]]*//;s/[[:space:]]*$//' .docs_changes);
       fi
     - if git diff --cached --quiet; then
         echo "No changes to commit.";
       else
         echo "Committing changes to GitLab...";
-        git pull
         git commit -m "🤖 Auto-generated Modifications for latest changes"
         git push
       fi
-  rules:
-    - changes:
-        - "**/*.py"  # Runs only when Python files change
-        - "**/*.gd" # Or godot script
