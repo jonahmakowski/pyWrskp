@@ -11,6 +11,7 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
+
 def get_credentials():
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -34,60 +35,69 @@ def get_credentials():
 
 
 def get_events(amount):
-  creds = get_credentials()
-  try:
-    service = build("calendar", "v3", credentials=creds)
+    creds = get_credentials()
+    try:
+        service = build("calendar", "v3", credentials=creds)
 
-    # Call the Calendar API
-    now = datetime.datetime.now(datetime.timezone.utc).isoformat()  # 'Z' indicates UTC time
-    events_result = (
-        service.events()
-        .list(
-            calendarId="primary",
-            timeMin=now,
-            maxResults=amount,
-            singleEvents=True,
-            orderBy="startTime",
+        # Call the Calendar API
+        now = datetime.datetime.now(
+            datetime.timezone.utc
+        ).isoformat()  # 'Z' indicates UTC time
+        events_result = (
+            service.events()
+            .list(
+                calendarId="primary",
+                timeMin=now,
+                maxResults=amount,
+                singleEvents=True,
+                orderBy="startTime",
+            )
+            .execute()
         )
-        .execute()
-    )
-    events = events_result.get("items", [])
+        events = events_result.get("items", [])
 
-    if not events:
-      print("No upcoming events found.")
-      return [], "No upcoming events found."
+        if not events:
+            print("No upcoming events found.")
+            return [], "No upcoming events found."
 
-    # Prints the start and name of the next 10 events
-    output = []
-    out_str = ""
-    for index, event in enumerate(events):
-      start = date_parser(event["start"].get("dateTime", event["start"].get("date")))
-      end = date_parser(event["end"].get("dateTime", event["start"].get("date")))
-      location = event['location'].replace('\n', ' ') if 'location' in event.keys() else None
-      title = event['summary']
-      output.append({'title': title, 'location': location, 'start': start, 'end': end})
-      out_str += f"{index + 1}.\t{start.strftime('%d/%m/%Y, %H:%M')} - {end.strftime('%d/%m/%Y, %H:%M')} -- {title} at {location}"
-    
-    return output, out_str
+        # Prints the start and name of the next 10 events
+        output = []
+        out_str = ""
+        for index, event in enumerate(events):
+            start = date_parser(
+                event["start"].get("dateTime", event["start"].get("date"))
+            )
+            end = date_parser(event["end"].get("dateTime", event["start"].get("date")))
+            location = (
+                event["location"].replace("\n", " ")
+                if "location" in event.keys()
+                else None
+            )
+            title = event["summary"]
+            output.append(
+                {"title": title, "location": location, "start": start, "end": end}
+            )
+            out_str += f"{index + 1}.\t{start.strftime('%d/%m/%Y, %H:%M')} - {end.strftime('%d/%m/%Y, %H:%M')} -- {title} at {location}"
 
-  except HttpError as error:
-    print(f"An error occurred: {error}")
-    return False
+        return output, out_str
+
+    except HttpError as error:
+        print(f"An error occurred: {error}")
+        return False
+
 
 def make_event(start, end, title):
     creds = get_credentials()
     service = build("calendar", "v3", credentials=creds)
-    service.events().insert(calendarId='primary', body={
-        'summary': title,
-        'start': {
-            'dateTime': start,
-            'timeZone': 'America/Toronto'
+    service.events().insert(
+        calendarId="primary",
+        body={
+            "summary": title,
+            "start": {"dateTime": start, "timeZone": "America/Toronto"},
+            "end": {"dateTime": end, "timeZone": "America/Toronto"},
         },
-        'end': {
-            'dateTime': end,
-            'timeZone': 'America/Toronto'
-        }
-    }).execute()
+    ).execute()
+
 
 if __name__ == "__main__":
-  events = get_events(200)
+    events = get_events(200)

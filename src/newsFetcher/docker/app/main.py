@@ -8,20 +8,23 @@ from threading import Thread
 app = Flask(__name__)
 log_clear()
 
+
 # Configure the scheduler
 class Config:
     SCHEDULER_API_ENABLED = True
+
 
 started = False
 
 app.config.from_object(Config)
 scheduler = APScheduler()
 
+
 def startup():
     """
     Initializes and starts a new thread to run the startup_helper function.
 
-    This function creates a new thread with the target set to the 
+    This function creates a new thread with the target set to the
     startup_helper function and starts the thread.
 
     Returns:
@@ -29,6 +32,7 @@ def startup():
     """
     x = Thread(target=startup_helper)
     x.start()
+
 
 def startup_helper():
     """
@@ -54,47 +58,66 @@ def startup_helper():
     global started
     canadian_headlines = fetch_headlines_canada()
     internationl_healines = fetch_headlines_international()
-    printf('Canadian Headlines:')
+    printf("Canadian Headlines:")
     for article in canadian_headlines:
         printf(f"{article['title']}")
-    
-    printf('\n\n\nInternational Headlines')
+
+    printf("\n\n\nInternational Headlines")
     for article in internationl_healines:
         printf(f"{article['title']}")
-    
-    printf('\n\n\nScraping Articles')
+
+    printf("\n\n\nScraping Articles")
 
     try:
-        len_files = len(listdir(f'../articles/{datetime.today().strftime('%Y-%m-%d')}/canada'))
-        len_files += len(listdir(f'../articles/{datetime.today().strftime('%Y-%m-%d')}/international'))
+        len_files = len(
+            listdir(f"../articles/{datetime.today().strftime('%Y-%m-%d')}/canada")
+        )
+        len_files += len(
+            listdir(
+                f"../articles/{datetime.today().strftime('%Y-%m-%d')}/international"
+            )
+        )
     except FileNotFoundError:
         len_files = 0
 
     if len_files == 0:
-        x1 = Thread(target=scrape_articles, args=(canadian_headlines, 'canada',))
-        x2 = Thread(target=scrape_articles, args=(internationl_healines, 'international',))
+        x1 = Thread(
+            target=scrape_articles,
+            args=(
+                canadian_headlines,
+                "canada",
+            ),
+        )
+        x2 = Thread(
+            target=scrape_articles,
+            args=(
+                internationl_healines,
+                "international",
+            ),
+        )
         x1.start()
         x2.start()
         x1.join()
         x2.join()
     else:
-        printf('Scraping skipped, {} files stored.'.format(len_files))
+        printf("Scraping skipped, {} files stored.".format(len_files))
 
-    x1 = Thread(target=summarize_articles, args=('canada',))
-    x2 = Thread(target=summarize_articles, args=('international',))
-    printf('Summarizing Articles; All data scraped')
-    printf('Started Summarizing Canadaian Articles')
+    x1 = Thread(target=summarize_articles, args=("canada",))
+    x2 = Thread(target=summarize_articles, args=("international",))
+    printf("Summarizing Articles; All data scraped")
+    printf("Started Summarizing Canadaian Articles")
     x1.start()
-    printf('Started Summarizing International Articles')
+    printf("Started Summarizing International Articles")
     x2.start()
     x1.join()
     x2.join()
-    printf('Started Daily Summaries')
+    printf("Started Daily Summaries")
     printf(daily_summary())
-    printf('Completed AI Bootup Sequence')
+    printf("Completed AI Bootup Sequence")
     started = True
 
-def load_data(date=datetime.today().strftime('%Y-%m-%d')):
+
+def load_data(date=datetime.today().strftime("%Y-%m-%d")):
     """
     Load and process article data for a given date.
     This function reads article files from specified directories for 'canada' and 'international' regions,
@@ -118,28 +141,29 @@ def load_data(date=datetime.today().strftime('%Y-%m-%d')):
                 'international_summary': str
             }
     """
-    path = '../articles/{}/{}'.format(date, 'canada')
+    path = "../articles/{}/{}".format(date, "canada")
     articles = listdir(path)
-    data = {'articles': []}
+    data = {"articles": []}
     for article in articles:
-        with open(join(path, article), 'r') as f:
+        with open(join(path, article), "r") as f:
             file_data = json.load(f)
-            file_data['region'] = 'ca'
-            data['articles'].append(file_data)
-    
-    path = '../articles/{}/{}'.format(date, 'international')
+            file_data["region"] = "ca"
+            data["articles"].append(file_data)
+
+    path = "../articles/{}/{}".format(date, "international")
     articles = listdir(path)
     for article in articles:
-        with open(join(path, article), 'r') as f:
+        with open(join(path, article), "r") as f:
             file_data = json.load(f)
-            file_data['region'] = 'in'
-            data['articles'].append(file_data)
-    
-    data['canada_summary'], data['international_summary'] = daily_summary()
+            file_data["region"] = "in"
+            data["articles"].append(file_data)
+
+    data["canada_summary"], data["international_summary"] = daily_summary()
 
     return data
 
-@scheduler.task('cron', id='daily_job', hour=0, minute=0)
+
+@scheduler.task("cron", id="daily_job", hour=0, minute=0)
 def get_all_articles():
     """
     Fetches and processes all articles from Canadian and international sources.
@@ -157,15 +181,16 @@ def get_all_articles():
     canadian_headlines = fetch_headlines_canada()
     internationl_healines = fetch_headlines_international()
 
-    scrape_articles(canadian_headlines, 'canada')
-    scrape_articles(internationl_healines, 'international')
-    
-    summarize_articles('canada')
-    summarize_articles('international')
+    scrape_articles(canadian_headlines, "canada")
+    scrape_articles(internationl_healines, "international")
+
+    summarize_articles("canada")
+    summarize_articles("international")
 
     data = load_data()
 
-@app.route('/')
+
+@app.route("/")
 def index():
     """
     Renders the index page with data for today's date if the application has started.
@@ -184,7 +209,7 @@ def index():
     """
     if started:
         # Get today's date
-        today = datetime.today().strftime('%Y-%m-%d')
+        today = datetime.today().strftime("%Y-%m-%d")
 
         # Load data for today (can adjust this for previous day logic)
         data = load_data(today)
@@ -197,6 +222,7 @@ def index():
         return render_template("index.html", data=data, today=today)
     else:
         return "Loading data..."
+
 
 @app.route("/api/<date>")
 def get_data(date):
@@ -212,9 +238,10 @@ def get_data(date):
     data = load_data(date)
     return jsonify(data)
 
+
 scheduler.init_app(app)
 scheduler.start()
 
 if __name__ == "__main__":
     startup()
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host="0.0.0.0", port=5001)

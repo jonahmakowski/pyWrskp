@@ -1,5 +1,6 @@
 import datetime
 
+
 def work(hour, mint, print_info=True):
     hour = int(hour)
     mint = int(mint)
@@ -13,6 +14,6 @@ def work(hour, mint, print_info=True):
         now = now.strftime("%X")
         if now == past_time:
             if print_info:
-                print('DING-DONG')
-                print('Time up!')
-            return 'DING-Dong'
+                print("DING-DONG")
+                print("Time up!")
+            return "DING-Dong"

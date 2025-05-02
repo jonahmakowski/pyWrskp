@@ -5,11 +5,11 @@ from subprocess import Popen
 
 
 def exec_applescript(script):
-    p = Popen(['osascript', '-e', script])
+    p = Popen(["osascript", "-e", script])
 
 
 def process_file(filename):
-    print('Processing file {}'.format(filename))  # Debug Message
+    print("Processing file {}".format(filename))  # Debug Message
     process_script = """-- Set the application to monitor and the message to display
                         set monitoredApp to "{}"
                         set displayMessage to "{}"
@@ -40,7 +40,7 @@ def process_file(filename):
                         end repeat
                         """
     # Open the file in read mode
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:
         # Read all lines
         lines = file.readlines()
 
@@ -48,18 +48,20 @@ def process_file(filename):
     first_line = lines[0]
     rest_of_lines = lines[1:]
 
-    Popen(['rm', filename])
+    Popen(["rm", filename])
 
-    exec_applescript(process_script.format(first_line.strip(), ''.join(rest_of_lines).strip()))
+    exec_applescript(
+        process_script.format(first_line.strip(), "".join(rest_of_lines).strip())
+    )
 
 
-if __name__ == '__main__':
-    files = list(os.walk('notes'))
+if __name__ == "__main__":
+    files = list(os.walk("notes"))
     for file in files:
-        path = ''
+        path = ""
         for part in file:
             if not part:
-                path += '/'
+                path += "/"
             else:
                 if type([]) == type(part):
                     path += part[0]

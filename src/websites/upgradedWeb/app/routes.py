@@ -3,10 +3,11 @@ from app import app
 import threading
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template('home.html', title='Home')
+    return render_template("home.html", title="Home")
 
-@app.route('/passwordcrack', methods=['GET', 'POST'])
+
+@app.route("/passwordcrack", methods=["GET", "POST"])
 def passwordcrack():
-    return render_template('passwordCrack.html', title='Password Crack')
+    return render_template("passwordCrack.html", title="Password Crack")

@@ -2,7 +2,7 @@ import json
 
 
 class Notes:
-    def __init__(self, name='data3.jonahtext'):
+    def __init__(self, name="data3.jonahtext"):
         self.notes = []
         self.name = name
 
@@ -17,14 +17,14 @@ class Notes:
             pass
         if self.notes != []:
             for item in self.notes:
-                print('{}'.format(item))
+                print("{}".format(item))
         if self.notes == []:
             print("you don't have any notes saved!")
 
     def save_notes(self):
-        with open(self.name, 'w') as outfile:
+        with open(self.name, "w") as outfile:
             json.dump(self.notes, outfile)
-    
+
     def clear(self):
         self.notes = []
         self.save_notes()
@@ -33,11 +33,11 @@ class Notes:
 if __name__ == "__main__":
     n = Notes()
     n.print_notes()
-    add = input('would you like to add any note? (y/n/c)')
-    if add == 'y':
-        info = input('what is your note?')
+    add = input("would you like to add any note? (y/n/c)")
+    if add == "y":
+        info = input("what is your note?")
         n.add_note(info)
         n.save_notes()
         print('your note, "{}" has been added to your saved notes!'.format(info))
-    elif add == 'c':
+    elif add == "c":
         n.clear()

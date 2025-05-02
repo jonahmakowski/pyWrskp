@@ -22,11 +22,13 @@ clients = {}
 window = tk.Tk()
 window.title("Server")
 
+
 # Create a function to send a message to all the clients
 def send():
     message_text = message.get()
     for conn, name in clients.items():
         conn.send((username + ": " + message_text).encode())
+
 
 # Create a variable to store the message
 message = tk.StringVar()
@@ -44,6 +46,7 @@ username = input("Enter your username: ")
 
 # Run the Tkinter event loop
 window.mainloop()
+
 
 # Create a function to handle a new client
 def handle_client(connection, address):
@@ -76,6 +79,7 @@ def handle_client(connection, address):
 
     # Close the connection
     connection.close()
+
 
 # Create a loop to accept new connections
 while True:

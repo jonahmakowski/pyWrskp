@@ -1,17 +1,94 @@
 def abcs():
-    abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-           'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-           'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-           'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-           'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', '.', ',',
-           '"', "'", '1', '2', '3', '4', '5', '6', '7', '8', '9',
-           '0', '-', '_', '+', '=', '{', '}', '[', ']', '(', ')',
-           '!', '?', '|', '<', '>', '/']
+    abc = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        " ",
+        ".",
+        ",",
+        '"',
+        "'",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+        "-",
+        "_",
+        "+",
+        "=",
+        "{",
+        "}",
+        "[",
+        "]",
+        "(",
+        ")",
+        "!",
+        "?",
+        "|",
+        "<",
+        ">",
+        "/",
+    ]
     return abc
 
 
 def decrypt(key, message, abc=abcs()):
-    return encrypt(key*-1, message, abc=abc)
+    return encrypt(key * -1, message, abc=abc)
 
 
 def encrypt(key, message, abc=abcs()):
@@ -31,7 +108,7 @@ def encrypt(key, message, abc=abcs()):
                 added = True
         if not added:
             completed_list.append(i)
-    completed_string = ''
+    completed_string = ""
     for item in completed_list:
         completed_string += item
     return completed_string

@@ -21,7 +21,9 @@ def login_to_claude(webui_url, google_email, google_password):
 
         # Wait for and click the "Continue with Google" button
         google_login_button = WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Continue with Google')]"))
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[contains(text(), 'Continue with Google')]")
+            )
         )
         sleep(4)
         google_login_button.click()
@@ -54,7 +56,9 @@ def login_to_claude(webui_url, google_email, google_password):
         continue_button.click()
 
         continue_button = WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable((By.XPATH, "//div[@id='passwordNext']/div/button"))
+            EC.element_to_be_clickable(
+                (By.XPATH, "//div[@id='passwordNext']/div/button")
+            )
         )
         continue_button.click()
 

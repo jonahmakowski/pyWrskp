@@ -23,16 +23,16 @@ redRectangle = pygame.Rect((0, 0), (recWidth, recHeight))
 greenRectangle = pygame.Rect((recWidth, 0), (recWidth, recHeight))
 blueRectangle = pygame.Rect(((recWidth * 2), 0), (recWidth, recHeight))
 
-button_size = int(recHeight / 2) 
+button_size = int(recHeight / 2)
 
 topRectangle = pygame.Rect((0, 0), (DIS_WIDTH, recHeight + button_size))
 
-buttonMinus = pygame.image.load('button_minus.png')
-buttonPlus = pygame.image.load('button_plus.png')
+buttonMinus = pygame.image.load("button_minus.png")
+buttonPlus = pygame.image.load("button_plus.png")
 buttonMinus = pygame.transform.scale(buttonMinus, (button_size, button_size))
 buttonPlus = pygame.transform.scale(buttonPlus, ((button_size), button_size))
-minusRect = buttonMinus.get_rect(topleft = (0, recHeight))
-plusRect = buttonPlus.get_rect(topleft = (recHeight, recHeight))
+minusRect = buttonMinus.get_rect(topleft=(0, recHeight))
+plusRect = buttonPlus.get_rect(topleft=(recHeight, recHeight))
 
 while keep_going:
     for event in pygame.event.get():

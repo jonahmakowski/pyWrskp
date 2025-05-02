@@ -8,6 +8,6 @@ inp1.sort()
 inp2.sort()
 
 if inp1 == inp2:
-    print('yes')
+    print("yes")
 else:
-    print('no')
+    print("no")

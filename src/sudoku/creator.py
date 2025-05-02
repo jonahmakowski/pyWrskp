@@ -1,25 +1,28 @@
-'''
+"""
 THIS DOES NOT WORK
-'''
+"""
 
 from solve_mm1 import Board
 
+
 def sudoku(size):
     import time
-    start_time=time.time()
+
+    start_time = time.time()
 
     import sys
     import random as rn
+
     mydict = {}
     n = 0
     # print ('--started calculating--')
     while len(mydict) < 9:
         n += 1
-        x = range(1, size+1)
+        x = range(1, size + 1)
         testlist = rn.sample(x, len(x))
 
         isgood = True
-        for dictid,savedlist in mydict.items():
+        for dictid, savedlist in mydict.items():
             if isgood == False:
                 break
             for v in savedlist:
@@ -33,15 +36,15 @@ def sudoku(size):
             dsavedlists = {}
             dtestlists = {}
             dcombindedlists = {}
-            for a in range(1,mod + 1):
-                savedlist = mydict[len(mydict) - a]               
+            for a in range(1, mod + 1):
+                savedlist = mydict[len(mydict) - a]
                 for v1 in savedlist:
                     modsavedlists = (savedlist.index(v1) / 3) % 3
-                    dsavedlists[len(dsavedlists)] = [modsavedlists,v1]
+                    dsavedlists[len(dsavedlists)] = [modsavedlists, v1]
                 for t1 in testlist:
                     modtestlists = (testlist.index(t1) / 3) % 3
-                    dtestlists[len(dtestlists)] = [modtestlists,t1]
-                for k,v2 in dsavedlists.items():
+                    dtestlists[len(dtestlists)] = [modtestlists, t1]
+                for k, v2 in dsavedlists.items():
                     dcombindedlists[len(dcombindedlists)] = v2
                     dcombindedlists[len(dcombindedlists)] = dtestlists[k]
             vsave = 0
@@ -65,13 +68,14 @@ def sudoku(size):
                 # print ('success found', len(mydict), 'row')
 
     # print ('--finished calculating--')
-    total_time = time.time()-start_time
+    total_time = time.time() - start_time
     return mydict
+
 
 return_dict = sudoku(9)
 # print ('')
 # print ('--printing output--')
-for n,v in return_dict.items():
-    print (n,v)
+for n, v in return_dict.items():
+    print(n, v)
 # print ('process took',total_tries,'tries in', round(amt_of_time,2), 'secs')
 # print ('-------------------')

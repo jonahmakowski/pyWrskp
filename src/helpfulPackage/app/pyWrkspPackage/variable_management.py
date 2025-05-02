@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import copy
 
+
 def dict_merge(d1: dict, d2: dict) -> dict:
     """
     Merges two dictionaries recursively. If a key in both dictionaries has a dictionary as its value,
@@ -22,6 +23,7 @@ def dict_merge(d1: dict, d2: dict) -> dict:
             d1[key] = value
     return d1
 
+
 def chunk_list(lst: list, size: int) -> list:
     """
     Splits a list into smaller lists (chunks) of a specified size.
@@ -39,7 +41,8 @@ def chunk_list(lst: list, size: int) -> list:
         >>> chunk_list([1, 2, 3, 4, 5], 2)
         [[1, 2], [3, 4], [5]]
     """
-    return [lst[i:i + size] for i in range(0, len(lst), size)]
+    return [lst[i : i + size] for i in range(0, len(lst), size)]
+
 
 def flatten(lst: list) -> list:
     """
@@ -52,6 +55,7 @@ def flatten(lst: list) -> list:
         list: A single flattened list containing all the elements of the sublists.
     """
     return [item for sublist in lst for item in sublist]
+
 
 def load_from_env(variable: str) -> str:
     """
@@ -69,7 +73,8 @@ def load_from_env(variable: str) -> str:
     load_dotenv()
     return os.getenv(variable)
 
-def list_to_str(lis: list, sep='') -> str:
+
+def list_to_str(lis: list, sep="") -> str:
     """
     Converts a list of items into a single string with each item separated by a specified separator.
 
@@ -80,10 +85,11 @@ def list_to_str(lis: list, sep='') -> str:
     Returns:
         str: A single string with all items from the list separated by the specified separator.
     """
-    out = ''
+    out = ""
     for item in lis:
-        out += str(item+sep)
+        out += str(item + sep)
     return out.strip()
+
 
 def make_matrix(rows: int, cols: int, default=None) -> list:
     """
@@ -99,13 +105,14 @@ def make_matrix(rows: int, cols: int, default=None) -> list:
     """
     return [[default for _ in range(cols)] for _ in range(rows)]
 
+
 def recursive_copy(lst: list) -> list:
     """
     Recursively copies a list of lists.
 
     Args:
         lst (list): The list to be copied. This can be a nested list.
- 
+
     Returns:
         list: A new list that is a deep copy of the input list.
     """

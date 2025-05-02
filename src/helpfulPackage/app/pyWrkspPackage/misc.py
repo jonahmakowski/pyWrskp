@@ -2,6 +2,7 @@ import time
 from subprocess import run, CalledProcessError
 from openai import OpenAI
 
+
 def int_input(prompt: str) -> int:
     """
     Prompt the user to enter an integer value.
@@ -21,6 +22,7 @@ def int_input(prompt: str) -> int:
             return int(input(prompt))
         except ValueError:
             print("Please enter a number.")
+
 
 def float_input(prompt: str) -> float:
     """
@@ -42,6 +44,7 @@ def float_input(prompt: str) -> float:
         except ValueError:
             print("Please enter a number.")
 
+
 def timer(func):
     """
     A decorator that prints the execution time of the decorated function.
@@ -52,15 +55,18 @@ def timer(func):
     Returns:
         callable: The wrapped function that prints its execution time.
     """
+
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
         end = time.time()
         print(f"{func.__name__} took {end - start:.4f} seconds")
         return result
+
     return wrapper
 
-def timestamp_print(*args, sep=' ', end='\n') -> None:
+
+def timestamp_print(*args, sep=" ", end="\n") -> None:
     """
     Prints the given arguments with a timestamp.
 
@@ -73,12 +79,13 @@ def timestamp_print(*args, sep=' ', end='\n') -> None:
         timestamp_print("Hello", "world")
         # Output: [2023-10-05 14:23:45] Hello world
     """
-    print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] ",end='')
+    print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] ", end="")
     for arg in args:
         print(arg, end=sep)
-    print(end, end='')
+    print(end, end="")
 
-def run_terminal_command(command: str) -> str|None:
+
+def run_terminal_command(command: str) -> str | None:
     """
     Run a terminal command and capture its output.
 
@@ -95,6 +102,7 @@ def run_terminal_command(command: str) -> str|None:
         print(f"Command '{command}' failed with error: {e.stderr}")
         return None
 
+
 def ai_response(messages: list, model: str, url: str, key: str, stream=False):
     """
     Get a response from the OpenAI API.
@@ -110,9 +118,13 @@ def ai_response(messages: list, model: str, url: str, key: str, stream=False):
         tuple: The content of the response and the updated messages list.
     """
     client = OpenAI(api_key=key, base_url=url)
-    completion = client.chat.completions.create(model=model, messages=messages, stream=stream)
+    completion = client.chat.completions.create(
+        model=model, messages=messages, stream=stream
+    )
     if not stream:
-        messages.append({"role": "assistant", "content": completion.choices[0].message.content})
+        messages.append(
+            {"role": "assistant", "content": completion.choices[0].message.content}
+        )
         return completion.choices[0].message.content, messages
     else:
         return completion

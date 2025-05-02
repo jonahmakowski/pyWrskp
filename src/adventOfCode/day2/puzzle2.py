@@ -8,14 +8,16 @@ def report_check(reports):
             nots.append(ind)
     return safe, nots
 
+
 def is_safe(report):
     if check_report(report):
         return True
     for i in range(len(report)):
-        temp = report[:i] + report[i+1:]
+        temp = report[:i] + report[i + 1 :]
         if check_report(temp):
             return True
     return False
+
 
 def check_report(report):
     if len(report) < 2:
@@ -27,11 +29,11 @@ def check_report(report):
         typ = -1
     else:
         return False
-    
+
     prev_num = None
     for num in report:
         if prev_num is not None:
-            if 1 <= abs(num-prev_num) <= 3:
+            if 1 <= abs(num - prev_num) <= 3:
                 if num < prev_num and typ == -1:
                     status = True
                 elif num > prev_num and typ == 1:
@@ -43,10 +45,11 @@ def check_report(report):
         prev_num = num
     return status
 
+
 def do_challenge():
-    with open('input.txt') as f:
+    with open("input.txt") as f:
         lines = f.readlines()
-    
+
     reports = []
     for line in lines:
         report = []
@@ -57,5 +60,6 @@ def do_challenge():
     safe, nots = report_check(reports)
 
     return safe
+
 
 print(do_challenge())

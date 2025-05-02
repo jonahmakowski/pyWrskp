@@ -4,7 +4,7 @@ import turtle
 class Google:
     def __init__(self):
         self.t = turtle.Turtle()
-        self.t.shape('turtle')
+        self.t.shape("turtle")
         self.size = 1
         self.t.penup()
         self.current_x = -200 * self.size
@@ -20,17 +20,17 @@ class Google:
         self.t.setheading(180)
         self.t.pendown()
         for i in range(270):
-            self.t.forward(1*self.size)
+            self.t.forward(1 * self.size)
             self.t.left(1)
         self.t.left(90)
-        self.t.forward(60*self.size)
+        self.t.forward(60 * self.size)
         self.t.penup()
 
     def drawo(self):
         self.t.setheading(180)
         self.t.pendown()
         for i in range(400):
-            self.t.forward(1*self.size)
+            self.t.forward(1 * self.size)
             self.t.left(1)
         self.t.penup()
 
@@ -38,29 +38,29 @@ class Google:
         self.t.pendown()
         self.t.setheading(270)
         self.t.pendown()
-        self.t.forward(115*self.size)
+        self.t.forward(115 * self.size)
         self.t.left(90)
-        self.t.forward(75*self.size)
+        self.t.forward(75 * self.size)
         self.t.penup()
 
     def drawe(self):
         self.t.pendown()
-        main_distance = 115*self.size
+        main_distance = 115 * self.size
         self.t.setheading(270)
         self.t.pendown()
         self.t.forward(main_distance)
         self.t.left(90)
-        self.t.forward(75*self.size)
-        self.t.backward(75*self.size)
+        self.t.forward(75 * self.size)
+        self.t.backward(75 * self.size)
         self.t.right(90)
-        self.t.backward(main_distance/2)
+        self.t.backward(main_distance / 2)
         self.t.left(90)
-        self.t.forward(50*self.size)
-        self.t.backward(50*self.size)
+        self.t.forward(50 * self.size)
+        self.t.backward(50 * self.size)
         self.t.right(90)
-        self.t.backward(main_distance/2)
+        self.t.backward(main_distance / 2)
         self.t.left(90)
-        self.t.forward(75*self.size)
+        self.t.forward(75 * self.size)
         self.t.penup()
 
     def drawgoogle(self):

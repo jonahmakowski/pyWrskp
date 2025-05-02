@@ -9,13 +9,12 @@ bad = False
 for item in inp_lis:
     if item != current:
         bad = True
-    if current == 'Z':
-        current = 'X'
-    elif current == 'X':
-        current = 'Z'
+    if current == "Z":
+        current = "X"
+    elif current == "X":
+        current = "Z"
 
 if bad:
-    print('BAD')
+    print("BAD")
 else:
-    print('GOOD')
-    
+    print("GOOD")

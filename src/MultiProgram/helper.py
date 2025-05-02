@@ -7,17 +7,17 @@ import json
 import pyWrskp
 
 
-def decrypt_txt(path='txt.txt'):
+def decrypt_txt(path="txt.txt"):
     end = []
     list_encrypt = pyWrskp.read_file(path)
 
     count = 0
 
     for item in list_encrypt:
-        key = item['key']
+        key = item["key"]
         end.append({})
         for i in item:
-            if i != 'key':
+            if i != "key":
                 i_key = pyWrskp.decrypt(key, i)
                 i_decrypt = pyWrskp.decrypt(key, item[i])
                 end[count][i_key] = i_decrypt
@@ -29,36 +29,29 @@ def logging(log_item):
     past_log = read_log()
     now = datetime.datetime.now()
     now = now.strftime("%d/%m/%Y %H:%M:%S")
-    current_log = past_log + [{'log': log_item, 'datetime': now}]
+    current_log = past_log + [{"log": log_item, "datetime": now}]
     write_log(current_log)
 
 
-def number_input_local(question,
-                       t='int',
-                       new_line=False,
-                       tell=True):
+def number_input_local(question, t="int", new_line=False, tell=True):
     if tell:
-        question += ' (This must be a number)'
+        question += " (This must be a number)"
     if new_line:
-        question += '\n'
+        question += "\n"
     while True:
         try:
-            if t == 'int':
-                a = int(question_window(question,
-                                        'Input Number'))
+            if t == "int":
+                a = int(question_window(question, "Input Number"))
             else:
-                a = float(question_window(question,
-                                          'Input Number'))
+                a = float(question_window(question, "Input Number"))
             break
         except ValueError:
-            show_window('That is not a number!\n' +
-                        'Try again',
-                        'Not a number')
+            show_window("That is not a number!\n" + "Try again", "Not a number")
     return a
 
 
 def clear():
-    os.system('clear')
+    os.system("clear")
 
 
 def question_window(question, title):
@@ -76,7 +69,7 @@ def show_window(text, title):
 def create_secret_code(amount=5):
     secret_code = []
     for i in range(amount):
-        choice = random.randint(1, amount*2)
+        choice = random.randint(1, amount * 2)
         secret_code.append(choice)
     return secret_code
 
@@ -89,28 +82,28 @@ def display_logs(logs):
         start_idx = page * page_size
         end_idx = (page + 1) * page_size
 
-        print('Info, Datetime')  # TODO transfer this to PSG
+        print("Info, Datetime")  # TODO transfer this to PSG
         for item in logs[start_idx:end_idx]:
-            print('{}, {}'.format(item['log'], item['datetime']))
+            print("{}, {}".format(item["log"], item["datetime"]))
 
         if end_idx >= len(logs):
             break
 
         user_input = input('\nPress "n" for next page, or "q" to quit: ')
 
-        if user_input == 'n':
+        if user_input == "n":
             page += 1
-        elif user_input == 'q':
+        elif user_input == "q":
             break
 
 
-def write_log(data, path='log.txt'):
-    with open(path, 'w') as f:
+def write_log(data, path="log.txt"):
+    with open(path, "w") as f:
         for item in data:
-            f.write(json.dumps(item) + '\n')
+            f.write(json.dumps(item) + "\n")
 
 
-def read_log(path='log.txt'):
+def read_log(path="log.txt"):
     with open(path) as f:
         lines = f.readlines()
 
@@ -122,15 +115,19 @@ def read_log(path='log.txt'):
 
 def play_music(music=None):
     if music is None:
-        music = input('What is the name of the file you would like to play\n' +
-                      'Music file must be under the "music" folder\n')
+        music = input(
+            "What is the name of the file you would like to play\n"
+            + 'Music file must be under the "music" folder\n'
+        )
     while True:
-        if pyWrskp.play_music('music/{}'.format(music)):
+        if pyWrskp.play_music("music/{}".format(music)):
             return
         else:
             if music is None:
-                music = input('What is the name of the file you would like to play\n' +
-                              'Music file must be under the "music" folder\n')
+                music = input(
+                    "What is the name of the file you would like to play\n"
+                    + 'Music file must be under the "music" folder\n'
+                )
 
 
 def check_lowest_common_multiple(num, multiple, m):

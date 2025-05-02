@@ -10,6 +10,7 @@ API_KEY_NEWS_API = getenv("NEWS_API_KEY")
 API_KEY_GNEWS = getenv("GNEWS_API_KEY")
 API_KEY_NEWSDATA = getenv("NEWSDATA_API_KEY")
 
+
 def use_api(params, url):
     """
     Makes a GET request to the specified URL with the given parameters and returns the JSON response.
@@ -26,6 +27,7 @@ def use_api(params, url):
 
     # Return JSON data
     return response_newsAPI.json()
+
 
 def fetch_headlines_canada():
     """
@@ -49,25 +51,46 @@ def fetch_headlines_canada():
     Note:
         The function removes articles from a specific source identified by the placeholder "[Removed]".
     """
-    news_api_result = use_api({"apiKey": API_KEY_NEWS_API, "language": "en", "sources": "cbc-news,global-news,toronto-star,the-globe-and-mail,toronto-sun,national-post,ottawa-citizen", "pageSize": 100}, 'https://newsapi.org/v2/top-headlines')
-    gnews_api_result = use_api({"category": "general", "lang": "en", "country": "ca", "max": 10, "apikey":API_KEY_GNEWS}, 'https://gnews.io/api/v4/top-headlines')
-    newsdata_api_result = use_api({"apiKey": API_KEY_NEWSDATA, "country": "ca", "language": "en"}, 'https://newsdata.io/api/1/latest')
+    news_api_result = use_api(
+        {
+            "apiKey": API_KEY_NEWS_API,
+            "language": "en",
+            "sources": "cbc-news,global-news,toronto-star,the-globe-and-mail,toronto-sun,national-post,ottawa-citizen",
+            "pageSize": 100,
+        },
+        "https://newsapi.org/v2/top-headlines",
+    )
+    gnews_api_result = use_api(
+        {
+            "category": "general",
+            "lang": "en",
+            "country": "ca",
+            "max": 10,
+            "apikey": API_KEY_GNEWS,
+        },
+        "https://gnews.io/api/v4/top-headlines",
+    )
+    newsdata_api_result = use_api(
+        {"apiKey": API_KEY_NEWSDATA, "country": "ca", "language": "en"},
+        "https://newsdata.io/api/1/latest",
+    )
 
-    results = news_api_result['articles']
-    results.extend(gnews_api_result['articles'])
-    results.extend(newsdata_api_result['results'])
+    results = news_api_result["articles"]
+    results.extend(gnews_api_result["articles"])
+    results.extend(newsdata_api_result["results"])
 
     passed = False
 
     while not passed:
         passed = True
         for index, result in enumerate(results):
-            if 'source' in result.keys() and result['source']['name'] == "[Removed]":
+            if "source" in result.keys() and result["source"]["name"] == "[Removed]":
                 del results[index]
                 passed = False
                 break
 
     return results
+
 
 def fetch_headlines_international():
     """
@@ -80,25 +103,35 @@ def fetch_headlines_international():
     Returns:
         list: A list of dictionaries, each representing a news article with combined results from the APIs.
     """
-    news_api_result = use_api({"apiKey": API_KEY_NEWS_API, "language": "en", "pageSize": 100}, 'https://newsapi.org/v2/top-headlines')
-    gnews_api_result = use_api({"category": "general", "lang": "en", "max": 10, "apikey":API_KEY_GNEWS}, 'https://gnews.io/api/v4/top-headlines')
-    newsdata_api_result = use_api({"apiKey": API_KEY_NEWSDATA, "language": "en"}, 'https://newsdata.io/api/1/latest')
+    news_api_result = use_api(
+        {"apiKey": API_KEY_NEWS_API, "language": "en", "pageSize": 100},
+        "https://newsapi.org/v2/top-headlines",
+    )
+    gnews_api_result = use_api(
+        {"category": "general", "lang": "en", "max": 10, "apikey": API_KEY_GNEWS},
+        "https://gnews.io/api/v4/top-headlines",
+    )
+    newsdata_api_result = use_api(
+        {"apiKey": API_KEY_NEWSDATA, "language": "en"},
+        "https://newsdata.io/api/1/latest",
+    )
 
-    results = news_api_result['articles']
-    results.extend(gnews_api_result['articles'])
-    results.extend(newsdata_api_result['results'])
+    results = news_api_result["articles"]
+    results.extend(gnews_api_result["articles"])
+    results.extend(newsdata_api_result["results"])
 
     passed = False
 
     while not passed:
         passed = True
         for index, result in enumerate(results):
-            if 'source' in result.keys() and result['source']['name'] == "[Removed]":
+            if "source" in result.keys() and result["source"]["name"] == "[Removed]":
                 del results[index]
                 passed = False
                 break
 
     return results
+
 
 def scrape_article_content(url, type, debug=False, timeout=10):
     """
@@ -113,31 +146,39 @@ def scrape_article_content(url, type, debug=False, timeout=10):
         requests.exceptions.RequestException: If the request to the URL fails.
     """
     try:
-        printf(f'{type}: Scraping Article:', url)
+        printf(f"{type}: Scraping Article:", url)
         # Send a GET request to the article URL
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
         response = requests.get(url, headers=headers, timeout=timeout)
-        if debug: printf('Request Sent')
+        if debug:
+            printf("Request Sent")
 
         response.raise_for_status()  # Raise an error for failed requests
-        if debug: printf('Status Check Passed')
+        if debug:
+            printf("Status Check Passed")
 
         # Parse the webpage content with BeautifulSoup
         soup = BeautifulSoup(response.text, "html.parser")
-        if debug: printf('Soup Created')
+        if debug:
+            printf("Soup Created")
 
         # Attempt to extract the main article content
         # Common tags for article text include <p>, <article>, and <div>
         paragraphs = soup.find_all("p")  # Get all paragraph tags
-        if debug: printf('Data Extracted')
-        
+        if debug:
+            printf("Data Extracted")
+
         article_content = "\n".join([p.get_text() for p in paragraphs if p.get_text()])
-        if debug: printf('Parsed Data')
+        if debug:
+            printf("Parsed Data")
 
         return article_content
     except requests.exceptions.RequestException as e:
         printf(f"Failed to fetch article: {e}")
         return None
+
 
 def scrape_articles(articles, type):
     """
@@ -159,33 +200,47 @@ def scrape_articles(articles, type):
     6. Saves the article details to a text file in the created directory.
     7. Prints a message if the article content could not be scraped.
     """
-    today = datetime.today().strftime('%Y-%m-%d')
+    today = datetime.today().strftime("%Y-%m-%d")
     for article in articles:
-        article_url = article["url"] if 'url' in article.keys() else article['link']
+        article_url = article["url"] if "url" in article.keys() else article["link"]
         article_content = scrape_article_content(article_url, type)
         if article_content and article_content is not None:
-            article_dic = {'title': article['title'], 'source': article['source']['name'] if 'source' in article.keys() else article['source_name'], 'Description': article['description'], 'url': article['url'] if 'url' in article.keys() else article['link'], 'imgurl': article['urlToImage'] if 'urlToImage' in article.keys() else None, 'content': article_content}
+            article_dic = {
+                "title": article["title"],
+                "source": (
+                    article["source"]["name"]
+                    if "source" in article.keys()
+                    else article["source_name"]
+                ),
+                "Description": article["description"],
+                "url": article["url"] if "url" in article.keys() else article["link"],
+                "imgurl": (
+                    article["urlToImage"] if "urlToImage" in article.keys() else None
+                ),
+                "content": article_content,
+            }
             makedirs(f"../articles/{today}/{type}", exist_ok=True)
-            safe_title = article['title'].replace('/', '_')
+            safe_title = article["title"].replace("/", "_")
             with open(f"../articles/{today}/{type}/{safe_title}.txt", "w") as file:
                 json.dump(article_dic, file)
         else:
             printf(f"{type}: Failed to scrape article: {article['title']}")
+
 
 # Example usage
 if __name__ == "__main__":
     # Fetch headlines
     canadian_headlines = fetch_headlines_canada()
     internationl_healines = fetch_headlines_international()
-    printf('Canadian Headlines:')
+    printf("Canadian Headlines:")
     for article in canadian_headlines:
         printf(f"{article['title']}")
-    
-    printf('\n\n\nInternational Headlines')
+
+    printf("\n\n\nInternational Headlines")
     for article in internationl_healines:
         printf(f"{article['title']}")
-    
-    printf('\n\n\nScraping Articles')
-    
-    scrape_articles(canadian_headlines, 'canada')
-    scrape_articles(internationl_healines, 'international')
+
+    printf("\n\n\nScraping Articles")
+
+    scrape_articles(canadian_headlines, "canada")
+    scrape_articles(internationl_healines, "international")

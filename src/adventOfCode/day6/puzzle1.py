@@ -1,5 +1,6 @@
 import pyWrkspPackage
 
+
 def find_gaurd(data):
     """
     Finds the coordinates of the guard in the given 2D list.
@@ -19,6 +20,7 @@ def find_gaurd(data):
                 return x, y
     raise Exception("No gaurd found")
 
+
 def mainloop(data: list, direc: tuple):
     """
     Executes the main loop logic for processing the data based on the given direction.
@@ -35,11 +37,11 @@ def mainloop(data: list, direc: tuple):
     """
     x, y = find_gaurd(data)
     dirx, diry = direc
-    if data[y+diry][x+dirx] == "." or data[y+diry][x+dirx] == "X":
+    if data[y + diry][x + dirx] == "." or data[y + diry][x + dirx] == "X":
         data[y][x] = "X"
-        data[y+diry][x+dirx] = "^"
+        data[y + diry][x + dirx] = "^"
         return data, direc
-    if data[y+diry][x+dirx] == "#":
+    if data[y + diry][x + dirx] == "#":
         if direc == (0, -1):
             direc = (1, 0)
         elif direc == (1, 0):
@@ -50,6 +52,7 @@ def mainloop(data: list, direc: tuple):
             direc = (0, -1)
         return data, direc
     raise Exception("Invalid data")
+
 
 def count(data):
     """
@@ -68,6 +71,7 @@ def count(data):
                 value += 1
     return value
 
+
 def main():
     """
     Main function to execute the puzzle logic.
@@ -85,18 +89,22 @@ def main():
     """
     data = pyWrkspPackage.load_from_file("input.txt").split("\n")
     data = [list(item) for item in data]
-    for point in data: print(*point)
+    for point in data:
+        print(*point)
     data, direc = mainloop(data, (0, -1))
-    for point in data: print(*point)
+    for point in data:
+        print(*point)
     while True:
         try:
             print()
             data, direc = mainloop(data, direc)
-            for point in data: print(*point)
+            for point in data:
+                print(*point)
         except IndexError:
             break
-    
+
     return count(data)
+
 
 if __name__ == "__main__":
     print(main())

@@ -9,8 +9,8 @@ helper.white_black(5)
 
 helper.clear_screen()
 
-passcode = input('What is the passcode?')
-passcode.encode('utf-8')
+passcode = input("What is the passcode?")
+passcode.encode("utf-8")
 
 if not helper.check_password(passcode):
     exit()

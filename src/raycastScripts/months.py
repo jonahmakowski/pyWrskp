@@ -14,7 +14,8 @@
 # @raycast.author Jonah
 # @raycast.authorURL N/A
 
-print('''1.\tJanuary
+print(
+    """1.\tJanuary
 2.\tFebruary
 3.\tMarch
 4.\tApril
@@ -25,5 +26,5 @@ print('''1.\tJanuary
 9.\tSeptember
 10.\tOctober
 11.\tNovember
-12.\tDecember''')
-
+12.\tDecember"""
+)

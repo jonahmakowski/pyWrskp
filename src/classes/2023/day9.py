@@ -12,22 +12,22 @@ def create_board():
 
 
 def show_board(b):
-    print(chr(95)*(COL_COUNT*2+3))
+    print(chr(95) * (COL_COUNT * 2 + 3))
     for r in range(ROW_COUNT):
-        print('[', *b[r], ']')
-    print(chr(175)*(COL_COUNT*2+3))
-    print(' ', *range(COL_COUNT))
+        print("[", *b[r], "]")
+    print(chr(175) * (COL_COUNT * 2 + 3))
+    print(" ", *range(COL_COUNT))
 
 
 def get_player_input(p):
     while True:
-        inp = input('Player {}, what col would you like?    '.format(p))
+        inp = input("Player {}, what col would you like?    ".format(p))
         if inp.isdigit():
             inp = int(inp)
             if 0 <= inp <= COL_COUNT - 1:
                 break
             else:
-                print('{} is not a vaild number'.format(inp))
+                print("{} is not a vaild number".format(inp))
         else:
             print('What ever "{}" '.format(inp) + "is, it isn't a number!")
     return inp
@@ -38,7 +38,7 @@ def get_full_col(c, b):
 
 
 def drop(p, b, c):
-    for i in range(ROW_COUNT-1, -1, -1):
+    for i in range(ROW_COUNT - 1, -1, -1):
         if board[i][c] == 0:
             board[i][c] = p
             r = i
@@ -60,13 +60,13 @@ while not game_over:
     while True:
         col = get_player_input(player)
         if get_full_col(col, board):
-            print('This col is full, please choose a diffrent one.')
+            print("This col is full, please choose a diffrent one.")
         else:
             break
-    
+
     board, row = drop(player, board, col)
     show_board(board)
-    
+
     if player == 1:
         player = 2
     else:

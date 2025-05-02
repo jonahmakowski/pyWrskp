@@ -1,5 +1,8 @@
 import pygame
+
 pygame.init()
+
+
 def which_color(x, radius, current_color, screen):
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
