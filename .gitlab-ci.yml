@@ -135,7 +135,7 @@ commit:
     - git config --global user.name "GitLab CI"
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
-    - rm -r build/
+    - rm -r build/ || echo "No build directory to remove"
     - git add .
     - |
       # Check if there are any changes
