@@ -21,10 +21,10 @@ python_black:
     - git config --global user.name "GitLab CI"
     - git add .
     - if git diff --cached --quiet; then
-        echo "No changes to commit from Black.";
+        echo "No changes to commit from Black."
       else
-        echo "Changes detected by Black, storing artifacts...";
-        git format-patch -1 --stdout > black_changes.patch;
+        echo "Changes detected by Black, storing artifacts..."
+        git diff --cached > black_changes.patch
       fi
   artifacts:
     paths:
@@ -38,7 +38,7 @@ docker_build:
   image: docker:latest
   services:
     - name: docker:dind
-      alias: docker
+  alias: docker
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ''
@@ -48,8 +48,8 @@ docker_build:
   script:
     - |
       echo "Waiting for docker daemon on tcp://docker:2375..."
-      apk add --no-cache docker-cli # Add docker client if needed in docker:latest
-      timeout 60 sh -c 'while ! docker info > /dev/null 2>&1; do echo -n "."; sleep 1; done;' # Increased timeout
+      apk add --no-cache docker-cli
+      timeout 60 sh -c 'while ! docker info > /dev/null 2>&1; do echo -n "."; sleep 1; done;'
       echo "Docker daemon is ready!"
     - echo "Checking Dockerfiles for changes..."
     - |
@@ -86,9 +86,6 @@ github_commit:
   script:
     - apk add git tar ca-certificates
     - update-ca-certificates
-    - mkdir -p build/copy_for_github
-    - tar --exclude='build' -cf - -C . . | tar -xf - -C build/copy_for_github
-    - cd build/copy_for_github
     - git config user.name "GitLab CI"
     - git config user.email "jonah@makowski.ca"
     - git checkout main
@@ -140,10 +137,10 @@ generate_docs:
     - python src/docGeneration/generate.py  # Runs AI-powered doc generation
     - git add .
     - if git diff --cached --quiet; then
-        echo "No changes to commit from Docs.";
+        echo "No changes to commit from Docs."
       else
-        echo "Changes detected by Docs, storing artifacts...";
-        git format-patch -1 --stdout > docs_changes.patch;
+        echo "Changes detected by Docs, storing artifacts..."
+        git diff --cached > docs_changes.patch
       fi
   artifacts:
     paths:
@@ -168,17 +165,18 @@ commit_and_push:
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
     - echo "Checking for changes from Black and Docs..."
     - if [ -f black_changes.patch ]; then
-        echo "Applying changes from Black...";
-        git am < black_changes.patch;
+        echo "Applying changes from Black..."
+        git apply black_changes.patch
       fi
     - if [ -f docs_changes.patch ]; then
-        echo "Applying changes from Docs...";
-        git am < docs_changes.patch;
+        echo "Applying changes from Docs..."
+        git apply docs_changes.patch
       fi
+    - git add .
     - if git diff --cached --quiet; then
-        echo "No changes to commit.";
+        echo "No changes to commit."
       else
-        echo "Committing changes to GitLab...";
+        echo "Committing changes to GitLab..."
         git commit -m "🤖 Auto-generated Modifications and Docs for latest changes"
         git push
       fi
