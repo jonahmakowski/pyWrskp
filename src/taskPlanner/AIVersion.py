@@ -10,23 +10,24 @@ import pytz
 import math
 from api_access import get_credentials
 
-SCOPES = ['https://www.googleapis.com/auth/calendar']
+SCOPES = ["https://www.googleapis.com/auth/calendar"]
+
 
 def get_calendar_service():
     creds = None
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    if os.path.exists("token.pickle"):
+        with open("token.pickle", "rb") as token:
             creds = pickle.load(token)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
             creds = flow.run_local_server(port=0)
-        with open('token.pickle', 'wb') as token:
+        with open("token.pickle", "wb") as token:
             pickle.dump(creds, token)
-    return build('calendar', 'v3', credentials=creds)
+    return build("calendar", "v3", credentials=creds)
+
 
 def split_into_chunks(total_duration, min_chunk, max_chunk):
     if total_duration < 0 or min_chunk <= 0 or max_chunk <= 0:
@@ -37,17 +38,17 @@ def split_into_chunks(total_duration, min_chunk, max_chunk):
         return []
     if min_chunk <= total_duration <= max_chunk:
         return [total_duration]
-    
+
     k_min = math.ceil(total_duration / max_chunk)
     min_total = k_min * min_chunk
     if min_total > total_duration:
         raise ValueError(f"Cannot split {total_duration}h with given chunk constraints")
-    
+
     remaining = total_duration - min_total
     max_extra = max_chunk - min_chunk
     if remaining > k_min * max_extra:
         raise ValueError("Cannot split with current constraints")
-    
+
     num_full_extra = remaining // max_extra
     partial_extra = remaining % max_extra
     chunks = [max_chunk] * num_full_extra
@@ -57,10 +58,11 @@ def split_into_chunks(total_duration, min_chunk, max_chunk):
     chunks.sort(reverse=True)
     return chunks
 
+
 def main():
     service = get_calendar_service()
-    calendar = service.calendars().get(calendarId='primary').execute()
-    tz_str = calendar.get('timeZone', 'UTC')
+    calendar = service.calendars().get(calendarId="primary").execute()
+    tz_str = calendar.get("timeZone", "UTC")
     tz = pytz.timezone(tz_str)
 
     task_name = input("Enter task name: ")
@@ -82,34 +84,43 @@ def main():
         print("Due date must be in the future")
         return
 
-    events_result = service.events().list(
-        calendarId='primary',
-        timeMin=now.isoformat(),
-        timeMax=due_date.isoformat(),
-        singleEvents=True,
-        orderBy='startTime'
-    ).execute()
-    
+    events_result = (
+        service.events()
+        .list(
+            calendarId="primary",
+            timeMin=now.isoformat(),
+            timeMax=due_date.isoformat(),
+            singleEvents=True,
+            orderBy="startTime",
+        )
+        .execute()
+    )
+
     busy_events = []
-    for event in events_result.get('items', []):
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        end = event['end'].get('dateTime', event['end'].get('date'))
-        if 'T' in start:
+    for event in events_result.get("items", []):
+        start = event["start"].get("dateTime", event["start"].get("date"))
+        end = event["end"].get("dateTime", event["end"].get("date"))
+        if "T" in start:
             start_dt = dt.fromisoformat(start).astimezone(tz)
             end_dt = dt.fromisoformat(end).astimezone(tz)
         else:
-            start_dt = tz.localize(dt.combine(dt.fromisoformat(start).date(), dt.min.time()))
-            end_dt = tz.localize(dt.combine(dt.fromisoformat(end).date(), dt.min.time()))
-        busy_events.append({'start': start_dt, 'end': end_dt})
+            start_dt = tz.localize(
+                dt.combine(dt.fromisoformat(start).date(), dt.min.time())
+            )
+            end_dt = tz.localize(
+                dt.combine(dt.fromisoformat(end).date(), dt.min.time())
+            )
+        busy_events.append({"start": start_dt, "end": end_dt})
 
     def merge_events(events):
-        if not events: return []
-        sorted_events = sorted(events, key=lambda x: x['start'])
+        if not events:
+            return []
+        sorted_events = sorted(events, key=lambda x: x["start"])
         merged = [sorted_events[0]]
         for event in sorted_events[1:]:
             last = merged[-1]
-            if event['start'] <= last['end']:
-                merged[-1]['end'] = max(last['end'], event['end'])
+            if event["start"] <= last["end"]:
+                merged[-1]["end"] = max(last["end"], event["end"])
             else:
                 merged.append(event)
         return merged
@@ -117,9 +128,9 @@ def main():
     free_slots = []
     current_start = now
     for event in merge_events(busy_events):
-        if event['start'] > current_start:
-            free_slots.append((current_start, event['start']))
-        current_start = max(current_start, event['end'])
+        if event["start"] > current_start:
+            free_slots.append((current_start, event["start"]))
+        current_start = max(current_start, event["end"])
     if current_start < due_date:
         free_slots.append((current_start, due_date))
 
@@ -144,13 +155,16 @@ def main():
 
     for start, end in events_to_create:
         event = {
-            'summary': task_name,
-            'start': {'dateTime': start.isoformat(), 'timeZone': tz_str},
-            'end': {'dateTime': end.isoformat(), 'timeZone': tz_str},
+            "summary": task_name,
+            "start": {"dateTime": start.isoformat(), "timeZone": tz_str},
+            "end": {"dateTime": end.isoformat(), "timeZone": tz_str},
         }
-        service.events().insert(calendarId='primary', body=event).execute()
-        print(f"Scheduled: {start.strftime('%Y-%m-%d %H:%M')} to {end.strftime('%H:%M')}")
+        service.events().insert(calendarId="primary", body=event).execute()
+        print(
+            f"Scheduled: {start.strftime('%Y-%m-%d %H:%M')} to {end.strftime('%H:%M')}"
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     get_credentials()
     main()

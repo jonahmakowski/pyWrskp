@@ -14,6 +14,6 @@ for i in range(100):
 
 t.penup()
 t.goto(50, 75)
-t.write('The Strange Circle')
+t.write("The Strange Circle")
 
 input()

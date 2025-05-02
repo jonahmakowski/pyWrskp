@@ -1,21 +1,22 @@
 a = []
-print('WELCOME TO MY SMARTNESS TEST')
+print("WELCOME TO MY SMARTNESS TEST")
 
 
 def q(qu, ae):
-    qe = input(qu + '\n')
+    qe = input(qu + "\n")
     if qe == ae:
         return True
     if qe != ae:
         return False
 
 
-c = ''  # question
-d = ''  # question (3 * 3)
+c = ""  # question
+d = ""  # question (3 * 3)
 
 
 def q_idea():
     from random import randint as r
+
     num = r(2, 3)
     nums = []
     if num == 2:
@@ -33,19 +34,28 @@ def q_idea():
 
     def question_def(opr):
         if len(nums) == 2:
-            questionr = ('What is ' + str(nums[0]) + opr + str(nums[1]) + '?')
+            questionr = "What is " + str(nums[0]) + opr + str(nums[1]) + "?"
         if len(nums) == 3:
-            questionr = ('What is ' + str(nums[0]) + opr + str(nums[1]) + opr + str(nums[2]) + '?')
+            questionr = (
+                "What is "
+                + str(nums[0])
+                + opr
+                + str(nums[1])
+                + opr
+                + str(nums[2])
+                + "?"
+            )
         return questionr
+
     op = r(1, 4)
     if op == 1:
-        question = question_def(' + ')
+        question = question_def(" + ")
     elif op == 2:
-        question = question_def(' - ')
+        question = question_def(" - ")
     elif op == 3:
-        question = question_def(' * ')
+        question = question_def(" * ")
     elif op == 4:
-        question = question_def(' / ')
+        question = question_def(" / ")
     global c
     global d
     c = question
@@ -76,17 +86,17 @@ i = 0
 for item in a:
     if item:
         i += 1
-rank = 'terrible.'
+rank = "terrible."
 if i >= 1:
-    rank = 'bad.'
+    rank = "bad."
 if i >= 3:
-    rank = 'ok.'
+    rank = "ok."
 if i >= 5:
-    rank = 'pretty good.'
+    rank = "pretty good."
 if i >= 7:
-    rank = 'good.'
+    rank = "good."
 if i >= 8:
-    rank = 'great!'
+    rank = "great!"
 if i >= 9:
-    rank = 'Outstanding!!'
-print('you ranked ' + rank)
+    rank = "Outstanding!!"
+print("you ranked " + rank)

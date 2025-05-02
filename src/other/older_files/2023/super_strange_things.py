@@ -16,7 +16,7 @@ t.pendown()
 
 while True:
     t.forward(length)
-    t.right(360/sides)
+    t.right(360 / sides)
     length -= 0.01
     if length < max * -1:
         break

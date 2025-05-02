@@ -6,6 +6,7 @@ t.penup
 t.goto(140, 10)
 t.pendown()
 
+
 def hi():
     t.left(90)
     t.forward(100)
@@ -29,6 +30,8 @@ def hi():
     t.right(90)
     t.forward(100)
     t.pendown()
+
+
 hi()
 hi()
 hi()

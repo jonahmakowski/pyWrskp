@@ -1,6 +1,7 @@
 import json
 import os
 
+
 def load_from_file(file_path: str) -> str:
     """
     Reads the content of a file and returns it as a string.
@@ -11,8 +12,9 @@ def load_from_file(file_path: str) -> str:
     Returns:
         str: The content of the file as a string.
     """
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         return file.read()
+
 
 def write_to_file(file_path: str, text: str) -> None:
     """
@@ -25,8 +27,9 @@ def write_to_file(file_path: str, text: str) -> None:
     Returns:
         None
     """
-    with open(file_path, 'w') as file:
+    with open(file_path, "w") as file:
         file.write(text)
+
 
 def append_to_file(file_path: str, text: str) -> None:
     """
@@ -39,8 +42,9 @@ def append_to_file(file_path: str, text: str) -> None:
     Returns:
         None
     """
-    with open(file_path, 'a') as file:
+    with open(file_path, "a") as file:
         file.write(text)
+
 
 def json_load_file(file_path: str) -> dict:
     """
@@ -56,8 +60,9 @@ def json_load_file(file_path: str) -> dict:
         FileNotFoundError: If the file at the specified path does not exist.
         json.JSONDecodeError: If the file is not a valid JSON.
     """
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         return json.load(file)
+
 
 def json_write_file(file_path: str, data: dict) -> None:
     """
@@ -70,8 +75,9 @@ def json_write_file(file_path: str, data: dict) -> None:
     Returns:
         None
     """
-    with open(file_path, 'w') as file:
+    with open(file_path, "w") as file:
         json.dump(data, file, indent=4)
+
 
 def create_folders(path: str) -> None:
     """
@@ -84,6 +90,7 @@ def create_folders(path: str) -> None:
         None
     """
     os.makedirs(path, exist_ok=True)
+
 
 def file_exists(file_path: str) -> bool:
     """

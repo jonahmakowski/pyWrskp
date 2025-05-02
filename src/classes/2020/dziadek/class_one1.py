@@ -1,11 +1,12 @@
 import pygame
 
-print('version 1')
+print("version 1")
 
 pygame.init()
 screen = pygame.display.set_mode([1375, 750])
 pygame.display.set_caption(
-    "Click the color-square to change the current color; the space-bar changes the background color")
+    "Click the color-square to change the current color; the space-bar changes the background color"
+)
 
 keep_going = True
 mouse_down = False

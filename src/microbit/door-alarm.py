@@ -6,7 +6,7 @@ while True:
     if compass.get_field_strength() < 200000:
         active_mag = True
     if button_a.is_pressed() and button_b.is_pressed():
-        display.scroll('Confirmed')
+        display.scroll("Confirmed")
         active_mag = False
         active_light = False
     elif button_a.is_pressed():

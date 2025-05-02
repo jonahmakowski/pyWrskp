@@ -1,5 +1,6 @@
 import pyWrkspPackage
 
+
 def parse_rules(rules, split):
     """
     Parses a list of rules and splits each rule by a given delimiter.
@@ -9,7 +10,7 @@ def parse_rules(rules, split):
         split (str): The delimiter to split each rule string.
 
     Returns:
-        list of list of int: A list where each element is a list of integers 
+        list of list of int: A list where each element is a list of integers
                              obtained by splitting and converting the rule strings.
     """
     output = []
@@ -20,6 +21,7 @@ def parse_rules(rules, split):
                 rule_temp.append(int(rule))
             output.append(rule_temp)
     return output
+
 
 def check_valid(rules, message):
     """
@@ -48,6 +50,7 @@ def check_valid(rules, message):
             break
     return valid
 
+
 def all_in(list1, list2):
     """
     Check if all elements of list1 are present in list2.
@@ -63,16 +66,17 @@ def all_in(list1, list2):
     count_invalid = 1
     for item in list1:
         if not item in list2:
-            #print(f"{count_invalid} Item {item} not in list2")
+            # print(f"{count_invalid} Item {item} not in list2")
             count_invalid += 1
             valid = False
     return valid
+
 
 def make_valid(rules, message):
     """
     Reorders characters in the message according to the given rules until the message is valid.
     Args:
-        rules (list of tuples): A list of tuples where each tuple contains two characters. 
+        rules (list of tuples): A list of tuples where each tuple contains two characters.
                                 The first character should appear before the second character in the message.
         message (str): The message to be validated and reordered.
     Returns:
@@ -87,12 +91,13 @@ def make_valid(rules, message):
                 if index1 > index2:
                     message[index1], message[index2] = message[index2], message[index1]
                     print(message)
-    
+
     return message
+
 
 def main():
     """
-    Main function to process input data, parse rules and messages, validate messages, 
+    Main function to process input data, parse rules and messages, validate messages,
     and calculate a sum based on the valid messages.
 
     The function performs the following steps:
@@ -107,8 +112,8 @@ def main():
         int: The sum of the middle characters of the valid messages.
     """
     data = pyWrkspPackage.load_from_file("input.txt").split("\n")
-    rules = parse_rules(data, '|')
-    messages = parse_rules(data, ',')
+    rules = parse_rules(data, "|")
+    messages = parse_rules(data, ",")
     valid_rules = []
     for message in messages:
         if not check_valid(rules, message):
@@ -127,6 +132,7 @@ def main():
         print(message[len(message) // 2])
         su += message[len(message) // 2]
     return su
+
 
 if __name__ == "__main__":
     print(main())

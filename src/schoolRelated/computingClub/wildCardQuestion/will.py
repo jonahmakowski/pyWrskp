@@ -1,7 +1,9 @@
 import itertools
 
+
 def getPermutations(lis):
     return list(itertools.combinations(lis, 2))
+
 
 first = input().split()
 second = input().split()
@@ -16,7 +18,7 @@ for item in permuations:
     if int(item[0]) + int(item[1]) == tsum:
         combos += 1
 
-if combos%2+who == 1:
+if combos % 2 + who == 1:
     print("aurpine")
 else:
-    print("kushanzaveri" + str(int(combos/2)))
+    print("kushanzaveri" + str(int(combos / 2)))

@@ -11,7 +11,7 @@ class Security:
     def get_info(self, username, password):
         self.username = username
         self.password = password
-        self.attempts.append('get_info')
+        self.attempts.append("get_info")
 
     def test(self, error):
         temp = False
@@ -20,23 +20,23 @@ class Security:
                 temp = True
         if not temp:
             for i in range(50):
-                print('ERROR, {}'.format(error))
-            return 'error'
+                print("ERROR, {}".format(error))
+            return "error"
         else:
-            return 'accepted'
+            return "accepted"
 
     def login(self):
-        if self.test('get_info') == 'error':
+        if self.test("get_info") == "error":
             exit()
         else:
-            print('authenticating username and password')
+            print("authenticating username and password")
             time.sleep(random.randint(1, 5))
-            if self.username == 'WhiteSwine' and self.password == 'bored':
-                print('authenticated')
-                self.attempts.append('login')
+            if self.username == "WhiteSwine" and self.password == "bored":
+                print("authenticated")
+                self.attempts.append("login")
                 return
 
 
 s = Security()
-s.get_info(input('What is your username? \n'), input('What is your password? \n'))
+s.get_info(input("What is your username? \n"), input("What is your password? \n"))
 s.login()

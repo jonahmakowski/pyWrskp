@@ -1,32 +1,32 @@
 import turtle
 
-tbr = turtle.Turtle() # Turtle Bottom Right
-tbl = turtle.Turtle() # Turtle Bottom Left
-ttr = turtle.Turtle() # Turtle Top Right
-ttl = turtle.Turtle() # Turtle Top Left
-tc = turtle.Turtle() # Turtle Center
+tbr = turtle.Turtle()  # Turtle Bottom Right
+tbl = turtle.Turtle()  # Turtle Bottom Left
+ttr = turtle.Turtle()  # Turtle Top Right
+ttl = turtle.Turtle()  # Turtle Top Left
+tc = turtle.Turtle()  # Turtle Center
 
-'''
+"""
 # Set to max speed
 tbr.speed(0)
 tbl.speed(0)
 ttr.speed(0)
 ttl.speed(0)
 tc.speed(0)
-'''
+"""
 
 # Set colors
-tbr.color('blue')
-tbl.color('green')
-ttr.color('purple')
-ttl.color('black')
-tc.color('orange')
+tbr.color("blue")
+tbl.color("green")
+ttr.color("purple")
+ttl.color("black")
+tc.color("orange")
 
-'''
+"""
 # Mark Center (0,0 NOT true center)
 tc.forward(2)
 tc.backward(2)
-'''
+"""
 
 # Pens up
 tbr.penup()
@@ -36,11 +36,11 @@ ttl.penup()
 tc.penup()
 
 # Goto Correct Positions
-tbl.goto(-581, -237) # DONE
-tbr.goto(576, -236) # Done
-ttr.goto(576, 242) # Done
-ttl.goto(-581, 242) # DONE
-tc.goto(50, 50) # DONE
+tbl.goto(-581, -237)  # DONE
+tbr.goto(576, -236)  # Done
+ttr.goto(576, 242)  # Done
+ttl.goto(-581, 242)  # DONE
+tc.goto(50, 50)  # DONE
 
 # Put pens down
 tbr.pendown()

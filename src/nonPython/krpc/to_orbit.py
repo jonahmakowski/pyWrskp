@@ -9,19 +9,19 @@ open_radiators = True
 
 
 # krpc Constants
-conn = krpc.connect(name='To Orbit!')
+conn = krpc.connect(name="To Orbit!")
 vessel = conn.space_center.active_vessel
 
 # Data streaming
-ut = conn.add_stream(getattr, conn.space_center, 'ut')
-altitude = conn.add_stream(getattr, vessel.flight(), 'mean_altitude')
-apoapsis = conn.add_stream(getattr, vessel.orbit, 'apoapsis_altitude')
-periapsis = conn.add_stream(getattr, vessel.orbit, 'periapsis_altitude')
-thrust = conn.add_stream(getattr, vessel, 'thrust')
-mass = conn.add_stream(getattr, vessel, 'mass')
-parts_stream = conn.add_stream(getattr, vessel.parts, 'all')
-engine_stream = conn.add_stream(getattr, vessel.parts, 'engines')
-stage_stream = conn.add_stream(getattr, vessel.control, 'current_stage')
+ut = conn.add_stream(getattr, conn.space_center, "ut")
+altitude = conn.add_stream(getattr, vessel.flight(), "mean_altitude")
+apoapsis = conn.add_stream(getattr, vessel.orbit, "apoapsis_altitude")
+periapsis = conn.add_stream(getattr, vessel.orbit, "periapsis_altitude")
+thrust = conn.add_stream(getattr, vessel, "thrust")
+mass = conn.add_stream(getattr, vessel, "mass")
+parts_stream = conn.add_stream(getattr, vessel.parts, "all")
+engine_stream = conn.add_stream(getattr, vessel.parts, "engines")
+stage_stream = conn.add_stream(getattr, vessel.control, "current_stage")
 
 # Setup
 vessel.auto_pilot.engage()
@@ -84,7 +84,7 @@ while altitude() < 70100:
         vessel.control.throttle = 1
         while apoapsis() < 80000:
             turn = map_value(90, 70000, altitude())
-            vessel.auto_pilot.target_pitch_and_heading(90-turn, 90)
+            vessel.auto_pilot.target_pitch_and_heading(90 - turn, 90)
             twr = get_twr()
 
             if twr > 2:
@@ -103,10 +103,10 @@ while altitude() < 70100:
 vessel.auto_pilot.disengage()
 vessel.control.sas = True
 vessel.control.sas_mode = vessel.control.sas_mode.prograde
-with conn.stream(vessel.orbit, 'time_to_apoapsis') as time_until_apoapsis:
+with conn.stream(vessel.orbit, "time_to_apoapsis") as time_until_apoapsis:
     start_time = ut()
     start_time_until = time_until_apoapsis()
-    conn.warp_to(start_time+start_time_until-50)
+    conn.warp_to(start_time + start_time_until - 50)
     while time_until_apoapsis > 10:
         pass
 
@@ -133,10 +133,10 @@ while not apoapsis() < orbit_height:
 vessel.control.throttle = 0
 
 # Warp to apoapsis
-with conn.stream(vessel.orbit, 'time_to_apoapsis') as time_until_apoapsis:
+with conn.stream(vessel.orbit, "time_to_apoapsis") as time_until_apoapsis:
     start_time = ut()
     start_time_until = time_until_apoapsis()
-    conn.warp_to(start_time+start_time_until-50)
+    conn.warp_to(start_time + start_time_until - 50)
     while time_until_apoapsis > 10:
         pass
 
@@ -147,7 +147,7 @@ while not orbit_height - 1000 < periapsis() < orbit_height + 1000:
 vessel.control.throttle = 0
 
 # All Done!
-print('All done')
+print("All done")
 for _ in range(10):
     vessel.lights = False
     sleep(0.01)

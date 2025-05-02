@@ -66,7 +66,7 @@ while not game_over:
                 direction = DOWN
             elif event.key == pygame.K_LEFT:
                 direction = LEFT
-    
+
     # Update the snake position
     if direction == UP:
         snake_position[1] -= 10
@@ -79,19 +79,27 @@ while not game_over:
 
     # Update the snake body
     snake_body.insert(0, list(snake_position))
-    if snake_position[0] == apple_position[0] and snake_position[1] == apple_position[1]:
+    if (
+        snake_position[0] == apple_position[0]
+        and snake_position[1] == apple_position[1]
+    ):
         score += 1
         apple_spawned = 0
     else:
         snake_body.pop()
-    
+
     if apple_spawned == 0:
-        x_pos = random.randint(1, (window_size[0]-10)/10)
-        y_pos = random.randint(1, (window_size[0]-10)/10)
-        
+        x_pos = random.randint(1, (window_size[0] - 10) / 10)
+        y_pos = random.randint(1, (window_size[0] - 10) / 10)
+
     # Check for game over
-    if snake_position[0] < 0 or snake_position[0] > window_size[0]-10 or snake_position[1] < 0 or snake_position[1] > window_size[1]-10:
-       game_over = True
+    if (
+        snake_position[0] < 0
+        or snake_position[0] > window_size[0] - 10
+        or snake_position[1] < 0
+        or snake_position[1] > window_size[1] - 10
+    ):
+        game_over = True
     for block in snake_body[1:]:
         if snake_position[0] == block[0] and snake_position[1] == block[1]:
             game_over = True
@@ -104,7 +112,9 @@ while not game_over:
         pygame.draw.rect(screen, white, pygame.Rect(position[0], position[1], 10, 10))
 
     # Draw the apple
-    pygame.draw.rect(screen, white, pygame.Rect(apple_position[0], apple_position[1], 10, 10))
+    pygame.draw.rect(
+        screen, white, pygame.Rect(apple_position[0], apple_position[1], 10, 10)
+    )
 
     # Update the display
     pygame.display.update()
@@ -114,4 +124,3 @@ while not game_over:
 
 # Print the final score
 print("Your final score is: " + str(score))
-

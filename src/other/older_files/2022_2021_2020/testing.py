@@ -4,4 +4,5 @@ def f():
     print(x, y)
     x = 2
 
+
 f()

@@ -15,17 +15,26 @@ modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlin
 print("Modified files:", modified_files)
 
 # Filter files from /src/ that are Python or C++ source_files
-source_files = [f for f in modified_files if f.startswith("src/") and f.endswith((".py", '.gd'))]
+source_files = [
+    f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".gd"))
+]
 
 print(f"{len(source_files)}; Source files:", source_files)
 
-documentation_files = [os.path.join(dirpath, f) for (dirpath, dirnames, filenames) in os.walk('docs/ai_docs/') for f in
-                       filenames]
+documentation_files = [
+    os.path.join(dirpath, f)
+    for (dirpath, dirnames, filenames) in os.walk("docs/ai_docs/")
+    for f in filenames
+]
 print(f"{len(documentation_files)}; Documentation files:", documentation_files)
 
 # Remove old documentation for files that have been deleted
 for doc_file in documentation_files:
-    corresponding_source_file = doc_file.replace("docs/ai_docs/", "src/").replace(".md", ".py").replace(".markdown", ".gd")
+    corresponding_source_file = (
+        doc_file.replace("docs/ai_docs/", "src/")
+        .replace(".md", ".py")
+        .replace(".markdown", ".gd")
+    )
     if not os.path.exists(corresponding_source_file):
         print(f"Removing outdated documentation: {doc_file}")
         os.remove(doc_file)
@@ -36,10 +45,7 @@ if not source_files:
     exit(0)
 
 # Initialize OpenAI client with custom API URL
-client = openai.OpenAI(
-    api_key=OPENAI_API_KEY,
-    base_url=CUSTOM_API_URL
-)
+client = openai.OpenAI(api_key=OPENAI_API_KEY, base_url=CUSTOM_API_URL)
 
 for file_num, file in enumerate(source_files):
     if not os.path.exists(file):
@@ -57,14 +63,11 @@ for file_num, file in enumerate(source_files):
     # Create chat completion request
     messages = [
         {"role": "system", "content": prompt},
-        {"role": "user", "content": code}
+        {"role": "user", "content": code},
     ]
 
     response = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=messages,
-        temperature=0.7,
-        max_tokens=1000
+        model=MODEL_NAME, messages=messages, temperature=0.7, max_tokens=1000
     )
 
     documentation = response.choices[0].message.content
@@ -74,7 +77,11 @@ for file_num, file in enumerate(source_files):
         continue
 
     # Convert file path from /src/ to /docs/
-    doc_path = file.replace("src/", "docs/ai_docs/").replace(".py", ".md").replace(".gd", ".markdown")
+    doc_path = (
+        file.replace("src/", "docs/ai_docs/")
+        .replace(".py", ".md")
+        .replace(".gd", ".markdown")
+    )
 
     # Ensure parent directories exist
     os.makedirs(os.path.dirname(doc_path), exist_ok=True)

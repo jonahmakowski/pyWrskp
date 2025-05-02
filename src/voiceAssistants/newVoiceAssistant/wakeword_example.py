@@ -1,8 +1,8 @@
 import pvporcupine
 from pvrecorder import PvRecorder
 
-keywords = ['computer']
-access_key = 'API_KEY_HERE'
+keywords = ["computer"]
+access_key = "API_KEY_HERE"
 
 porcupine = pvporcupine.create(access_key=access_key, keywords=keywords)
 recoder = PvRecorder(device_index=-1, frame_length=porcupine.frame_length)
@@ -20,4 +20,3 @@ except KeyboardInterrupt:
 finally:
     porcupine.delete()
     recoder.delete()
-

@@ -4,11 +4,15 @@ from pyWrkspPackage import run_terminal_command
 from webbrowser import open as web_open
 from urllib.parse import quote
 
-APPLICATION_PATHS = ['{}/Applications/'.format(os.path.expanduser("~")),
-                     '/System/Volumes/Preboot/Cryptexes/App/System/Applications/',
-                     '/System/Applications/', '/System/Library/CoreServices/Applications/',
-                     '/Applications/']
+APPLICATION_PATHS = [
+    "{}/Applications/".format(os.path.expanduser("~")),
+    "/System/Volumes/Preboot/Cryptexes/App/System/Applications/",
+    "/System/Applications/",
+    "/System/Library/CoreServices/Applications/",
+    "/Applications/",
+]
 PATHS = [os.path.expanduser("~")]
+
 
 def hide_app(app_name: str) -> None:
     """
@@ -24,9 +28,10 @@ def hide_app(app_name: str) -> None:
         tell application "System Events" to keystroke "h" using {{command down}}
     end tell
     """
-    run(['osascript', '-e', applescript])
+    run(["osascript", "-e", applescript])
 
-def find_path_app(app: str) -> str|bool:
+
+def find_path_app(app: str) -> str | bool:
     """
     Find the path of an application using the `mdfind` command.
 
@@ -37,13 +42,27 @@ def find_path_app(app: str) -> str|bool:
     str|bool: The path of the application if found, False otherwise.
     """
     search = run_terminal_command('mdfind "{}"'.format(app))
-    search = search.split('\n')
+    search = search.split("\n")
     for result in search:
-        if ((((result.startswith(APPLICATION_PATHS[0]) or result.startswith(APPLICATION_PATHS[1])) or
-             (result.startswith(APPLICATION_PATHS[2]) or result.startswith(APPLICATION_PATHS[3])))) or
-                result.startswith(APPLICATION_PATHS[4]) and result.endswith('.app')):
+        if (
+            (
+                (
+                    (
+                        result.startswith(APPLICATION_PATHS[0])
+                        or result.startswith(APPLICATION_PATHS[1])
+                    )
+                    or (
+                        result.startswith(APPLICATION_PATHS[2])
+                        or result.startswith(APPLICATION_PATHS[3])
+                    )
+                )
+            )
+            or result.startswith(APPLICATION_PATHS[4])
+            and result.endswith(".app")
+        ):
             return result
     return False
+
 
 def open_directory_in_finder(directory: str) -> bool:
     """
@@ -56,10 +75,11 @@ def open_directory_in_finder(directory: str) -> bool:
     bool: True if the directory was successfully opened, False otherwise.
     """
     if os.path.isdir(directory):
-        run(['open', directory])
+        run(["open", directory])
         return True
     else:
         return False
+
 
 def open_app(app: str) -> bool:
     """
@@ -75,10 +95,11 @@ def open_app(app: str) -> bool:
     if not app_path:
         return False
     else:
-        run(['open', app_path])
+        run(["open", app_path])
         return True
 
-def find_path(file: str) -> str|bool:
+
+def find_path(file: str) -> str | bool:
     """
     Find the path of a file using the `mdfind` command.
 
@@ -89,7 +110,7 @@ def find_path(file: str) -> str|bool:
     str|bool: The path of the file if found, False otherwise.
     """
     file = file.split()
-    file_new = ''
+    file_new = ""
     for part in file:
         file_new += part
     file = file_new
@@ -97,7 +118,7 @@ def find_path(file: str) -> str|bool:
     search = run_terminal_command('mdfind "{}"'.format(file))
     if search is None:
         return False
-    search = search.split('\n')
+    search = search.split("\n")
 
     in_path_searches = []
 
@@ -111,7 +132,7 @@ def find_path(file: str) -> str|bool:
     elif len(in_path_searches) == 1:
         return in_path_searches[0]
     else:
-        print('The file has multiple locations. I haven\'t implemented this yet.')
+        print("The file has multiple locations. I haven't implemented this yet.")
         return False
 
 
@@ -132,11 +153,12 @@ def open_file(file: str) -> bool:
         os.system('open "{}"'.format(path))
         return True
 
+
 def pause() -> None:
     """
     Pause the music on Spotify.
     """
-    run(['osascript', '-e', 'tell application "Spotify" to pause'])
+    run(["osascript", "-e", 'tell application "Spotify" to pause'])
 
 
 def play(open_spotify=True) -> None:
@@ -147,9 +169,10 @@ def play(open_spotify=True) -> None:
     open_spotify (bool): If True, open the Spotify application before playing music.
     """
     if open_spotify:
-        open_app('Spotify')
-    run(['osascript', '-e', 'tell application "Spotify" to play'])
-    hide_app('Spotify')
+        open_app("Spotify")
+    run(["osascript", "-e", 'tell application "Spotify" to play'])
+    hide_app("Spotify")
+
 
 def open_webpage(page: str, https=True) -> None:
     """
@@ -160,11 +183,12 @@ def open_webpage(page: str, https=True) -> None:
     https (bool): If True, prepend 'https://' to the page URL. Defaults to True.
     """
     if https:
-        web_open('https://' + page)
+        web_open("https://" + page)
     else:
         web_open(page)
 
-def search(query:str) -> str:
+
+def search(query: str) -> str:
     """
     Search for a query on Google.
 
@@ -179,11 +203,13 @@ def search(query:str) -> str:
     open_webpage(final_url, https=False)
     return final_url
 
+
 def terminate() -> None:
     """
     Terminate the program.
     """
     raise KeyboardInterrupt
+
 
 def quit_app(app: str) -> None:
     """
@@ -197,9 +223,10 @@ def quit_app(app: str) -> None:
         quit
     end tell
     """
-    run(['osascript', '-e', applescript])
+    run(["osascript", "-e", applescript])
 
-def set_volume(percentage:int) -> None:
+
+def set_volume(percentage: int) -> None:
     """
     Set the system volume to a specified percentage.
 
@@ -207,9 +234,10 @@ def set_volume(percentage:int) -> None:
     percentage (int): The desired volume level as a percentage (0-100).
     """
     if 0 <= percentage <= 100:
-        run(['osascript', '-e', f'set volume output volume {percentage}'])
+        run(["osascript", "-e", f"set volume output volume {percentage}"])
     else:
         raise ValueError("Volume percentage must be between 0 and 100.")
+
 
 def get_current_volume() -> int:
     """
@@ -218,5 +246,7 @@ def get_current_volume() -> int:
     Returns:
     int: The current volume level as a percentage (0-100).
     """
-    volume = run_terminal_command('osascript -e "output volume of (get volume settings)"')
+    volume = run_terminal_command(
+        'osascript -e "output volume of (get volume settings)"'
+    )
     return int(volume)

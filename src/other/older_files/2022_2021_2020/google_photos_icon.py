@@ -3,7 +3,7 @@ from time import sleep
 
 t = turtle.Turtle()
 
-colors = ['yellow', 'green', 'blue', 'red']
+colors = ["yellow", "green", "blue", "red"]
 curve = 3
 t.speed(0)
 color = 0

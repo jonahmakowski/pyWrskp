@@ -6,8 +6,8 @@ pygame.init()
 screen = pygame.display.set_mode([DIS_WIDTH, DIS_HEIGHT])
 pygame.display.set_caption("Paint")
 
-buttonMinus = pygame.image.load('button_minus.png')
-buttonPlus = pygame.image.load('button_plus.png')
+buttonMinus = pygame.image.load("button_minus.png")
+buttonPlus = pygame.image.load("button_plus.png")
 
 keep_going = True
 mouse_down = False
@@ -28,7 +28,8 @@ recHeight = int(DIS_HEIGHT * 0.09)
 button_size = int(recHeight / 2)
 
 max_radius = int(recHeight / 2)
-location_x = ((DIS_WIDTH - (max_radius * 4)))
+location_x = DIS_WIDTH - (max_radius * 4)
+
 
 def menu():
     global location_x
@@ -45,11 +46,12 @@ def menu():
     y = 0
     for button in buttons:
         plus_minus = pygame.transform.scale(button, (button_size, button_size))
-        plus_minus_rec = plus_minus.get_rect(topleft = (location_x, y))
+        plus_minus_rec = plus_minus.get_rect(topleft=(location_x, y))
         screen.blit(plus_minus, plus_minus_rec)
         y += button_size
     pygame.display.update()
-    
+
+
 def check_color():
     global colors
     global recWidth
@@ -60,14 +62,15 @@ def check_color():
         rectangle = pygame.Rect((x, 0), (recWidth, recHeight))
         x += recWidth
         if rectangle.collidepoint(spot):
-            return 'color'
+            return "color"
     for button in buttons:
         plus_minus = pygame.transform.scale(button, (button_size, button_size))
-        plus_minus_rec = plus_minus.get_rect(topleft = (location_x, y))
+        plus_minus_rec = plus_minus.get_rect(topleft=(location_x, y))
         y += button_size
         if plus_minus_rec.collidepoint(spot):
-            return 'radius'
+            return "radius"
     return False
+
 
 def check():
     global colors
@@ -82,6 +85,7 @@ def check():
         x += recWidth
         if rectangle.collidepoint(spot):
             currentColour = col
+
 
 increase = 5
 

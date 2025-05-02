@@ -6,8 +6,8 @@ wrong = 0
 root = 0
 round_correct = False
 
-option = int(input('Which option would you like?'))
-max_num = int(input('What is the highest number you would like to test?'))
+option = int(input("Which option would you like?"))
+max_num = int(input("What is the highest number you would like to test?"))
 
 
 if option == 1:
@@ -23,7 +23,7 @@ if option == 1:
             wrong += 1
         print(num, root1, num2, root2, round_correct)
         num += 1
-        
+
 
 elif option == 2:
     while num < max_num:
@@ -50,12 +50,12 @@ elif option == 3:
         else:
             round_correct = False
             wrong += 1
-        
+
         print(num, root, root2, round_correct)
         num += 1
 
 elif option == 4:
-    diffrence = float(input('What is the diffrence you would like to check?'))
+    diffrence = float(input("What is the diffrence you would like to check?"))
     while num < max_num:
         num1 = num + 1
         sqrt1 = sqrt(num)
@@ -66,9 +66,9 @@ elif option == 4:
         else:
             round_correct = False
             wrong += 1
-        
+
         print(num, sqrt1, sqrt2, round_correct)
         num += 1
 
-print('Amount Correct', correct)
-print('Amiount Wrong', wrong)
+print("Amount Correct", correct)
+print("Amiount Wrong", wrong)

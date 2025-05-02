@@ -4,9 +4,10 @@ import class_1_extras
 
 import pygame
 
+
 def draw():
     pygame.init()
-    screen = pygame.display.set_mode([1375,750])
+    screen = pygame.display.set_mode([1375, 750])
     pygame.display.set_caption("Paint")
 
     keep_going = True
@@ -39,11 +40,11 @@ def draw():
     limeRectangle = pygame.Rect((400, 0), (50, 50))
     whiteRectangle = pygame.Rect((450, 0), (50, 50))
 
-    dotRectangle5 = pygame.Rect((500, 0), (50,50))
-    dotRectangle10 = pygame.Rect((550, 0), (50,50))
-    dotRectangle15 = pygame.Rect((600, 0), (50,50))
-    dotRectangle20 = pygame.Rect((650, 0), (50,50))
-    dotRectangle25 = pygame.Rect((700, 0), (50,50))
+    dotRectangle5 = pygame.Rect((500, 0), (50, 50))
+    dotRectangle10 = pygame.Rect((550, 0), (50, 50))
+    dotRectangle15 = pygame.Rect((600, 0), (50, 50))
+    dotRectangle20 = pygame.Rect((650, 0), (50, 50))
+    dotRectangle25 = pygame.Rect((700, 0), (50, 50))
 
     current_background = BLACK
 
@@ -77,14 +78,14 @@ def draw():
                 pygame.draw.circle(screen, currentColour, spot, radius)
                 pygame.display.update()
             elif y < 50 or x <= 750:
-        
+
                 temp = class_1_extras.which_color(x, radius, currentColour, screen)
-        
+
                 temp_true = isinstance(temp, int)
-        
+
                 if temp_true == True:
                     radius = temp
-        
+
                 elif temp_true == False:
                     if temp != None:
                         currentColour = temp
@@ -99,7 +100,7 @@ def draw():
         pygame.draw.rect(screen, ORANGE, orangeRectangle)
         pygame.draw.rect(screen, LIME, limeRectangle)
         pygame.draw.rect(screen, WHITE, whiteRectangle)
-        
+
         pygame.draw.rect(screen, current_background, dotRectangle5)
         pygame.draw.rect(screen, current_background, dotRectangle10)
         pygame.draw.rect(screen, current_background, dotRectangle15)
@@ -120,4 +121,6 @@ def draw():
             pygame.draw.circle(screen, BLACK, (725, 25), 25)
         pygame.display.update()
     pygame.quit()
+
+
 draw()

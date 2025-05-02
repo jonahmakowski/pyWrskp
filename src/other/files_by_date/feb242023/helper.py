@@ -10,9 +10,9 @@ class BordemFair:
         averages = []
         for item in self.people:
             info = item.compile_info()
-            a = info['intelligence']
-            a += info['speed']
-            a += info['strength']
+            a = info["intelligence"]
+            a += info["speed"]
+            a += info["strength"]
             a = a / 3
             averages.append(a)
         maxs = -1000000000000
@@ -26,12 +26,18 @@ class BordemFair:
             if averages[i] < mins:
                 mins = averages[i]
                 minnum = i
-        
+
         winner = self.people[maxnum]
         loser = self.people[minnum]
         if print_:
-            print('The winner is {}! with a average rating of {}!'.format(winner.name, maxs))
-            print('The loser is {}! with a average rating of {}'.format(loser.name, mins))
+            print(
+                "The winner is {}! with a average rating of {}!".format(
+                    winner.name, maxs
+                )
+            )
+            print(
+                "The loser is {}! with a average rating of {}".format(loser.name, mins)
+            )
         return winner, loser
 
     def info(self, print_=True):
@@ -41,15 +47,15 @@ class BordemFair:
             info.append(i)
         if print_:
             for item in info:
-                print('Name: {}'.format(item['name']))
-                print('Intelligence: {}'.format(item['intelligence']))
-                print('Speed: {}'.format(item['speed']))
-                print('Strength: {}'.format(item['strength']))
-                print('Age: {}'.format(item['age']))
-                print('Size: {}'.format(item['size']))
-                print('Other Info:')
-                for i in item['other']:
-                    print('\t{}'.format(i))
+                print("Name: {}".format(item["name"]))
+                print("Intelligence: {}".format(item["intelligence"]))
+                print("Speed: {}".format(item["speed"]))
+                print("Strength: {}".format(item["strength"]))
+                print("Age: {}".format(item["age"]))
+                print("Size: {}".format(item["size"]))
+                print("Other Info:")
+                for i in item["other"]:
+                    print("\t{}".format(i))
                 print()
                 print()
                 print()
@@ -67,13 +73,15 @@ class Person:
         self.other_info = []
 
     def compile_info(self):
-        info = {'intelligence': self.intelligence,
-                'speed': self.speed,
-                'strength': self.strength,
-                'size': self.size,
-                'age': self.age,
-                'name': self.name,
-                'other': self.other_info}
+        info = {
+            "intelligence": self.intelligence,
+            "speed": self.speed,
+            "strength": self.strength,
+            "size": self.size,
+            "age": self.age,
+            "name": self.name,
+            "other": self.other_info,
+        }
         return info
 
     def learn(self, amount):

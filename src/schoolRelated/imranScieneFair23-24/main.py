@@ -16,12 +16,15 @@ learning_rate = 0.005
 weight_decay = 0.0001
 batch_size = 256
 num_epochs = 150  # For real training, use num_epochs=100. 10 is a test value
-image_size = 72 # We'll resize input images to this size
+image_size = 72  # We'll resize input images to this size
 patch_size = 6  # Size of the patches to be extracted from the input images
 num_patches = (image_size // patch_size) ** 2
 projection_dim = 64
 num_heads = 4
-transformer_units = [projection_dim * 2, projection_dim]  # Size of the transformer layers
+transformer_units = [
+    projection_dim * 2,
+    projection_dim,
+]  # Size of the transformer layers
 transformer_layers = 12
 mlp_head_units = [2048, 1024]  # Size of the dense layers of the final classifier
 
@@ -103,9 +106,7 @@ for i, patch in enumerate(patches[0]):
     ax = plt.subplot(n, n, i + 1)
     patch_img = tf.reshape(patch, (patch_size, patch_size, 3))
     patch_shape = tf.shape(patch_img)
-    plt.imshow(
-        tf.make_ndarray(tf.make_tensor_proto(patch_img)).astype("uint8")
-    )
+    plt.imshow(tf.make_ndarray(tf.make_tensor_proto(patch_img)).astype("uint8"))
     plt.axis("off")
 
 
@@ -227,8 +228,10 @@ def run_experiment(model):
 
     return history
 
+
 vit_classifier = create_vit_classifier()
 history = run_experiment(vit_classifier)
+
 
 def plot_history(item):
     plt.plot(history.history[item], label=item)
@@ -239,6 +242,7 @@ def plot_history(item):
     plt.legend()
     plt.grid()
     plt.show()
+
 
 plot_history("loss")
 plot_history("top-5-accuracy")

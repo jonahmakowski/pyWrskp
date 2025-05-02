@@ -1,13 +1,14 @@
 def run_code(code):
     exec(code)
 
-code = ''
-print('what is your code (enter = new line):')
+
+code = ""
+print("what is your code (enter = new line):")
 
 while True:
     cod = input()
-    if cod == '':
+    if cod == "":
         break
-    code += cod + '\n'
+    code += cod + "\n"
 
 run_code(code)

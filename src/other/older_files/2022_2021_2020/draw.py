@@ -1,7 +1,7 @@
 import turtle
 
 t = turtle.Turtle()
-sides = int(input('How many sides would you like?'))
+sides = int(input("How many sides would you like?"))
 length = 0.025
 turn = 360 / sides
 t.speed(0)

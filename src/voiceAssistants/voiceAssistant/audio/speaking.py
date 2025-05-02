@@ -13,21 +13,21 @@ def replace_with_username(text):
     write_list = []
 
     for item in text_list:
-        if '{{USERNAME}}' in item:
-            speak_list.append(item.replace('{{USERNAME}}', username_speak))
-            write_list.append(item.replace('{{USERNAME}}', username_write))
+        if "{{USERNAME}}" in item:
+            speak_list.append(item.replace("{{USERNAME}}", username_speak))
+            write_list.append(item.replace("{{USERNAME}}", username_write))
         else:
             speak_list.append(item)
             write_list.append(item)
 
-    new_write = ''
-    new_speak = ''
+    new_write = ""
+    new_speak = ""
 
     for word in write_list:
-        new_write += word + ' '
+        new_write += word + " "
 
     for word in speak_list:
-        new_speak += word + ' '
+        new_speak += word + " "
 
     new_write = new_write[:-1]
     new_speak = new_speak[:-1]
@@ -37,4 +37,4 @@ def replace_with_username(text):
 
 def speak(text):
     write, talk = replace_with_username(text)
-    subprocess_run(['say', talk])
+    subprocess_run(["say", talk])

@@ -1,5 +1,6 @@
 import sys
-sys.path.append('../')
+
+sys.path.append("../")
 from five_letters import get_five_letters, get_words
 
 
@@ -33,13 +34,17 @@ def parse_input(inp, word, word_correct, word_wrong_place, word_wrong):
             else:
                 word_wrong_place[word_lis[index]] = [index]
         elif letter.lower() == "w":
-            if word_lis[index] not in word_wrong and (word_lis[index] not in word_correct or word_lis[index] in word_wrong_place.keys()):
+            if word_lis[index] not in word_wrong and (
+                word_lis[index] not in word_correct
+                or word_lis[index] in word_wrong_place.keys()
+            ):
                 word_wrong.append(word_lis[index])
         else:
-            print('There was an invalid input, terminating')
+            print("There was an invalid input, terminating")
             exit()
         index += 1
     return word_correct, word_wrong_place, word_wrong
+
 
 def check_valid_word(word, word_correct, word_wrong_place, word_wrong):
     """
@@ -58,17 +63,17 @@ def check_valid_word(word, word_correct, word_wrong_place, word_wrong):
     index = 0
 
     for letter in word_lis:
-        if letter.lower() != word_correct[index] and word_correct[index] != '':
-            #print("Word {} doesn't work at letter {} for not being in correct list, correct was {}"
-                  #.format(word, letter, word_correct[index]))
-            #print(word_correct, word_wrong_place, word_wrong)
+        if letter.lower() != word_correct[index] and word_correct[index] != "":
+            # print("Word {} doesn't work at letter {} for not being in correct list, correct was {}"
+            # .format(word, letter, word_correct[index]))
+            # print(word_correct, word_wrong_place, word_wrong)
             return False
         elif letter.lower() in word_wrong:
-            #print("Word {} doesn't work at letter {} for letter in wrong list".format(word, letter))
+            # print("Word {} doesn't work at letter {} for letter in wrong list".format(word, letter))
             return False
         elif word_wrong_place.get(word_lis[index]) is not None:
             if index in word_wrong_place[word_lis[index]]:
-                #print("Word {} doesn't work at letter {} for having letter in wrong spot".format(word, letter))
+                # print("Word {} doesn't work at letter {} for having letter in wrong spot".format(word, letter))
                 return False
         index += 1
 
@@ -79,12 +84,13 @@ def check_valid_word(word, word_correct, word_wrong_place, word_wrong):
 
     return True
 
+
 def give_rank(word_list):
     """
     Assigns a rank to each word in the given list based on the presence of specific letters.
 
-    The function uses predefined letter rankings to calculate a rank for each word. 
-    Each letter has a specific rank value, and the rank of a word is the sum of the 
+    The function uses predefined letter rankings to calculate a rank for each word.
+    Each letter has a specific rank value, and the rank of a word is the sum of the
     rank values of the letters it contains.
 
     Parameters:
@@ -93,15 +99,15 @@ def give_rank(word_list):
     Returns:
     list of int: A list of ranks corresponding to the words in the input list.
     """
-    rank1 = ['q', 'j', 'x']
-    rank2 = ['z', 'w', 'k']
-    rank3 = ['v', 'f', 'y']
-    rank4 = ['b', 'h', 'm']
-    rank5 = ['p', 'g', 'u']
-    rank6 = ['d', 'c', 'l']
-    rank7 = ['t', 'n']
-    rank8 = ['r', 'i', 'o']
-    rank9 = ['s', 'e', 'a']
+    rank1 = ["q", "j", "x"]
+    rank2 = ["z", "w", "k"]
+    rank3 = ["v", "f", "y"]
+    rank4 = ["b", "h", "m"]
+    rank5 = ["p", "g", "u"]
+    rank6 = ["d", "c", "l"]
+    rank7 = ["t", "n"]
+    rank8 = ["r", "i", "o"]
+    rank9 = ["s", "e", "a"]
 
     ranks = []
 
@@ -138,7 +144,14 @@ def give_rank(word_list):
 
     return ranks
 
-def find_all_valid(words:list, ranks:list, word_correct:list, word_wrong_place:dict, word_wrong:list):
+
+def find_all_valid(
+    words: list,
+    ranks: list,
+    word_correct: list,
+    word_wrong_place: dict,
+    word_wrong: list,
+):
     """
     Filters out invalid words from the given list of words based on the provided criteria.
 
@@ -162,6 +175,7 @@ def find_all_valid(words:list, ranks:list, word_correct:list, word_wrong_place:d
             index += 1
     return words, ranks
 
+
 def find_highest_points(words, ranks):
     """
     Finds the index of the word with the highest rank.
@@ -182,7 +196,8 @@ def find_highest_points(words, ranks):
 
     return high_index
 
-def remove_invalid_word_from_file(word, file='../words.txt'):
+
+def remove_invalid_word_from_file(word, file="../words.txt"):
     """
     Removes all occurrences of a specified word from a file containing a list of words.
     Args:
@@ -196,13 +211,13 @@ def remove_invalid_word_from_file(word, file='../words.txt'):
     """
     words = get_words(file=file)
     words.pop(words.index(word))
-    
+
     while word in words:
         words.pop(words.index(word))
-    
-    with open(file, 'w') as f:
-        f.write('\n'.join(words) + '\n')
-    print('Removed file from words.txt, will be saved for next time.')
+
+    with open(file, "w") as f:
+        f.write("\n".join(words) + "\n")
+    print("Removed file from words.txt, will be saved for next time.")
 
 
 def solver(starting_word="crane"):
@@ -218,7 +233,7 @@ def solver(starting_word="crane"):
     Returns:
         None
     """
-    with open('../five_letter_words.txt', 'r') as file:
+    with open("../five_letter_words.txt", "r") as file:
         words_temp = file.readlines()
 
     words = []
@@ -227,28 +242,33 @@ def solver(starting_word="crane"):
 
     ranks = give_rank(words)
 
-    word_correct = ['', '', '', '', ''] # Letters in correct place
-    word_wrong_place = {} # Give letter, and then a list of places with incorrect location
-    word_wrong = [] # Letters that aren't in the word at all
+    word_correct = ["", "", "", "", ""]  # Letters in correct place
+    word_wrong_place = (
+        {}
+    )  # Give letter, and then a list of places with incorrect location
+    word_wrong = []  # Letters that aren't in the word at all
 
     if starting_word in words:
         index = words.index(starting_word)
         words.pop(index)
         ranks.pop(index)
 
-    print('Correct (in correct place): C, semi-correct (in wrong place): S, Wrong (not in word): W')
+    print(
+        "Correct (in correct place): C, semi-correct (in wrong place): S, Wrong (not in word): W"
+    )
 
-    print('Guess 1: {}'.format(starting_word))
-    (word_correct,
-     word_wrong_place,
-     word_wrong) = parse_input(input(), starting_word, word_correct, word_wrong_place, word_wrong)
-
+    print("Guess 1: {}".format(starting_word))
+    (word_correct, word_wrong_place, word_wrong) = parse_input(
+        input(), starting_word, word_correct, word_wrong_place, word_wrong
+    )
 
     guess = 2
     while True:
-        words, ranks = find_all_valid(words, ranks, word_correct, word_wrong_place, word_wrong)
+        words, ranks = find_all_valid(
+            words, ranks, word_correct, word_wrong_place, word_wrong
+        )
 
-        print('There are {} words left'.format(len(words)))
+        print("There are {} words left".format(len(words)))
 
         if len(words) == 0:
             print("Unfortunatly, we've run out of words.")
@@ -256,22 +276,23 @@ def solver(starting_word="crane"):
 
         word = words[find_highest_points(words, ranks)]
 
-        print('Guess {}: {}'.format(guess, word))
+        print("Guess {}: {}".format(guess, word))
         inp = input()
-        if inp == 'n':
+        if inp == "n":
             words.pop(words.index(word))
             remove_invalid_word_from_file(word)
             continue
-        
-        (word_correct,
-         word_wrong_place,
-         word_wrong) = parse_input(inp, word, word_correct, word_wrong_place, word_wrong)
+
+        (word_correct, word_wrong_place, word_wrong) = parse_input(
+            inp, word, word_correct, word_wrong_place, word_wrong
+        )
 
         if word_correct == list(word):
-            print('{} is the correct word. Worked at guess {}'.format(word, guess))
+            print("{} is the correct word. Worked at guess {}".format(word, guess))
             break
         guess += 1
 
-if __name__ == '__main__':
-    get_five_letters(in_file='../words.txt', out_file='../five_letter_words.txt')
+
+if __name__ == "__main__":
+    get_five_letters(in_file="../words.txt", out_file="../five_letter_words.txt")
     solver()

@@ -22,9 +22,11 @@ SCOPE = (
 )
 
 # Check if the redirect URI is set correctly
-redirect_uri = os.getenv('SPOTIPY_REDIRECT_URI')
-if redirect_uri != 'http://127.0.0.1:8888/callback':
-    print("Warning: Make sure SPOTIPY_REDIRECT_URI in your .env file is set to 'http://127.0.0.1:8888/callback'.")
+redirect_uri = os.getenv("SPOTIPY_REDIRECT_URI")
+if redirect_uri != "http://127.0.0.1:8888/callback":
+    print(
+        "Warning: Make sure SPOTIPY_REDIRECT_URI in your .env file is set to 'http://127.0.0.1:8888/callback'."
+    )
 
 # Authenticate using SpotifyOAuth flow
 try:
@@ -38,6 +40,7 @@ except Exception as e:
     sys.exit(1)
 
 # --- Helper Functions ---
+
 
 def get_currently_playing() -> dict:
     """
@@ -65,29 +68,31 @@ def get_currently_playing() -> dict:
     """
     try:
         current_playback = sp.current_playback()
-        if not current_playback or not current_playback.get('item'):
+        if not current_playback or not current_playback.get("item"):
             return {}
 
-        track = current_playback['item']
-        track_name = track['name']
-        artist_name = ', '.join(artist['name'] for artist in track['artists'])
-        album_name = track['album']['name']
-        track_uri = track['uri']
-        track_id = track['id']
-        is_playing = current_playback['is_playing']
-        progress_ms = current_playback['progress_ms']
-        duration_ms = track['duration_ms']
+        track = current_playback["item"]
+        track_name = track["name"]
+        artist_name = ", ".join(artist["name"] for artist in track["artists"])
+        album_name = track["album"]["name"]
+        track_uri = track["uri"]
+        track_id = track["id"]
+        is_playing = current_playback["is_playing"]
+        progress_ms = current_playback["progress_ms"]
+        duration_ms = track["duration_ms"]
 
-        print(f"Currently playing: '{track_name}' by {artist_name} from the album '{album_name}'.")
+        print(
+            f"Currently playing: '{track_name}' by {artist_name} from the album '{album_name}'."
+        )
         return {
-            'track_name': track_name,
-            'artist_name': artist_name,
-            'album_name': album_name,
-            'track_uri': track_uri,
-            'track_id': track_id,
-            'is_playing': is_playing,
-            'progress_ms': progress_ms,
-            'duration_ms': duration_ms
+            "track_name": track_name,
+            "artist_name": artist_name,
+            "album_name": album_name,
+            "track_uri": track_uri,
+            "track_id": track_id,
+            "is_playing": is_playing,
+            "progress_ms": progress_ms,
+            "duration_ms": duration_ms,
         }
 
     except spotipy.exceptions.SpotifyException as e:
@@ -113,14 +118,14 @@ def find_track(name: str) -> tuple:
         - If multiple tracks match the search query, only the first result is returned.
     """
     try:
-        results = sp.search(q=name, type='track', limit=1)
-        items = results['tracks']['items']
+        results = sp.search(q=name, type="track", limit=1)
+        items = results["tracks"]["items"]
         if items:
             track = items[0]
-            track_name = track['name']
-            artist_names = ', '.join(artist['name'] for artist in track['artists'])
+            track_name = track["name"]
+            artist_names = ", ".join(artist["name"] for artist in track["artists"])
             print(f"Found track: '{track_name}' by {artist_names}")
-            return track['uri'], track['id']
+            return track["uri"], track["id"]
         else:
             print(f"Track '{name}' not found.")
             return None, None
@@ -128,32 +133,33 @@ def find_track(name: str) -> tuple:
         print(f"Error searching for track: {e}")
         return None, None
 
-def find_playlist_fuzzy(name:str, similarity_threshold=75) -> tuple:
+
+def find_playlist_fuzzy(name: str, similarity_threshold=75) -> tuple:
     """
     Perform a fuzzy search to find a Spotify playlist matching the given name.
 
-    This function retrieves all playlists associated with the current user, 
-    separates them into user-created and other playlists, and performs a fuzzy 
-    search to find the best match for the given playlist name. The search uses 
+    This function retrieves all playlists associated with the current user,
+    separates them into user-created and other playlists, and performs a fuzzy
+    search to find the best match for the given playlist name. The search uses
     a similarity threshold to determine acceptable matches.
 
     Args:
         name (str): The name of the playlist to search for.
-        similarity_threshold (int, optional): The minimum similarity score (0-100) 
+        similarity_threshold (int, optional): The minimum similarity score (0-100)
             required for a match. Defaults to 75.
 
     Returns:
-        tuple: A tuple containing the URI and ID of the matched playlist. 
+        tuple: A tuple containing the URI and ID of the matched playlist.
                 Returns (None, None) if no match is found or an error occurs.
 
     Raises:
-        spotipy.exceptions.SpotifyException: If an error occurs while interacting 
+        spotipy.exceptions.SpotifyException: If an error occurs while interacting
             with the Spotify API.
 
     Notes:
-        - The function prioritizes user-created playlists over other playlists 
+        - The function prioritizes user-created playlists over other playlists
             when combining results.
-        - The fuzzy search is case-insensitive and uses the `fuzz.WRatio` scorer 
+        - The fuzzy search is case-insensitive and uses the `fuzz.WRatio` scorer
             from the `fuzzywuzzy` library.
     """
     print(f"Fuzzy searching for playlist matching '{name}'...")
@@ -163,25 +169,43 @@ def find_playlist_fuzzy(name:str, similarity_threshold=75) -> tuple:
         limit = 50
         while True:
             results = sp.current_user_playlists(limit=limit, offset=offset)
-            if not results or not results['items']:
+            if not results or not results["items"]:
                 break
-            all_playlists.extend(results['items'])
-            if results['next']:
+            all_playlists.extend(results["items"])
+            if results["next"]:
                 offset += limit
             else:
                 break
 
         if not all_playlists:
-             print("You don't seem to have any playlists.")
-             return None, None
+            print("You don't seem to have any playlists.")
+            return None, None
 
         # Separate user-created playlists and other playlists
-        user_playlists = [p for p in all_playlists if p['owner']['id'] == user_info['id']]
-        other_playlists = [p for p in all_playlists if p['owner']['id'] != user_info['id']]
+        user_playlists = [
+            p for p in all_playlists if p["owner"]["id"] == user_info["id"]
+        ]
+        other_playlists = [
+            p for p in all_playlists if p["owner"]["id"] != user_info["id"]
+        ]
 
         # Create a mapping of playlist names (lowercase) to their details (uri, id)
-        user_playlist_map = {p['name'].lower(): {'uri': p['uri'], 'id': p['id'], 'original_name': p['name']} for p in user_playlists}
-        other_playlist_map = {p['name'].lower(): {'uri': p['uri'], 'id': p['id'], 'original_name': p['name']} for p in other_playlists}
+        user_playlist_map = {
+            p["name"].lower(): {
+                "uri": p["uri"],
+                "id": p["id"],
+                "original_name": p["name"],
+            }
+            for p in user_playlists
+        }
+        other_playlist_map = {
+            p["name"].lower(): {
+                "uri": p["uri"],
+                "id": p["id"],
+                "original_name": p["name"],
+            }
+            for p in other_playlists
+        }
 
         # Combine the maps, prioritizing user-created playlists
         combined_playlist_map = {**user_playlist_map, **other_playlist_map}
@@ -192,22 +216,27 @@ def find_playlist_fuzzy(name:str, similarity_threshold=75) -> tuple:
             name.lower(),
             playlist_names,
             scorer=fuzz.WRatio,
-            score_cutoff=similarity_threshold
+            score_cutoff=similarity_threshold,
         )
 
         if best_match:
             matched_name_lower = best_match[0]
             score = best_match[1]
             playlist_details = combined_playlist_map[matched_name_lower]
-            print(f"Best match found: '{playlist_details['original_name']}' (Score: {score}%)")
-            return playlist_details['uri'], playlist_details['id']
+            print(
+                f"Best match found: '{playlist_details['original_name']}' (Score: {score}%)"
+            )
+            return playlist_details["uri"], playlist_details["id"]
         else:
-            print(f"No playlist found matching '{name}' with similarity >= {similarity_threshold}%.")
+            print(
+                f"No playlist found matching '{name}' with similarity >= {similarity_threshold}%."
+            )
             return None, None
 
     except spotipy.exceptions.SpotifyException as e:
         print(f"Error searching for playlist: {e}")
         return None, None
+
 
 def list_user_playlists() -> list:
     """
@@ -230,10 +259,10 @@ def list_user_playlists() -> list:
         limit = 50
         while True:
             results = sp.current_user_playlists(limit=limit, offset=offset)
-            if not results or not results['items']:
+            if not results or not results["items"]:
                 break
-            playlists.extend(results['items'])
-            if results['next']:
+            playlists.extend(results["items"])
+            if results["next"]:
                 offset += limit
             else:
                 break
@@ -244,12 +273,13 @@ def list_user_playlists() -> list:
         playlists_out = []
 
         for i, playlist in enumerate(playlists):
-            owner = playlist['owner']['display_name']
-            playlists_out.append({'name': playlist['name'], 'user': owner})
+            owner = playlist["owner"]["display_name"]
+            playlists_out.append({"name": playlist["name"], "user": owner})
         return playlists_out
 
     except spotipy.exceptions.SpotifyException as e:
         print(f"Error fetching playlists: {e}")
+
 
 def get_active_device():
     """
@@ -271,26 +301,29 @@ def get_active_device():
     """
     try:
         devices = sp.devices()
-        if not devices or not devices['devices']:
+        if not devices or not devices["devices"]:
             print("No active Spotify device found. Please start Spotify on a device.")
             return None
 
-        active_devices = [d for d in devices['devices'] if d['is_active']]
+        active_devices = [d for d in devices["devices"] if d["is_active"]]
         if active_devices:
             device = active_devices[0]
             print(f"Using active device: '{device['name']}' ({device['type']})")
-            return device['id']
-        elif devices['devices']:
-             device = devices['devices'][0]
-             print(f"No active device detected, using first available: '{device['name']}' ({device['type']})")
-             return device
+            return device["id"]
+        elif devices["devices"]:
+            device = devices["devices"][0]
+            print(
+                f"No active device detected, using first available: '{device['name']}' ({device['type']})"
+            )
+            return device
         else:
-             print("No devices found.")
-             return None
+            print("No devices found.")
+            return None
 
     except spotipy.exceptions.SpotifyException as e:
         print(f"Error getting devices: {e}")
         return None
+
 
 def play_item(uri, device_id):
     """
@@ -323,11 +356,11 @@ def play_item(uri, device_id):
         return
 
     try:
-        item_type = uri.split(':')[1]
-        if item_type == 'track':
+        item_type = uri.split(":")[1]
+        if item_type == "track":
             sp.start_playback(device_id=device_id, uris=[uri])
             print("Playing track...")
-        elif item_type == 'playlist':
+        elif item_type == "playlist":
             sp.start_playback(device_id=device_id, context_uri=uri)
             print("Playing playlist...")
         else:
@@ -338,11 +371,16 @@ def play_item(uri, device_id):
     except spotipy.exceptions.SpotifyException as e:
         print(f"Could not start playback: {e}")
         if e.http_status == 403:
-             print("NOTE: Playback control via API usually requires a Spotify Premium account.")
+            print(
+                "NOTE: Playback control via API usually requires a Spotify Premium account."
+            )
         elif e.http_status == 404 and "Device not found" in str(e):
-             print("NOTE: Device might have become unavailable. Try selecting a device again.")
+            print(
+                "NOTE: Device might have become unavailable. Try selecting a device again."
+            )
         elif e.http_status == 400:
-             print(f"NOTE: Bad request. URI might be invalid: {uri}")
+            print(f"NOTE: Bad request. URI might be invalid: {uri}")
+
 
 def stop_playback(device_id):
     """
@@ -373,16 +411,21 @@ def stop_playback(device_id):
     except spotipy.exceptions.SpotifyException as e:
         print(f"Could not stop playback: {e}")
         if e.http_status == 403:
-             print("NOTE: Playback control via API usually requires a Spotify Premium account.")
+            print(
+                "NOTE: Playback control via API usually requires a Spotify Premium account."
+            )
         elif e.http_status == 404 and "Device not found" in str(e):
-             print("NOTE: Device might have become unavailable. Try selecting a device again.")
+            print(
+                "NOTE: Device might have become unavailable. Try selecting a device again."
+            )
+
 
 def like_song(track_id):
     """
     Adds a song to the user's Liked Songs on Spotify.
 
     Parameters:
-        track_id (str): The Spotify track ID of the song to be liked. 
+        track_id (str): The Spotify track ID of the song to be liked.
                         Must be a valid non-empty string.
 
     Behavior:
@@ -406,6 +449,7 @@ def like_song(track_id):
         print("Song added to your Liked Songs.")
     except spotipy.exceptions.SpotifyException as e:
         print(f"Could not like song: {e}")
+
 
 def add_track_to_playlist(track_uri, playlist_name):
     """
@@ -432,8 +476,8 @@ def add_track_to_playlist(track_uri, playlist_name):
         - If the track is already in the playlist, it does not add it again.
     """
     if not track_uri:
-         print("Cannot add track: Invalid track URI provided.")
-         return
+        print("Cannot add track: Invalid track URI provided.")
+        return
 
     # Find the playlist ID using the fuzzy search function
     playlist_uri, playlist_id = find_playlist_fuzzy(playlist_name)
@@ -444,15 +488,15 @@ def add_track_to_playlist(track_uri, playlist_name):
     try:
         # Check if the track is already in the playlist
         results = sp.playlist_items(playlist_id, fields="items.track.uri")
-        tracks = results['items']
-        track_uris = [item['track']['uri'] for item in tracks]
+        tracks = results["items"]
+        track_uris = [item["track"]["uri"] for item in tracks]
 
         if track_uri in track_uris:
             print(f"Track is already in the playlist '{playlist_name}'.")
             return
 
         sp.playlist_add_items(playlist_id=playlist_id, items=[track_uri])
-        playlist_info = sp.playlist(playlist_id, fields='name')
+        playlist_info = sp.playlist(playlist_id, fields="name")
         print(f"Track added to playlist '{playlist_info['name']}'.")
     except spotipy.exceptions.SpotifyException as e:
         print(f"Could not add track to playlist: {e}")

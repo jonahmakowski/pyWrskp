@@ -28,9 +28,13 @@ class Maze:
             random.shuffle(directions)
 
             for dx, dy in directions:
-                next_x, next_y = current_x + dx*2, current_y + dy*2
+                next_x, next_y = current_x + dx * 2, current_y + dy * 2
 
-                if 0 <= next_x < self.width and 0 <= next_y < self.height and self.maze[next_y][next_x] == 1:
+                if (
+                    0 <= next_x < self.width
+                    and 0 <= next_y < self.height
+                    and self.maze[next_y][next_x] == 1
+                ):
                     self.maze[next_y][next_x] = 0
                     self.maze[current_y + dy][current_x + dx] = 0
                     stack.append((next_x, next_y))
@@ -91,7 +95,10 @@ class Maze:
                 visited.add((x, y))
                 for dx, dy in self.options:
                     next_x, next_y = x + dx, y + dy
-                    if self.open_path((dx, dy), (x, y)) and (next_x, next_y) not in visited:
+                    if (
+                        self.open_path((dx, dy), (x, y))
+                        and (next_x, next_y) not in visited
+                    ):
                         stack.append((next_x, next_y, path + [(x, y)]))
 
         print(f"No solution found after {steps} steps.")
@@ -138,12 +145,14 @@ class Maze:
 
                 for dx, dy in self.options:
                     next_x, next_y = x + dx, y + dy
-                    if self.open_path((dx, dy), (x, y)) and (next_x, next_y) not in visited:
+                    if (
+                        self.open_path((dx, dy), (x, y))
+                        and (next_x, next_y) not in visited
+                    ):
                         stack.append((next_x, next_y, path + [(x, y)]))
 
         print("No solution found.")
         return False
-
 
 
 # Generate and print the maze
