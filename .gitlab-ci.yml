@@ -31,6 +31,9 @@ python_black:
     paths:
       - black_changes.patch
     expire_in: 1 hour
+  rules:
+    - changes:
+        - "**/*.py"  # Runs only when Python files change
 
 docker_build:
   stage: build
@@ -167,12 +170,12 @@ commit_and_push:
     - |
       if [ -f black_changes.patch ]; then
         echo "Applying changes from Black..."
-        git apply black_changes.patch
+        git apply black_changes.patch || echo "Failed to apply changes from Black, continuing..."
       fi
     - |
       if [ -f docs_changes.patch ]; then
         echo "Applying changes from Docs..."
-        git apply docs_changes.patch
+        git apply docs_changes.patch || echo "Failed to apply changes from Docs, continuing..."
       fi
     - git add .
     - |
