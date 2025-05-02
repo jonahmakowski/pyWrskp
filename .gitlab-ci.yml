@@ -2,8 +2,8 @@ stages:
  - format
  - build
  - docs
- - distribute
  - commit
+ - distribute
 
 python_black:
   image: python:alpine
