@@ -164,16 +164,19 @@ commit_and_push:
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
     - echo "Checking for changes from Black and Docs..."
-    - if [ -f black_changes.patch ]; then
+    - |
+      if [ -f black_changes.patch ]; then
         echo "Applying changes from Black..."
         git apply black_changes.patch
       fi
-    - if [ -f docs_changes.patch ]; then
+    - |
+      if [ -f docs_changes.patch ]; then
         echo "Applying changes from Docs..."
         git apply docs_changes.patch
       fi
     - git add .
-    - if git diff --cached --quiet; then
+    - |
+      if git diff --cached --quiet; then
         echo "No changes to commit."
       else
         echo "Committing changes to GitLab..."
