@@ -1,6 +1,7 @@
 import threading
 from importlib import import_module
 
+
 def run_in_thread(func, *args, **kwargs):
     """
     Run a function in a separate thread.
@@ -16,6 +17,7 @@ def run_in_thread(func, *args, **kwargs):
     thread = threading.Thread(target=func, args=args, kwargs=kwargs)
     thread.start()
     return thread
+
 
 def run_in_thread_with_return(func, *args, **kwargs):
     """
@@ -40,24 +42,25 @@ def run_in_thread_with_return(func, *args, **kwargs):
     thread.start()
     return result_container, thread
 
-def run_imports_in_thread(packages: list, aliases: list|None = None) -> None:
+
+def run_imports_in_thread(packages: list, aliases: list | None = None) -> None:
     """
-    Imports Python modules or submodules in separate threads and updates the global namespace 
+    Imports Python modules or submodules in separate threads and updates the global namespace
     with the imported modules using specified aliases.
     Args:
         packages (list): A list of packages to import. Each element can be:
             - A string representing the package name (e.g., "os").
-            - A tuple where the first element is the package name and the second element is 
+            - A tuple where the first element is the package name and the second element is
               the submodule name (e.g., ("os", "path")).
-        aliases (list | None, optional): A list of aliases corresponding to the `packages` list. 
+        aliases (list | None, optional): A list of aliases corresponding to the `packages` list.
             Each alias can be:
             - A string representing the alias for the package (e.g., "os_alias").
-            - A tuple where the second element is the alias for the submodule 
+            - A tuple where the second element is the alias for the submodule
               (e.g., ("os", "path_alias")).
             Defaults to None, in which case the package names are used as aliases.
     Behavior:
         - Each package or submodule is imported in a separate thread.
-        - The imported modules or submodules are added to the global namespace with the 
+        - The imported modules or submodules are added to the global namespace with the
           specified aliases.
         - Prints a message for each imported module or submodule in the format:
           "Imported <alias> as <package_name>".
@@ -69,13 +72,14 @@ def run_imports_in_thread(packages: list, aliases: list|None = None) -> None:
         run_imports_in_thread(packages, aliases)
         # Imports the `os` module as `os_alias` and the `os.path` submodule as `path_alias`.
     """
-    def import_packages(alias: str, package: str|tuple):
+
+    def import_packages(alias: str, package: str | tuple):
         """
         Dynamically imports a module or submodule and associates it with an alias.
 
         Args:
             alias (str): The alias to associate with the imported module or submodule.
-            package (str | tuple): The name of the module to import as a string, or a tuple where the first element is the 
+            package (str | tuple): The name of the module to import as a string, or a tuple where the first element is the
                                     module name and the second element is the submodule name.
 
         Returns:
@@ -95,7 +99,7 @@ def run_imports_in_thread(packages: list, aliases: list|None = None) -> None:
             module = import_module(package[0])
             submodule = getattr(module, package[1])
             return {"alias": alias, "package": submodule}
-    
+
     threads = []
     results = []
     aliases = aliases if aliases else packages
@@ -107,10 +111,14 @@ def run_imports_in_thread(packages: list, aliases: list|None = None) -> None:
         result, thread = run_in_thread_with_return(import_packages, alias, package)
         threads.append(thread)
         results.append(result)
-    
+
     for thread in threads:
         thread.join()
-    
+
     for result in results:
-        print(f"Imported {result['result']['alias']} as {result['result']['package'].__name__}")
-    globals().update({result["result"]["alias"]: result["result"]["package"] for result in results})
+        print(
+            f"Imported {result['result']['alias']} as {result['result']['package'].__name__}"
+        )
+    globals().update(
+        {result["result"]["alias"]: result["result"]["package"] for result in results}
+    )
