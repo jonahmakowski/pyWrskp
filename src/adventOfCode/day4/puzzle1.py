@@ -1,5 +1,6 @@
 import pyWrkspPackage
 
+
 def custom_chunk(lis):
     """
     Splits a list into chunks of 4 characters.
@@ -12,8 +13,9 @@ def custom_chunk(lis):
     """
     chunks = []
     for i in range(0, len(lis)):
-        chunks.append(lis[i:i+4])
+        chunks.append(lis[i : i + 4])
     return chunks
+
 
 def do_horizontal(line):
     """
@@ -25,7 +27,7 @@ def do_horizontal(line):
     Returns:
         int: The number of times the specified combinations appear in the line.
     """
-    combos = [['X', 'M', 'A', 'S'], ['S', 'A', 'M', 'X']]
+    combos = [["X", "M", "A", "S"], ["S", "A", "M", "X"]]
     splits = custom_chunk(list(line))
 
     amount = 0
@@ -34,6 +36,7 @@ def do_horizontal(line):
             amount += 1
 
     return amount
+
 
 def do_vertical(data):
     """
@@ -47,13 +50,14 @@ def do_vertical(data):
     for index, row in enumerate(data):
         for char_index, char in enumerate(row):
             verts[char_index][index] = char
-    
+
     amount = 0
 
     for coloumn in verts:
         amount += do_horizontal(coloumn)
-    
+
     return amount
+
 
 def do_diagnals(data):
     """
@@ -74,16 +78,41 @@ def do_diagnals(data):
     amount = 0
     for index, row in enumerate(data):
         for char_index, char in enumerate(row):
-            if char == 'X':
-                if index + 3 < len(data) and char_index + 3 < len(row) and data[index+1][char_index+1] == 'M' and data[index+2][char_index+2] == 'A' and data[index+3][char_index+3] == 'S':
+            if char == "X":
+                if (
+                    index + 3 < len(data)
+                    and char_index + 3 < len(row)
+                    and data[index + 1][char_index + 1] == "M"
+                    and data[index + 2][char_index + 2] == "A"
+                    and data[index + 3][char_index + 3] == "S"
+                ):
                     amount += 1
-                if index - 3 >= 0 and char_index - 3 >= 0 and data[index-1][char_index-1] == 'M' and data[index-2][char_index-2] == 'A' and data[index-3][char_index-3] == 'S':
+                if (
+                    index - 3 >= 0
+                    and char_index - 3 >= 0
+                    and data[index - 1][char_index - 1] == "M"
+                    and data[index - 2][char_index - 2] == "A"
+                    and data[index - 3][char_index - 3] == "S"
+                ):
                     amount += 1
-                if index + 3 < len(data) and char_index - 3 >= 0 and data[index+1][char_index-1] == 'M' and data[index+2][char_index-2] == 'A' and data[index+3][char_index-3] == 'S':
+                if (
+                    index + 3 < len(data)
+                    and char_index - 3 >= 0
+                    and data[index + 1][char_index - 1] == "M"
+                    and data[index + 2][char_index - 2] == "A"
+                    and data[index + 3][char_index - 3] == "S"
+                ):
                     amount += 1
-                if index - 3 >= 0 and char_index + 3 < len(row) and data[index-1][char_index+1] == 'M' and data[index-2][char_index+2] == 'A' and data[index-3][char_index+3] == 'S':
+                if (
+                    index - 3 >= 0
+                    and char_index + 3 < len(row)
+                    and data[index - 1][char_index + 1] == "M"
+                    and data[index - 2][char_index + 2] == "A"
+                    and data[index - 3][char_index + 3] == "S"
+                ):
                     amount += 1
     return amount
+
 
 def main():
     """
@@ -98,17 +127,18 @@ def main():
     Returns:
         int: The total calculated amount.
     """
-    data = pyWrkspPackage.load_from_file("input.txt").split('\n')
-    
+    data = pyWrkspPackage.load_from_file("input.txt").split("\n")
+
     amount = 0
-    
+
     for line in data:
         amount += do_horizontal(line)
-    
+
     amount += do_vertical(data)
-    
+
     amount += do_diagnals(data)
 
     return amount
+
 
 print(main())

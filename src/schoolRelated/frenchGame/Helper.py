@@ -24,5 +24,5 @@ def read_file(path):
 
 
 def write_file(path, save):
-    with open(path, 'w') as outfile:
+    with open(path, "w") as outfile:
         json.dump(save, outfile)

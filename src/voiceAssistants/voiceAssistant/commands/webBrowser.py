@@ -4,7 +4,7 @@ from urllib.parse import quote
 
 def open_webpage(page, https=True):
     if https:
-        web_open('https://'+page)
+        web_open("https://" + page)
     else:
         web_open(page)
 

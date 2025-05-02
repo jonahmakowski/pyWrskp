@@ -1,9 +1,9 @@
 import pygame
 
-print('version 0')
+print("version 0")
 
 pygame.init()
-screen = pygame.display.set_mode([1375,750])
+screen = pygame.display.set_mode([1375, 750])
 pygame.display.set_caption("Paint (press space bar to erase all)")
 
 keep_going = True
@@ -33,11 +33,11 @@ orangeRectangle = pygame.Rect((350, 0), (50, 50))
 limeRectangle = pygame.Rect((400, 0), (50, 50))
 whiteRectangle = pygame.Rect((450, 0), (50, 50))
 
-dotRectangle5 = pygame.Rect((500, 0), (50,50))
-dotRectangle10 = pygame.Rect((550, 0), (50,50))
-dotRectangle15 = pygame.Rect((600, 0), (50,50))
-dotRectangle20 = pygame.Rect((650, 0), (50,50))
-dotRectangle25 = pygame.Rect((700, 0), (50,50))
+dotRectangle5 = pygame.Rect((500, 0), (50, 50))
+dotRectangle10 = pygame.Rect((550, 0), (50, 50))
+dotRectangle15 = pygame.Rect((600, 0), (50, 50))
+dotRectangle20 = pygame.Rect((650, 0), (50, 50))
+dotRectangle25 = pygame.Rect((700, 0), (50, 50))
 
 while keep_going:
     for event in pygame.event.get():

@@ -1,14 +1,14 @@
 grade = input()
 grade = int(grade)
-#print(grade)
+# print(grade)
 
 if grade >= 80 and grade <= 100:
-    print('A')
+    print("A")
 elif grade >= 70 and grade <= 79:
-    print('B')
+    print("B")
 elif grade >= 60 and grade <= 69:
-    print('C')
+    print("C")
 elif grade >= 50 and grade <= 59:
-    print('D')
+    print("D")
 elif grade <= 50:
-    print('F')
+    print("F")

@@ -16,22 +16,24 @@ class BalancesAndTransactions:
         del balances[0]
         prev_balance = self.balances_original[0]
         for balance in balances:
-            transactions = self.transactions_between_dates(prev_balance['date'].split()[0],
-                                                           balance['date'].split()[0],
-                                                           amount_only=True)
-            should_be = sum(transactions) + prev_balance['amount']
+            transactions = self.transactions_between_dates(
+                prev_balance["date"].split()[0],
+                balance["date"].split()[0],
+                amount_only=True,
+            )
+            should_be = sum(transactions) + prev_balance["amount"]
             checked = balance.copy()
-            checked['status'] = 'Green' if should_be == balance['amount'] else 'Red'
+            checked["status"] = "Green" if should_be == balance["amount"] else "Red"
             self.balances_with_check.append(checked)
-            if should_be == balance['amount']:
+            if should_be == balance["amount"]:
                 prev_balance = balance
 
     def transactions_from_date(self, date_, amount_only=False):
         transactions = []
         for transaction in self.transaction_history:
-            if transaction['date'].split()[0] == date_:
+            if transaction["date"].split()[0] == date_:
                 if amount_only:
-                    transactions.append(transaction['amount'])
+                    transactions.append(transaction["amount"])
                 else:
                     transactions.append(transaction)
 
@@ -41,7 +43,9 @@ class BalancesAndTransactions:
         dates = self.get_dates_between(start_date, end_date)
         transactions = []
         for date_ in dates:
-            transactions.extend(self.transactions_from_date(date_, amount_only=amount_only))
+            transactions.extend(
+                self.transactions_from_date(date_, amount_only=amount_only)
+            )
         return transactions
 
     @staticmethod
@@ -61,61 +65,65 @@ class BalancesAndTransactions:
         return dates
 
 
-if __name__ == '__main__':
-    example_transactions = [{'amount': -100, 'date': '2024-06-01 19:04:53.712267'},
-                            {'amount': 200, 'date': '2024-06-02 19:10:53.712267'},
-                            {'amount': -200, 'date': '2024-06-04 19:10:53.712267'},
-                            {'amount': 300, 'date': '2024-06-06 19:10:53.712267'},
-                            {'amount': -1000, 'date': '2024-06-07 19:10:53.712267'},
-                            {'amount': -1000, 'date': '2024-06-07 19:15:53.712267'},
-                            {'amount': -1000, 'date': '2024-06-07 19:20:53.712267'},
-                            {'amount': -1000, 'date': '2024-06-08 19:25:53.712267'},
-                            {'amount': -1000, 'date': '2024-06-10 19:30:53.712267'},
-                            {'amount': 10000, 'date': '2024-07-12 19:10:53.712267'},
-                            {'amount': -1000, 'date': '2024-07-13 19:10:53.712267'}]
-    example_balances = [{'amount': 400, 'date': '2024-06-01 19:04:53.712267'},  #
-                        {'amount': 400, 'date': '2024-06-02 19:04:53.712267'},
-                        {'amount': 400, 'date': '2024-06-03 19:04:53.712267'},
-                        {'amount': 400, 'date': '2024-06-04 19:04:53.712267'},
-                        {'amount': 400, 'date': '2024-06-05 19:04:53.712267'},
-                        {'amount': 400, 'date': '2024-06-06 19:04:53.712267'},  #
-                        {'amount': -2900, 'date': '2024-06-07 19:04:53.712267'},  #
-                        {'amount': -3900, 'date': '2024-06-08 19:04:53.712267'},  #
-                        {'amount': -3900, 'date': '2024-06-09 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-10 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-11 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-12 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-13 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-14 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-15 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-16 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-17 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-18 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-19 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-20 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-21 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-22 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-23 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-24 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-25 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-26 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-27 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-28 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-29 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-06-30 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-01 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-02 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-03 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-04 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-05 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-06 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-07 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-08 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-09 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-10 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-11 19:04:53.712267'},
-                        {'amount': -3900, 'date': '2024-07-12 19:04:53.712267'},  #
-                        {'amount': -3100, 'date': '2024-07-13 19:04:53.712267'}]  #
+if __name__ == "__main__":
+    example_transactions = [
+        {"amount": -100, "date": "2024-06-01 19:04:53.712267"},
+        {"amount": 200, "date": "2024-06-02 19:10:53.712267"},
+        {"amount": -200, "date": "2024-06-04 19:10:53.712267"},
+        {"amount": 300, "date": "2024-06-06 19:10:53.712267"},
+        {"amount": -1000, "date": "2024-06-07 19:10:53.712267"},
+        {"amount": -1000, "date": "2024-06-07 19:15:53.712267"},
+        {"amount": -1000, "date": "2024-06-07 19:20:53.712267"},
+        {"amount": -1000, "date": "2024-06-08 19:25:53.712267"},
+        {"amount": -1000, "date": "2024-06-10 19:30:53.712267"},
+        {"amount": 10000, "date": "2024-07-12 19:10:53.712267"},
+        {"amount": -1000, "date": "2024-07-13 19:10:53.712267"},
+    ]
+    example_balances = [
+        {"amount": 400, "date": "2024-06-01 19:04:53.712267"},  #
+        {"amount": 400, "date": "2024-06-02 19:04:53.712267"},
+        {"amount": 400, "date": "2024-06-03 19:04:53.712267"},
+        {"amount": 400, "date": "2024-06-04 19:04:53.712267"},
+        {"amount": 400, "date": "2024-06-05 19:04:53.712267"},
+        {"amount": 400, "date": "2024-06-06 19:04:53.712267"},  #
+        {"amount": -2900, "date": "2024-06-07 19:04:53.712267"},  #
+        {"amount": -3900, "date": "2024-06-08 19:04:53.712267"},  #
+        {"amount": -3900, "date": "2024-06-09 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-10 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-11 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-12 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-13 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-14 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-15 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-16 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-17 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-18 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-19 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-20 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-21 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-22 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-23 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-24 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-25 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-26 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-27 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-28 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-29 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-06-30 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-01 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-02 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-03 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-04 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-05 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-06 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-07 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-08 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-09 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-10 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-11 19:04:53.712267"},
+        {"amount": -3900, "date": "2024-07-12 19:04:53.712267"},  #
+        {"amount": -3100, "date": "2024-07-13 19:04:53.712267"},
+    ]  #
     b = BalancesAndTransactions(example_transactions, example_balances)
     b.check_balances()
     for item in b.balances_with_check:

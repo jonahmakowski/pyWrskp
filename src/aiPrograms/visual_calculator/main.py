@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 class Calculator:
     def __init__(self):
         self.root = tk.Tk()
@@ -25,7 +26,7 @@ class Calculator:
             ("=", 4, 2),
             ("+", 4, 3),
             ("^", 5, 0),  # Power of button.
-            ("√", 5, 1)   # Square root button.
+            ("√", 5, 1),  # Square root button.
         ]
 
         self.display = tk.Entry(self.root, width=30)
@@ -61,9 +62,10 @@ class Calculator:
         elif operator == "/":
             return first_number / second_number
         elif operator == "^":
-            return first_number ** second_number
+            return first_number**second_number
         elif operator == "√":
-            return second_number ** 0.5
+            return second_number**0.5
+
 
 if __name__ == "__main__":
     calculator = Calculator()

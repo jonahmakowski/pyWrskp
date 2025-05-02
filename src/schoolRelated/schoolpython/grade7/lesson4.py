@@ -1,12 +1,12 @@
-'''
+"""
 Jonah
 Mrs. Brownhill
 June 13, 2023
 This program is supposed to make squares in a triagular setup.
-'''
-
+"""
 
 import turtle
+
 
 def squares():
     turtle.penup()
@@ -16,7 +16,7 @@ def squares():
         turtle.penup()
         turtle.setpos(-i, i)
         turtle.pendown()
-        
+
         turtle.seth(0)
         turtle.forward(20)
         turtle.left(90)
@@ -25,11 +25,11 @@ def squares():
         turtle.forward(20)
         turtle.left(90)
         turtle.forward(20)
-        
+
         turtle.penup()
-        turtle.setpos(-i, -i+60)
+        turtle.setpos(-i, -i + 60)
         turtle.pendown()
-        
+
         turtle.seth(0)
         turtle.forward(20)
         turtle.left(90)
@@ -39,6 +39,6 @@ def squares():
         turtle.left(90)
         turtle.forward(20)
     turtle.hideturtle()
-        
+
 
 squares()

@@ -9,4 +9,4 @@ def hide_app(app_name):
         tell application "System Events" to keystroke "h" using {{command down}}
     end tell
     """
-    subprocess.run(['osascript', '-e', applescript])
+    subprocess.run(["osascript", "-e", applescript])

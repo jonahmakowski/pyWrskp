@@ -11,6 +11,7 @@ class Turtle:
 
     def grid(self):
         self.t.pd()
+
         def draw(t, length):
             t.pd()
             t.forward(length)
@@ -20,6 +21,7 @@ class Turtle:
             t.left(90)
             t.forward(length)
             t.right(180)
+
         self.t.penup()
         self.t.goto(-500, 420)
         self.t.right(90)
@@ -35,8 +37,8 @@ class Turtle:
 
     def shape(self):
         self.t.pd()
-        sides = int(input('How many sides?'))
-        length = int(input('How long?'))
+        sides = int(input("How many sides?"))
+        length = int(input("How long?"))
         corner = 360 / sides
 
         self.t.pu()
@@ -50,7 +52,7 @@ class Turtle:
 
     def scribble(self, stamp):
         self.t.pd()
-        self.t.shape('turtle')
+        self.t.shape("turtle")
         self.t.speed(0)
         self.t.pensize(2)
 
@@ -64,16 +66,16 @@ class Turtle:
         gray = turtle.Turtle()
         red = turtle.Turtle()
 
-        blue.color('blue')
-        green.color('green')
-        yellow.color('yellow')
-        pink.color('pink')
-        purple.color('purple')
-        black.color('black')
-        brown.color('brown')
-        gray.color('gray')
-        red.color('red')
-        
+        blue.color("blue")
+        green.color("green")
+        yellow.color("yellow")
+        pink.color("pink")
+        purple.color("purple")
+        black.color("black")
+        brown.color("brown")
+        gray.color("gray")
+        red.color("red")
+
         blue.pu()
         green.pu()
         yellow.pu()
@@ -82,7 +84,7 @@ class Turtle:
         brown.pu()
         gray.pu()
         red.pu()
-        
+
         blue.goto(0, 0)
         green.goto(-self.border, self.border)
         yellow.goto(-self.border, -self.border)
@@ -91,7 +93,7 @@ class Turtle:
         brown.goto(0, 0)
         gray.goto(-self.border, self.border)
         red.goto(-self.border, -self.border)
-        
+
         blue.pd()
         green.pd()
         yellow.pd()
@@ -103,18 +105,31 @@ class Turtle:
 
         turtles = [blue, green, yellow, pink, purple, yellow, black, brown, gray, red]
 
-        colors = ['blue', 'green', 'yellow', 'black', 'purple', 'pink', 'brown', 'gray', 'red']
+        colors = [
+            "blue",
+            "green",
+            "yellow",
+            "black",
+            "purple",
+            "pink",
+            "brown",
+            "gray",
+            "red",
+        ]
 
         while True:
             for item in turtles:
                 item.pensize(random.randint(1, 5))
                 self.t.pensize(random.randint(1, 10))
-                item.shape('circle')
+                item.shape("circle")
                 if stamp == True:
                     item.stamp()
                 item.speed(0)
 
-                item.goto(random.randint(-self.border, self.border), random.randint(-self.border, self.border))
+                item.goto(
+                    random.randint(-self.border, self.border),
+                    random.randint(-self.border, self.border),
+                )
 
                 x = item.xcor()
                 y = item.ycor()
@@ -125,16 +140,16 @@ class Turtle:
 
 tit = Turtle()
 while True:
-    do = input('What do you wish to do?\n')
-    if do == 'grid':
+    do = input("What do you wish to do?\n")
+    if do == "grid":
         tit.grid()
-    elif do == 'shape':
+    elif do == "shape":
         tit.shape()
-    elif do == 'scribble':
-        stamp = input('Would you like to stamp? (y/n)\n')
-        if stamp == 'y':
+    elif do == "scribble":
+        stamp = input("Would you like to stamp? (y/n)\n")
+        if stamp == "y":
             tit.scribble(True)
         else:
             tit.scribble(False)
     else:
-        print('That is not an option try again')
+        print("That is not an option try again")

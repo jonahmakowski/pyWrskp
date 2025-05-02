@@ -1,6 +1,7 @@
 from multiples_and_factors import factors
 import PySimpleGUI as sg
 
+
 class Fraction:
     def __init__(self, numerator, denominator, whole=0):
         self.whole_number = whole
@@ -14,7 +15,9 @@ class Fraction:
         if self.whole_number != 0 and self.numerator == 0:
             return str(self.whole_number)
         elif self.whole_number != 0:
-            return "{} {}/{}".format(self.whole_number, self.numerator, self.denominator)
+            return "{} {}/{}".format(
+                self.whole_number, self.numerator, self.denominator
+            )
         else:
             return "{}/{}".format(self.numerator, self.denominator)
 
@@ -44,16 +47,18 @@ class MathFractionHelper:
             text = """Solving {} * {}
             First, multiply the numerators together ({} * {} = {})
             Then, multiply the denominator together ({} * {} = {})
-            The result is {}""".format(self.fraction1.str(),
-                                       self.fraction2.str(),
-                                       self.fraction1.numerator,
-                                       self.fraction2.numerator,
-                                       result.numerator,
-                                       self.fraction1.denominator,
-                                       self.fraction2.denominator,
-                                       result.denominator,
-                                       result.str())
-            sg.popup(text, line_width=200, title='Multiplying Fractions Explanation')
+            The result is {}""".format(
+                self.fraction1.str(),
+                self.fraction2.str(),
+                self.fraction1.numerator,
+                self.fraction2.numerator,
+                result.numerator,
+                self.fraction1.denominator,
+                self.fraction2.denominator,
+                result.denominator,
+                result.str(),
+            )
+            sg.popup(text, line_width=200, title="Multiplying Fractions Explanation")
 
         return result
 
@@ -105,16 +110,20 @@ class MathFractionHelper:
             \t- The factors of the denominator are:\t{}
             Now we need to determine the highest common factor:
             \t- The highest common factor is {}
-            Therefore, we can divide both fractions by {}, resulting in {}""".format(fraction_original.str(),
-                                                                                     numerator_factors_for_explain,
-                                                                                     denominator_factors_for_explain,
-                                                                                     div,
-                                                                                     div,
-                                                                                     fraction_improper.str())
+            Therefore, we can divide both fractions by {}, resulting in {}""".format(
+                fraction_original.str(),
+                numerator_factors_for_explain,
+                denominator_factors_for_explain,
+                div,
+                div,
+                fraction_improper.str(),
+            )
             if mixed:
-                text += '\nSince {} is more than one, we can rewrite it to {}'.format(fraction_improper, fraction.str())
+                text += "\nSince {} is more than one, we can rewrite it to {}".format(
+                    fraction_improper, fraction.str()
+                )
 
-            sg.popup(text, title='Simplifying Fraction Explanation', line_width=1000000)
+            sg.popup(text, title="Simplifying Fraction Explanation", line_width=1000000)
 
         return fraction
 

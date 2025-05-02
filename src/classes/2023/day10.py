@@ -11,15 +11,15 @@ def create_board():
 def show_board(board):
     print(chr(95) * (COL_COUNT * 2 + 3))
     for r in range(ROW_COUNT):
-        print('[', *board[r], ']')
+        print("[", *board[r], "]")
     print(chr(175) * (COL_COUNT * 2 + 3))
-    print('[', *range(0, COL_COUNT), ']')
+    print("[", *range(0, COL_COUNT), "]")
 
 
 def get_player_input(player):
     col_valid = False
     while not col_valid:
-        col_selected = input('Player ' + str(player) + ', Choose a column: ')
+        col_selected = input("Player " + str(player) + ", Choose a column: ")
         col_valid = col_selected.isnumeric() and 0 <= int(col_selected) < COL_COUNT
     return int(col_selected)
 
@@ -40,7 +40,7 @@ def is_a_winning_move(b, player):
         for c in range(0, COL_COUNT - 3):  # 0-3
             if b[r][c] == b[r][c + 1] == b[r][c + 2] == b[r][c + 3] == player:
                 return True
-    # vertical    
+    # vertical
     for c in range(0, COL_COUNT):  # 0 - COL_COUNT
         for r in range(0, ROW_COUNT - 3):  # 0-ROW_COUNT-3
             if b[r][c] == b[r + 1][c] == b[r + 2][c] == b[r + 3][c] == player:
@@ -49,13 +49,25 @@ def is_a_winning_move(b, player):
     # diagonal UP
     for c in range(0, COL_COUNT - 3):
         for r in range(3, ROW_COUNT):
-            if b[r][c] == b[r - 1][c + 1] == b[r - 2][c + 2] == b[r - 3][c + 3] == player:
+            if (
+                b[r][c]
+                == b[r - 1][c + 1]
+                == b[r - 2][c + 2]
+                == b[r - 3][c + 3]
+                == player
+            ):
                 return True
 
     # diagonal DOWN
-    for c in range(0, COL_COUNT-3):
-        for r in range(0, ROW_COUNT-3):
-            if b[r][c] == b[r + 1][c + 1] == b[r + 2][c + 2] == b[r + 3][c + 3] == player:
+    for c in range(0, COL_COUNT - 3):
+        for r in range(0, ROW_COUNT - 3):
+            if (
+                b[r][c]
+                == b[r + 1][c + 1]
+                == b[r + 2][c + 2]
+                == b[r + 3][c + 3]
+                == player
+            ):
                 return True
 
 
@@ -75,7 +87,7 @@ while not game_over:
     col = get_player_input(player)
 
     if is_column_full(b, col):
-        print('Sorry, that column is full')
+        print("Sorry, that column is full")
     else:
         row = next_open_row(b, col)
 
@@ -83,7 +95,7 @@ while not game_over:
         show_board(b)
 
         if is_a_winning_move(b, player):
-            print('Player', player, 'WON')
+            print("Player", player, "WON")
             game_over = True
 
         player = player + 1

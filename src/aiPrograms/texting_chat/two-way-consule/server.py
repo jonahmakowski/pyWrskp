@@ -34,4 +34,3 @@ while True:
 
 # Close the connection
 connection.close()
-

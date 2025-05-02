@@ -10,8 +10,8 @@ t.pendown()
 
 t.speed(1)
 
-sides = int(input('How many sides would you like?\n'))
-length_sides = int(input('How long would you like the sides to be?\n'))
+sides = int(input("How many sides would you like?\n"))
+length_sides = int(input("How long would you like the sides to be?\n"))
 
 for i in range(sides):
     t.left(360 / sides)

@@ -1,12 +1,18 @@
 import time
 
+
 def clear_screen():
     for i in range(100):
         print()
+
+
 def black_screen():
     for i in range(20):
-        print('||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||')
-        
+        print(
+            "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+        )
+
+
 def white_black(length):
     while length >= 0:
         clear_screen()
@@ -24,11 +30,11 @@ def white_black(length):
         if length < 1:
             length -= 0.1
 
+
 def check_password(password):
-    password.decode('utf-8')
-    
-    if password == '118':
+    password.decode("utf-8")
+
+    if password == "118":
         return True
     else:
         return False
-    

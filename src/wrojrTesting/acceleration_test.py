@@ -33,7 +33,7 @@ def decceleration(accel, target, current, last_time):
     return int(new), now, accel_done
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     t = 500
     a = 100
     c = 0

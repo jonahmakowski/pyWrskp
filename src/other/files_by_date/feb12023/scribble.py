@@ -7,7 +7,7 @@ turtles_amount = 10
 
 t = turtle.Turtle()
 t.speed(0)
-t.color('red')
+t.color("red")
 t.penup()
 t.goto(bounds, bounds)
 t.pendown()
@@ -24,14 +24,16 @@ for i in range(turtles_amount):
     turtles.append(turtle.Turtle())
 
 for item in turtles:
-    item.shape('turtle')
+    item.shape("turtle")
     item.speed(0)
 
 while True:
     for item in turtles:
         x = item.xcor()
         y = item.ycor()
-        if (int(x) > bounds or int(x) < -bounds) or (int(y) > bounds or int(y) < -bounds):
+        if (int(x) > bounds or int(x) < -bounds) or (
+            int(y) > bounds or int(y) < -bounds
+        ):
             item.penup()
             item.goto(0, 0)
             item.pendown()
@@ -48,7 +50,9 @@ while True:
 
         x = item.xcor()
         y = item.ycor()
-        if (int(x) > bounds or int(x) < -bounds) or (int(y) > bounds or int(y) < -bounds):
+        if (int(x) > bounds or int(x) < -bounds) or (
+            int(y) > bounds or int(y) < -bounds
+        ):
             item.penup()
             item.goto(0, 0)
             item.pendown()

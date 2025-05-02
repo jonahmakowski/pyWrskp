@@ -1,4 +1,4 @@
-colors = ['Red', 'White', 'Orange']
+colors = ["Red", "White", "Orange"]
 col_one = input()
 col_two = input()
 

@@ -6,11 +6,12 @@ from time import sleep
 import speech_recognition as sr
 
 # Setting up Audio Systems
-mixer.init() # mp3 player init
-engine = pyttsx3.init() # text to speech init
-engine.setProperty('rate', 150)  # Speed of speech
-engine.setProperty('volume', 1)  # Volume level (0.0 to 1.0)
-model = whisper.load_model('base.en') # Whisper model init
+mixer.init()  # mp3 player init
+engine = pyttsx3.init()  # text to speech init
+engine.setProperty("rate", 150)  # Speed of speech
+engine.setProperty("volume", 1)  # Volume level (0.0 to 1.0)
+model = whisper.load_model("base.en")  # Whisper model init
+
 
 def take_command() -> str:
     """
@@ -32,12 +33,13 @@ def take_command() -> str:
     print("Recognizing...")
     with open("temp_audio.wav", "wb") as f:
         f.write(audio.get_wav_data())
-    transcription = model.transcribe("temp_audio.wav")['text']
+    transcription = model.transcribe("temp_audio.wav")["text"]
     remove("temp_audio.wav")
 
     return transcription
 
-def play_sound(hold: bool, sound='audio/audio.mp3') -> None:
+
+def play_sound(hold: bool, sound="audio/audio.mp3") -> None:
     """
     Play a sound file using the mixer module.
 
@@ -51,6 +53,7 @@ def play_sound(hold: bool, sound='audio/audio.mp3') -> None:
         while mixer.music.get_busy():
             sleep(0.001)
 
+
 def speak(message: str, voice=132, hold=True) -> None:
     """
     Convert text to speech and play it through the speakers.
@@ -59,7 +62,7 @@ def speak(message: str, voice=132, hold=True) -> None:
         message (str): The text message to be spoken.
         voice (int, optional): The index of the voice to use. Defaults to 132.
     """
-    voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[voice].id)  # Changing index changes voices
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[voice].id)  # Changing index changes voices
     engine.say(message)
     engine.runAndWait()

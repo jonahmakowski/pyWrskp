@@ -1,12 +1,15 @@
 from board import Board
 from peices import *
 
+
 class Game:
     def __init__(self, board=None):
         self.move = 0
         self.board = Board() if board is None else board
 
-    def move_pieces(self, piece:ChessPiece, location_cords:tuple, display=True, override=False):
+    def move_pieces(
+        self, piece: ChessPiece, location_cords: tuple, display=True, override=False
+    ):
         legal_moves = piece.list_moves(self.board)
         if not override:
             if location_cords not in legal_moves:
@@ -15,7 +18,8 @@ class Game:
                 return False
         self.board.move((piece.position_x, piece.position_y), location_cords)
         white_win, black_win = self.board.win_check()
-        if display: self.board.pr()
+        if display:
+            self.board.pr()
         if white_win:
             print("White Wins!")
             exit()
@@ -45,8 +49,10 @@ class Game:
                     break
                 print("Invalid input! Try again\n")
 
-            if not self.move_pieces(self.board.get_location(int(piece_loc[0]), int(piece_loc[1])),
-                                               (int(end_loc[0]), int(end_loc[1]))):
+            if not self.move_pieces(
+                self.board.get_location(int(piece_loc[0]), int(piece_loc[1])),
+                (int(end_loc[0]), int(end_loc[1])),
+            ):
                 print("That isn't a valid move for this piece, please try again.")
             else:
                 break

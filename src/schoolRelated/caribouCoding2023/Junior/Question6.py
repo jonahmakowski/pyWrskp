@@ -15,8 +15,8 @@ average = sum_ / inp1
 
 for item in numbers:
     if item > average:
-        print('higher')
+        print("higher")
     elif item < average:
-        print('lower')
+        print("lower")
     else:
-        print('equal')
+        print("equal")

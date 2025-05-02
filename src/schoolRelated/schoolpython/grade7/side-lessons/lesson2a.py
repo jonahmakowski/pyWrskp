@@ -2,34 +2,34 @@ import turtle
 
 turtle.screensize(300, 300)
 
-tbr = turtle.Turtle() # Turtle Bottom Right
-tbl = turtle.Turtle() # Turtle Bottom Left
-ttr = turtle.Turtle() # Turtle Top Right
-ttl = turtle.Turtle() # Turtle Top Left
+tbr = turtle.Turtle()  # Turtle Bottom Right
+tbl = turtle.Turtle()  # Turtle Bottom Left
+ttr = turtle.Turtle()  # Turtle Top Right
+ttl = turtle.Turtle()  # Turtle Top Left
 
 # Set colors
-tbr.color('blue')
-tbl.color('green')
-ttr.color('purple')
-ttl.color('black')
+tbr.color("blue")
+tbl.color("green")
+ttr.color("purple")
+ttl.color("black")
 
 # Pens up
 tbr.penup()
 tbl.penup()
 ttr.penup()
 ttl.penup()
-'''
+"""
 tbl.goto(-200, -200)
 tbr.goto(200, -200)
 ttr.goto(200, 200)
 ttl.goto(-200, 200)
-'''
+"""
 
 # Goto cornors
-tbl.goto(-581, -237) # DONE
-tbr.goto(576, -236) # Working On
-ttr.goto(576, 242) # Done
-ttl.goto(-581, 242) # DONE
+tbl.goto(-581, -237)  # DONE
+tbr.goto(576, -236)  # Working On
+ttr.goto(576, 242)  # Done
+ttl.goto(-581, 242)  # DONE
 
 # Put pens down
 tbr.pendown()

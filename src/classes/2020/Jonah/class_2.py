@@ -1,5 +1,8 @@
 import pygame
+
 pygame.init()
+
+
 def paint():
     DIS_WIDTH = 1280
     DIS_HEIGHT = 820
@@ -31,14 +34,14 @@ def paint():
 
     increase = 5
 
-    plusRect_location_x = ((DIS_WIDTH - (max_radius * 4)))
+    plusRect_location_x = DIS_WIDTH - (max_radius * 4)
 
-    buttonMinus = pygame.image.load('button_minus.png')
-    buttonPlus = pygame.image.load('button_plus.png')
+    buttonMinus = pygame.image.load("button_minus.png")
+    buttonPlus = pygame.image.load("button_plus.png")
     buttonMinus = pygame.transform.scale(buttonMinus, (button_size, button_size))
     buttonPlus = pygame.transform.scale(buttonPlus, ((button_size), button_size))
-    minusRect = buttonMinus.get_rect(topleft = (plusRect_location_x, button_size))
-    plusRect = buttonPlus.get_rect(topleft = (plusRect_location_x, 0))
+    minusRect = buttonMinus.get_rect(topleft=(plusRect_location_x, button_size))
+    plusRect = buttonPlus.get_rect(topleft=(plusRect_location_x, 0))
 
     while keep_going:
         for event in pygame.event.get():
@@ -99,5 +102,7 @@ def paint():
         screen.blit(buttonMinus, minusRect)
         screen.blit(buttonPlus, plusRect)
         pygame.display.update()
+
+
 paint()
 pygame.quit()

@@ -5,7 +5,8 @@ from os.path import join
 from datetime import datetime
 from helper import *
 
-MODEL = 'llama3.2'
+MODEL = "llama3.2"
+
 
 def summarize_article(article):
     """
@@ -17,20 +18,25 @@ def summarize_article(article):
             - summary_long (str): A detailed summary of the article.
             - summary_short (str): A brief summary of the article in two sentences.
     """
-    prompt_long = '''Summarize the following article, don't use markdown formatting. The viewer already knows your summary is about the article.:
+    prompt_long = """Summarize the following article, don't use markdown formatting. The viewer already knows your summary is about the article.:
     Title: {}
     Content: 
-    {}'''.format(article['title'], article['content'])
+    {}""".format(
+        article["title"], article["content"]
+    )
 
-    prompt_short = '''Summarize the following article in 2 scentances. Don't use markdown formatting. The viewer already knows your summary is about the article.:
+    prompt_short = """Summarize the following article in 2 scentances. Don't use markdown formatting. The viewer already knows your summary is about the article.:
     Title: {}
     Content: 
-    {}'''.format(article['title'], article['content'])
+    {}""".format(
+        article["title"], article["content"]
+    )
 
     summary_long = ollama.generate(MODEL, prompt_long)
     summary_short = ollama.generate(MODEL, prompt_short)
-    
-    return summary_long['response'], summary_short['response']
+
+    return summary_long["response"], summary_short["response"]
+
 
 def summarize_articles(type):
     """
@@ -48,23 +54,30 @@ def summarize_articles(type):
     Example:
         summarize_articles('sports')
     """
-    path = '../articles/{}/{}'.format(datetime.today().strftime('%Y-%m-%d'), type)
+    path = "../articles/{}/{}".format(datetime.today().strftime("%Y-%m-%d"), type)
     articles = listdir(path)
     for index, article in enumerate(articles):
-        printf('{}: Summarizing {} of {}:'.format(type, index+1, len(articles)), article)
-        with open(join(path, article), 'r') as f:
+        printf(
+            "{}: Summarizing {} of {}:".format(type, index + 1, len(articles)), article
+        )
+        with open(join(path, article), "r") as f:
             file_data = json.load(f)
-        if ('summary_long' in file_data.keys() and 'summary_short' in file_data.keys()) and len(file_data['summary_long']) > 10 and len(file_data['summary_short']) > 10:
-            printf('Summary already exists, skipping...')
+        if (
+            ("summary_long" in file_data.keys() and "summary_short" in file_data.keys())
+            and len(file_data["summary_long"]) > 10
+            and len(file_data["summary_short"]) > 10
+        ):
+            printf("Summary already exists, skipping...")
             continue
-        
+
         summary_long, summary_short = summarize_article(file_data)
 
-        file_data['summary_long'] = summary_long
-        file_data['summary_short'] = summary_short
+        file_data["summary_long"] = summary_long
+        file_data["summary_short"] = summary_short
 
         with open(join(path, article), "w") as file:
             json.dump(file_data, file)
+
 
 def daily_summary():
     """
@@ -78,56 +91,75 @@ def daily_summary():
         FileNotFoundError: If the articles directory or files are not found.
     """
     try:
-        with open('../articles/daily_summary.txt', 'r') as f:
+        with open("../articles/daily_summary.txt", "r") as f:
             summaries = json.load(f)
     except FileNotFoundError:
         summaries = {}
 
-    if datetime.today().strftime('%Y-%m-%d') not in summaries.keys():
-        path = '../articles/{}/{}/'.format(datetime.today().strftime('%Y-%m-%d'), 'canada')
+    if datetime.today().strftime("%Y-%m-%d") not in summaries.keys():
+        path = "../articles/{}/{}/".format(
+            datetime.today().strftime("%Y-%m-%d"), "canada"
+        )
         articles = listdir(path)
         canada_data = []
         for article in articles:
-            with open(join(path, article), 'r') as f:
+            with open(join(path, article), "r") as f:
                 file_data = json.load(f)
-                canada_data.append(file_data['summary_long'])
-        
-        path = '../articles/{}/{}/'.format(datetime.today().strftime('%Y-%m-%d'), 'international')
+                canada_data.append(file_data["summary_long"])
+
+        path = "../articles/{}/{}/".format(
+            datetime.today().strftime("%Y-%m-%d"), "international"
+        )
         articles = listdir(path)
         international_data = []
         for article in articles:
-            with open(join(path, article), 'r') as f:
+            with open(join(path, article), "r") as f:
                 file_data = json.load(f)
-                international_data.append(file_data['summary_long'])
-        
-        canada_summaries = ''
+                international_data.append(file_data["summary_long"])
+
+        canada_summaries = ""
         for summary in canada_data:
-            canada_summaries += '\n\n' + summary
-        
-        international_summaries = ''
+            canada_summaries += "\n\n" + summary
+
+        international_summaries = ""
         for summary in international_data:
-            international_summaries += '\n\n' + summary
-        
-        canada_summary = ollama.generate(MODEL, canada_summaries + "\n\n***You are a news broadcaster, summarize all the information in these articles.*** The articles are above. Have a section for each of the major catagories in the articles.")
-        international_summary = ollama.generate(MODEL, international_summaries + "\n\n***You are a news broadcaster, summarize all the information in these articles.*** The articles are above. Have a section for each of the major catagories in the articles.")
+            international_summaries += "\n\n" + summary
 
-        summaries[datetime.today().strftime('%Y-%m-%d')] = {}
-        summaries[datetime.today().strftime('%Y-%m-%d')]['canada'] = canada_summary['response']
-        summaries[datetime.today().strftime('%Y-%m-%d')]['international'] = international_summary['response']
+        canada_summary = ollama.generate(
+            MODEL,
+            canada_summaries
+            + "\n\n***You are a news broadcaster, summarize all the information in these articles.*** The articles are above. Have a section for each of the major catagories in the articles.",
+        )
+        international_summary = ollama.generate(
+            MODEL,
+            international_summaries
+            + "\n\n***You are a news broadcaster, summarize all the information in these articles.*** The articles are above. Have a section for each of the major catagories in the articles.",
+        )
 
-        with open(f'../articles/daily_summary.txt', 'w') as f:
+        summaries[datetime.today().strftime("%Y-%m-%d")] = {}
+        summaries[datetime.today().strftime("%Y-%m-%d")]["canada"] = canada_summary[
+            "response"
+        ]
+        summaries[datetime.today().strftime("%Y-%m-%d")]["international"] = (
+            international_summary["response"]
+        )
+
+        with open(f"../articles/daily_summary.txt", "w") as f:
             json.dump(summaries, f)
 
-        return canada_summary['response'], international_summary['response']
+        return canada_summary["response"], international_summary["response"]
     else:
-        return summaries[datetime.today().strftime('%Y-%m-%d')]['canada'], summaries[datetime.today().strftime('%Y-%m-%d')]['international']
+        return (
+            summaries[datetime.today().strftime("%Y-%m-%d")]["canada"],
+            summaries[datetime.today().strftime("%Y-%m-%d")]["international"],
+        )
 
 
-if __name__ == '__main__':
-    printf('Started Summarizing Canadaian Articles')
-    summarize_articles('canada')
-    printf('Started Summarizing International Articles')
-    summarize_articles('international')
-    printf('Started Daily Summaries')
+if __name__ == "__main__":
+    printf("Started Summarizing Canadaian Articles")
+    summarize_articles("canada")
+    printf("Started Summarizing International Articles")
+    summarize_articles("international")
+    printf("Started Daily Summaries")
     printf(daily_summary())
-    printf('Completed AI Bootup Sequence')
+    printf("Completed AI Bootup Sequence")

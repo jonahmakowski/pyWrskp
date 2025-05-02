@@ -1,6 +1,6 @@
 from helper import *
 
-expression = input('Type a mathimatical expression:\n')
+expression = input("Type a mathimatical expression:\n")
 
 p = Parser(expression)
 tokens = p.make_tokens()

@@ -1,17 +1,17 @@
 # Token Types #
-TT_MUL = 'MUL'
-TT_DIV = 'DIV'
-TT_ADD = 'ADD'
-TT_SUB = 'SUB'
-TT_NUM = 'NUM'
-TT_RPAREN = '('
-TT_LPAREN = ')'
-TT_EXPRESSION = 'EXPRESSION'
+TT_MUL = "MUL"
+TT_DIV = "DIV"
+TT_ADD = "ADD"
+TT_SUB = "SUB"
+TT_NUM = "NUM"
+TT_RPAREN = "("
+TT_LPAREN = ")"
+TT_EXPRESSION = "EXPRESSION"
 ALL_TTs = (TT_MUL, TT_DIV, TT_ADD, TT_SUB, TT_NUM, TT_RPAREN, TT_LPAREN, TT_EXPRESSION)
 ###############
 
-DIGITS = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
-OPS = ('+', '-', '*', '/')
+DIGITS = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+OPS = ("+", "-", "*", "/")
 
 
 class Token:
@@ -23,7 +23,11 @@ class Token:
         self.value = value
 
     def __repr__(self):
-        return '{}:{}'.format(self.tt, self.value) if self.value is not None else '{}'.format(self.tt)
+        return (
+            "{}:{}".format(self.tt, self.value)
+            if self.value is not None
+            else "{}".format(self.tt)
+        )
 
 
 class Expression:
@@ -58,20 +62,20 @@ class Parser:
         tokens = []
         while True:
             num = False
-            if self.index != ' ':
+            if self.index != " ":
                 if self.index in OPS:
-                    if self.index == '*':
+                    if self.index == "*":
                         tokens.append(Token(TT_MUL))
-                    elif self.index == '/':
+                    elif self.index == "/":
                         tokens.append(Token(TT_DIV))
-                    elif self.index == '+':
+                    elif self.index == "+":
                         tokens.append(Token(TT_ADD))
-                    elif self.index == '-':
+                    elif self.index == "-":
                         tokens.append(Token(TT_SUB))
-                elif self.index in ('(', ')'):
-                    if self.index == '(':
+                elif self.index in ("(", ")"):
+                    if self.index == "(":
                         tokens.append(Token(TT_RPAREN))
-                    elif self.index == ')':
+                    elif self.index == ")":
                         tokens.append(Token(TT_LPAREN))
                 elif self.index in DIGITS:
                     num = True
@@ -89,7 +93,7 @@ class Parser:
 
     def make_numbers(self, tokens):
         stop = False
-        value = ''
+        value = ""
 
         while True:
             if self.index in DIGITS:
@@ -148,18 +152,18 @@ class Order:
             while True:
                 if len(right_found) == 0:
                     break
-                pairs.append((right_found[0], left_found[len(left_found)-1]))
+                pairs.append((right_found[0], left_found[len(left_found) - 1]))
                 del right_found[0]
-                del left_found[len(left_found)-1]
-            
+                del left_found[len(left_found) - 1]
+
             if len(pairs) == 0:
                 break
-            
-            pair = pairs[len(pairs)-1]
+
+            pair = pairs[len(pairs) - 1]
             temp = self.expression.expression
-            temp1 = self.expression.expression[pair[0]+1:pair[1]]
+            temp1 = self.expression.expression[pair[0] + 1 : pair[1]]
             temp_expression = Expression(temp1)
-            del temp[pair[0]:pair[1]+1]
+            del temp[pair[0] : pair[1] + 1]
             temp.insert(pair[0], temp_expression)
             self.expression = Expression(temp)
 
@@ -168,40 +172,73 @@ class Order:
         right_parentheses = 0
         while True:
             if self.index.tt in (TT_MUL, TT_DIV, TT_SUB, TT_ADD):
-                if (self.pos + 1 < len(self.expression.expression)
-                        and self.expression.expression[self.pos+1].tt not in (TT_NUM, TT_RPAREN, TT_LPAREN)):
-                    raise Exception('A Number or parentheses must come before and after a operation')
-                elif self.pos > 0 and self.expression.expression[self.pos-1].tt not in (TT_NUM, TT_RPAREN, TT_LPAREN):
-                    raise Exception('A Number or parentheses must come before and after a operation')
+                if self.pos + 1 < len(
+                    self.expression.expression
+                ) and self.expression.expression[self.pos + 1].tt not in (
+                    TT_NUM,
+                    TT_RPAREN,
+                    TT_LPAREN,
+                ):
+                    raise Exception(
+                        "A Number or parentheses must come before and after a operation"
+                    )
+                elif self.pos > 0 and self.expression.expression[
+                    self.pos - 1
+                ].tt not in (TT_NUM, TT_RPAREN, TT_LPAREN):
+                    raise Exception(
+                        "A Number or parentheses must come before and after a operation"
+                    )
             elif self.index.tt in (TT_RPAREN, TT_LPAREN):
-                if (self.pos + 1 < len(self.expression.expression) and self.index.tt == TT_RPAREN
-                        and self.expression.expression[self.pos+1].tt != TT_NUM):
-                    raise Exception('A Number or parentheses must happen within parentheses')
-                elif ((self.pos > 0 and self.index.tt == TT_LPAREN) and
-                      (self.expression.expression[self.pos-1].tt != TT_NUM
-                       and self.expression.expression[self.pos-1].tt != TT_LPAREN)):
-                    raise Exception('A Number or parentheses must happen within parentheses')
+                if (
+                    self.pos + 1 < len(self.expression.expression)
+                    and self.index.tt == TT_RPAREN
+                    and self.expression.expression[self.pos + 1].tt != TT_NUM
+                ):
+                    raise Exception(
+                        "A Number or parentheses must happen within parentheses"
+                    )
+                elif (self.pos > 0 and self.index.tt == TT_LPAREN) and (
+                    self.expression.expression[self.pos - 1].tt != TT_NUM
+                    and self.expression.expression[self.pos - 1].tt != TT_LPAREN
+                ):
+                    raise Exception(
+                        "A Number or parentheses must happen within parentheses"
+                    )
                 elif self.index.tt == TT_LPAREN:
                     left_parentheses += 1
                 elif self.index.tt == TT_RPAREN:
                     right_parentheses += 1
             elif self.index.tt == TT_NUM:
-                if self.pos > 0 and self.expression.expression[self.pos-1].tt == TT_NUM:
-                    raise Exception('Numbers can not come directly after other numbers')
-                elif (self.pos + 1 < len(self.expression.expression)
-                      and self.expression.expression[self.pos+1].tt == TT_NUM):
-                    raise Exception('Numbers can not come directly after other numbers')
-                elif self.pos > 0 and self.expression.expression[self.pos-1].tt == TT_LPAREN:
-                    raise Exception("Numbers can not come directly after left (')') parentheses")
-                elif (self.pos + 1 < len(self.expression.expression)
-                      and self.expression.expression[self.pos+1].tt == TT_RPAREN):
-                    raise Exception("Numbers can not come directly before right ('(') parentheses")
+                if (
+                    self.pos > 0
+                    and self.expression.expression[self.pos - 1].tt == TT_NUM
+                ):
+                    raise Exception("Numbers can not come directly after other numbers")
+                elif (
+                    self.pos + 1 < len(self.expression.expression)
+                    and self.expression.expression[self.pos + 1].tt == TT_NUM
+                ):
+                    raise Exception("Numbers can not come directly after other numbers")
+                elif (
+                    self.pos > 0
+                    and self.expression.expression[self.pos - 1].tt == TT_LPAREN
+                ):
+                    raise Exception(
+                        "Numbers can not come directly after left (')') parentheses"
+                    )
+                elif (
+                    self.pos + 1 < len(self.expression.expression)
+                    and self.expression.expression[self.pos + 1].tt == TT_RPAREN
+                ):
+                    raise Exception(
+                        "Numbers can not come directly before right ('(') parentheses"
+                    )
 
             if self.advance():
                 break
 
         if left_parentheses != right_parentheses:
-            raise Exception('The number of left and right parentheses must be the same')
+            raise Exception("The number of left and right parentheses must be the same")
         self.reset()
 
 
@@ -209,7 +246,7 @@ class Solve:
     def __init__(self, expression):
         self.expression = expression
         self.solve()
-    
+
     def solve(self):
         while len(self.expression.expression) > 1:
             indexes = []
@@ -256,7 +293,7 @@ class Solve:
         for idx in indexes[:-1]:
             temp = temp[idx].expression
         temp[indexes[-1]] = new_num
-    
+
     @staticmethod
     def simple_solve_mul_div(expression):
         found = False
@@ -267,7 +304,7 @@ class Solve:
             elif item.tt == TT_MUL:
                 found = True
                 break
-        
+
         while found:
             found = False
             for item in expression.expression:
@@ -282,23 +319,23 @@ class Solve:
             index = 0
             for item in expression.expression:
                 if item.tt == TT_DIV:
-                    prev_val = expression.expression[index-1]
-                    next_val = expression.expression[index+1]
+                    prev_val = expression.expression[index - 1]
+                    next_val = expression.expression[index + 1]
                     solve = prev_val.value / next_val.value
-                    del expression.expression[index+1]
+                    del expression.expression[index + 1]
                     del expression.expression[index]
-                    del expression.expression[index-1]
-                    expression.expression.insert(index-1, Token(TT_NUM, value=solve))
+                    del expression.expression[index - 1]
+                    expression.expression.insert(index - 1, Token(TT_NUM, value=solve))
                     found = True
                     break
                 elif item.tt == TT_MUL:
-                    prev_val = expression.expression[index-1]
-                    next_val = expression.expression[index+1]
+                    prev_val = expression.expression[index - 1]
+                    next_val = expression.expression[index + 1]
                     solve = prev_val.value * next_val.value
-                    del expression.expression[index+1]
+                    del expression.expression[index + 1]
                     del expression.expression[index]
-                    del expression.expression[index-1]
-                    expression.expression.insert(index-1, Token(TT_NUM, value=solve))
+                    del expression.expression[index - 1]
+                    expression.expression.insert(index - 1, Token(TT_NUM, value=solve))
                     found = True
                     break
                 index += 1
@@ -314,7 +351,7 @@ class Solve:
             elif item.tt == TT_ADD:
                 found = True
                 break
-        
+
         while found:
             found = False
             for item in expression.expression:
@@ -329,25 +366,24 @@ class Solve:
             index = 0
             for item in expression.expression:
                 if item.tt == TT_SUB:
-                    prev_val = expression.expression[index-1]
-                    next_val = expression.expression[index+1]
+                    prev_val = expression.expression[index - 1]
+                    next_val = expression.expression[index + 1]
                     solve = prev_val.value - next_val.value
-                    del expression.expression[index+1]
+                    del expression.expression[index + 1]
                     del expression.expression[index]
-                    del expression.expression[index-1]
-                    expression.expression.insert(index-1, Token(TT_NUM, value=solve))
+                    del expression.expression[index - 1]
+                    expression.expression.insert(index - 1, Token(TT_NUM, value=solve))
                     found = True
                     break
                 elif item.tt == TT_ADD:
-                    prev_val = expression.expression[index-1]
-                    next_val = expression.expression[index+1]
+                    prev_val = expression.expression[index - 1]
+                    next_val = expression.expression[index + 1]
                     solve = prev_val.value + next_val.value
-                    del expression.expression[index+1]
+                    del expression.expression[index + 1]
                     del expression.expression[index]
-                    del expression.expression[index-1]
-                    expression.expression.insert(index-1, Token(TT_NUM, value=solve))
+                    del expression.expression[index - 1]
+                    expression.expression.insert(index - 1, Token(TT_NUM, value=solve))
                     found = True
                     break
                 index += 1
         return expression
-                    

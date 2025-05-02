@@ -9,7 +9,7 @@ for item in inpu_lis:
     output_lis[index] = item
     index -= 1
 
-output = ''
+output = ""
 for item in output_lis:
     output += item
 print(output)
