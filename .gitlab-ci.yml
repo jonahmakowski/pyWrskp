@@ -135,7 +135,8 @@ generate_docs:
     - git pull
     - python src/docGeneration/generate.py  # Runs AI-powered doc generation
     - git add .
-    - if git diff --cached --quiet; then
+    - |
+      if git diff --cached --quiet; then
         echo "No changes to commit from Docs."
       else
         echo "Changes detected by Docs, storing artifacts..."
