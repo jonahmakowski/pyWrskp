@@ -171,11 +171,13 @@ commit_and_push:
       if [ -f black_changes.patch ]; then
         echo "Applying changes from Black..."
         git apply black_changes.patch || echo "Failed to apply changes from Black, continuing..."
+        rm black_changes.patch || echo "black_changes.patch not found, continuing..."
       fi
     - |
       if [ -f docs_changes.patch ]; then
         echo "Applying changes from Docs..."
         git apply docs_changes.patch || echo "Failed to apply changes from Docs, continuing..."
+        rm docs_changes.patch || echo "docs_changes.patch not found, continuing..."
       fi
     - git add .
     - |
