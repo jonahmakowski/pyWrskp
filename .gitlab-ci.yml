@@ -29,6 +29,7 @@ python_black:
   artifacts:
     paths:
       - black_changes.patch
+    expire_in: 1 hour
 
 docker_build:
   stage: build
@@ -147,6 +148,11 @@ generate_docs:
   artifacts:
     paths:
       - docs_changes.patch
+    expire_in: 1 hour
+  rules:
+    - changes:
+        - "**/*.py"  # Runs only when Python files change
+        - "**/*.gd" # Or godot script
 
 commit_and_push:
   image: alpine
