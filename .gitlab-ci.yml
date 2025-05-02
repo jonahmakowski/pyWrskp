@@ -24,11 +24,11 @@ python_black:
         echo "No changes to commit from Black.";
       else
         echo "Changes detected by Black, storing artifacts...";
-        git diff --cached > .black_changes;
+        git format-patch -1 --stdout > black_changes.patch;
       fi
   artifacts:
     paths:
-      - .black_changes
+      - black_changes.patch
 
 docker_build:
   stage: build
@@ -142,11 +142,11 @@ generate_docs:
         echo "No changes to commit from Docs.";
       else
         echo "Changes detected by Docs, storing artifacts...";
-        git diff --cached > .docs_changes;
+        git format-patch -1 --stdout > docs_changes.patch;
       fi
   artifacts:
     paths:
-      - .docs_changes
+      - docs_changes.patch
 
 commit_and_push:
   image: alpine
@@ -162,18 +162,18 @@ commit_and_push:
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
     - git pull
     - echo "Checking for changes from Black and Docs..."
-    - if [ -f .black_changes ] && [ "$(cat .black_changes)" != "" ]; then
+    - if [ -f black_changes.patch ]; then
         echo "Applying changes from Black...";
-        git apply <(sed 's/^[[:space:]]*//;s/[[:space:]]*$//' .black_changes);
+        git am < black_changes.patch;
       fi
-    - if [ -f .docs_changes ] && [ "$(cat .docs_changes)" != "" ]; then
+    - if [ -f docs_changes.patch ]; then
         echo "Applying changes from Docs...";
-        git apply <(sed 's/^[[:space:]]*//;s/[[:space:]]*$//' .docs_changes);
+        git am < docs_changes.patch;
       fi
     - if git diff --cached --quiet; then
         echo "No changes to commit.";
       else
         echo "Committing changes to GitLab...";
-        git commit -m "🤖 Auto-generated Modifications for latest changes"
+        git commit -m "🤖 Auto-generated Modifications and Docs for latest changes"
         git push
       fi
