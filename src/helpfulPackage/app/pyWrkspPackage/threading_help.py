@@ -1,5 +1,4 @@
 import threading
-from importlib import import_module
 
 
 def run_in_thread(func, *args, **kwargs):
