@@ -1,0 +1,415 @@
+diff --git a/src/programmingLanguage/commands.py b/src/programmingLanguage/commands.py
+index c1189cf4a..bd8d8b693 100644
+--- a/src/programmingLanguage/commands.py
++++ b/src/programmingLanguage/commands.py
+@@ -1,95 +1,125 @@
+ import errors
+ 
++
+ class Command:
+     imported = {}
++
+     def __init__(self, description: str, name: str, imp: bool):
+         self.description = description
+         self.imp = imp
+         self.name = name
+         Command.imported[self.name] = imp
++
+     def __str__(self):
+         return f"Command(name={self.name}, description={self.description})"
++
+     def __repr__(self):
+         return f"Command(name={self.name}, description={self.description})"
++
+     def impo(self):
+         if Command.imported[self.name]:
+             return
+         else:
+             raise errors.NotImplementedError(f"Import of {self.name}")
+-    
++
+ 
+ class LoadFile(Command):
+     def __init__(self):
+-        super().__init__(description="Load a file from the filesystem", name='LoadFile', imp=False)
++        super().__init__(
++            description="Load a file from the filesystem", name="LoadFile", imp=False
++        )
++
+     def load_params(self, file_path: str):
+         self.file_path = file_path
++
+     def execute(self):
+         if not Command.imported:
+             raise errors.NotImportedError("load_from_file")
+         try:
+-            load_from_file = globals().get('load_from_file')
++            load_from_file = globals().get("load_from_file")
+             return load_from_file(self.file_path)
+         except FileNotFoundError:
+             errors.FileNotFoundError(self.file_path)
++
+     def impo(self):
+         if not Command.imported[self.name]:
+             Command.imported[self.name] = True
+             from pyWrkspPackage import load_from_file
+-            globals()['load_from_file'] = load_from_file
++
++            globals()["load_from_file"] = load_from_file
++
+ 
+ class Print(Command):
+     def __init__(self):
+-        super().__init__(description="Print a message to the console", name='Print', imp=True)
+-    def load_params(self, *args, sep: str = ' ', newline: bool = True):
++        super().__init__(
++            description="Print a message to the console", name="Print", imp=True
++        )
++
++    def load_params(self, *args, sep: str = " ", newline: bool = True):
+         self.args = args
+         self.sep = sep
+         self.newline = newline
++
+     def execute(self):
+-        print(*self.args, sep=self.sep, end='\n' if self.newline else '')
++        print(*self.args, sep=self.sep, end="\n" if self.newline else "")
++
+ 
+ class Say(Command):
+     def __init__(self):
+-        super().__init__(description="Say a message", name='Say', imp=False)
++        super().__init__(description="Say a message", name="Say", imp=False)
++
+     def load_params(self, message: str):
+         self.message = message
++
+     def execute(self):
+         if not Command.imported:
+             raise errors.NotImportedError("say")
+-        speak = globals().get('speak')
++        speak = globals().get("speak")
+         speak(self.message)
++
+     def impo(self):
+         if not Command.imported[self.name]:
+             Command.imported[self.name] = True
+             from pyWrkspPackage.audio import speak
+-            globals()['speak'] = speak
++
++            globals()["speak"] = speak
++
+ 
+ class Add(Command):
+     def __init__(self):
+-        super().__init__(description="Add numbers", name='Add', imp=True)
++        super().__init__(description="Add numbers", name="Add", imp=True)
++
+     def load_params(self, *args):
+         self.args = args
++
+     def execute(self):
+         try:
+             return sum(self.args)
+         except TypeError:
+             errors.SyntaxError("Invalid arguments for addition")
+ 
++
+ class Sub(Command):
+     def __init__(self):
+-        super().__init__(description="Subtract numbers", name='Subtract', imp=True)
++        super().__init__(description="Subtract numbers", name="Subtract", imp=True)
++
+     def load_params(self, *args):
+         self.args = args
++
+     def execute(self):
+         try:
+             return self.args[0] - sum(self.args[1:])
+         except TypeError:
+             errors.SyntaxError("Invalid arguments for subtraction")
+ 
++
+ class Mult(Command):
+     def __init__(self):
+-        super().__init__(description="Multiply numbers", name='Multiply', imp=True)
++        super().__init__(description="Multiply numbers", name="Multiply", imp=True)
++
+     def load_params(self, *args):
+         self.args = args
++
+     def execute(self):
+         try:
+             result = 1
+@@ -99,11 +129,14 @@ class Mult(Command):
+         except TypeError:
+             errors.SyntaxError("Invalid arguments for multiplication")
+ 
++
+ class Div(Command):
+     def __init__(self):
+-        super().__init__(description="Divide numbers", name='Divide', imp=True)
++        super().__init__(description="Divide numbers", name="Divide", imp=True)
++
+     def load_params(self, *args):
+         self.args = args
++
+     def execute(self):
+         try:
+             result = self.args[0]
+diff --git a/src/programmingLanguage/errors.py b/src/programmingLanguage/errors.py
+index 5b3307e38..d1ac74ef1 100644
+--- a/src/programmingLanguage/errors.py
++++ b/src/programmingLanguage/errors.py
+@@ -1,50 +1,67 @@
+ # User Issues:
+ class UserError:
+     """Base class for user-related errors."""
++
+     def __init__(self, type, message):
+         print(f"{type}: {message}")
+         exit(1)
+ 
++
+ class FileNotFoundError(UserError):
+     """Exception raised when a file is not found."""
++
+     def __init__(self, filename):
+         super().__init__("FileNotFoundError", f"File '{filename}' not found.")
+ 
++
+ class CommandNotFoundError(UserError):
+     """Exception raised when a command is not found."""
++
+     def __init__(self, command):
+         super().__init__("CommandNotFoundError", f"Command '{command}' not found.")
+ 
++
+ class VariableNotFoundError(UserError):
+     """Exception raised when a variable is not found."""
++
+     def __init__(self, variable):
+         super().__init__("VariableNotFoundError", f"Variable '{variable}' not found.")
+ 
++
+ class SyntaxError(UserError):
+     """Exception raised for syntax errors."""
++
+     def __init__(self, message):
+         super().__init__("SyntaxError", message)
+ 
++
+ # Language Issues:
+ class LanguageError(Exception):
+     """Exception raised for language-related errors."""
++
+     def __init__(self, message):
+-        self.message = 'Language Limitation Error: ' + message
++        self.message = "Language Limitation Error: " + message
+         super().__init__(message)
+ 
++
+ class NotImplementedError(LanguageError):
+     """Exception raised when a feature is not implemented."""
++
+     def __init__(self, feature):
+         self.feature = feature
+         super().__init__(f"Feature '{feature}' is not implemented.")
+ 
++
+ class NotImportedError(LanguageError):
+     """Exception raised when a feature is not imported."""
++
+     def __init__(self, feature):
+         self.feature = feature
+         super().__init__(f"Feature '{feature}' is not imported.")
+ 
++
+ class UnkownError(LanguageError):
+     """Exception raised for unknown errors."""
++
+     def __init__(self, message):
+         super().__init__(f"Unknown error: {message}")
+diff --git a/src/programmingLanguage/parser.py b/src/programmingLanguage/parser.py
+index 949a44222..59da7e237 100644
+--- a/src/programmingLanguage/parser.py
++++ b/src/programmingLanguage/parser.py
+@@ -4,20 +4,20 @@ import errors
+ from pyWrkspPackage import load_from_file, run_in_thread
+ 
+ commands_avalible_direct = classes_in_module = [
+-    {'exec': obj, 'name': obj.__name__}
++    {"exec": obj, "name": obj.__name__}
+     for _, obj in getmembers(commands, isclass)
+-    if obj.__module__ == commands.__name__ and obj.__name__ != 'Command'
++    if obj.__module__ == commands.__name__ and obj.__name__ != "Command"
+ ]
+ 
+ commands_avalible = {}
+ 
+ for command in commands_avalible_direct:
+-    command_name = command['name']
+-    command_class = command['exec']
++    command_name = command["name"]
++    command_class = command["exec"]
+     commands_avalible[command_name] = command_class
+ 
+ variables = {}
+-'''
++"""
+ In format of:
+ {
+     'var_name': {
+@@ -25,82 +25,102 @@ In format of:
+         'type': type
+     }
+ }
+-'''
++"""
+ 
+ 
+ def get_tokens(line: str) -> list:
+     # Remove comments
+-    line = line.split('#')[0]
++    line = line.split("#")[0]
+     # Split by whitespace
+     tokens = line.split()
+     # Remove empty tokens
+     tokens = [token for token in tokens if token]
+     return tokens
+ 
++
+ def parse_line(line: str):
+     global variables
+     tokens = get_tokens(line)
+     if tokens == []:
+         return None
+-    
++
+     reconsturcted_line = []
+ 
+     for token in tokens:
+         if token in variables.keys():
+-            reconsturcted_line.append(variables[token]['value'])
++            reconsturcted_line.append(variables[token]["value"])
+         else:
+             reconsturcted_line.append(token)
+-    
++
+     prev = []
+ 
+-    for index in range(len(reconsturcted_line)-1, -1, -1):
++    for index in range(len(reconsturcted_line) - 1, -1, -1):
+         cur_token = reconsturcted_line[index]
+         if "!" in cur_token:
+             if cur_token.index("!") != 0:
+-                errors.SyntaxError("Syntax error, ! must be at the start of the variable")
++                errors.SyntaxError(
++                    "Syntax error, ! must be at the start of the variable"
++                )
+             var_name = cur_token[1:]
+             if var_name not in variables.keys():
+                 errors.VariableNotFoundError(var_name)
+             else:
+-                prev.append(variables[var_name]['value'])
+-        elif ':' not in cur_token:
++                prev.append(variables[var_name]["value"])
++        elif ":" not in cur_token:
+             if isinstance(cur_token, str):
+                 if cur_token.isnumeric():
+                     prev.append(int(cur_token))
+-                elif cur_token.replace('.', '', 1).isdigit():
++                elif cur_token.replace(".", "", 1).isdigit():
+                     prev.append(float(cur_token))
+                 else:
+                     prev.append(cur_token)
+             else:
+-                raise errors.UnkownError(f"Unknown value {cur_token} of type {type(cur_token)}")
+-        elif cur_token.replace(':', '') in commands_avalible.keys():
+-            command = commands_avalible[cur_token.replace(':', '')]()
++                raise errors.UnkownError(
++                    f"Unknown value {cur_token} of type {type(cur_token)}"
++                )
++        elif cur_token.replace(":", "") in commands_avalible.keys():
++            command = commands_avalible[cur_token.replace(":", "")]()
+             command.load_params(*prev)
+             command.impo()
+             prev = []
+             output = command.execute()
+-            if output is not None: prev.append(output)
++            if output is not None:
++                prev.append(output)
+         else:
+             if len(prev) == 1:
+                 value = prev[0]
+                 if isinstance(value, int):
+-                    variables[cur_token.replace(':', '')] = {'value': value, 'type': 'int'}
++                    variables[cur_token.replace(":", "")] = {
++                        "value": value,
++                        "type": "int",
++                    }
+                 elif isinstance(value, float):
+-                    variables[cur_token.replace(':', '')] = {'value': value, 'type': 'float'}
++                    variables[cur_token.replace(":", "")] = {
++                        "value": value,
++                        "type": "float",
++                    }
+                 elif isinstance(value, str):
+-                    variables[cur_token.replace(':', '')] = {'value': value, 'type': 'str'}
++                    variables[cur_token.replace(":", "")] = {
++                        "value": value,
++                        "type": "str",
++                    }
+                 else:
+-                    raise errors.SyntaxError(f"Syntax error, cannot assign {cur_token} to {value}")
++                    raise errors.SyntaxError(
++                        f"Syntax error, cannot assign {cur_token} to {value}"
++                    )
+             elif len(prev) > 1:
+-                variables[cur_token.replace(':', '')] = {'value': prev, 'type': 'list'}
++                variables[cur_token.replace(":", "")] = {"value": prev, "type": "list"}
+             else:
+-                raise errors.SyntaxError(f"Syntax error, cannot assign {cur_token} to nothing")
++                raise errors.SyntaxError(
++                    f"Syntax error, cannot assign {cur_token} to nothing"
++                )
+             prev = []
+ 
++
+ def parse_file(file_path: str):
+     file = load_from_file(file_path)
+ 
+-    file = file.split('\n')
++    file = file.split("\n")
+ 
+     threads = []
+ 
+@@ -108,20 +128,24 @@ def parse_file(file_path: str):
+         for command in commands_avalible:
+             if command in line:
+                 # Check if the command is preceded by a comment
+-                comment_index = line.find('#')
++                comment_index = line.find("#")
+                 command_index = line.find(command)
+                 if comment_index != -1 and comment_index < command_index:
+                     continue  # Skip if the command is commented out
+-                if command not in commands.Command.imported.keys() or not commands.Command.imported[command]:
++                if (
++                    command not in commands.Command.imported.keys()
++                    or not commands.Command.imported[command]
++                ):
+                     print(f"Command {command} found in file, importing...")
+                     threads.append(run_in_thread(commands_avalible[command]().impo()))
+-    
++
+     for thread in threads:
+         thread.join()
+ 
+     for line in file:
+         parse_line(line)
+ 
++
+ if __name__ == "__main__":
+-    parse_file('example.jonahscript')
++    parse_file("example.jonahscript")
+     print(variables)
