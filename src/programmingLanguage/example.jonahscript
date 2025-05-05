@@ -1,0 +1,7 @@
+Say: Hello # Running a function with the paramter of Hello
+
+variable_with_file_data: LoadFile: text.txt # Printing the contents of text.txt
+
+Print: !variable_with_file_data # Print the value in variable_with_file_data
+
+variable: Add: 10 5.5 # making a variable with a value of 15.5
