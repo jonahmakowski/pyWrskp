@@ -8,9 +8,6 @@ stages:
 python_black:
   image: python:alpine
   stage: format
-  after_script:
-    - echo "Cleaning up..."
-    - rm -f black_changes.patch
   before_script:
     - pip install black
   script:
@@ -37,6 +34,21 @@ python_black:
   rules:
     - changes:
         - "**/*.py"  # Runs only when Python files change
+  
+python_black_cleanup:
+  image: alpine
+  stage: format
+  dependencies:
+    - python_black
+  script:
+    - echo "Cleaning up artifacts from Black..."
+    - |
+      if [ -f black_changes.patch ]; then
+        echo "Removing black_changes.patch..."
+        rm black_changes.patch || echo "black_changes.patch not found, continuing..."
+      else
+        echo "No black_changes.patch found, nothing to clean up."
+      fi
 
 docker_build:
   stage: build
