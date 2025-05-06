@@ -141,4 +141,3 @@ class CoderDecoder:
         if self.print_info:
             print("your decoded message is {}".format(new_message_str))
         return new_message_str
-

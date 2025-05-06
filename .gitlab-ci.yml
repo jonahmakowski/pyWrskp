@@ -14,6 +14,7 @@ python_black:
     - apk add --no-cache git
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
+    - git config pull.rebase false
     - git pull
     - echo "Running Black for code formatting..."
     - black . || echo "Black formatting failed but continuing..."
@@ -38,7 +39,7 @@ python_black:
 python_black_cleanup:
   image: alpine
   stage: format
-  dependencies:
+  needs:
     - python_black
   script:
     - echo "Cleaning up artifacts from Black..."
