@@ -24,6 +24,14 @@ def extract_properties_from_note(note_path):
                 properties = yaml.safe_load(yaml_content)
             except Exception as e:
                 print(f"Error parsing YAML: {e}")
+    
+    for prop in properties:
+        if isinstance(properties[prop], list):
+            properties[prop] = [(float(item) if item.replace('.', '').isdigit() else str(item)) for item in properties[prop]]
+        elif isinstance(properties[prop], str):
+            if properties[prop].replace('.', '', 1).isdigit():
+                properties[prop] = float(properties[prop])
+
     return properties
 
 def get_all_properties_from_folders(folder):
