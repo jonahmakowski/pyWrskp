@@ -1,9 +1,7 @@
 import os
-import re
 import pandas as pd
 from sqlalchemy import create_engine
 import yaml
-from pyWrkspPackage import write_to_file
 
 def extract_properties_from_note(note_path):
     """
