@@ -8,6 +8,9 @@ stages:
 python_black:
   image: python:alpine
   stage: format
+  after_script:
+    - echo "Cleaning up..."
+    - rm -f black_changes.patch
   before_script:
     - pip install black
   script:
