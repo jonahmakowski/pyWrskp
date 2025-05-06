@@ -1,0 +1,15 @@
+stages:
+  - send_to_sql
+
+send_to_sql:
+  stage: send_to_sql
+  image: python:alpine
+  script:
+    - echo "Running Python script to send data to SQL..."
+    - wget -O script.py 'http://192.168.86.4:8929/jonahmakowski/pyWrskp/-/raw/main/src/obsidianDataSQL/obisidian_to_SQL.py?ref_type=heads'
+    - wget -O requirements.txt 'http://192.168.86.4:8929/jonahmakowski/pyWrskp/-/raw/main/src/obsidianDataSQL/obisidian_to_SQL.py?ref_type=heads'
+    - pip install -r requirements.txt
+    - python script.py
+  rules:
+    - changes:
+        - "**/Media Ratings/**/*.md"
