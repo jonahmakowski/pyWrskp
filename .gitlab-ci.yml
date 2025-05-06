@@ -14,6 +14,7 @@ python_black:
     - apk add --no-cache git
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
+    - git config pull.rebase false
     - git pull
     - echo "Running Black for code formatting..."
     - black . || echo "Black formatting failed but continuing..."
@@ -34,6 +35,21 @@ python_black:
   rules:
     - changes:
         - "**/*.py"  # Runs only when Python files change
+  
+python_black_cleanup:
+  image: alpine
+  stage: format
+  needs:
+    - python_black
+  script:
+    - echo "Cleaning up artifacts from Black..."
+    - |
+      if [ -f black_changes.patch ]; then
+        echo "Removing black_changes.patch..."
+        rm black_changes.patch || echo "black_changes.patch not found, continuing..."
+      else
+        echo "No black_changes.patch found, nothing to clean up."
+      fi
 
 docker_build:
   stage: build
@@ -93,6 +109,7 @@ github_commit:
     - git config user.email "jonah@makowski.ca"
     - git checkout main
     - git remote set-url origin "https://jonahmakowski:$GITHUB_PASSWORD@github.com/jonahmakowski/pyWrskp.git"
+    - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git" || echo "Failed to set remote URL for GitLab, continuing..."
     - git pull gitlab main
     - git config pull.rebase false
     - git pull origin
