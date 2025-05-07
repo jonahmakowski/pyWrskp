@@ -1,538 +1,211 @@
-diff --git a/src/adventOfCode/day6/puzzle2.py b/src/adventOfCode/day6/puzzle2.py
-index a24689a3c..56384b152 100644
---- a/src/adventOfCode/day6/puzzle2.py
-+++ b/src/adventOfCode/day6/puzzle2.py
-@@ -181,4 +181,3 @@ def main():
- 
- if __name__ == "__main__":
-     print(main())
--
-diff --git a/src/obsidianDataSQL/obisidian_to_SQL.py b/src/obsidianDataSQL/obisidian_to_SQL.py
-index ad4d5dce3..f28d4c595 100644
---- a/src/obsidianDataSQL/obisidian_to_SQL.py
-+++ b/src/obsidianDataSQL/obisidian_to_SQL.py
-@@ -3,37 +3,42 @@ import pandas as pd
- from sqlalchemy import create_engine
- import yaml
+diff --git a/src/bookSuggester/main.py b/src/bookSuggester/main.py
+index f57f608ed..c40061d5f 100644
+--- a/src/bookSuggester/main.py
++++ b/src/bookSuggester/main.py
+@@ -16,6 +16,7 @@ AI_API_KEY = os.getenv("AI_API_KEY")
+ AI_MODEL = "mistral-small-latest"
+ AI_URL = "http://192.168.86.4:4001"
  
 +
- def extract_properties_from_note(note_path):
-     """
-     Extracts properties from an Obsidian note.
-     Properties are assumed to be in YAML front matter format (key: value or key: [list]).
-     """
-     properties = {}
--    with open(note_path, 'r', encoding='utf-8') as file:
-+    with open(note_path, "r", encoding="utf-8") as file:
-         lines = file.readlines()
--        if lines[0].strip() == '---':  # Check for YAML front matter
-+        if lines[0].strip() == "---":  # Check for YAML front matter
-             yaml_lines = []
-             for line in lines[1:]:
--                if line.strip() == '---':  # End of YAML front matter
-+                if line.strip() == "---":  # End of YAML front matter
-                     break
-                 yaml_lines.append(line)
--            
-+
-             # Parse YAML content
--            yaml_content = '\n'.join(yaml_lines)
-+            yaml_content = "\n".join(yaml_lines)
-             try:
-                 properties = yaml.safe_load(yaml_content)
-             except Exception as e:
-                 print(f"Error parsing YAML: {e}")
--    
-+
-     for prop in properties:
-         if isinstance(properties[prop], list):
--            properties[prop] = [(float(item) if item.replace('.', '').isdigit() else str(item)) for item in properties[prop]]
-+            properties[prop] = [
-+                (float(item) if item.replace(".", "").isdigit() else str(item))
-+                for item in properties[prop]
-+            ]
-         elif isinstance(properties[prop], str):
--            if properties[prop].replace('.', '', 1).isdigit():
-+            if properties[prop].replace(".", "", 1).isdigit():
-                 properties[prop] = float(properties[prop])
- 
-     return properties
+ # Fetch book data from Google Books API
+ def get_google_books_data(book_title):
+     url = f"https://www.googleapis.com/books/v1/volumes"
+@@ -34,13 +35,14 @@ def get_google_books_data(book_title):
+         }
+     return None
  
 +
- def get_all_properties_from_folders(folder):
-     """
-     Iterates through specified folders and extracts properties from all Obsidian notes.
-@@ -41,13 +46,14 @@ def get_all_properties_from_folders(folder):
-     all_properties = []
-     for root, _, files in os.walk(folder):
-         for file in files:
--            if file.endswith('.md'):  # Only process Markdown files
-+            if file.endswith(".md"):  # Only process Markdown files
-                 note_path = os.path.join(root, file)
-                 properties = extract_properties_from_note(note_path)
--                properties['note_path'] = note_path  # Add note path for reference
-+                properties["note_path"] = note_path  # Add note path for reference
-                 all_properties.append(properties)
-     return all_properties
+ # Refactored: Find similar books by author and category, input is a DataFrame
+ def find_similar_books(df, rating_threshold=7):
+     recommendations = []
+-    book_titles = df['title'].tolist()
++    book_titles = df["title"].tolist()
+     for _, row in df.iterrows():
+-        book_title = row['title']
+-        rating = row['rating']
++        book_title = row["title"]
++        rating = row["rating"]
+         print(f"[Books API] Processing book: {book_title} with rating: {rating}")
+         if rating < rating_threshold:
+             continue  # Only look at highly rated books
+@@ -59,14 +61,19 @@ def find_similar_books(df, rating_threshold=7):
+                 for item in results.get("items", []):
+                     volume_info = item["volumeInfo"]
+                     recommended_title = volume_info.get("title")
+-                    if recommended_title and recommended_title.lower() != book_title.lower():
+-                        recommendations.append({
+-                            "title": recommended_title,
+-                            "authors": volume_info.get("authors", []),
+-                            "categories": volume_info.get("categories", []),
+-                            "description": volume_info.get("description", ""),
+-                            "reason": f"Same author: {author}"
+-                        })
++                    if (
++                        recommended_title
++                        and recommended_title.lower() != book_title.lower()
++                    ):
++                        recommendations.append(
++                            {
++                                "title": recommended_title,
++                                "authors": volume_info.get("authors", []),
++                                "categories": volume_info.get("categories", []),
++                                "description": volume_info.get("description", ""),
++                                "reason": f"Same author: {author}",
++                            }
++                        )
+             # Get similar books by categories
+             for category in categories:
+                 url = "https://www.googleapis.com/books/v1/volumes"
+@@ -76,29 +83,35 @@ def find_similar_books(df, rating_threshold=7):
+                 for item in results.get("items", []):
+                     volume_info = item["volumeInfo"]
+                     recommended_title = volume_info.get("title")
+-                    if recommended_title and recommended_title.lower() != book_title.lower():
+-                        recommendations.append({
+-                            "title": recommended_title,
+-                            "authors": volume_info.get("authors", []),
+-                            "categories": volume_info.get("categories", []),
+-                            "description": volume_info.get("description", ""),
+-                            "reason": f"Same category: {category}"
+-                        })
++                    if (
++                        recommended_title
++                        and recommended_title.lower() != book_title.lower()
++                    ):
++                        recommendations.append(
++                            {
++                                "title": recommended_title,
++                                "authors": volume_info.get("authors", []),
++                                "categories": volume_info.get("categories", []),
++                                "description": volume_info.get("description", ""),
++                                "reason": f"Same category: {category}",
++                            }
++                        )
+     # Removing duplicates
+-    unique_recommendations = {r['title']: r for r in recommendations}.values()
++    unique_recommendations = {r["title"]: r for r in recommendations}.values()
+     unique_recommendations = list(unique_recommendations)
+ 
+     for recommendation in unique_recommendations:
+-        if recommendation['title'] in book_titles:
++        if recommendation["title"] in book_titles:
+             del recommendation  # Remove if already in the original list
+             continue
+         for book in book_titles:
+-            if book in recommendation['title']:
++            if book in recommendation["title"]:
+                 del recommendation
+                 break
+ 
+     return unique_recommendations
  
 +
- def push_properties_to_mysql(properties, db_url, table_name):
-     """
-     Pushes extracted properties to a MySQL database using pandas and sqlalchemy.
-@@ -56,36 +62,42 @@ def push_properties_to_mysql(properties, db_url, table_name):
-     normalized_properties = []
-     for prop in properties:
-         if isinstance(prop, dict):
--            normalized_properties.append({k: (v if not isinstance(v, list) else ', '.join(map(str, v))) for k, v in prop.items()})
--    
-+            normalized_properties.append(
-+                {
-+                    k: (v if not isinstance(v, list) else ", ".join(map(str, v)))
-+                    for k, v in prop.items()
-+                }
-+            )
-+
-     # Convert normalized properties to a DataFrame
-     df = pd.DataFrame(normalized_properties)
-     print(f"DataFrame created with {len(df)} records.")
--    
-+
-     # Create SQLAlchemy engine
-     engine = create_engine(db_url)
-     print(f"Connected to database at {db_url}")
--    
-+
-     # Push DataFrame to MySQL
--    df.to_sql(table_name, con=engine, if_exists='replace', index=False)
-+    df.to_sql(table_name, con=engine, if_exists="replace", index=False)
-     print(f"Data successfully pushed to table '{table_name}' in the database.")
+ # Fetch book data from Open Library API
+ def get_open_library_data(book_title):
+     url = "http://openlibrary.org/search.json"
+@@ -117,6 +130,7 @@ def get_open_library_data(book_title):
+         }
+     return None
  
 +
- if __name__ == "__main__":
-     # Specify the folders containing Obsidian notes
--    folder_books = './Media Ratings/Reading/Books'
--    folder_movies = './Media Ratings/Movies&Shows'
--    
-+    folder_books = "./Media Ratings/Reading/Books"
-+    folder_movies = "./Media Ratings/Movies&Shows"
-+
-     # MySQL database connection URL (update with your credentials)
-     db_url = "mysql://root:password@192.168.86.2/obsidian"
--    
-+
-     # Table name in the database
-     table_name_books = "books"
-     table_name_movies = "movies"
--    
-+
-     # Extract properties from notes
-     properties_books = get_all_properties_from_folders(folder_books)
-     properties_movies = get_all_properties_from_folders(folder_movies)
--    
-+
-     # Push properties to MySQL
-     push_properties_to_mysql(properties_books, db_url, table_name_books)
--    push_properties_to_mysql(properties_movies, db_url, table_name_movies)
-\ No newline at end of file
-+    push_properties_to_mysql(properties_movies, db_url, table_name_movies)
-diff --git a/src/weatherStation/main.py b/src/weatherStation/main.py
-index 2eddd0cc0..f6233821a 100644
---- a/src/weatherStation/main.py
-+++ b/src/weatherStation/main.py
-@@ -6,16 +6,25 @@ from os import getenv
- from dotenv import load_dotenv
- import multiprocessing
- from pyWrkspPackage import json_write_file, list_to_str
-+
- load_dotenv()
+ def load_book_data():
+     # Load book data from the database
+     query = "SELECT title, rating FROM books"
+@@ -124,67 +138,68 @@ def load_book_data():
+     print("Loaded book data from database.")
+     return df
  
--engine = create_engine(f"mysql://root:{getenv('MYSQL_PASSWORD')}@192.168.86.2:3306/weather_station")
-+engine = create_engine(
-+    f"mysql://root:{getenv('MYSQL_PASSWORD')}@192.168.86.2:3306/weather_station"
-+)
 +
+ def get_book_sentiment(book_title):
+     book_data = get_google_books_data(book_title)
+     if not book_data:
+         book_data = get_open_library_data(book_title)
+-    
++
+     prompt = f"Based on this title: {book_data['title']}, authors: {', '.join(book_data['authors'])}, categories: {', '.join(book_data['categories'])}, and description: {book_data['description']}, Give me an overview of the book in 3 sentences."
+-    messages = [
+-        {"role": "user", "content": prompt}
+-    ]
++    messages = [{"role": "user", "content": prompt}]
+     response, _ = ai_response(messages, AI_MODEL, AI_URL, AI_API_KEY)
  
- def load_data(hours, step, offset, num, total_workers, queue, target):
-     for hour in range(1 + offset, hours + 1, step + total_workers - 1):
--        print(f'[Data Loader {num}] Loading {hour}h ahead data')
--        hour_ahead = pd.read_sql(f'SELECT date, {target.format(hour)} FROM combined_data', engine, index_col='date')
-+        print(f"[Data Loader {num}] Loading {hour}h ahead data")
-+        hour_ahead = pd.read_sql(
-+            f"SELECT date, {target.format(hour)} FROM combined_data",
-+            engine,
-+            index_col="date",
+     return response
+ 
++
+ def get_overall_book_sentiment(books):
+     sentiments = []
+     for book in books:
+-        print(f"[AI Based Sentiment] Processing book: {book['title']} with rating: {book['rating']}")
+-        if book['rating'] < 7:
++        print(
++            f"[AI Based Sentiment] Processing book: {book['title']} with rating: {book['rating']}"
 +        )
-         queue.put((hour, hour_ahead))
- 
-+
- def create_predictions_test(predictors, core_weather, target, alpha=0.5):
-     reg = Ridge(alpha=alpha)
-     train = core_weather.loc[:"2020-12-31"]
-@@ -25,30 +34,53 @@ def create_predictions_test(predictors, core_weather, target, alpha=0.5):
-     predictions = reg.predict(test[predictors])
- 
-     error = mean_squared_error(test[target], predictions)
++        if book["rating"] < 7:
+             continue
+-        sentiment = get_book_sentiment(book['title'])
+-        sentiments.append({
+-            "title": book['title'],
+-            "sentiment": sentiment,
+-            "value": book['rating']
+-        })
 -    
--    combined = pd.concat([test[target], pd.Series(predictions, index=test.index)], axis=1)
-+
-+    combined = pd.concat(
-+        [test[target], pd.Series(predictions, index=test.index)], axis=1
-+    )
-     combined.columns = ["actual", "predictions"]
-     return error, combined
- 
--def run_all_tests(predictors, target, hours=168, step=1, workers=15, alpha_min=0.1, alpha_max=1, alpha_step=0.1):
--    errors = [[0 for _ in range(hours)] for _ in range(int(alpha_min*100), int(alpha_max*100), int(alpha_step*100))]
-+
-+def run_all_tests(
-+    predictors,
-+    target,
-+    hours=168,
-+    step=1,
-+    workers=15,
-+    alpha_min=0.1,
-+    alpha_max=1,
-+    alpha_step=0.1,
-+):
-+    errors = [
-+        [0 for _ in range(hours)]
-+        for _ in range(
-+            int(alpha_min * 100), int(alpha_max * 100), int(alpha_step * 100)
-+        )
-+    ]
-     threads = []
-     queue = multiprocessing.Queue()
- 
-     for i in range(workers):
--        thread = multiprocessing.Process(target=load_data, args=(hours, step, step * i, i, workers, queue))
-+        thread = multiprocessing.Process(
-+            target=load_data, args=(hours, step, step * i, i, workers, queue)
-+        )
-         thread.start()
-         threads.append(thread)
--    
--    print('[Main] Started Data Loader Thread')
--    print('[Main] Loading Base Data')
--    core_weather = pd.read_sql(f'SELECT {list_to_str(predictors, sep=', ')} FROM combined_data', engine, index_col='date')
--    print('[Main] Loaded Base Data')
--    
-+
-+    print("[Main] Started Data Loader Thread")
-+    print("[Main] Loading Base Data")
-+    core_weather = pd.read_sql(
-+        f"SELECT {list_to_str(predictors, sep=', ')} FROM combined_data",
-+        engine,
-+        index_col="date",
-+    )
-+    print("[Main] Loaded Base Data")
-+
-     hourly_data = {}
-     for hour in range(1, hours + 1, step):
--        print(f'[Main] {hour}h ahead data')
--        
-+        print(f"[Main] {hour}h ahead data")
-+
-         have_data = False
-         while not have_data:
-             if hour in hourly_data:
-@@ -60,21 +92,27 @@ def run_all_tests(predictors, target, hours=168, step=1, workers=15, alpha_min=0
-                     hourly_data[loaded_hour] = hour_ahead
-                 except:
-                     pass
--        
--        print(f'\t[Main] Loaded {hour}h ahead data')
--        for error_index, alpha in enumerate(range(int(alpha_min*100), int(alpha_max*100), int(alpha_step*100))):
-+
-+        print(f"\t[Main] Loaded {hour}h ahead data")
-+        for error_index, alpha in enumerate(
-+            range(int(alpha_min * 100), int(alpha_max * 100), int(alpha_step * 100))
-+        ):
-             alpha /= 100
--            print(f'\t[Main] Testing with alpha {alpha}')
-+            print(f"\t[Main] Testing with alpha {alpha}")
-             core_weather_with_hour_ahead = core_weather.copy()
--            core_weather_with_hour_ahead[target.format(hour)] = hour_ahead[target.format(hour)]
-+            core_weather_with_hour_ahead[target.format(hour)] = hour_ahead[
-+                target.format(hour)
-+            ]
-             target = target.format(hour)
--            error, combined = create_predictions_test(predictors, core_weather_with_hour_ahead, target)
--            errors[error_index][hour-1] += error
-+            error, combined = create_predictions_test(
-+                predictors, core_weather_with_hour_ahead, target
-+            )
-+            errors[error_index][hour - 1] += error
-             print(f"\t\t[Main] Error: {error} with alpha {alpha}")
--    
-+
-     for thread in threads:
-         thread.join()
--    
-+
-     best_per_hour = [1000 for _ in range(0, hours, step)]
-     best_alpha_per_hour = [0 for _ in range(0, hours, step)]
- 
-@@ -84,9 +122,10 @@ def run_all_tests(predictors, target, hours=168, step=1, workers=15, alpha_min=0
-                 best_per_hour[hour] = errors[error_index][hour]
-                 best_alpha_per_hour[hour] = alpha
- 
--    print(f'Average Error: {sum(best_per_hour) / len(best_per_hour)}')
--    json_write_file('best_error_per_hour.json', best_per_hour)
--    json_write_file('best_alpha_per_hour.json', best_alpha_per_hour)
-+    print(f"Average Error: {sum(best_per_hour) / len(best_per_hour)}")
-+    json_write_file("best_error_per_hour.json", best_per_hour)
-+    json_write_file("best_alpha_per_hour.json", best_alpha_per_hour)
-+
- 
- if __name__ == "__main__":
-     run_all_tests([])
-diff --git a/src/weatherStation/merge_data.py b/src/weatherStation/merge_data.py
-index 6b09d6ca9..853165d89 100644
---- a/src/weatherStation/merge_data.py
-+++ b/src/weatherStation/merge_data.py
-@@ -6,50 +6,63 @@ from dotenv import load_dotenv
- 
- load_dotenv()
- 
--engine = create_engine(f"mysql://root:{getenv('MYSQL_PASSWORD')}@192.168.86.2:3306/weather_station")
-+engine = create_engine(
-+    f"mysql://root:{getenv('MYSQL_PASSWORD')}@192.168.86.2:3306/weather_station"
-+)
-+
- 
- def convert_bimin_to_hourly(df):
-     df.index = pd.to_datetime(df.index)
--    df.index = df.index.astype('datetime64[ns]')
-+    df.index = df.index.astype("datetime64[ns]")
- 
-     df_hourly = df.copy()
--    df_hourly.index = df.index.floor('h')
--    df_hourly = df_hourly[~df_hourly.index.duplicated(keep='first')]
--    df_hourly.drop(columns=['temperature', 'humidity'], inplace=True)
-+    df_hourly.index = df.index.floor("h")
-+    df_hourly = df_hourly[~df_hourly.index.duplicated(keep="first")]
-+    df_hourly.drop(columns=["temperature", "humidity"], inplace=True)
- 
--    df_hourly['temperature'] = df.groupby(df.index.floor('h'))['temperature'].mean()
--    df_hourly['humidity'] = df.groupby(df.index.floor('h'))['humidity'].mean()
-+    df_hourly["temperature"] = df.groupby(df.index.floor("h"))["temperature"].mean()
-+    df_hourly["humidity"] = df.groupby(df.index.floor("h"))["humidity"].mean()
- 
-     return df_hourly
- 
-+
- def combine_data(ahead=168):
--    df = pd.read_sql('historical_data', engine, index_col='date')
-+    df = pd.read_sql("historical_data", engine, index_col="date")
-     df.dropna(inplace=True)
- 
--    df_bimin = pd.read_sql('live_data', engine, index_col='time')
-+    df_bimin = pd.read_sql("live_data", engine, index_col="time")
- 
-     df_hourly = convert_bimin_to_hourly(df_bimin)
-     df_hourly = send_to_db(df_hourly, engine, return_df=True)
- 
--    print('Sending historical data to DB')
--    df.to_sql('combined_data', engine, if_exists='replace', index=True, index_label='date')
--    print('Sending my data to DB')
--    df_hourly.to_sql('combined_data', engine, if_exists='append', index=True, index_label='date')
-+    print("Sending historical data to DB")
-+    df.to_sql(
-+        "combined_data", engine, if_exists="replace", index=True, index_label="date"
-+    )
-+    print("Sending my data to DB")
-+    df_hourly.to_sql(
-+        "combined_data", engine, if_exists="append", index=True, index_label="date"
-+    )
- 
-     # Adding targets
--    print('Adding Targets')
--    combined_data = pd.read_sql('combined_data', engine, index_col='date')
-+    print("Adding Targets")
-+    combined_data = pd.read_sql("combined_data", engine, index_col="date")
- 
-     for i in range(1, ahead + 1):
--        print(f'Adding {i}h ahead targets')
--        combined_data[f'temperature_{i}h_ahead'] = combined_data['temperature'].shift(-i)
--        combined_data[f'humidity_{i}h_ahead'] = combined_data['humidity'].shift(-i)
-+        print(f"Adding {i}h ahead targets")
-+        combined_data[f"temperature_{i}h_ahead"] = combined_data["temperature"].shift(
-+            -i
-+        )
-+        combined_data[f"humidity_{i}h_ahead"] = combined_data["humidity"].shift(-i)
-         combined_data = combined_data.copy()
--    
--    print('Dropping NaN values')
-+
-+    print("Dropping NaN values")
-     combined_data.dropna(inplace=True)
--    print('Sending combined data to DB')
--    combined_data.to_sql('combined_data', engine, if_exists='replace', index=True, index_label='date')
-+    print("Sending combined data to DB")
-+    combined_data.to_sql(
-+        "combined_data", engine, if_exists="replace", index=True, index_label="date"
-+    )
-+
- 
- if __name__ == "__main__":
-     combine_data()
-diff --git a/src/weatherStation/parse_data.py b/src/weatherStation/parse_data.py
-index 40168b4eb..9e03551c6 100644
---- a/src/weatherStation/parse_data.py
-+++ b/src/weatherStation/parse_data.py
-@@ -6,51 +6,96 @@ from dotenv import load_dotenv
- 
- load_dotenv()
- 
--warnings.simplefilter(action='ignore', category=FutureWarning)
-+warnings.simplefilter(action="ignore", category=FutureWarning)
-+
-+engine = create_engine(
-+    f"mysql://root:{getenv('MYSQL_PASSWORD')}@192.168.86.2:3306/weather_station"
-+)
- 
--engine = create_engine(f"mysql://root:{getenv('MYSQL_PASSWORD')}@192.168.86.2:3306/weather_station")
- 
- def send_to_db(df, engine, out_table=None, return_df=False):
-     df.index = pd.to_datetime(df.index)
--    df.index = df.index.astype('datetime64[ns]')
-+    df.index = df.index.astype("datetime64[ns]")
- 
--    df = df.rename(columns={
--        'temperature_2m (°C)': 'temperature',
--        'relative_humidity_2m (%)': 'humidity'
--    })
-+    df = df.rename(
-+        columns={
-+            "temperature_2m (°C)": "temperature",
-+            "relative_humidity_2m (%)": "humidity",
-+        }
-+    )
- 
-     # Add Predictors
--    print('Adding predictors')
--    df["monthly_avg"] = df["temperature"].groupby(df.index.month).apply(lambda x: x.expanding(1).mean()).reset_index(level=0, drop=True)
--    df["day_avg"] = df["temperature"].groupby(df.index.day).apply(lambda x: x.expanding(1).mean()).reset_index(level=0, drop=True)
--    df["day_of_year_avg"] = df["temperature"].groupby(df.index.day_of_year).apply(lambda x: x.expanding(1).mean()).reset_index(level=0, drop=True)
--    
--    df["monthly_avg_humidity"] = df["humidity"].groupby(df.index.month).apply(lambda x: x.expanding(1).mean()).reset_index(level=0, drop=True)
--    df["day_avg_humidity"] = df["humidity"].groupby(df.index.day).apply(lambda x: x.expanding(1).mean()).reset_index(level=0, drop=True)
--    df["day_of_year_avg_humidity"] = df["humidity"].groupby(df.index.day_of_year).apply(lambda x: x.expanding(1).mean()).reset_index(level=0, drop=True)
-+    print("Adding predictors")
-+    df["monthly_avg"] = (
-+        df["temperature"]
-+        .groupby(df.index.month)
-+        .apply(lambda x: x.expanding(1).mean())
-+        .reset_index(level=0, drop=True)
-+    )
-+    df["day_avg"] = (
-+        df["temperature"]
-+        .groupby(df.index.day)
-+        .apply(lambda x: x.expanding(1).mean())
-+        .reset_index(level=0, drop=True)
-+    )
-+    df["day_of_year_avg"] = (
-+        df["temperature"]
-+        .groupby(df.index.day_of_year)
-+        .apply(lambda x: x.expanding(1).mean())
-+        .reset_index(level=0, drop=True)
-+    )
-+
-+    df["monthly_avg_humidity"] = (
-+        df["humidity"]
-+        .groupby(df.index.month)
-+        .apply(lambda x: x.expanding(1).mean())
-+        .reset_index(level=0, drop=True)
-+    )
-+    df["day_avg_humidity"] = (
-+        df["humidity"]
-+        .groupby(df.index.day)
-+        .apply(lambda x: x.expanding(1).mean())
-+        .reset_index(level=0, drop=True)
-+    )
-+    df["day_of_year_avg_humidity"] = (
-+        df["humidity"]
-+        .groupby(df.index.day_of_year)
-+        .apply(lambda x: x.expanding(1).mean())
-+        .reset_index(level=0, drop=True)
-+    )
- 
-     ## Daily Data
--    df['daily_high'] = df['temperature'].rolling(24).max()
--    df['daily_low'] = df['temperature'].rolling(24).min()
--    
--    df['daily_high_humidity'] = df['humidity'].rolling(24).max()
--    df['daily_low_humidity'] = df['humidity'].rolling(24).min()
--    
--    df['daily_min_max'] = df['daily_high'] - df['daily_low']
--    df['daily_min_max_humidity'] = df['daily_high_humidity'] - df['daily_low_humidity']
-+    df["daily_high"] = df["temperature"].rolling(24).max()
-+    df["daily_low"] = df["temperature"].rolling(24).min()
-+
-+    df["daily_high_humidity"] = df["humidity"].rolling(24).max()
-+    df["daily_low_humidity"] = df["humidity"].rolling(24).min()
-+
-+    df["daily_min_max"] = df["daily_high"] - df["daily_low"]
-+    df["daily_min_max_humidity"] = df["daily_high_humidity"] - df["daily_low_humidity"]
- 
-     ## Yesterday's relative
--    df['temperature_yesterday'] = df['temperature'].shift(24)
--    df['humidity_yesterday'] = df['humidity'].shift(24)
--    df['relative_temperature_yesterday'] = df['temperature'].shift(24) - df['temperature']
--    df['relative_humidity_yesterday'] = df['humidity'].shift(24) - df['humidity']
-+    df["temperature_yesterday"] = df["temperature"].shift(24)
-+    df["humidity_yesterday"] = df["humidity"].shift(24)
-+    df["relative_temperature_yesterday"] = (
-+        df["temperature"].shift(24) - df["temperature"]
-+    )
-+    df["relative_humidity_yesterday"] = df["humidity"].shift(24) - df["humidity"]
- 
--    print('Sending to DB')
-+    print("Sending to DB")
-     if return_df:
-         return df
-     else:
--        df.to_sql(out_table, engine, if_exists='replace', index=True, index_label='date')
-+        df.to_sql(
-+            out_table, engine, if_exists="replace", index=True, index_label="date"
++        sentiment = get_book_sentiment(book["title"])
++        sentiments.append(
++            {"title": book["title"], "sentiment": sentiment, "value": book["rating"]}
 +        )
 +
+     prompt = f"Based on the following summaries: {sentiments}, give me an overall understanding of what the books are. Chracterize the books in 3 sentences (Genre, etc). A higher value means that the book is more important to your summary. Just give me the summary, no other text."
+-    messages = [
+-        {"role": "user", "content": prompt}
+-    ]
++    messages = [{"role": "user", "content": prompt}]
+     response, _ = ai_response(messages, AI_MODEL, AI_URL, AI_API_KEY)
+     return response
  
++
+ def get_rating(book_title, book_description, overall_sentiment):
+     prompt = f"Based on the following summary of what the user likes: {overall_sentiment}, rate on a scale from 1 to 100 how likely the user would like the book '{book_title}', here is the description: {book_description}. Include only the number, no other text."
+-    messages = [
+-        {"role": "user", "content": prompt}
+-    ]
++    messages = [{"role": "user", "content": prompt}]
+     response, _ = ai_response(messages, AI_MODEL, AI_URL, AI_API_KEY)
+     return int(response)
+ 
++
+ def find_best(overall_sentiment, recommendations):
+     best_books = []
+     for book in recommendations:
+         print(f"[AI Based Rating] Processing book: {book['title']}")
+-        rating = get_rating(book['title'], book['description'], overall_sentiment)
+-        best_books.append({
+-            "title": book['title'],
+-            "rating": rating,
+-            "description": book['description'],
+-            "reason": book['reason']
+-        })
+-    
++        rating = get_rating(book["title"], book["description"], overall_sentiment)
++        best_books.append(
++            {
++                "title": book["title"],
++                "rating": rating,
++                "description": book["description"],
++                "reason": book["reason"],
++            }
++        )
++
+     # Sort by rating
+-    best_books.sort(key=lambda x: x['rating'], reverse=True)
++    best_books.sort(key=lambda x: x["rating"], reverse=True)
+     return best_books
+ 
++
+ # Example usage
  if __name__ == "__main__":
--    df = pd.read_csv('historical-weather-data-hourly.csv', index_col=0, parse_dates=True, infer_datetime_format=True)
--    send_to_db(df, engine,'historical_data')
-+    df = pd.read_csv(
-+        "historical-weather-data-hourly.csv",
-+        index_col=0,
-+        parse_dates=True,
-+        infer_datetime_format=True,
-+    )
-+    send_to_db(df, engine, "historical_data")
-diff --git a/src/weatherStation/raspberrypi3_script.py b/src/weatherStation/raspberrypi3_script.py
-index 206b65d40..fbda07511 100644
---- a/src/weatherStation/raspberrypi3_script.py
-+++ b/src/weatherStation/raspberrypi3_script.py
-@@ -13,7 +13,9 @@ skip_wait = False
- try:
-     while True:
-         try:
--            while (datetime.now().minute % 2 != 0 or datetime.now().minute == last_minute) or skip_wait:
-+            while (
-+                datetime.now().minute % 2 != 0 or datetime.now().minute == last_minute
-+            ) or skip_wait:
-                 sleep(0.1)
-             print("Reading sensor data...")
-             skip_wait = False
-@@ -21,8 +23,10 @@ try:
-             temp = dht_device.temperature
-             humidity = dht_device.humidity
-             now = datetime.now()
--            current_row = pd.DataFrame([[now, temp, humidity]], columns=['time', 'temperature', 'humidity'])
--            current_row.to_sql('live_data', engine, if_exists='append', index=False)
-+            current_row = pd.DataFrame(
-+                [[now, temp, humidity]], columns=["time", "temperature", "humidity"]
-+            )
-+            current_row.to_sql("live_data", engine, if_exists="append", index=False)
-             print(now, temp, humidity)
-         except RuntimeError as e:
-             skip_wait = True
+     book_data = load_book_data()
+-    overall_sentiment = get_overall_book_sentiment(book_data.to_dict(orient='records'))
++    overall_sentiment = get_overall_book_sentiment(book_data.to_dict(orient="records"))
+     recommendations = find_similar_books(book_data, rating_threshold=7)
+     best = find_best(overall_sentiment, recommendations)
+     print("Top 5 recommended books:")
