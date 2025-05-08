@@ -1,206 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://dnptc7mnty36c"]
+[gd_scene load_steps=11 format=4 uid="uid://dnptc7mnty36c"]
 
-[ext_resource type="Script" path="res://scripts/character.gd" id="1_64iuk"]
-[ext_resource type="Texture2D" uid="uid://b08grbbqmi5uk" path="res://assets/knight.png" id="2_hmuw2"]
+[ext_resource type="PackedScene" uid="uid://dfr6gk0jgmt8m" path="res://scenes/character.tscn" id="1_4m4wy"]
 [ext_resource type="Texture2D" uid="uid://c4835ko8t0w6d" path="res://assets/world_tileset.png" id="3_u2ukb"]
 [ext_resource type="PackedScene" uid="uid://bmc164s5jqisd" path="res://scenes/death_zone.tscn" id="4_7qqf5"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pgnmv"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tqkaq"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ug8m5"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hobat"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_je4vt"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(64, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ff47d"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(96, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ek6bc"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(128, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_agiwa"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(160, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t71px"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(192, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tgrfs"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(0, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dg2l1"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(32, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_slu3x"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(64, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8si1m"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(96, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w1f3f"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(128, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sha0u"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(160, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3lrad"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(192, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ng15k"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(224, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_17wvb"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(0, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fkb1g"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(32, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gyn3p"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(64, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2p3u2"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(96, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jd6ti"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(128, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vbj30"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(160, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_scviv"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(192, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mk6bk"]
-atlas = ExtResource("2_hmuw2")
-region = Rect2(224, 96, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_ffokg"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pgnmv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tqkaq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ug8m5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hobat")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_je4vt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ff47d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ek6bc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_agiwa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t71px")
-}],
-"loop": true,
-"name": &"jump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tgrfs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dg2l1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_slu3x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8si1m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_w1f3f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sha0u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3lrad")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ng15k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_17wvb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fkb1g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gyn3p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2p3u2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jd6ti")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vbj30")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_scviv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mk6bk")
-}],
-"loop": true,
-"name": &"run",
-"speed": 10.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m1rqw"]
-radius = 5.0
-height = 20.0
+[ext_resource type="Texture2D" uid="uid://wmsuv3sbngp6" path="res://assets/platforms.png" id="5_1xr1k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ydfnw"]
 texture = ExtResource("3_u2ukb")
@@ -402,32 +205,73 @@ texture = ExtResource("3_u2ukb")
 2:4/size_in_atlas = Vector2i(3, 3)
 2:4/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cdcq2"]
+texture = ExtResource("5_1xr1k")
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+0:3/0 = 0
+1:3/size_in_atlas = Vector2i(2, 1)
+1:3/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+1:1/size_in_atlas = Vector2i(2, 1)
+1:1/0 = 0
+1:0/size_in_atlas = Vector2i(2, 1)
+1:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_67v7v"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ydfnw")
+sources/1 = SubResource("TileSetAtlasSource_cdcq2")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qg1x0"]
 distance = -96.0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f6vod"]
+texture = ExtResource("5_1xr1k")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1, -8, 1)
+0:0/0/physics_layer_0/polygon_0/one_way = true
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1, -8, 1)
+0:1/0/physics_layer_0/polygon_0/one_way = true
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1, -8, 1)
+0:2/0/physics_layer_0/polygon_0/one_way = true
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1, -8, 1)
+0:3/0/physics_layer_0/polygon_0/one_way = true
+1:0/size_in_atlas = Vector2i(2, 1)
+1:0/0 = 0
+1:0/0/texture_origin = Vector2i(-8, 0)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8, 16, -8, 16, 1, -16, 1)
+1:0/0/physics_layer_0/polygon_0/one_way = true
+1:2/size_in_atlas = Vector2i(2, 1)
+1:2/0 = 0
+1:2/0/texture_origin = Vector2i(-8, 0)
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8, 16, -8, 16, 1, -16, 1)
+1:2/0/physics_layer_0/polygon_0/one_way = true
+1:3/size_in_atlas = Vector2i(2, 1)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8, 16, -8, 16, 1, -16, 1)
+1:3/0/physics_layer_0/polygon_0/one_way = true
+1:1/size_in_atlas = Vector2i(2, 1)
+1:1/0 = 0
+1:1/0/texture_origin = Vector2i(-8, 0)
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8, 16, -8, 16, 1, -16, 1)
+1:1/0/physics_layer_0/polygon_0/one_way = true
+
+[sub_resource type="TileSet" id="TileSet_kxaur"]
+physics_layer_0/collision_layer = 3
+sources/0 = SubResource("TileSetAtlasSource_f6vod")
+
 [node name="Main" type="Node2D"]
 
-[node name="Character" type="CharacterBody2D" parent="."]
-script = ExtResource("1_64iuk")
-
-[node name="Camera" type="Camera2D" parent="Character"]
-zoom = Vector2(3, 3)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Character"]
-sprite_frames = SubResource("SpriteFrames_ffokg")
-animation = &"jump"
-autoplay = "idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
-position = Vector2(0, 2)
-shape = SubResource("CapsuleShape2D_m1rqw")
+[node name="Character" parent="." instance=ExtResource("1_4m4wy")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray(0, 0, 254, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+tile_map_data = PackedByteArray("AAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAD+/wIAAAAAAAEAAAD//wIAAAAAAAEAAAAAAAIAAAAAAAEAAAABAAIAAAAAAAEAAAACAAIAAAAAAAEAAAACAAMAAAAAAAEAAAABAAMAAAAAAAEAAAAAAAMAAAAAAAEAAAD//wMAAAAAAAEAAAD+/wMAAAAAAAEAAAA=")
 tile_set = SubResource("TileSet_67v7v")
 
 [node name="Death Zone" parent="." instance=ExtResource("4_7qqf5")]
@@ -436,4 +280,6 @@ position = Vector2(1, 67)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Death Zone"]
 shape = SubResource("WorldBoundaryShape2D_qg1x0")
 
-[connection signal="animation_changed" from="Character/AnimatedSprite2D" to="Character" method="_on_animated_sprite_2d_animation_changed"]
+[node name="PlatformTileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAACAP//AAABAAAAAAA=")
+tile_set = SubResource("TileSet_kxaur")
