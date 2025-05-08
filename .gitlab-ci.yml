@@ -50,6 +50,9 @@ python_black_cleanup:
       else
         echo "No black_changes.patch found, nothing to clean up."
       fi
+  rules:
+    - changes:
+        - "**/*.py"  # Runs only when Python files change
 
 docker_build:
   stage: build
