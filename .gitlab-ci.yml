@@ -48,7 +48,7 @@ rust_formatter:
     - git pull
     - cd src/rust/rust_formatter
     - rustup component add rustfmt
-    - cargo run
+    - cargo run --release
     - cd ../../..
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
@@ -228,6 +228,7 @@ commit_and_push:
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
     - git remote set-url gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git" || echo "Failed to set remote URL for GitLab, continuing..."
     - echo "Checking for changes from Black and Docs..."
+    - git pull gitlab
     - |
       if [ -f python_changes.patch ]; then
         echo "Applying changes from Black..."
