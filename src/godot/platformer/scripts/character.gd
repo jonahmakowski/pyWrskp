@@ -1,9 +1,12 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const SPEED = 150.0
+const JUMP_VELOCITY = -300.0
 
+func _process(delta: float) -> void:
+	if $PlatformRayCast.is_colliding() and Input.is_action_just_pressed("move_down"):
+		position.y += 1
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
