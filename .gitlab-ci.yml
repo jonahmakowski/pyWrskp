@@ -1,11 +1,12 @@
 stages:
 - format
+- cleanup
 - docs
 - distribute
 - commit
 - build
 
-python_black:
+python_formatter:
   image: python:alpine
   stage: format
   before_script:
@@ -26,33 +27,70 @@ python_black:
         echo "No changes to commit from Black."
       else
         echo "Changes detected by Black, storing artifacts..."
-        git diff --cached > black_changes.patch
+        git diff --cached > python_changes.patch
       fi
   artifacts:
     paths:
-      - black_changes.patch
+      - python_changes.patch
     expire_in: 1 hour
   rules:
     - changes:
         - "**/*.py"  # Runs only when Python files change
-  
-python_black_cleanup:
-  image: alpine
+
+rust_formatter:
+  image: rust:alpine
   stage: format
-  needs:
-    - python_black
-  script:
-    - echo "Cleaning up artifacts from Black..."
+  before_script:
+    - apk add --no-cache git
+    - git checkout main
+    - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
+    - git config pull.rebase false
+    - git pull
+    - cd src/rust/rust_formatter
+    - cargo run
+    - git config --global user.email "gitlab-ci@localhost"
+    - git config --global user.name "GitLab CI"
+    - git add .
     - |
-      if [ -f black_changes.patch ]; then
-        echo "Removing black_changes.patch..."
-        rm black_changes.patch || echo "black_changes.patch not found, continuing..."
+      if git diff --cached --quiet; then
+        echo "No changes to commit from Rust."
       else
-        echo "No black_changes.patch found, nothing to clean up."
+        echo "Changes detected by Rust, storing artifacts..."
+        git diff --cached > rust_changes.patch
+      fi
+  artifacts:
+    paths:
+      - rust_changes.patch
+    expire_in: 1 hour
+  rules:
+    - changes:
+        - "**/*.rs"
+        - "**/Cargo.toml"
+
+formatter_cleanup:
+  image: alpine
+  stage: cleanup
+  script:
+    - echo "Cleaning up artifacts..."
+    - |
+      if [ -f python_changes.patch ]; then
+        echo "Removing python_changes.patch..."
+        rm python_changes.patch || echo "python_changes.patch not found, continuing..."
+      else
+        echo "No python_changes.patch found, nothing to clean up."
+      fi
+    - |
+      if [ -f rust_changes.patch ]; then
+        echo "Removing rust_changes.patch..."
+        rm rust_changes.patch || echo "rust_changes.patch not found, continuing..."
+      else
+        echo "No rust_changes.patch found, nothing to clean up."
       fi
   rules:
     - changes:
         - "**/*.py"  # Runs only when Python files change
+        - "**/*.rs"
+        - "**/Cargo.toml"
 
 docker_build:
   stage: build
@@ -189,16 +227,22 @@ commit_and_push:
     - git remote set-url gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git" || echo "Failed to set remote URL for GitLab, continuing..."
     - echo "Checking for changes from Black and Docs..."
     - |
-      if [ -f black_changes.patch ]; then
+      if [ -f python_changes.patch ]; then
         echo "Applying changes from Black..."
-        git apply black_changes.patch || echo "Failed to apply changes from Black, continuing..."
-        rm black_changes.patch || echo "black_changes.patch not found, continuing..."
+        git apply python_changes.patch || echo "Failed to apply changes from Black, continuing..."
+        rm python_changes.patch || echo "python_changes.patch not found, continuing..."
       fi
     - |
       if [ -f docs_changes.patch ]; then
         echo "Applying changes from Docs..."
         git apply docs_changes.patch || echo "Failed to apply changes from Docs, continuing..."
         rm docs_changes.patch || echo "docs_changes.patch not found, continuing..."
+      fi
+    - |
+      if [ -f rust_changes.patch ]; then
+        echo "Applying changes from Docs..."
+        git apply rust_changes.patch || echo "Failed to apply changes from Docs, continuing..."
+        rm rust_changes.patch || echo "rust_changes.patch not found, continuing..."
       fi
     - git add .
     - |
