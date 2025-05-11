@@ -1,14 +1,14 @@
-use std::env;
 use rand::Rng;
+use std::env;
 
 fn generate_password(length: i32) -> String {
     let mut password = String::new();
-    
+
     for _ in 0..length {
         let letter: char = rand::rng().sample(rand::distr::Alphanumeric) as char;
         password.push(letter);
     }
-    
+
     password
 }
 
@@ -29,5 +29,4 @@ fn main() {
     println!("Generating a password of length {}...", length);
     let password = generate_password(*length);
     println!("Generated password: {}", password);
-
 }
