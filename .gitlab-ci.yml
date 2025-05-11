@@ -47,6 +47,7 @@ rust_formatter:
     - git config pull.rebase false
     - git pull
     - cd src/rust/rust_formatter
+    - rustup component add rustfmt
     - cargo run
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
