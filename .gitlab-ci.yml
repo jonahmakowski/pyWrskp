@@ -49,6 +49,7 @@ rust_formatter:
     - cd src/rust/rust_formatter
     - rustup component add rustfmt
     - cargo run
+    - cd ../../..
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
     - git add .
