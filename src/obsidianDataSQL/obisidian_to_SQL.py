@@ -72,6 +72,8 @@ def push_properties_to_mysql(properties, db_url, table_name):
     # Convert normalized properties to a DataFrame
     df = pd.DataFrame(normalized_properties)
     print(f"DataFrame created with {len(df)} records.")
+    df = df[df['ratings'].notna()]  # Remove rows where 'ratings' column is None
+    print(f"DataFrame created with {len(df)} records after filtering.")
 
     # Create SQLAlchemy engine
     engine = create_engine(db_url)
