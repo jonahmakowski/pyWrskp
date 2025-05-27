@@ -1,0 +1,9 @@
+[package]
+name = "web_scraper"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+reqwest = "0.12.15"
+select = "0.6.1"
+trpl = "0.2.0"
