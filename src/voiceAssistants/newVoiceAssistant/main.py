@@ -7,7 +7,7 @@ import pvporcupine
 from pvrecorder import PvRecorder
 import speech_recognition as sr
 from datetime import datetime
-from pandas.io.clipboard import paste
+from pandas import read_clipboard
 import spotify
 from weather_get import get_weather
 from google_calendar import get_events, get_credentials, do_make_event
@@ -138,10 +138,10 @@ def parse_command(message: str, message_list: list) -> tuple[str, bool]:
         return list_to_str(split_message), True
     elif len(command[0]) == 3:
         func(list_to_str(split_message))
-    elif func == paste:
+    elif func == read_clipboard:
         print("Ran command {} without arguments".format(key))
         speak(command[1].split()[0])
-        clipboard = str(paste())
+        clipboard = str(read_clipboard())
         print(clipboard)
         message_list = get_message_list(
             message_list, "AUTOMATED RESPONSE: Clipboard contents: {}".format(clipboard)
