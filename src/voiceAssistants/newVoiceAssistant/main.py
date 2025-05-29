@@ -29,7 +29,7 @@ COMMANDS = {
     "open-folder": [actions.open_directory_in_finder, True],
     "hide-application": [actions.hide_app, True],
     "question-mode": ["Question Mode", False],
-    "clipboard-contents": [paste, False],
+    "clipboard-contents": [read_clipboard, False],
     "terminate": [actions.terminate, False],
     "quit-application": [actions.quit_app, True],
     "make-event": [do_make_event, True, True],
