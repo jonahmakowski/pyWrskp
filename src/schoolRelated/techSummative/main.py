@@ -3,11 +3,20 @@ from os import getenv
 from dotenv import load_dotenv
 from pvrecorder import PvRecorder
 import pvporcupine
-import speech_recognition as sr
+import pyaudio
+import actions
 
 load_dotenv()
 VOICE_KEY = getenv("VOICE_DETECTION_TOKEN")
 
+commands = {'time': actions.get_time, 'play': actions.play_song, 'weather': actions.daily_average_temperature}
+
+def parse_command(command: str):
+    command = command.lower()
+    command_lis = command.split(" ")
+    for command_iter in command_lis:
+        if command_iter in commands:
+            return commands[command_iter](command)
 
 def main():
     porcupine = pvporcupine.create(access_key=VOICE_KEY, keywords=["jarvis"])
@@ -18,7 +27,8 @@ def main():
 
     device_index = int(input("Select the device index: "))
 
-    mic_list = sr.Microphone.list_microphone_names()
+    audio = pyaudio.PyAudio()
+    mic_list = [audio.get_device_info_by_index(i)['name'] for i in range(audio.get_host_api_info_by_index(0)['deviceCount'])]
     print("Available microphones:")
     for i, mic_name in enumerate(mic_list):
         print(f"{i}: {mic_name}")
@@ -37,6 +47,7 @@ def main():
                 play_sound(False)
                 transcription = take_command(mic_index)
                 print(transcription)
+                parse_command(transcription)
 
     except KeyboardInterrupt:
         recoder.stop()
