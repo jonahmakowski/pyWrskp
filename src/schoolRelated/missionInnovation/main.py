@@ -14,24 +14,36 @@ from dotenv import load_dotenv
 
 
 load_dotenv()  # Load environment variables from .env file
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")  # Get email password from environment variable
+EMAIL_PASSWORD = os.getenv(
+    "EMAIL_PASSWORD"
+)  # Get email password from environment variable
 AI_MODEL = "llama3.2:latest"
 
 whisper_model = whisper.load_model("base.en")  # Whisper model init
 
+
 def check_button_pressed():
     return False
 
-def record_audio(filename="output.wav", samplerate=44100, channels=1, chunk_size=1024, record_format=pyaudio.paInt16):
+
+def record_audio(
+    filename="output.wav",
+    samplerate=44100,
+    channels=1,
+    chunk_size=1024,
+    record_format=pyaudio.paInt16,
+):
     print("Recording...")
     audio = pyaudio.PyAudio()
 
     # Open stream
-    stream = audio.open(format=record_format, 
-                        channels=channels, 
-                        rate=samplerate, 
-                        input=True, 
-                        frames_per_buffer=chunk_size)
+    stream = audio.open(
+        format=record_format,
+        channels=channels,
+        rate=samplerate,
+        input=True,
+        frames_per_buffer=chunk_size,
+    )
 
     frames = []
 
@@ -53,26 +65,36 @@ def record_audio(filename="output.wav", samplerate=44100, channels=1, chunk_size
     audio.terminate()
 
     # Save the recorded audio to a file
-    with wave.open(filename, 'wb') as wf:
+    with wave.open(filename, "wb") as wf:
         wf.setnchannels(channels)
         wf.setsampwidth(audio.get_sample_size(record_format))
         wf.setframerate(samplerate)
-        wf.writeframes(b''.join(frames))
+        wf.writeframes(b"".join(frames))
     print(f"Audio saved to {filename}")
+
 
 def transcribe_audio(filename="output.wav"):
     print("Transcribing audio...")
     return whisper_model.transcribe(filename)["text"]
 
+
 def summarize_audio(transcript):
     print("Summarizing audio...")
     prompt = load_from_file("prompt.md")
-    
-    response = ollama.generate(AI_MODEL, transcript, system=prompt)['response']
+
+    response = ollama.generate(AI_MODEL, transcript, system=prompt)["response"]
 
     return response
 
-def send_email_with_info(summary, transcript, recipient_emails, subject="Lesson Summary", audio_file="output.wav", sender="pywrkspemail@gmail.com"):
+
+def send_email_with_info(
+    summary,
+    transcript,
+    recipient_emails,
+    subject="Lesson Summary",
+    audio_file="output.wav",
+    sender="pywrkspemail@gmail.com",
+):
     print("Sending email with summary and transcription...")
     port = 465
 
@@ -106,19 +128,21 @@ def send_email_with_info(summary, transcript, recipient_emails, subject="Lesson 
             server.login("pywrkspemail@gmail.com", EMAIL_PASSWORD)
             server.sendmail(sender, receiver_email, text)
 
+
 def cleanup():
     if os.path.exists("output.wav"):
         print("Removing output.wav...")
         os.remove("output.wav")
     print("Cleanup complete.")
 
+
 if __name__ == "__main__":
     emails = ["jonah@makowski.ca"]
     record_audio()
-    
+
     transcript = transcribe_audio()
     print(f"Transcription: {transcript}")
-    
+
     summary = summarize_audio(transcript)
     print(f"Summary: {summary}")
 

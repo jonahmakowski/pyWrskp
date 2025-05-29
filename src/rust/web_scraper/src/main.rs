@@ -6,7 +6,7 @@ use std::io::Cursor;
 async fn scrape_webpage(url: &str) -> Result<String, Box<dyn Error>> {
     // Send an HTTP GET request
     let response = reqwest::get(url).await?;
-    
+
     // Check if the response was successful
     if !response.status().is_success() {
         return Err(Box::new(std::io::Error::new(
