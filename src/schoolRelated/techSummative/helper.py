@@ -52,15 +52,17 @@ def take_command(mic_index) -> str:
         str: The recognized text from the audio input.
     """
     r = sr.Recognizer()
+    r.pause_threshold = 2
 
-    with sr.Microphone(device_index=mic_index) as source:
+    with sr.Microphone() as source:  # device_index=mic_index
         print("Listening...")
-        r.pause_threshold = 2
         audio = r.listen(source)
 
     print("Recognizing...")
     with open("temp_audio.wav", "wb") as f:
         f.write(audio.get_wav_data())
     transcription = model.transcribe("temp_audio.wav")["text"]
+
+    remove("temp_audio.wav")  # Clean up the temporary file
 
     return transcription
