@@ -29,8 +29,14 @@ impl Piece {
                     rook_moves
                 }
                 "Knight" => vec![
-                    (2, 1), (1, 2), (-1, 2), (-2, 1),
-                    (-2, -1), (-1, -2), (1, -2), (2, -1),
+                    (2, 1),
+                    (1, 2),
+                    (-1, 2),
+                    (-2, 1),
+                    (-2, -1),
+                    (-1, -2),
+                    (1, -2),
+                    (2, -1),
                 ], // Knights move in an L-shape
                 "Bishop" => {
                     let mut bishop_moves = Vec::new();
@@ -57,14 +63,20 @@ impl Piece {
                     queen_moves
                 }
                 "King" => vec![
-                    (1, 0), (-1, 0), (0, 1), (0, -1),
-                    (1, 1), (-1, 1), (1, -1), (-1, -1),
+                    (1, 0),
+                    (-1, 0),
+                    (0, 1),
+                    (0, -1),
+                    (1, 1),
+                    (-1, 1),
+                    (1, -1),
+                    (-1, -1),
                 ], // Kings move one step in any direction
                 _ => Vec::new(), // Default to no moves for unknown pieces
             },
             path_check: match n.as_str() {
                 "Pawn" | "Knight" | "King" => false, // These pieces do not check paths
-                _ => true, // Rook, Bishop, Queen check paths
+                _ => true,                           // Rook, Bishop, Queen check paths
             },
             symbol: match (n.as_str(), c.as_str()) {
                 ("Pawn", "White") => '♙',
@@ -111,7 +123,6 @@ impl Board {
                 Piece::new("Bishop".to_string(), "White".to_string(), 5, 0),
                 Piece::new("Knight".to_string(), "White".to_string(), 6, 0),
                 Piece::new("Rook".to_string(), "White".to_string(), 7, 0),
-                
                 Piece::new("Pawn".to_string(), "White".to_string(), 0, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 1, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 2, 1),
@@ -120,8 +131,6 @@ impl Board {
                 Piece::new("Pawn".to_string(), "White".to_string(), 5, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 6, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 7, 1),
-
-                
                 Piece::new("Rook".to_string(), "Black".to_string(), 0, 7),
                 Piece::new("Knight".to_string(), "Black".to_string(), 1, 7),
                 Piece::new("Bishop".to_string(), "Black".to_string(), 2, 7),
@@ -130,7 +139,6 @@ impl Board {
                 Piece::new("Bishop".to_string(), "Black".to_string(), 5, 7),
                 Piece::new("Knight".to_string(), "Black".to_string(), 6, 7),
                 Piece::new("Rook".to_string(), "Black".to_string(), 7, 7),
-                
                 Piece::new("Pawn".to_string(), "Black".to_string(), 0, 6),
                 Piece::new("Pawn".to_string(), "Black".to_string(), 1, 6),
                 Piece::new("Pawn".to_string(), "Black".to_string(), 2, 6),
@@ -145,7 +153,7 @@ impl Board {
     }
 
     pub fn display(&self) {
-        println!("{}", "-".repeat(((self.size.0*2) as usize) - 1));
+        println!("{}", "-".repeat(((self.size.0 * 2) as usize) - 1));
         for y in (0..self.size.1).rev() {
             for x in 0..self.size.0 {
                 let mut found = false;
@@ -162,7 +170,7 @@ impl Board {
             }
             println!();
         }
-        println!("{}", "-".repeat(((self.size.0*2) as usize) - 1));
+        println!("{}", "-".repeat(((self.size.0 * 2) as usize) - 1));
     }
 
     pub fn move_piece(&mut self, piece_x: i32, piece_y: i32, move_index: i32) {
