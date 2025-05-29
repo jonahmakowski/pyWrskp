@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=4 uid="uid://dnptc7mnty36c"]
+[gd_scene load_steps=13 format=4 uid="uid://dnptc7mnty36c"]
 
 [ext_resource type="PackedScene" uid="uid://dfr6gk0jgmt8m" path="res://scenes/character.tscn" id="1_4m4wy"]
 [ext_resource type="Texture2D" uid="uid://c4835ko8t0w6d" path="res://assets/world_tileset.png" id="3_u2ukb"]
 [ext_resource type="PackedScene" uid="uid://bmc164s5jqisd" path="res://scenes/death_zone.tscn" id="4_7qqf5"]
 [ext_resource type="Texture2D" uid="uid://wmsuv3sbngp6" path="res://assets/platforms.png" id="5_1xr1k"]
 [ext_resource type="PackedScene" uid="uid://djqq0330vk0b3" path="res://scenes/enemy.tscn" id="5_cdlqe"]
+[ext_resource type="PackedScene" uid="uid://ctfqgd206xdxt" path="res://scenes/box.tscn" id="6_k0nq3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ydfnw"]
 texture = ExtResource("3_u2ukb")
@@ -286,5 +287,8 @@ shape = SubResource("WorldBoundaryShape2D_qg1x0")
 tile_map_data = PackedByteArray("AAACAP//AAABAAAAAAA=")
 tile_set = SubResource("TileSet_kxaur")
 
-[node name="RigidBody2D" parent="." instance=ExtResource("5_cdlqe")]
-position = Vector2(128, 2)
+[node name="Enemy" parent="." instance=ExtResource("5_cdlqe")]
+position = Vector2(232, -11)
+
+[node name="RigidBody2D" parent="." instance=ExtResource("6_k0nq3")]
+position = Vector2(150, -1)
