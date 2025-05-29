@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://djqq0330vk0b3"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_ddwhs"]
-[ext_resource type="PackedScene" uid="uid://bmc164s5jqisd" path="res://scenes/death_zone.tscn" id="1_eey58"]
+[ext_resource type="PackedScene" uid="uid://bmc164s5jqisd" path="res://objects/death_zone.tscn" id="1_eey58"]
 [ext_resource type="Texture2D" uid="uid://bvaxtki4rwiwh" path="res://assets/slime_green.png" id="2_aclod"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2pdvd"]
@@ -46,7 +46,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_seq47"]
 size = Vector2(14, 9)
 
-[node name="RigidBody2D" type="RigidBody2D"]
+[node name="Enemy" type="RigidBody2D"]
 script = ExtResource("1_ddwhs")
 
 [node name="DeathZone" parent="." instance=ExtResource("1_eey58")]
