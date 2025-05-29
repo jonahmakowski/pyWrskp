@@ -1,14 +1,14 @@
-[gd_scene load_steps=13 format=4 uid="uid://dnptc7mnty36c"]
+[gd_scene load_steps=13 format=4 uid="uid://ynj650ofx61g"]
 
-[ext_resource type="PackedScene" uid="uid://dfr6gk0jgmt8m" path="res://objects/character.tscn" id="1_6tx1v"]
-[ext_resource type="Texture2D" uid="uid://c4835ko8t0w6d" path="res://assets/world_tileset.png" id="3_u2ukb"]
-[ext_resource type="PackedScene" uid="uid://bmc164s5jqisd" path="res://objects/death_zone.tscn" id="4_e8jbq"]
-[ext_resource type="Texture2D" uid="uid://wmsuv3sbngp6" path="res://assets/platforms.png" id="5_1xr1k"]
-[ext_resource type="PackedScene" uid="uid://djqq0330vk0b3" path="res://objects/enemy.tscn" id="5_e1wvi"]
-[ext_resource type="PackedScene" uid="uid://inwj3ioobcdn" path="res://objects/door.tscn" id="6_kapyq"]
+[ext_resource type="PackedScene" uid="uid://dfr6gk0jgmt8m" path="res://objects/character.tscn" id="1_i3c50"]
+[ext_resource type="Texture2D" uid="uid://c4835ko8t0w6d" path="res://assets/world_tileset.png" id="2_xftiu"]
+[ext_resource type="Texture2D" uid="uid://wmsuv3sbngp6" path="res://assets/platforms.png" id="3_kmmdf"]
+[ext_resource type="PackedScene" uid="uid://bmc164s5jqisd" path="res://objects/death_zone.tscn" id="4_0hr14"]
+[ext_resource type="PackedScene" uid="uid://ctfqgd206xdxt" path="res://objects/box.tscn" id="5_rgo8w"]
+[ext_resource type="PackedScene" uid="uid://inwj3ioobcdn" path="res://objects/door.tscn" id="6_x4wfo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ydfnw"]
-texture = ExtResource("3_u2ukb")
+texture = ExtResource("2_xftiu")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
 1:0/0 = 0
@@ -208,7 +208,7 @@ texture = ExtResource("3_u2ukb")
 2:4/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cdcq2"]
-texture = ExtResource("5_1xr1k")
+texture = ExtResource("3_kmmdf")
 0:0/0 = 0
 0:1/0 = 0
 0:2/0 = 0
@@ -231,7 +231,7 @@ sources/1 = SubResource("TileSetAtlasSource_cdcq2")
 distance = -96.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f6vod"]
-texture = ExtResource("5_1xr1k")
+texture = ExtResource("3_kmmdf")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1, -8, 1)
 0:0/0/physics_layer_0/polygon_0/one_way = true
@@ -269,15 +269,15 @@ texture = ExtResource("5_1xr1k")
 physics_layer_0/collision_layer = 3
 sources/0 = SubResource("TileSetAtlasSource_f6vod")
 
-[node name="Main" type="Node2D"]
+[node name="Main2" type="Node2D"]
 
-[node name="Character" parent="." instance=ExtResource("1_6tx1v")]
+[node name="Character" parent="." instance=ExtResource("1_i3c50")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAD+/wIAAAAAAAEAAAD//wIAAAAAAAEAAAAAAAIAAAAAAAEAAAABAAIAAAAAAAEAAAACAAIAAAAAAAEAAAACAAMAAAAAAAEAAAABAAMAAAAAAAEAAAAAAAMAAAAAAAEAAAD//wMAAAAAAAEAAAD+/wMAAAAAAAEAAAAGAAEAAAAAAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAAKAAEAAAAAAAAAAAALAAEAAAAAAAAAAAAFAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAFAAEAAAAAAAEAAAAMAAEAAAAAAAEAAAA=")
 tile_set = SubResource("TileSet_67v7v")
 
-[node name="Death Zone" parent="." instance=ExtResource("4_e8jbq")]
+[node name="Death Zone" parent="." instance=ExtResource("4_0hr14")]
 position = Vector2(1, 67)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Death Zone"]
@@ -287,9 +287,10 @@ shape = SubResource("WorldBoundaryShape2D_qg1x0")
 tile_map_data = PackedByteArray("AAACAP//AAABAAAAAAA=")
 tile_set = SubResource("TileSet_kxaur")
 
-[node name="Enemy" parent="." instance=ExtResource("5_e1wvi")]
-position = Vector2(169, -6)
+[node name="Box" parent="." instance=ExtResource("5_rgo8w")]
+position = Vector2(128, 0)
 
-[node name="Door" parent="." instance=ExtResource("6_kapyq")]
-position = Vector2(200, -11)
-destination = "res://scenes/main_2.tscn"
+[node name="Door" parent="." instance=ExtResource("6_x4wfo")]
+position = Vector2(88, -11)
+destination = "res://scenes/main.tscn"
+destinationpos = Vector2(200, -14)
