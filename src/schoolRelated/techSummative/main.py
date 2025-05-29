@@ -9,7 +9,12 @@ import actions
 load_dotenv()
 VOICE_KEY = getenv("VOICE_DETECTION_TOKEN")
 
-commands = {'time': actions.get_time, 'play': actions.play_song, 'weather': actions.daily_average_temperature}
+commands = {
+    "time": actions.get_time,
+    "play": actions.play_song,
+    "weather": actions.daily_average_temperature,
+}
+
 
 def parse_command(command: str):
     command = command.lower()
@@ -17,6 +22,7 @@ def parse_command(command: str):
     for command_iter in command_lis:
         if command_iter in commands:
             return commands[command_iter](command)
+
 
 def main():
     porcupine = pvporcupine.create(access_key=VOICE_KEY, keywords=["jarvis"])
@@ -28,7 +34,10 @@ def main():
     device_index = int(input("Select the device index: "))
 
     audio = pyaudio.PyAudio()
-    mic_list = [audio.get_device_info_by_index(i)['name'] for i in range(audio.get_host_api_info_by_index(0)['deviceCount'])]
+    mic_list = [
+        audio.get_device_info_by_index(i)["name"]
+        for i in range(audio.get_host_api_info_by_index(0)["deviceCount"])
+    ]
     print("Available microphones:")
     for i, mic_name in enumerate(mic_list):
         print(f"{i}: {mic_name}")
