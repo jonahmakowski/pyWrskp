@@ -3,6 +3,7 @@ import helper
 import spotify
 import weather_get
 
+
 def get_time(prompt: str) -> str:
     """
     Get the current time in a formatted string.
@@ -13,6 +14,7 @@ def get_time(prompt: str) -> str:
     time = datetime.now().strftime("%I:%M %p")
     helper.speak(f"The current time is {time}")
 
+
 def play_song(prompt: str) -> None:
     """
     Play a song using the Spotify API.
@@ -20,11 +22,19 @@ def play_song(prompt: str) -> None:
     Args:
         prompt (str): The command to play a song.
     """
-    song_name = prompt.replace("play", "").replace('.', '').replace('!', '').replace('?', '').replace(',', '').strip()
+    song_name = (
+        prompt.replace("play", "")
+        .replace(".", "")
+        .replace("!", "")
+        .replace("?", "")
+        .replace(",", "")
+        .strip()
+    )
     if song_name:
         spotify.play_song(song_name)
     else:
         helper.speak("Please specify a song to play.")
+
 
 def daily_average_temperature(prompt: str) -> None:
     """
@@ -44,4 +54,6 @@ def daily_average_temperature(prompt: str) -> None:
     """
     data = weather_get.get_weather()
     today = datetime.now().strftime("%Y-%m-%d")
-    helper.speak(f"Today's average temperature is {round(data[today]['daily_avg_temp'], 1)} degrees Celsius.")
+    helper.speak(
+        f"Today's average temperature is {round(data[today]['daily_avg_temp'], 1)} degrees Celsius."
+    )
