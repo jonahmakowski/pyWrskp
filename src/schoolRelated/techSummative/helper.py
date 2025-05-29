@@ -26,6 +26,7 @@ def play_sound(hold: bool, sound="audio/audio.mp3") -> None:
         while mixer.music.get_busy():
             sleep(0.001)
 
+
 def speak(message: str, voice=132) -> None:
     """
     Convert text to speech and play it through the speakers.
@@ -38,6 +39,7 @@ def speak(message: str, voice=132) -> None:
     engine.setProperty("voice", voices[voice].id)  # Changing index changes voices
     engine.say(message)
     engine.runAndWait()
+
 
 def take_command(mic_index) -> str:
     """
