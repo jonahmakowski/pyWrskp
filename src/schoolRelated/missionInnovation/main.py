@@ -1,9 +1,7 @@
 import pyaudio
 import wave
 import whisper
-import os
-from pyWrkspPackage import load_from_file
-import ollama
+from os import path, getenv, remove
 import smtplib
 import ssl
 from email import encoders
@@ -11,19 +9,33 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
+from time import sleep
+from gpiozero import Button, LED
+import subprocess
+import json
 
 
 load_dotenv()  # Load environment variables from .env file
-EMAIL_PASSWORD = os.getenv(
+EMAIL_PASSWORD = getenv(
     "EMAIL_PASSWORD"
 )  # Get email password from environment variable
-AI_MODEL = "llama3.2:latest"
+AI_MODEL = "mistral-large-latest"
+button = Button(14)  # GPIO pin for the button
+light = LED(15)
 
 whisper_model = whisper.load_model("base.en")  # Whisper model init
 
 
+def light_on():
+    light.on()
+
+
+def light_off():
+    light.off()
+
+
 def check_button_pressed():
-    return False
+    return button.is_pressed
 
 
 def record_audio(
@@ -80,11 +92,20 @@ def transcribe_audio(filename="output.wav"):
 
 def summarize_audio(transcript):
     print("Summarizing audio...")
-    prompt = load_from_file("prompt.md")
 
-    response = ollama.generate(AI_MODEL, transcript, system=prompt)["response"]
+    result = subprocess.run(
+        ["python3", "generate_summary.py", AI_MODEL],
+        input=transcript,
+        capture_output=True,
+        text=True
+    )
 
-    return response
+    if result.returncode != 0:
+        print("Subprocess failed:", result.stderr)
+        exit(1)
+    summary = json.loads(result.stdout)["choices"][0]['message']['content']
+
+    return summary
 
 
 def send_email_with_info(
@@ -109,18 +130,18 @@ def send_email_with_info(
 
         message.attach(MIMEText(body, "plain"))
 
-        with open(audio_file, "rb") as attachment:
-            part = MIMEBase("application", "octet-stream")
-            part.set_payload(attachment.read())
+        #with open(audio_file, "rb") as attachment:
+        #    part = MIMEBase("application", "octet-stream")
+        #    part.set_payload(attachment.read())
 
-        encoders.encode_base64(part)
+        #encoders.encode_base64(part)
 
-        part.add_header(
-            "Content-Disposition",
-            f"attachment; filename= {audio_file}",
-        )
+        #part.add_header(
+        #    "Content-Disposition",
+        #    f"attachment; filename= {audio_file}",
+        #)
 
-        message.attach(part)
+        #message.attach(part)
         text = message.as_string()
 
         context = ssl.create_default_context()
@@ -130,22 +151,37 @@ def send_email_with_info(
 
 
 def cleanup():
-    if os.path.exists("output.wav"):
+    if path.exists("output.wav"):
         print("Removing output.wav...")
-        os.remove("output.wav")
+        remove("output.wav")
     print("Cleanup complete.")
 
 
 if __name__ == "__main__":
     emails = ["jonah@makowski.ca"]
-    record_audio()
+    while True:
+        light_off()
+        print("Press the button to start recording...")
+        while not check_button_pressed():
+            sleep(0.1)
+        print("Button pressed, waiting for release...")
+        while check_button_pressed():
+            light_on()
+            sleep(0.5)
+            light_off()
+        print("Button released, starting recording...")
+        
+        light_on()
+        record_audio()
+        light_off()
 
-    transcript = transcribe_audio()
-    print(f"Transcription: {transcript}")
+        transcript = transcribe_audio()
+        print(f"Transcription: {transcript}")
 
-    summary = summarize_audio(transcript)
-    print(f"Summary: {summary}")
 
-    send_email_with_info(summary, transcript, emails)
+        summary = summarize_audio(transcript)
+        print(f"Summary: {summary}")
 
-    cleanup()
+        send_email_with_info(summary, transcript, emails)
+
+        cleanup()
