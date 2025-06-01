@@ -13,16 +13,13 @@ input_text = sys.stdin.read()
 prompt = load_from_file("prompt.md")
 
 url = "https://api.mistral.ai/v1/chat/completions"
-headers = {
-    "Authorization": f"Bearer {api_key}",
-    "Content-Type": "application/json"
-}
+headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
 payload = {
     "model": model,
     "messages": [
         {"role": "system", "content": prompt},
-        {"role": "user", "content": input_text}
-    ]
+        {"role": "user", "content": input_text},
+    ],
 }
 
 response = requests.post(url, headers=headers, json=payload)
