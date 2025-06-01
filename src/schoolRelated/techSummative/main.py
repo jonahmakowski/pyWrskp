@@ -18,7 +18,13 @@ commands = {
 
 def parse_command(command: str):
     command = command.lower()
-    command_lis = command.replace('.', '').replace('!', '').replace('?', '').replace(',', '').split(" ")
+    command_lis = (
+        command.replace(".", "")
+        .replace("!", "")
+        .replace("?", "")
+        .replace(",", "")
+        .split(" ")
+    )
     for command_iter in command_lis:
         if command_iter in commands:
             return commands[command_iter](command)

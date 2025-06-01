@@ -97,13 +97,13 @@ def summarize_audio(transcript):
         ["python3", "generate_summary.py", AI_MODEL],
         input=transcript,
         capture_output=True,
-        text=True
+        text=True,
     )
 
     if result.returncode != 0:
         print("Subprocess failed:", result.stderr)
         exit(1)
-    summary = json.loads(result.stdout)["choices"][0]['message']['content']
+    summary = json.loads(result.stdout)["choices"][0]["message"]["content"]
 
     return summary
 
@@ -130,18 +130,18 @@ def send_email_with_info(
 
         message.attach(MIMEText(body, "plain"))
 
-        #with open(audio_file, "rb") as attachment:
+        # with open(audio_file, "rb") as attachment:
         #    part = MIMEBase("application", "octet-stream")
         #    part.set_payload(attachment.read())
 
-        #encoders.encode_base64(part)
+        # encoders.encode_base64(part)
 
-        #part.add_header(
+        # part.add_header(
         #    "Content-Disposition",
         #    f"attachment; filename= {audio_file}",
-        #)
+        # )
 
-        #message.attach(part)
+        # message.attach(part)
         text = message.as_string()
 
         context = ssl.create_default_context()
@@ -170,14 +170,13 @@ if __name__ == "__main__":
             sleep(0.5)
             light_off()
         print("Button released, starting recording...")
-        
+
         light_on()
         record_audio()
         light_off()
 
         transcript = transcribe_audio()
         print(f"Transcription: {transcript}")
-
 
         summary = summarize_audio(transcript)
         print(f"Summary: {summary}")
