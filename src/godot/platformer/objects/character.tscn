@@ -1,7 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://dfr6gk0jgmt8m"]
+[gd_scene load_steps=32 format=3 uid="uid://dfr6gk0jgmt8m"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_8e8wm"]
 [ext_resource type="Texture2D" uid="uid://b08grbbqmi5uk" path="res://assets/knight.png" id="2_sxlo3"]
+[ext_resource type="PackedScene" uid="uid://ctf75keggkxp2" path="res://objects/display_coins.tscn" id="2_wo6oh"]
+[ext_resource type="FontFile" uid="uid://cdlmqd110qrjr" path="res://assets/fonts/PixelOperator8.ttf" id="4_tuj8d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pgnmv"]
 atlas = ExtResource("2_sxlo3")
@@ -140,7 +142,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -200,10 +202,16 @@ animations = [{
 radius = 5.0
 height = 20.0
 
-[node name="Character" type="CharacterBody2D"]
+[node name="Character" type="CharacterBody2D" groups=["player"]]
 z_index = 1
 collision_layer = 2
 script = ExtResource("1_8e8wm")
+
+[node name="coins" parent="." instance=ExtResource("2_wo6oh")]
+offset_left = -190.0
+offset_top = -105.0
+offset_right = -114.0
+offset_bottom = -89.0
 
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
@@ -217,6 +225,33 @@ autoplay = "idle"
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_m1rqw")
 one_way_collision_margin = 0.0
+
+[node name="deathMessage" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Big Text" type="Label" parent="deathMessage"]
+layout_mode = 0
+offset_left = -84.0
+offset_top = -50.0
+offset_right = 84.0
+offset_bottom = -26.0
+theme_override_fonts/font = ExtResource("4_tuj8d")
+theme_override_font_sizes/font_size = 24
+text = "You Died!"
+
+[node name="Label" type="Label" parent="deathMessage"]
+layout_mode = 0
+offset_left = -114.0
+offset_top = -26.0
+offset_right = 114.0
+offset_bottom = -10.0
+theme_override_fonts/font = ExtResource("4_tuj8d")
+theme_override_font_sizes/font_size = 0
+text = "Press e to dismiss"
 
 [node name="PlatformRayCast" type="RayCast2D" parent="."]
 target_position = Vector2(0, 17)
