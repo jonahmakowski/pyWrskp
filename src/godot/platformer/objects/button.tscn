@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://dxdqixwmcnjwt"]
+
+[ext_resource type="Texture2D" uid="uid://dw4b5dfkn0tep" path="res://assets/coin.png" id="1_sobol"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="1_w1h5g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_riehn"]
+size = Vector2(10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8xl7"]
+atlas = ExtResource("1_sobol")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_figjs"]
+atlas = ExtResource("1_sobol")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oj5d6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8xl7")
+}],
+"loop": true,
+"name": &"pressed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_figjs")
+}],
+"loop": true,
+"name": &"unpressed",
+"speed": 5.0
+}]
+
+[node name="button" type="Node2D"]
+script = ExtResource("1_w1h5g")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_riehn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_oj5d6")
+animation = &"pressed"
+autoplay = "unpressed"
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

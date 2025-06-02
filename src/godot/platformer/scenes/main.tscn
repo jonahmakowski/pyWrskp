@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dnptc7mnty36c"]
+[gd_scene load_steps=17 format=4 uid="uid://dnptc7mnty36c"]
 
 [ext_resource type="PackedScene" uid="uid://dfr6gk0jgmt8m" path="res://objects/character.tscn" id="1_6tx1v"]
 [ext_resource type="Texture2D" uid="uid://c4835ko8t0w6d" path="res://assets/world_tileset.png" id="3_u2ukb"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://wmsuv3sbngp6" path="res://assets/platforms.png" id="5_1xr1k"]
 [ext_resource type="PackedScene" uid="uid://djqq0330vk0b3" path="res://objects/enemy.tscn" id="5_e1wvi"]
 [ext_resource type="PackedScene" uid="uid://inwj3ioobcdn" path="res://objects/door.tscn" id="6_kapyq"]
+[ext_resource type="PackedScene" uid="uid://dxdqixwmcnjwt" path="res://objects/button.tscn" id="7_8egg8"]
+[ext_resource type="PackedScene" uid="uid://cka8q7l3d1yh4" path="res://objects/coin.tscn" id="8_rcrmh"]
+[ext_resource type="PackedScene" uid="uid://1bjdkuue34ba" path="res://objects/key.tscn" id="9_qw2m2"]
+[ext_resource type="PackedScene" uid="uid://c6uyfrml1xvux" path="res://objects/spike.tscn" id="10_jfw07"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ydfnw"]
 texture = ExtResource("3_u2ukb")
@@ -228,7 +232,7 @@ sources/0 = SubResource("TileSetAtlasSource_ydfnw")
 sources/1 = SubResource("TileSetAtlasSource_cdcq2")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qg1x0"]
-distance = -96.0
+distance = -158.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f6vod"]
 texture = ExtResource("5_1xr1k")
@@ -274,7 +278,7 @@ sources/0 = SubResource("TileSetAtlasSource_f6vod")
 [node name="Character" parent="." instance=ExtResource("1_6tx1v")]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAD+/wIAAAAAAAEAAAD//wIAAAAAAAEAAAAAAAIAAAAAAAEAAAABAAIAAAAAAAEAAAACAAIAAAAAAAEAAAACAAMAAAAAAAEAAAABAAMAAAAAAAEAAAAAAAMAAAAAAAEAAAD//wMAAAAAAAEAAAD+/wMAAAAAAAEAAAAGAAEAAAAAAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAAKAAEAAAAAAAAAAAALAAEAAAAAAAAAAAAFAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAFAAEAAAAAAAEAAAAMAAEAAAAAAAEAAAA=")
+tile_map_data = PackedByteArray("AAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAD+/wIAAAAAAAEAAAD//wIAAAAAAAEAAAAAAAIAAAAAAAEAAAABAAIAAAAAAAEAAAACAAIAAAAAAAEAAAACAAMAAAAAAAEAAAABAAMAAAAAAAEAAAAAAAMAAAAAAAEAAAD//wMAAAAAAAEAAAD+/wMAAAAAAAEAAAAGAAEAAAAAAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAAKAAEAAAAAAAAAAAALAAEAAAAAAAAAAAAFAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAFAAEAAAAAAAEAAAAMAAEAAAAAAAEAAAD9/wEAAAAAAAAAAAD8/wEAAAAAAAAAAAD7/wEAAAAAAAAAAAD6/wEAAAAAAAAAAAD5/wEAAAAAAAAAAAD4/wEAAAAAAAAAAAD3/wEAAAAAAAAAAAD2/wEAAAAAAAAAAAD1/wEAAAAAAAAAAAD0/wEAAAAAAAAAAADz/wEAAAAAAAAAAADy/wEAAAAAAAAAAADx/wEAAAAAAAAAAADw/wEAAAAAAAAAAADv/wEAAAAAAAAAAADu/wEAAAAAAAAAAADt/wEAAAAAAAAAAADs/wEAAAAAAAAAAAD9/wIAAAAAAAEAAAD9/wMAAAAAAAEAAAD8/wMAAAAAAAEAAAD7/wMAAAAAAAEAAAD7/wIAAAAAAAEAAAD8/wIAAAAAAAEAAADs/wIAAAAAAAEAAADs/wMAAAAAAAEAAADt/wIAAAAAAAEAAADt/wMAAAAAAAEAAADu/wIAAAAAAAEAAADu/wMAAAAAAAEAAADv/wIAAAAAAAEAAADv/wMAAAAAAAEAAADw/wIAAAAAAAEAAADw/wMAAAAAAAEAAADx/wIAAAAAAAEAAADx/wMAAAAAAAEAAADy/wIAAAAAAAEAAADy/wMAAAAAAAEAAADz/wIAAAAAAAEAAADz/wMAAAAAAAEAAAD0/wIAAAAAAAEAAAD0/wMAAAAAAAEAAAD1/wIAAAAAAAEAAAD1/wMAAAAAAAEAAAD2/wIAAAAAAAEAAAD2/wMAAAAAAAEAAAD3/wIAAAAAAAEAAAD3/wMAAAAAAAEAAAD4/wIAAAAAAAEAAAD4/wMAAAAAAAEAAAD5/wIAAAAAAAEAAAD5/wMAAAAAAAEAAAD6/wIAAAAAAAEAAAD6/wMAAAAAAAEAAAA=")
 tile_set = SubResource("TileSet_67v7v")
 
 [node name="Death Zone" parent="." instance=ExtResource("4_e8jbq")]
@@ -288,8 +292,24 @@ tile_map_data = PackedByteArray("AAACAP//AAABAAAAAAA=")
 tile_set = SubResource("TileSet_kxaur")
 
 [node name="Enemy" parent="." instance=ExtResource("5_e1wvi")]
-position = Vector2(169, -6)
+position = Vector2(168, 2)
 
 [node name="Door" parent="." instance=ExtResource("6_kapyq")]
 position = Vector2(200, -11)
 destination = "res://scenes/main_2.tscn"
+requires_key = true
+key_uuid = "0"
+
+[node name="button" parent="." instance=ExtResource("7_8egg8")]
+position = Vector2(24, 8)
+
+[node name="coin" parent="." instance=ExtResource("8_rcrmh")]
+position = Vector2(-21, 7)
+uuid = "0"
+
+[node name="key" parent="." instance=ExtResource("9_qw2m2")]
+position = Vector2(40, 3)
+uuid = "0"
+
+[node name="Spike" parent="." instance=ExtResource("10_jfw07")]
+position = Vector2(-200, 8)
