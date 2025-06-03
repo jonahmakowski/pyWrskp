@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://ynj650ofx61g"]
+[gd_scene load_steps=14 format=4 uid="uid://ynj650ofx61g"]
 
 [ext_resource type="PackedScene" uid="uid://dfr6gk0jgmt8m" path="res://objects/character.tscn" id="1_i3c50"]
 [ext_resource type="Texture2D" uid="uid://c4835ko8t0w6d" path="res://assets/world_tileset.png" id="2_xftiu"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bmc164s5jqisd" path="res://objects/death_zone.tscn" id="4_0hr14"]
 [ext_resource type="PackedScene" uid="uid://ctfqgd206xdxt" path="res://objects/box.tscn" id="5_rgo8w"]
 [ext_resource type="PackedScene" uid="uid://inwj3ioobcdn" path="res://objects/door.tscn" id="6_x4wfo"]
+[ext_resource type="PackedScene" uid="uid://dxdqixwmcnjwt" path="res://objects/button.tscn" id="7_l44ra"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ydfnw"]
 texture = ExtResource("2_xftiu")
@@ -294,3 +295,6 @@ position = Vector2(128, 0)
 position = Vector2(88, -11)
 destination = "res://scenes/main.tscn"
 destinationpos = Vector2(200, -14)
+
+[node name="button" parent="." instance=ExtResource("7_l44ra")]
+position = Vector2(151, 6)

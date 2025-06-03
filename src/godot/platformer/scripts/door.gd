@@ -26,3 +26,10 @@ func _process(delta: float) -> void:
 			$nokey.visible = true
 		elif Input.is_action_just_pressed('interact') and touchingPlayer:
 			$"/root/Controller".change_scene(destinationpos, destination)
+	if requires_key:
+		if Controller.is_key_collected(key_uuid):
+			$unlocked.visible = true
+			$locked.visible = false
+		else:
+			$unlocked.visible = false
+			$locked.visible = true

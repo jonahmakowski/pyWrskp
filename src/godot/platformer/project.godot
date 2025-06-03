@@ -18,6 +18,7 @@ config/icon="res://assets/icon.svg"
 [autoload]
 
 Controller="*res://scenes/controller.tscn"
+Clock="*res://scenes/clock.tscn"
 
 [display]
 
