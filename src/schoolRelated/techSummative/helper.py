@@ -60,7 +60,7 @@ def take_command(mic_index) -> str:
         audio = r.listen(source)
 
     print("Recognizing...")
-    #with open("temp_audio.wav", "wb") as f:
+    # with open("temp_audio.wav", "wb") as f:
     #    f.write(audio.get_wav_data())
     # transcription = model.transcribe("temp_audio.wav")["text"]
 
