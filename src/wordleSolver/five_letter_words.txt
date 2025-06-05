@@ -8235,7 +8235,6 @@ groks
 groma
 grond
 gronk
-gront
 groof
 groom
 groop
@@ -14359,7 +14358,6 @@ ornes
 orney
 ornis
 oromo
-orono
 orpin
 orpit
 orris
