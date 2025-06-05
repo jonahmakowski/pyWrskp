@@ -1,15 +1,16 @@
 from time import sleep
 from pygame import mixer
 import pyttsx3
-#from os import remove
-#import whisper
+
+# from os import remove
+# import whisper
 import speech_recognition as sr
 
 mixer.init()
 engine = pyttsx3.init()  # text to speech init
 engine.setProperty("rate", 150)  # Speed of speech
 engine.setProperty("volume", 1)  # Volume level (0.0 to 1.0)
-#model = whisper.load_model("base.en")  # Whisper model init
+# model = whisper.load_model("base.en")  # Whisper model init
 
 
 def play_sound(hold: bool, sound="audio/audio.mp3") -> None:
@@ -58,13 +59,13 @@ def take_command(mic_index) -> str:
         print("Listening...")
         audio = r.listen(source)
 
-    #print("Recognizing...")
-    #with open("temp_audio.wav", "wb") as f:
+    # print("Recognizing...")
+    # with open("temp_audio.wav", "wb") as f:
     #    f.write(audio.get_wav_data())
-    #transcription = model.transcribe("temp_audio.wav")["text"]
+    # transcription = model.transcribe("temp_audio.wav")["text"]
 
-    #remove("temp_audio.wav")  # Clean up the temporary file
+    # remove("temp_audio.wav")  # Clean up the temporary file
 
-    transcription = r.recognize_whisper('tiny.en', audio, language='english')
+    transcription = r.recognize_whisper("tiny.en", audio, language="english")
 
     return transcription
