@@ -59,13 +59,13 @@ def take_command(mic_index) -> str:
         print("Listening...")
         audio = r.listen(source)
 
-    # print("Recognizing...")
-    # with open("temp_audio.wav", "wb") as f:
+    print("Recognizing...")
+    #with open("temp_audio.wav", "wb") as f:
     #    f.write(audio.get_wav_data())
     # transcription = model.transcribe("temp_audio.wav")["text"]
 
     # remove("temp_audio.wav")  # Clean up the temporary file
 
-    transcription = r.recognize_whisper("tiny.en", audio, language="english")
+    transcription = r.recognize_google(audio)
 
     return transcription
