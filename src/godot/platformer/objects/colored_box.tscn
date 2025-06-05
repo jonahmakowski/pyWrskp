@@ -1,0 +1,92 @@
+[gd_scene load_steps=11 format=3 uid="uid://bag7tx5mlb4t5"]
+
+[ext_resource type="Texture2D" uid="uid://dbtsyinjh6xsm" path="res://assets/LisgarGameTileset2.png" id="1_c0h05"]
+[ext_resource type="Script" uid="uid://b67475ko81qrd" path="res://scripts/colored_box.gd" id="1_vclym"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sil54"]
+atlas = ExtResource("1_c0h05")
+region = Rect2(96, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1p80r"]
+atlas = ExtResource("1_c0h05")
+region = Rect2(80, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6ro6"]
+atlas = ExtResource("1_c0h05")
+region = Rect2(64, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8x2fc"]
+atlas = ExtResource("1_c0h05")
+region = Rect2(96, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_647o7"]
+atlas = ExtResource("1_c0h05")
+region = Rect2(80, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwtyh"]
+atlas = ExtResource("1_c0h05")
+region = Rect2(64, 64, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6u1hk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sil54")
+}],
+"loop": true,
+"name": &"non_solid_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1p80r")
+}],
+"loop": true,
+"name": &"non_solid_green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6ro6")
+}],
+"loop": true,
+"name": &"non_solid_red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8x2fc")
+}],
+"loop": true,
+"name": &"solid_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_647o7")
+}],
+"loop": true,
+"name": &"solid_green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwtyh")
+}],
+"loop": true,
+"name": &"solid_red",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3v36k"]
+size = Vector2(14, 14)
+
+[node name="ColoredBox" type="StaticBody2D"]
+script = ExtResource("1_vclym")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6u1hk")
+animation = &"non_solid_green"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3v36k")
