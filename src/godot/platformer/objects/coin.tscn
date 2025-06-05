@@ -1,98 +1,42 @@
-[gd_scene load_steps=17 format=3 uid="uid://cka8q7l3d1yh4"]
+[gd_scene load_steps=9 format=3 uid="uid://cka8q7l3d1yh4"]
 
-[ext_resource type="Script" path="res://scripts/coin.gd" id="1_d61sk"]
-[ext_resource type="Texture2D" uid="uid://dw4b5dfkn0tep" path="res://assets/coin.png" id="2_8ul6c"]
+[ext_resource type="Script" uid="uid://dtwy0tv71m2mt" path="res://scripts/coin.gd" id="1_d61sk"]
+[ext_resource type="Texture2D" uid="uid://dbtsyinjh6xsm" path="res://assets/LisgarGameTileset2.png" id="2_5lwk3"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uw23d"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(0, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkhyx"]
+atlas = ExtResource("2_5lwk3")
+region = Rect2(96, 32, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uipkg"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(16, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_obv0q"]
+atlas = ExtResource("2_5lwk3")
+region = Rect2(112, 32, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ei2dt"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(32, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tkkt"]
+atlas = ExtResource("2_5lwk3")
+region = Rect2(128, 32, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fl16b"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e4k6f"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(64, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mu6ll"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(80, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vwalv"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(96, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_flgnq"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(112, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lgd5v"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(128, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vo5ne"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(144, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ibmuu"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(160, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6snsx"]
-atlas = ExtResource("2_8ul6c")
-region = Rect2(176, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpb4j"]
+atlas = ExtResource("2_5lwk3")
+region = Rect2(144, 32, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nmoxq"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uw23d")
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_fkhyx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_uipkg")
+"texture": SubResource("AtlasTexture_obv0q")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ei2dt")
+"texture": SubResource("AtlasTexture_1tkkt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fl16b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e4k6f")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mu6ll")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vwalv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_flgnq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lgd5v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vo5ne")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ibmuu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6snsx")
+"texture": SubResource("AtlasTexture_kpb4j")
 }],
 "loop": true,
 "name": &"default",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_87ui6"]
@@ -104,7 +48,7 @@ script = ExtResource("1_d61sk")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_nmoxq")
 autoplay = "default"
-frame_progress = 0.914867
+frame_progress = 0.233035
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2

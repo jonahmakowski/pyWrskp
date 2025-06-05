@@ -1,0 +1,104 @@
+[gd_scene load_steps=16 format=3 uid="uid://ct3kvhxiyq5gc"]
+
+[ext_resource type="Script" uid="uid://cptg4nl18dof0" path="res://scripts/wall_clock.gd" id="1_igj6y"]
+[ext_resource type="Texture2D" uid="uid://dbtsyinjh6xsm" path="res://assets/LisgarGameTileset2.png" id="2_k1f66"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cds50"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0alkg"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5wmu"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4k7m"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(144, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ev3my"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(160, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1aaq"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(176, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a3xin"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iefwa"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_igvtm"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(128, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdcrm"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(144, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqg1h"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(160, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtb76"]
+atlas = ExtResource("2_k1f66")
+region = Rect2(176, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jb0ua"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cds50")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0alkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5wmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4k7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ev3my")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1aaq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3xin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iefwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igvtm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdcrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqg1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtb76")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="WallClock" type="Node2D"]
+script = ExtResource("1_igj6y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jb0ua")
+frame = 5
+frame_progress = 0.128564

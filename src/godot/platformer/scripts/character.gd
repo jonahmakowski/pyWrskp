@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 150.0
+const SPEED = 125.0
 const JUMP_VELOCITY = -300.0
 const SPRINT_SPEED = 200
 
@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if $PlatformRayCast.is_colliding() and Input.is_action_just_pressed("move_down"):
-		position.y += 1
+		position.y += 3
 	if Input.is_action_pressed('interact'):
 		$deathMessage.visible = false
 
@@ -28,7 +28,9 @@ func _physics_process(delta: float) -> void:
 	if not $deathMessage.visible:
 		# Handle jump.
 		if Input.is_action_just_pressed("jump") and is_on_floor(): velocity.y = JUMP_VELOCITY
-		if not is_on_floor(): $AnimatedSprite2D.play('jump')
+		if not is_on_floor(): 
+			if velocity.y < 0: $AnimatedSprite2D.play('jump')
+			else: $AnimatedSprite2D.play('fall')
 		
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
@@ -42,3 +44,6 @@ func _physics_process(delta: float) -> void:
 			if is_on_floor(): $AnimatedSprite2D.play('idle')
 
 	move_and_slide()
+
+func _on_spike_collider_entered(body: Node2D) -> void:
+	Controller.die()
