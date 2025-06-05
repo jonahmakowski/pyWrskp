@@ -1,35 +1,83 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxdqixwmcnjwt"]
+[gd_scene load_steps=11 format=3 uid="uid://dxdqixwmcnjwt"]
 
-[ext_resource type="Texture2D" uid="uid://dw4b5dfkn0tep" path="res://assets/coin.png" id="1_sobol"]
-[ext_resource type="Script" path="res://scripts/button.gd" id="1_w1h5g"]
+[ext_resource type="Script" uid="uid://fg2vxa1de5kq" path="res://scripts/button.gd" id="1_w1h5g"]
+[ext_resource type="Texture2D" uid="uid://dbtsyinjh6xsm" path="res://assets/LisgarGameTileset2.png" id="2_a217y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_riehn"]
-size = Vector2(10, 10)
+size = Vector2(16, 5)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j8xl7"]
-atlas = ExtResource("1_sobol")
-region = Rect2(48, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ox2am"]
+atlas = ExtResource("2_a217y")
+region = Rect2(48, 80, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_figjs"]
-atlas = ExtResource("1_sobol")
-region = Rect2(0, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3afo"]
+atlas = ExtResource("2_a217y")
+region = Rect2(32, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5arrg"]
+atlas = ExtResource("2_a217y")
+region = Rect2(16, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snmad"]
+atlas = ExtResource("2_a217y")
+region = Rect2(48, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0w63"]
+atlas = ExtResource("2_a217y")
+region = Rect2(32, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqc4l"]
+atlas = ExtResource("2_a217y")
+region = Rect2(16, 64, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_oj5d6"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j8xl7")
+"texture": SubResource("AtlasTexture_ox2am")
 }],
 "loop": true,
-"name": &"pressed",
+"name": &"pressed_blue",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_figjs")
+"texture": SubResource("AtlasTexture_b3afo")
 }],
 "loop": true,
-"name": &"unpressed",
+"name": &"pressed_green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5arrg")
+}],
+"loop": true,
+"name": &"pressed_red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snmad")
+}],
+"loop": true,
+"name": &"unpressed_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0w63")
+}],
+"loop": true,
+"name": &"unpressed_green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqc4l")
+}],
+"loop": true,
+"name": &"unpressed_red",
 "speed": 5.0
 }]
 
@@ -37,16 +85,16 @@ animations = [{
 script = ExtResource("1_w1h5g")
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 0
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_riehn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_oj5d6")
-animation = &"pressed"
-autoplay = "unpressed"
+animation = &"unpressed_red"
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

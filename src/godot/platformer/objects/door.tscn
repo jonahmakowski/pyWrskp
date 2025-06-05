@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://inwj3ioobcdn"]
 
-[ext_resource type="Script" path="res://scripts/door.gd" id="1_hewlj"]
-[ext_resource type="Texture2D" uid="uid://b1sdgkaa1kpt4" path="res://assets/fruit.png" id="1_skho6"]
+[ext_resource type="Script" uid="uid://bienjtgouc3yx" path="res://scripts/door.gd" id="1_hewlj"]
+[ext_resource type="Texture2D" uid="uid://dbtsyinjh6xsm" path="res://assets/LisgarGameTileset2.png" id="2_aie0s"]
 [ext_resource type="FontFile" uid="uid://cdlmqd110qrjr" path="res://assets/fonts/PixelOperator8.ttf" id="3_i53ju"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y30gr"]
-size = Vector2(12.5, 19)
+size = Vector2(16, 26)
 
 [node name="Door" type="Node2D"]
 script = ExtResource("1_hewlj")
@@ -17,46 +17,49 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_y30gr")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_skho6")
+[node name="unlocked" type="Sprite2D" parent="."]
+texture = ExtResource("2_aie0s")
 region_enabled = true
-region_rect = Rect2(20, 32, 9, 16)
+region_rect = Rect2(16, 6, 16, 26)
+
+[node name="locked" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("2_aie0s")
+region_enabled = true
+region_rect = Rect2(48, 6, 16, 26)
 
 [node name="nokey" type="Label" parent="."]
 visible = false
+z_index = 5
 offset_left = -47.0
-offset_top = -19.0
+offset_top = -22.0
 offset_right = 48.0
-offset_bottom = -11.0
+offset_bottom = -14.0
 theme_override_fonts/font = ExtResource("3_i53ju")
 theme_override_font_sizes/font_size = 8
 text = "Requires a key!"
 
+[node name="badtime" type="Label" parent="."]
+visible = false
+z_index = 5
+offset_left = -75.0
+offset_top = -22.0
+offset_right = 76.0
+offset_bottom = -14.0
+theme_override_fonts/font = ExtResource("3_i53ju")
+theme_override_font_sizes/font_size = 8
+text = "Requires a specific time"
+
 [node name="key" type="Label" parent="."]
 visible = false
-offset_left = -95.0
-offset_top = -19.0
-offset_right = 94.0
-offset_bottom = -11.0
+z_index = 5
+offset_left = -94.0
+offset_top = -22.0
+offset_right = 95.0
+offset_bottom = -14.0
 theme_override_fonts/font = ExtResource("3_i53ju")
 theme_override_font_sizes/font_size = 8
 text = "Press e to go through the door"
-
-[node name="unlocked" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -13)
-scale = Vector2(0.517045, 0.517045)
-texture = ExtResource("1_skho6")
-region_enabled = true
-region_rect = Rect2(20, 48, 9, 16)
-
-[node name="locked" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(0, -13)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_skho6")
-region_enabled = true
-region_rect = Rect2(34, 49, 11, 15)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

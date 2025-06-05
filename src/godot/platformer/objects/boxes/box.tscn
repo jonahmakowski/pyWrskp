@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://2niqm53vl2mf"]
+
+[ext_resource type="PackedScene" uid="uid://ctfqgd206xdxt" path="res://objects/boxes/base.tscn" id="1_06lbp"]
+[ext_resource type="Texture2D" uid="uid://dbtsyinjh6xsm" path="res://assets/LisgarGameTileset2.png" id="2_0uval"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Box" parent="." instance=ExtResource("1_06lbp")]
+
+[node name="Sprite2D" type="Sprite2D" parent="Box"]
+texture = ExtResource("2_0uval")
+region_enabled = true
+region_rect = Rect2(64, 32, 16, 16)
