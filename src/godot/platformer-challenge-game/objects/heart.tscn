@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4o1eqnrc8omq"]
+
+[ext_resource type="Texture2D" uid="uid://ihp2y8a4vb5m" path="res://assets/hearts/Pixel Heart Sprite Sheet 16x16.png" id="1_krj6w"]
+[ext_resource type="Script" uid="uid://ouk02dodop6g" path="res://scripts/heart.gd" id="1_mpj2w"]
+[ext_resource type="FontFile" uid="uid://ddmv4fwcipy41" path="res://assets/fonts/PixelOperator8.ttf" id="3_ipgsx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mpj2w"]
+
+[node name="Heart" type="Node2D"]
+script = ExtResource("1_mpj2w")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_mpj2w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_krj6w")
+region_enabled = true
+region_rect = Rect2(0, 2, 16, 13)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -42.0
+offset_top = -58.0
+offset_right = 42.0
+offset_bottom = -50.0
+theme_override_fonts/font = ExtResource("3_ipgsx")
+theme_override_font_sizes/font_size = 8
+text = "At Full Health"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
