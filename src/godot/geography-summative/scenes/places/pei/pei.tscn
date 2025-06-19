@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://bjuidgdw4qw8g"]
+[gd_scene load_steps=15 format=4 uid="uid://bjuidgdw4qw8g"]
 
 [ext_resource type="Texture2D" uid="uid://cdkjvjxo0frg2" path="res://assets/tiles/sand/5.png" id="1_7wnxk"]
 [ext_resource type="Texture2D" uid="uid://dyno36togsh6k" path="res://assets/tiles/sand/1.png" id="1_ph63w"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bl8r07j27o4tu" path="res://assets/tiles/sand/4.png" id="5_3kmdc"]
 [ext_resource type="PackedScene" uid="uid://cilvr8uxpcjkn" path="res://objects/pei/mussels.tscn" id="7_lpt07"]
 [ext_resource type="PackedScene" uid="uid://uij28jfnhasm" path="res://objects/pei/ladder.tscn" id="7_tibx5"]
-[ext_resource type="PackedScene" uid="uid://duk258wnl3ims" path="res://scenes/places/outro.tscn" id="9_3kmdc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8els2"]
 texture = ExtResource("1_7wnxk")
@@ -97,6 +96,12 @@ position = Vector2(860, 422)
 [node name="Ladder14" parent="Ladders" instance=ExtResource("7_tibx5")]
 position = Vector2(872, 102)
 
+[node name="Ladder15" parent="Ladders" instance=ExtResource("7_tibx5")]
+position = Vector2(264, 423)
+
+[node name="Ladder16" parent="Ladders" instance=ExtResource("7_tibx5")]
+position = Vector2(532, -153)
+
 [node name="BadMussels" type="Node" parent="."]
 
 [node name="Mussels" parent="BadMussels" instance=ExtResource("7_lpt07")]
@@ -127,7 +132,7 @@ position = Vector2(-56, 36)
 position = Vector2(260, 317)
 
 [node name="Mussels10" parent="BadMussels" instance=ExtResource("7_lpt07")]
-position = Vector2(861, 348)
+position = Vector2(860, 376)
 
 [node name="GoodMussels" type="Node" parent="."]
 
@@ -195,5 +200,16 @@ color = 1
 position = Vector2(77, 252)
 color = 1
 
+[node name="Mussels20" parent="GoodMussels" instance=ExtResource("7_lpt07")]
+position = Vector2(417, -65)
+color = 1
+
+[node name="Mussels21" parent="GoodMussels" instance=ExtResource("7_lpt07")]
+position = Vector2(595, -69)
+color = 1
+
+[node name="Mussels22" parent="GoodMussels" instance=ExtResource("7_lpt07")]
+position = Vector2(856, 246)
+color = 1
+
 [node name="PEIPlayer" parent="." instance=ExtResource("3_jj0st")]
-next_scene = ExtResource("9_3kmdc")

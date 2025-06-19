@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dje52405l533i"]
 
 [ext_resource type="Script" uid="uid://c2if00rtedq8n" path="res://scripts/intro.gd" id="1_qj514"]
-[ext_resource type="PackedScene" uid="uid://bss2qm3ywrg87" path="res://scenes/places/montreal/montreal.tscn" id="2_meodv"]
+[ext_resource type="PackedScene" uid="uid://bbnls3jkgplho" path="res://scenes/places/montreal.tscn" id="2_meodv"]
 [ext_resource type="FontFile" uid="uid://cf7ol80uefu05" path="res://assets/fonts/PixelOperator8.ttf" id="2_reunk"]
 [ext_resource type="FontFile" uid="uid://c4er40nrjgp5y" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_meodv"]
 [ext_resource type="Texture2D" uid="uid://h1jgn5u6mq2h" path="res://assets/backgrounds/city.png" id="5_reunk"]

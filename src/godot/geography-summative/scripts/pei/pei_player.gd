@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
 @export var max_of_white:int
-@export var yellow_required:int
 @export var death_screen:PackedScene
 @export var next_scene:PackedScene
+
+@onready var yellow_required = $"../GoodMussels".get_child_count()
 
 const speed = 100
 
@@ -27,5 +28,7 @@ func _physics_process(delta: float) -> void:
 	if max_of_white <= score_of_white:
 		Controller.new_scene = str(get_tree().current_scene.scene_file_path)
 		get_tree().change_scene_to_packed(death_screen)
+	if yellow_required == score_of_yellow:
+		get_tree().change_scene_to_packed(next_scene)
 	
 	move_and_slide()
