@@ -15,11 +15,13 @@ impl Piece {
     pub fn new(n: String, c: String, x_pos: i32, y_pos: i32) -> Self {
         Self {
             moves: match n.as_str() {
-                "Pawn" => {match c.as_str() {
-                    "White" => vec![(0, 1)], // Pawns move forward one step
-                    "Black" => vec![(0, -1)], // Pawns move forward one step
-                    _ => vec![], // Default to no moves for unknown colors
-                }},
+                "Pawn" => {
+                    match c.as_str() {
+                        "White" => vec![(0, 1)],  // Pawns move forward one step
+                        "Black" => vec![(0, -1)], // Pawns move forward one step
+                        _ => vec![],              // Default to no moves for unknown colors
+                    }
+                }
                 "Rook" => {
                     let mut rook_moves = Vec::new();
                     for i in 1..8 {
