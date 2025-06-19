@@ -102,7 +102,7 @@ theme_override_font_sizes/font_size = 8
 text = "I have bad news… for the previous champion! You’ve just won the Amazing Race with an outstanding"
 autowrap_mode = 3
 visible_characters = 0
-visible_ratio = -0.00512821
+visible_ratio = 0.0
 
 [node name="Text5" type="Label" parent="Text/Winner"]
 visible = false
@@ -203,7 +203,7 @@ theme_override_font_sizes/font_size = 8
 text = "you did an amazing job with __ minutes,"
 autowrap_mode = 3
 visible_characters = 0
-visible_ratio = -0.00862069
+visible_ratio = 0.0
 script = SubResource("GDScript_ounwj")
 
 [node name="Text6" type="Label" parent="Text/Normal"]
@@ -291,7 +291,7 @@ theme_override_font_sizes/font_size = 8
 text = "Oh… wow… uh, congrats…?"
 autowrap_mode = 3
 visible_characters = 0
-visible_ratio = -0.00917431
+visible_ratio = 0.0
 
 [node name="Text5" type="Label" parent="Text/Loser"]
 visible = false
@@ -305,7 +305,7 @@ theme_override_font_sizes/font_size = 8
 text = "You got the slowest time ever with a shocking ___ minutes…"
 autowrap_mode = 3
 visible_characters = 0
-visible_ratio = -0.0117647
+visible_ratio = 0.0
 script = SubResource("GDScript_obh0w")
 
 [node name="Text6" type="Label" parent="Text/Loser"]
