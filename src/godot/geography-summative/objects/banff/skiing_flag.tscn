@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://du3c8yn50kaer"]
+
+[ext_resource type="Script" uid="uid://d25n8en8p2534" path="res://scripts/banff/skiing_flag.gd" id="1_6a28i"]
+[ext_resource type="Texture2D" uid="uid://dbraufr4m8xim" path="res://assets/Flag.png" id="1_xvo3m"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6a28i"]
+height = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vbl5j"]
+radius = 14.0
+
+[node name="SkiingFlag" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_6a28i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xvo3m")
+region_enabled = true
+region_rect = Rect2(24, 31, 14, 19)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_6a28i")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_vbl5j")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

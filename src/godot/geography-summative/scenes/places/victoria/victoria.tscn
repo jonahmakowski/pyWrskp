@@ -1,0 +1,128 @@
+[gd_scene load_steps=19 format=3 uid="uid://ixqeudbqvcg1"]
+
+[ext_resource type="Script" uid="uid://chv7bx05th5gr" path="res://scripts/victoria/victoria.gd" id="1_2aose"]
+[ext_resource type="AudioStream" uid="uid://cr3av1hudfuu5" path="res://assets/Tinikling.mp3" id="2_7lsbg"]
+[ext_resource type="PackedScene" uid="uid://dym3wrilsnpsv" path="res://scenes/places/victoria/ui.tscn" id="2_awgs8"]
+[ext_resource type="PackedScene" uid="uid://dkwivdf5kunyc" path="res://scenes/pause_menu.tscn" id="3_h56c0"]
+[ext_resource type="PackedScene" uid="uid://cjst304op04ol" path="res://scenes/intros/banff_intro.tscn" id="3_t3mqs"]
+[ext_resource type="Texture2D" uid="uid://b34twus0hbp5y" path="res://assets/Player2/rhythm_game/1.png" id="3_yu528"]
+[ext_resource type="Texture2D" uid="uid://2rnamj3od37d" path="res://assets/Player2/rhythm_game/2.png" id="4_awgs8"]
+[ext_resource type="Texture2D" uid="uid://c5rtyf14xyxmp" path="res://assets/Player2/rhythm_game/3.png" id="5_o1ux4"]
+[ext_resource type="Texture2D" uid="uid://bncgtno787u1u" path="res://assets/Player2/rhythm_game/4.png" id="6_h56c0"]
+[ext_resource type="Texture2D" uid="uid://h1jgn5u6mq2h" path="res://assets/backgrounds/city.png" id="7_mxvoq"]
+[ext_resource type="Texture2D" uid="uid://07w6eio5yr28" path="res://assets/Player2/rhythm_game/5.png" id="7_t3mqs"]
+[ext_resource type="Texture2D" uid="uid://bo7cmkhxy3mj5" path="res://assets/Player2/rhythm_game/6.png" id="8_mxvoq"]
+[ext_resource type="Texture2D" uid="uid://dxqxx5aetk52n" path="res://assets/Player2/rhythm_game/7.png" id="9_fj3h5"]
+[ext_resource type="Texture2D" uid="uid://ewisk0dmqufd" path="res://assets/Player2/rhythm_game/8.png" id="10_0ijdb"]
+[ext_resource type="PackedScene" uid="uid://ctj3pnf7liu0x" path="res://objects/victoria/arrows.tscn" id="12_o1ux4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_awgs8"]
+size = Vector2(118, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o1ux4"]
+size = Vector2(384, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_grbj1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_fj3h5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_o1ux4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_h56c0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yu528")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_t3mqs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_mxvoq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_awgs8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_0ijdb")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
+}]
+
+[node name="Victoria" type="Node2D"]
+script = ExtResource("1_2aose")
+arrow_scene = ExtResource("12_o1ux4")
+next_scene = ExtResource("3_t3mqs")
+lives_max = 3
+
+[node name="UI" parent="." instance=ExtResource("2_awgs8")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7lsbg")
+autoplay = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(3, 3)
+
+[node name="RemoveArrowsArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RemoveArrowsArea"]
+position = Vector2(59, 214)
+shape = SubResource("RectangleShape2D_awgs8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RemoveArrowsArea"]
+position = Vector2(324, 213)
+shape = SubResource("RectangleShape2D_awgs8")
+
+[node name="ButtonPressArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonPressArea"]
+position = Vector2(192, 191)
+shape = SubResource("RectangleShape2D_o1ux4")
+
+[node name="Arrows" type="Node" parent="."]
+
+[node name="PauseMenu" parent="." instance=ExtResource("3_h56c0")]
+
+[node name="PanelContainer" parent="PauseMenu" index="0"]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 92.0
+offset_top = 66.0
+offset_right = 292.0
+offset_bottom = 150.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -30
+position = Vector2(192.164, 107.5)
+scale = Vector2(1.57857, 1.57857)
+texture = ExtResource("7_mxvoq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(192, 131)
+scale = Vector2(1.79688, 1.79688)
+sprite_frames = SubResource("SpriteFrames_grbj1")
+autoplay = "default"
+frame_progress = 0.42689
+
+[connection signal="body_entered" from="RemoveArrowsArea" to="." method="_on_area_2d_body_entered"]
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
+
+[editable path="PauseMenu"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://c562cpq45fb6x"]
+[gd_scene load_steps=54 format=3 uid="uid://c562cpq45fb6x"]
 
 [ext_resource type="Texture2D" uid="uid://0d14hoxupu4" path="res://assets/samurai/ATTACK.png" id="1_01cyv"]
 [ext_resource type="Script" uid="uid://djix0ghaqq7xh" path="res://scripts/samurai_enemy.gd" id="1_tlfi0"]
@@ -6,7 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://be7ueyyxpjvei" path="res://assets/samurai/IDLE.png" id="3_nqg48"]
 [ext_resource type="Texture2D" uid="uid://cvamlqikr0bgi" path="res://assets/samurai/RUN.png" id="4_k7ct5"]
 [ext_resource type="FontFile" uid="uid://ddmv4fwcipy41" path="res://assets/fonts/PixelOperator8.ttf" id="6_nqg48"]
-[ext_resource type="Texture2D" uid="uid://ihp2y8a4vb5m" path="res://assets/hearts/Pixel Heart Sprite Sheet 16x16.png" id="7_k7ct5"]
+[ext_resource type="Texture2D" uid="uid://ihp2y8a4vb5m" path="res://assets/collectables/hearts/Pixel Heart Sprite Sheet 16x16.png" id="7_k7ct5"]
+[ext_resource type="Texture2D" uid="uid://bnxqb41xgi2vk" path="res://assets/collectables/coins/coins.png" id="8_imiy1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3rfka"]
 atlas = ExtResource("1_01cyv")
@@ -296,6 +297,42 @@ height = 34.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlfi0"]
 size = Vector2(60, 200)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1o7s2"]
+atlas = ExtResource("8_imiy1")
+region = Rect2(96, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwokp"]
+atlas = ExtResource("8_imiy1")
+region = Rect2(112, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyi47"]
+atlas = ExtResource("8_imiy1")
+region = Rect2(128, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osa5c"]
+atlas = ExtResource("8_imiy1")
+region = Rect2(144, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5fw7f"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_1o7s2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwokp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyi47")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osa5c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="samurai_enemy" type="CharacterBody2D" groups=["enemy"]]
 z_index = -1
 collision_layer = 4
@@ -312,14 +349,14 @@ shape = SubResource("CapsuleShape2D_n0sak")
 
 [node name="ShapeCastLeft" type="ShapeCast2D" parent="."]
 visible = false
-position = Vector2(-30, 0)
+position = Vector2(-50, 0)
 shape = SubResource("RectangleShape2D_tlfi0")
 target_position = Vector2(-400, 0)
 collision_mask = 2
 
 [node name="ShapeCastRight" type="ShapeCast2D" parent="."]
 visible = false
-position = Vector2(30, 0)
+position = Vector2(50, 0)
 shape = SubResource("RectangleShape2D_tlfi0")
 target_position = Vector2(400, 0)
 collision_mask = 2
@@ -363,6 +400,12 @@ region_enabled = true
 region_rect = Rect2(0, 2, 16, 13)
 
 [node name="EnemyAudio" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Coin" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -36)
+sprite_frames = SubResource("SpriteFrames_5fw7f")
+autoplay = "default"
 
 [connection signal="animation_looped" from="Sprite" to="." method="_on_sprite_animation_looped"]
 [connection signal="finished" from="EnemyAudio" to="." method="_on_enemy_audio_finished"]

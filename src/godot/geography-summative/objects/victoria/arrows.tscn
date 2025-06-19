@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://ctj3pnf7liu0x"]
+
+[ext_resource type="Script" uid="uid://blia7tvnhfha8" path="res://scripts/victoria/arrows.gd" id="1_mg68x"]
+[ext_resource type="Texture2D" uid="uid://m0oawq5v2wsw" path="res://assets/arrows/down.png" id="1_ueykf"]
+[ext_resource type="Texture2D" uid="uid://civkqxk7n1c68" path="res://assets/arrows/left.png" id="2_mg68x"]
+[ext_resource type="Texture2D" uid="uid://bq3fpnbjt0ygk" path="res://assets/arrows/right.png" id="3_l8xew"]
+[ext_resource type="Texture2D" uid="uid://cqk6wqwp1ogyf" path="res://assets/arrows/up.png" id="4_0ec8r"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kty52"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ueykf")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mg68x")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_l8xew")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_0ec8r")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ueykf"]
+radius = 9.0
+height = 20.0
+
+[node name="Arrows" type="CharacterBody2D"]
+script = ExtResource("1_mg68x")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kty52")
+animation = &"down"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ueykf")

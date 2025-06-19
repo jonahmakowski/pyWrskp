@@ -1,0 +1,124 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcxbaal1fvck"]
+
+[ext_resource type="Script" uid="uid://c2if00rtedq8n" path="res://scripts/intro.gd" id="1_gveqm"]
+[ext_resource type="FontFile" uid="uid://cf7ol80uefu05" path="res://assets/fonts/PixelOperator8.ttf" id="3_vwibs"]
+[ext_resource type="FontFile" uid="uid://c4er40nrjgp5y" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="4_ioarw"]
+[ext_resource type="Texture2D" uid="uid://n33ekk2oostt" path="res://assets/Textbox.png" id="5_28e2h"]
+[ext_resource type="Texture2D" uid="uid://h1jgn5u6mq2h" path="res://assets/backgrounds/city.png" id="6_paav3"]
+[ext_resource type="Texture2D" uid="uid://but2creg1awg6" path="res://assets/Jon.png" id="7_1frqn"]
+
+[node name="PEIIntro" type="Node2D"]
+script = ExtResource("1_gveqm")
+
+[node name="Text" type="Node" parent="."]
+
+[node name="Text1" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vwibs")
+theme_override_font_sizes/font_size = 8
+text = "Welcome to P.E.I. P.E.I. is known for its beautiful beaches, particularly the red sand beaches, rolling green"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = -0.00591716
+
+[node name="Text2" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vwibs")
+theme_override_font_sizes/font_size = 8
+text = "landscapes, and the iconic setting of Anne of Green Gables."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text3" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vwibs")
+theme_override_font_sizes/font_size = 8
+text = "Your challenge is to collect 10 yellow mussels. But be aware that there are white mussels. These"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = -0.00423729
+
+[node name="Text4" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vwibs")
+theme_override_font_sizes/font_size = 8
+text = "mussels are raw, and if you pick up 2 raw mussels, you will be forced to restart the challenge and waste"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text5" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vwibs")
+theme_override_font_sizes/font_size = 8
+text = "precious time that you don’t have."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text6" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vwibs")
+theme_override_font_sizes/font_size = 8
+text = "Now, without further ado… let the challenge begin!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text"]
+offset_left = -108.0
+offset_top = 14.0
+offset_right = -84.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_ioarw")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4.75, 4.75)
+
+[node name="Backgrounds" type="Node" parent="."]
+
+[node name="Textbox" type="Sprite2D" parent="Backgrounds"]
+z_index = -4
+texture = ExtResource("5_28e2h")
+
+[node name="Sprite2D" type="Sprite2D" parent="Backgrounds"]
+z_index = -20
+texture = ExtResource("6_paav3")
+
+[node name="Jon1" type="Sprite2D" parent="."]
+position = Vector2(109, 10)
+texture = ExtResource("7_1frqn")

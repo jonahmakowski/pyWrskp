@@ -1,0 +1,350 @@
+[gd_scene load_steps=11 format=3 uid="uid://duk258wnl3ims"]
+
+[ext_resource type="Script" uid="uid://be2511q4gifyv" path="res://scripts/outro.gd" id="1_b7pod"]
+[ext_resource type="FontFile" uid="uid://cf7ol80uefu05" path="res://assets/fonts/PixelOperator8.ttf" id="2_ounwj"]
+[ext_resource type="FontFile" uid="uid://c4er40nrjgp5y" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_4fg01"]
+[ext_resource type="Texture2D" uid="uid://n33ekk2oostt" path="res://assets/Textbox.png" id="4_obh0w"]
+[ext_resource type="Texture2D" uid="uid://h1jgn5u6mq2h" path="res://assets/backgrounds/city.png" id="5_yeo1i"]
+[ext_resource type="Texture2D" uid="uid://but2creg1awg6" path="res://assets/Jon.png" id="6_sn67r"]
+
+[sub_resource type="GDScript" id="GDScript_b7pod"]
+resource_name = "time_display"
+script/source = "extends Label
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	text = \"time of \" + TotalTimer.formated_version().split(\" \")[1] + \" minutes! Congratulations, new champion.\"
+"
+
+[sub_resource type="GDScript" id="GDScript_ounwj"]
+script/source = "extends Label
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	text = \"you did an amazing job with \" + TotalTimer.formated_version().split(\" \")[1] + \" minutes,\"
+"
+
+[sub_resource type="GDScript" id="GDScript_4fg01"]
+script/source = "extends Label
+
+func _ready() -> void:
+	var dat = $\"../../..\".load_data()
+	text = \"The current record is \" + str(dat['best'])
+"
+
+[sub_resource type="GDScript" id="GDScript_obh0w"]
+script/source = "extends Label
+
+func _ready() -> void:
+	text = \"You got the slowest time ever with a shocking\" + TotalTimer.formated_version().split()[1] + \"minutes…\"
+"
+
+[node name="Outro" type="Node2D"]
+script = ExtResource("1_b7pod")
+
+[node name="Text" type="Node" parent="."]
+
+[node name="Winner" type="Node" parent="Text"]
+
+[node name="Text1" type="Label" parent="Text/Winner"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "Congratulations contestants! You’ve traveled all across Canada, and our time has come to a close."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text2" type="Label" parent="Text/Winner"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "You truly made this amazing race amazing!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text3" type="Label" parent="Text/Winner"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "But, this is a race after all… the question you’ve all been asking… did you win the Amazing Race…?"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text4" type="Label" parent="Text/Winner"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "I have bad news… for the previous champion! You’ve just won the Amazing Race with an outstanding"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = -0.00512821
+
+[node name="Text5" type="Label" parent="Text/Winner"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "time of __ minutes! Congratulations, new champion."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+script = SubResource("GDScript_b7pod")
+
+[node name="Text6" type="Label" parent="Text/Winner"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "You’ve beaten all the odds and come out on top!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Normal" type="Node" parent="Text"]
+
+[node name="Text1" type="Label" parent="Text/Normal"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "Congratulations contestants! You’ve traveled all across Canada, and our time has come to a close."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text2" type="Label" parent="Text/Normal"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "You truly made this amazing race amazing!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text3" type="Label" parent="Text/Normal"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "But, this is a race after all… the question you’ve all been asking… did you win the Amazing Race…?"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text4" type="Label" parent="Text/Normal"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "Oh… I regret to tell you, but you didn’t win the Amazing Race…"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text5" type="Label" parent="Text/Normal"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "you did an amazing job with __ minutes,"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = -0.00862069
+script = SubResource("GDScript_ounwj")
+
+[node name="Text6" type="Label" parent="Text/Normal"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "and we hope to see you again to try your luck at the Amazing Race once more."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text7" type="Label" parent="Text/Normal"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "The current record is"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+script = SubResource("GDScript_4fg01")
+
+[node name="Loser" type="Node" parent="Text"]
+
+[node name="Text1" type="Label" parent="Text/Loser"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "Congratulations contestants! You’ve traveled all across Canada, and our time has come to a close."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text2" type="Label" parent="Text/Loser"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "You truly made this amazing race amazing!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text3" type="Label" parent="Text/Loser"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "But, this is a race after all… the question you’ve all been asking… did you win the Amazing Race…?"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text4" type="Label" parent="Text/Loser"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "Oh… wow… uh, congrats…?"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = -0.00917431
+
+[node name="Text5" type="Label" parent="Text/Loser"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "You got the slowest time ever with a shocking ___ minutes…"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = -0.0117647
+script = SubResource("GDScript_obh0w")
+
+[node name="Text6" type="Label" parent="Text/Loser"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ounwj")
+theme_override_font_sizes/font_size = 8
+text = "were you trying to lose…?"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text"]
+offset_left = -108.0
+offset_top = 14.0
+offset_right = -84.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_4fg01")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4.75, 4.75)
+
+[node name="Backgrounds" type="Node" parent="."]
+
+[node name="Textbox" type="Sprite2D" parent="Backgrounds"]
+z_index = -4
+texture = ExtResource("4_obh0w")
+
+[node name="Sprite2D" type="Sprite2D" parent="Backgrounds"]
+z_index = -20
+texture = ExtResource("5_yeo1i")
+
+[node name="Jon1" type="Sprite2D" parent="."]
+position = Vector2(109, 10)
+texture = ExtResource("6_sn67r")

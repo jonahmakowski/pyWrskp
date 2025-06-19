@@ -7,7 +7,12 @@ const RUN_MULT = 2
 var blocking = false
 
 func _ready() -> void:
-	Controller.current_respawn = position
+	if not Controller.send_to_respawn:
+		Controller.current_respawn = position
+	else:
+		position = Controller.current_respawn
+		Controller.send_to_respawn = false
+	$Health.text = "Health: {0}\nCoins: {1}".format([Controller.player_health, len(Controller.coins_collected)])
 
 func get_enemies():
 	var objects_collide = []
@@ -26,16 +31,16 @@ func _process(_delta: float) -> void:
 		Input.is_action_just_pressed("attack2") or 
 		Input.is_action_just_pressed("attack3")):
 		
-		$PlayerAudio.stream = load("res://assets/audio/sword-swing.mp3")
-		$PlayerAudio.play()
+		Controller.play_audio($PlayerAudio, "res://assets/audio/sword-swing.mp3")
 		
 		if $EnemyRayCast.is_colliding():
 			var collidors = get_enemies()
 			for collider in collidors:
-				collider.attacked()
+				if collider != null:
+					collider.attacked()
 	if Input.is_action_just_pressed('block'): 
 		blocking = true
-	$Health.text = "Health: " + str(Controller.player_health)
+	$Health.text = "Health: {0}\nCoins: {1}".format([Controller.player_health, len(Controller.coins_collected)])
 
 func is_attacking():
 	return "attack" in $Sprite.animation or $Sprite.animation == 'defend'
@@ -76,8 +81,9 @@ func _on_sprite_animation_looped() -> void:
 
 func attacked():
 	if not blocking:
-		$PlayerAudio.stream = load("res://assets/audio/hurt.mp3")
-		$PlayerAudio.play()
+		Controller.play_audio($PlayerAudio, "res://assets/audio/hurt.mp3")
 		Controller.player_health -= 1
 		if Controller.player_health == 0:
 			Controller.kill_player()
+	else:
+		Controller.play_audio($PlayerAudio, "res://assets/audio/block.mp3", 10)
