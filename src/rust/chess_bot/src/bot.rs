@@ -17,7 +17,11 @@ pub fn find_all_valid_moves(board: &Board, color: &String) -> Vec<(i32, i32, i32
     return valid_moves; // (x, y, move_index)
 }
 
-fn most_score_move(board: &Board, color: &String, moves: Vec<(i32, i32, i32)>) -> Option<(i32, i32, i32, bool)> {
+fn most_score_move(
+    board: &Board,
+    color: &String,
+    moves: Vec<(i32, i32, i32)>,
+) -> Option<(i32, i32, i32, bool)> {
     let mut best_move = None;
     let mut best_score = i32::MIN;
     let mut has_king = true;
@@ -48,7 +52,8 @@ pub fn play_best_move(board: &mut Board, color: &String, ahead: i32) {
         let (x, y, move_index) = m;
         let mut move_board = board.deep_clone();
         move_board.move_piece(x.clone(), y.clone(), move_index.clone());
-        let turn_result = find_best_move(&mut move_board, &color, ahead-1, 0, *x, *y, *move_index);
+        let turn_result =
+            find_best_move(&mut move_board, &color, ahead - 1, 0, *x, *y, *move_index);
         move_scores.push(turn_result);
     }
 
@@ -57,8 +62,15 @@ pub fn play_best_move(board: &mut Board, color: &String, ahead: i32) {
 
     for moves in move_scores {
         for inner_moves in moves {
-            for (index, (has_king_me, has_king_enemy, score, enemy_score, depth, x, y, move_index)) in inner_moves.into_iter().enumerate() {
-                println!("Move: ({}, {}, {}) \t Score: {} \t Enemy Score: {} \t Depth: {}", x, y, move_index, score, enemy_score, depth);
+            for (
+                index,
+                (has_king_me, has_king_enemy, score, enemy_score, depth, x, y, move_index),
+            ) in inner_moves.into_iter().enumerate()
+            {
+                println!(
+                    "Move: ({}, {}, {}) \t Score: {} \t Enemy Score: {} \t Depth: {}",
+                    x, y, move_index, score, enemy_score, depth
+                );
                 if score - enemy_score > max_score && has_king_me {
                     to_play = (x, y, move_index);
                     max_score = score - enemy_score;
@@ -71,28 +83,50 @@ pub fn play_best_move(board: &mut Board, color: &String, ahead: i32) {
         }
     }
     // has_king_me, has_king_enemy, score, enemy_score, depth, x, y, move_index
-    
+
     println!("Max score: {}", max_score);
-    println!("Playing move: ({}, {}, {}) with score {} me: {} enemy: {}", to_play.0, to_play.1, to_play.2, score_to_play, my_score_to_play, enemy_score_to_play);
+    println!(
+        "Playing move: ({}, {}, {}) with score {} me: {} enemy: {}",
+        to_play.0, to_play.1, to_play.2, score_to_play, my_score_to_play, enemy_score_to_play
+    );
     board.move_piece(to_play.0, to_play.1, to_play.2);
 }
 
-pub fn find_best_move(board: &Board, color: &String, ahead: i32, depth: i32, move_x: i32, move_y: i32, move_index: i32) -> Vec<Vec<(bool, bool, i32, i32, i32, i32, i32, i32)>> { //returns a vec with has_king_me, has_king_enemy, score, enemy_score, depth, x, y, move_index
+pub fn find_best_move(
+    board: &Board,
+    color: &String,
+    ahead: i32,
+    depth: i32,
+    move_x: i32,
+    move_y: i32,
+    move_index: i32,
+) -> Vec<Vec<(bool, bool, i32, i32, i32, i32, i32, i32)>> {
+    //returns a vec with has_king_me, has_king_enemy, score, enemy_score, depth, x, y, move_index
     if ahead == 0 {
-        return vec![
-            vec![
-                (board.count_score(color).1, board.count_score(&board.get_opponent_color(color)).1, board.count_score(color).0, board.count_score(&board.get_opponent_color(color)).0, depth, move_x, move_y, move_index)
-            ]        
-        ];
+        return vec![vec![(
+            board.count_score(color).1,
+            board.count_score(&board.get_opponent_color(color)).1,
+            board.count_score(color).0,
+            board.count_score(&board.get_opponent_color(color)).0,
+            depth,
+            move_x,
+            move_y,
+            move_index,
+        )]];
     }
 
     let moves = find_all_valid_moves(board, color);
     if moves.is_empty() {
-        return vec![
-            vec![
-                (board.count_score(color).1, board.count_score(&board.get_opponent_color(color)).1, board.count_score(color).0, board.count_score(&board.get_opponent_color(color)).0, depth, move_x, move_y, move_index)
-            ]
-        ];
+        return vec![vec![(
+            board.count_score(color).1,
+            board.count_score(&board.get_opponent_color(color)).1,
+            board.count_score(color).0,
+            board.count_score(&board.get_opponent_color(color)).0,
+            depth,
+            move_x,
+            move_y,
+            move_index,
+        )]];
     }
 
     let mut best_moves = Vec::new();
@@ -102,13 +136,15 @@ pub fn find_best_move(board: &Board, color: &String, ahead: i32, depth: i32, mov
             let opponent_color = temp_board.get_opponent_color(&color);
 
             let moves = find_all_valid_moves(&temp_board, &opponent_color);
-            let (enemy_move_x, enemy_move_y, enemy_move_index, _) = most_score_move(&temp_board, &opponent_color, moves)
-                .expect("Failed to find a valid enemy move");
+            let (enemy_move_x, enemy_move_y, enemy_move_index, _) =
+                most_score_move(&temp_board, &opponent_color, moves)
+                    .expect("Failed to find a valid enemy move");
             temp_board.move_piece(enemy_move_x, enemy_move_y, enemy_move_index);
             // println!("Enemy move: ({}, {}, {})", enemy_move_x, enemy_move_y, enemy_move_index);
         }
         temp_board.move_piece(x, y, move_index);
-        let next_moves = find_best_move(&temp_board, &color, ahead - 1, depth + 1, x, y, move_index);
+        let next_moves =
+            find_best_move(&temp_board, &color, ahead - 1, depth + 1, x, y, move_index);
         best_moves.extend(next_moves);
     }
 

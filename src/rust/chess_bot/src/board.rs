@@ -19,7 +19,6 @@ impl Board {
                 Piece::new("Bishop".to_string(), "White".to_string(), 5, 0),
                 Piece::new("Knight".to_string(), "White".to_string(), 6, 0),
                 Piece::new("Rook".to_string(), "White".to_string(), 7, 0),
-                
                 Piece::new("Pawn".to_string(), "White".to_string(), 0, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 1, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 2, 1),
@@ -28,7 +27,6 @@ impl Board {
                 Piece::new("Pawn".to_string(), "White".to_string(), 5, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 6, 1),
                 Piece::new("Pawn".to_string(), "White".to_string(), 7, 1),
-                
                 Piece::new("Rook".to_string(), "Black".to_string(), 0, 7),
                 Piece::new("Knight".to_string(), "Black".to_string(), 1, 7),
                 Piece::new("Bishop".to_string(), "Black".to_string(), 2, 7),
@@ -37,7 +35,6 @@ impl Board {
                 Piece::new("Bishop".to_string(), "Black".to_string(), 5, 7),
                 Piece::new("Knight".to_string(), "Black".to_string(), 6, 7),
                 Piece::new("Rook".to_string(), "Black".to_string(), 7, 7),
-                
                 Piece::new("Pawn".to_string(), "Black".to_string(), 0, 6),
                 Piece::new("Pawn".to_string(), "Black".to_string(), 1, 6),
                 Piece::new("Pawn".to_string(), "Black".to_string(), 2, 6),
@@ -115,10 +112,17 @@ impl Board {
     pub fn valid_move(&self, piece_x: i32, piece_y: i32, move_index: i32) -> bool {
         let piece: &Piece;
 
-        if let Some(piece_iter) = self.pieces.iter().find(|p| p.x == piece_x && p.y == piece_y) {
+        if let Some(piece_iter) = self
+            .pieces
+            .iter()
+            .find(|p| p.x == piece_x && p.y == piece_y)
+        {
             piece = piece_iter;
         } else {
-            println!("VALID_MOVE: No piece found at position ({}, {}).", piece_x, piece_y);
+            println!(
+                "VALID_MOVE: No piece found at position ({}, {}).",
+                piece_x, piece_y
+            );
             return false;
         }
 
@@ -147,18 +151,18 @@ impl Board {
         // For pieces that check paths (Rook, Bishop, Queen), we need to ensure the path is clear
         let mut step_x = 0;
         let mut step_y = 0;
-        
+
         if dx != 0 {
             step_x = dx / dx.abs();
         }
-        
+
         if dy != 0 {
             step_y = dy / dy.abs();
         }
 
         let mut scanning_x = piece.x + step_x;
         let mut scanning_y = piece.y + step_y;
-    
+
         while scanning_x != new_x || scanning_y != new_y {
             for scan_piece in &self.pieces {
                 if scan_piece.x == scanning_x && scan_piece.y == scanning_y {
@@ -170,7 +174,7 @@ impl Board {
         }
         true
     }
-    
+
     pub fn count_score(&self, color: &String) -> (i32, bool) {
         let mut score = 0;
         let mut has_king = false;
@@ -186,7 +190,8 @@ impl Board {
     }
 
     fn kill_piece(&mut self, piece_x: i32, piece_y: i32) {
-        self.pieces.retain(|piece| !(piece.x == piece_x && piece.y == piece_y));
+        self.pieces
+            .retain(|piece| !(piece.x == piece_x && piece.y == piece_y));
     }
 
     pub fn deep_clone(&self) -> Self {
@@ -212,7 +217,10 @@ impl Board {
     fn delete_duplicate_pieces(&mut self) {
         let mut unique_pieces: Vec<&Piece> = Vec::new();
         for piece in &self.pieces {
-            if !unique_pieces.iter().any(|p: &&Piece| p.x == piece.x && p.y == piece.y && p.color == piece.color) {
+            if !unique_pieces
+                .iter()
+                .any(|p: &&Piece| p.x == piece.x && p.y == piece.y && p.color == piece.color)
+            {
                 unique_pieces.push(piece);
             }
         }
@@ -224,17 +232,35 @@ impl Board {
         let mut piece_y = String::new();
         let mut move_index = String::new();
 
-        io::stdin().read_line(&mut piece_x).expect("Failed to read line");
-        io::stdin().read_line(&mut piece_y).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut piece_x)
+            .expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut piece_y)
+            .expect("Failed to read line");
 
-        let piece_x: i32 = piece_x.trim().parse().expect("Please enter a valid number for piece X position");
-        let piece_y: i32 = piece_y.trim().parse().expect("Please enter a valid number for piece Y position");
+        let piece_x: i32 = piece_x
+            .trim()
+            .parse()
+            .expect("Please enter a valid number for piece X position");
+        let piece_y: i32 = piece_y
+            .trim()
+            .parse()
+            .expect("Please enter a valid number for piece Y position");
 
         if let Some(piece) = self.get_piece_at(piece_x, piece_y) {
-            println!("Selected piece: {} ({}) at ({}, {})", piece.symbol, piece.name, piece.x, piece.y);
+            println!(
+                "Selected piece: {} ({}) at ({}, {})",
+                piece.symbol, piece.name, piece.x, piece.y
+            );
             println!("Available moves: {:?}", piece.moves);
-            io::stdin().read_line(&mut move_index).expect("Failed to read line");
-            let move_index: i32 = move_index.trim().parse().expect("Please enter a valid number for move index");
+            io::stdin()
+                .read_line(&mut move_index)
+                .expect("Failed to read line");
+            let move_index: i32 = move_index
+                .trim()
+                .parse()
+                .expect("Please enter a valid number for move index");
 
             if piece.color.to_string() == self.turn.to_string() {
                 self.move_piece(piece_x, piece_y, move_index);
