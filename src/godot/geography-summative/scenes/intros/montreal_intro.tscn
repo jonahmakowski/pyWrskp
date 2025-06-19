@@ -1,0 +1,134 @@
+[gd_scene load_steps=8 format=3 uid="uid://dje52405l533i"]
+
+[ext_resource type="Script" uid="uid://c2if00rtedq8n" path="res://scripts/intro.gd" id="1_qj514"]
+[ext_resource type="PackedScene" uid="uid://bss2qm3ywrg87" path="res://scenes/places/montreal/montreal.tscn" id="2_meodv"]
+[ext_resource type="FontFile" uid="uid://cf7ol80uefu05" path="res://assets/fonts/PixelOperator8.ttf" id="2_reunk"]
+[ext_resource type="FontFile" uid="uid://c4er40nrjgp5y" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_meodv"]
+[ext_resource type="Texture2D" uid="uid://h1jgn5u6mq2h" path="res://assets/backgrounds/city.png" id="5_reunk"]
+[ext_resource type="Texture2D" uid="uid://n33ekk2oostt" path="res://assets/Textbox.png" id="5_ya3eo"]
+[ext_resource type="Texture2D" uid="uid://but2creg1awg6" path="res://assets/Jon.png" id="6_ubwr5"]
+
+[node name="MontrealIntro" type="Node2D"]
+script = ExtResource("1_qj514")
+next_scene = ExtResource("2_meodv")
+
+[node name="Text" type="Node" parent="."]
+
+[node name="Text1" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_reunk")
+theme_override_font_sizes/font_size = 8
+text = "Welcome to Montreal! Montreal is an island city surrounded by the Des Prairies river and is known for its"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text2" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_reunk")
+theme_override_font_sizes/font_size = 8
+text = "unique blend of European and North American cultures, a vibrant culinary scene, and a strong sense"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text3" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_reunk")
+theme_override_font_sizes/font_size = 8
+text = "of community."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text4" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_reunk")
+theme_override_font_sizes/font_size = 8
+text = "Your challenge is to kayak around the island of Montreal. Simple enough, right…?"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text5" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_reunk")
+theme_override_font_sizes/font_size = 8
+text = "Not quite, you’ll have to evade obstacles such as rocks and logs. And remember, it’s not called the"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text6" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_reunk")
+theme_override_font_sizes/font_size = 8
+text = "amazing race for nothing. If you want any chance of winning, you better complete this challenge"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text7" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_reunk")
+theme_override_font_sizes/font_size = 8
+text = "quickly!
+Good luck! The world is waiting... GO!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text"]
+offset_left = -108.0
+offset_top = 14.0
+offset_right = -87.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_meodv")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4.75, 4.75)
+
+[node name="Backgrounds" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Backgrounds"]
+z_index = -10
+texture = ExtResource("5_reunk")
+
+[node name="Textbox" type="Sprite2D" parent="Backgrounds"]
+z_index = -4
+texture = ExtResource("5_ya3eo")
+
+[node name="Jon1" type="Sprite2D" parent="."]
+position = Vector2(109, 10)
+texture = ExtResource("6_ubwr5")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://b2fcfspwwrmlw"]
+[gd_scene load_steps=86 format=3 uid="uid://b2fcfspwwrmlw"]
 
 [ext_resource type="Script" uid="uid://frbigifq62wx" path="res://scripts/player.gd" id="1_f46kd"]
 [ext_resource type="Texture2D" uid="uid://crc07hoemstp5" path="res://assets/knight/ATTACK 1.png" id="2_3nfmf"]
@@ -14,9 +14,10 @@
 [ext_resource type="FontFile" uid="uid://ddmv4fwcipy41" path="res://assets/fonts/PixelOperator8.ttf" id="12_42cpl"]
 [ext_resource type="Script" uid="uid://ddn8capaphd7d" path="res://scripts/pause_menu.gd" id="13_kdgjc"]
 [ext_resource type="FontFile" uid="uid://ce6744ysmbxio" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="14_q0i8f"]
+[ext_resource type="Texture2D" uid="uid://8xk1kaahymcr" path="res://assets/backgrounds/background 1/orig.png" id="15_0i614"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d4anp"]
-height = 38.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0i614"]
+size = Vector2(20, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q0i8f"]
 size = Vector2(20, 43.59)
@@ -549,7 +550,8 @@ collision_layer = 2
 script = ExtResource("1_f46kd")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_d4anp")
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_0i614")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -567,10 +569,11 @@ autoplay = "idle"
 [node name="Health" type="Label" parent="."]
 offset_left = -288.0
 offset_top = -160.0
-offset_right = -164.0
-offset_bottom = -144.0
+offset_right = -92.0
+offset_bottom = -125.0
 theme_override_fonts/font = ExtResource("12_42cpl")
-text = "Health: 20"
+text = "Health: 20
+Coins: 0"
 
 [node name="PlayerAudio" type="AudioStreamPlayer2D" parent="."]
 
@@ -602,10 +605,33 @@ grow_horizontal = 2
 grow_vertical = 2
 use_top_left = true
 
-[node name="Label" type="Label" parent="Control/PauseMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PauseMenu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PauseMenu/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("14_q0i8f")
 theme_override_font_sizes/font_size = 32
 text = "Paused"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PauseMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="Control/PauseMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_42cpl")
+text = "Restart"
+
+[node name="ResumeButton" type="Button" parent="Control/PauseMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_42cpl")
+text = "Resume"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -100
+texture = ExtResource("15_0i614")
 
 [connection signal="animation_looped" from="Sprite" to="." method="_on_sprite_animation_looped"]
+[connection signal="pressed" from="Control/PauseMenu/VBoxContainer/HBoxContainer/RestartButton" to="Control" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Control/PauseMenu/VBoxContainer/HBoxContainer/ResumeButton" to="Control" method="_on_resume_button_pressed"]

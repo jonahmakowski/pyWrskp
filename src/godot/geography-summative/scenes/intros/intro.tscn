@@ -1,0 +1,115 @@
+[gd_scene load_steps=8 format=3 uid="uid://6wiup57upd75"]
+
+[ext_resource type="FontFile" uid="uid://cf7ol80uefu05" path="res://assets/fonts/PixelOperator8.ttf" id="1_4bx60"]
+[ext_resource type="Script" uid="uid://c2if00rtedq8n" path="res://scripts/intro.gd" id="1_i2l1n"]
+[ext_resource type="Texture2D" uid="uid://8d666bgaeejs" path="res://assets/backgrounds/canada.png" id="1_ioskq"]
+[ext_resource type="PackedScene" uid="uid://dje52405l533i" path="res://scenes/intros/montreal_intro.tscn" id="2_tcdtj"]
+[ext_resource type="Texture2D" uid="uid://n33ekk2oostt" path="res://assets/Textbox.png" id="2_yjqpq"]
+[ext_resource type="FontFile" uid="uid://c4er40nrjgp5y" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_vb57f"]
+[ext_resource type="Texture2D" uid="uid://but2creg1awg6" path="res://assets/Jon.png" id="5_wfs7u"]
+
+[node name="Intro" type="Node2D"]
+script = ExtResource("1_i2l1n")
+next_scene = ExtResource("2_tcdtj")
+num_of_text = 4
+
+[node name="Text" type="Node" parent="."]
+
+[node name="Text1" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_4bx60")
+theme_override_font_sizes/font_size = 8
+text = "Welcome to the Amazing Race 2025! I’ll be your host and guide for this season. "
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Continue Button" type="Label" parent="Text/Text1"]
+z_index = 5
+layout_mode = 0
+offset_left = 86.0
+offset_top = -93.0
+offset_right = 233.0
+offset_bottom = -85.0
+theme_override_fonts/font = ExtResource("1_4bx60")
+theme_override_font_sizes/font_size = 8
+text = "Press Enter
+to Continue"
+horizontal_alignment = 2
+
+[node name="Text2" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_4bx60")
+theme_override_font_sizes/font_size = 8
+text = "We’re going to be traveling across Canada."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text3" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_4bx60")
+theme_override_font_sizes/font_size = 8
+text = "Your goal is to complete various challenges as quickly as possible."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Text4" type="Label" parent="Text"]
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_4bx60")
+theme_override_font_sizes/font_size = 8
+text = "Let the amazing race begin!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text"]
+offset_left = -108.0
+offset_top = 14.0
+offset_right = -87.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_vb57f")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4.75, 4.75)
+
+[node name="Backgrounds" type="Node" parent="."]
+
+[node name="Background fill" type="Sprite2D" parent="Backgrounds"]
+z_index = -5
+position = Vector2(0, -1)
+texture = ExtResource("1_ioskq")
+flip_h = true
+
+[node name="Canada" type="Sprite2D" parent="Backgrounds"]
+z_index = -5
+position = Vector2(0, -22)
+texture = ExtResource("1_ioskq")
+
+[node name="Textbox" type="Sprite2D" parent="Backgrounds"]
+z_index = -4
+texture = ExtResource("2_yjqpq")
+
+[node name="Jon1" type="Sprite2D" parent="."]
+position = Vector2(109, 10)
+texture = ExtResource("5_wfs7u")

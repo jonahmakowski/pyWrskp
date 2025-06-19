@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://u51ifk655xer"]
+
+[ext_resource type="Texture2D" uid="uid://d161vj74xvvij" path="res://assets/backgrounds/background 6/orig_big.png" id="1_87r6x"]
+[ext_resource type="FontFile" uid="uid://ce6744ysmbxio" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_f5pji"]
+
+[node name="ThatsAllForNow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -577.0
+offset_bottom = -326.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 2304.0
+offset_bottom = 1296.0
+use_top_left = true
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("1_87r6x")
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.194349, 0.194349, 0.194349, 1)
+theme_override_fonts/font = ExtResource("2_f5pji")
+theme_override_font_sizes/font_size = 128
+text = "That's all for now!"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
