@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=3 uid="uid://chdaent4aov1j"]
+
+[ext_resource type="Script" uid="uid://cbxi4ycr0nhwh" path="res://scripts/banff/banff.gd" id="1_g6is0"]
+[ext_resource type="PackedScene" uid="uid://bdkjt1vmyul03" path="res://objects/banff/obstacleSkiing.tscn" id="2_8gnyc"]
+[ext_resource type="PackedScene" uid="uid://c5dt8vlukxp6q" path="res://objects/players/skiier.tscn" id="3_mwidx"]
+[ext_resource type="PackedScene" uid="uid://bcxbaal1fvck" path="res://scenes/intros/pei_intro.tscn" id="4_8gnyc"]
+[ext_resource type="Script" uid="uid://4i1h5v4rdtj5" path="res://scripts/banff/obstacles.gd" id="4_s6da1"]
+[ext_resource type="PackedScene" uid="uid://du3c8yn50kaer" path="res://objects/banff/skiing_flag.tscn" id="5_n8m1c"]
+[ext_resource type="Texture2D" uid="uid://mv5hrnc51uxk" path="res://icon.svg" id="6_booah"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d0g1a"]
+distance = 300.0
+
+[node name="Banff" type="Node"]
+script = ExtResource("1_g6is0")
+obstacle_scene = ExtResource("2_8gnyc")
+
+[node name="Skiier" parent="." instance=ExtResource("3_mwidx")]
+unique_name_in_owner = true
+next_scene = ExtResource("4_8gnyc")
+
+[node name="Sides" type="Node" parent="."]
+
+[node name="Obstacles_Folder" type="Node" parent="."]
+
+[node name="Obstacles" type="Node2D" parent="."]
+position = Vector2(0, 1000)
+script = ExtResource("4_s6da1")
+obstacle = ExtResource("2_8gnyc")
+flag = ExtResource("5_n8m1c")
+
+[node name="Sprite2D" type="Sprite2D" parent="Obstacles"]
+z_index = -200
+texture = ExtResource("6_booah")
+
+[node name="Area2D" type="Area2D" parent="Obstacles"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacles/Area2D"]
+shape = SubResource("WorldBoundaryShape2D_d0g1a")

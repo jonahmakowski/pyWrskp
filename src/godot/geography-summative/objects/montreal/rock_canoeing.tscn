@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://g0la2gg2k0yu"]
+
+[ext_resource type="Script" uid="uid://b5vmq0bxgld18" path="res://scripts/montreal/canoeing_rock.gd" id="1_50hid"]
+[ext_resource type="Texture2D" uid="uid://bsu52r4fftcby" path="res://assets/rocks/rock 1.png" id="2_5wefo"]
+[ext_resource type="Texture2D" uid="uid://dgyjhtgq5aiu1" path="res://assets/rocks/log 1.png" id="3_jv46n"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dh84n"]
+radius = 7.0
+height = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lc31t"]
+radius = 40.0125
+
+[node name="Rock" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_50hid")
+
+[node name="Rock" type="Sprite2D" parent="."]
+texture = ExtResource("2_5wefo")
+region_enabled = true
+region_rect = Rect2(26, 44, 29, 16)
+
+[node name="Log" type="Sprite2D" parent="."]
+visible = false
+rotation = 1.5708
+texture = ExtResource("3_jv46n")
+region_enabled = true
+region_rect = Rect2(29, 33, 11, 26)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." groups=["obstacles"]]
+z_index = 1000
+position = Vector2(2.98023e-08, 0)
+scale = Vector2(1.45, 0.8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_dh84n")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_lc31t")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

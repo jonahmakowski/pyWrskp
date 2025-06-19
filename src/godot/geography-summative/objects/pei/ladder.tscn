@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://uij28jfnhasm"]
+
+[ext_resource type="Texture2D" uid="uid://c32ws220rar5s" path="res://assets/ladder.png" id="1_00ja2"]
+[ext_resource type="Script" uid="uid://b5fw2seyxqwyd" path="res://scripts/pei/ladder.gd" id="1_rsox6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_00ja2"]
+radius = 19.2354
+
+[node name="Ladder" type="StaticBody2D"]
+script = ExtResource("1_rsox6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 15)
+texture = ExtResource("1_00ja2")
+region_enabled = true
+region_rect = Rect2(42, 16, 15, 48)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(0, -15)
+texture = ExtResource("1_00ja2")
+region_enabled = true
+region_rect = Rect2(42, 16, 15, 48)
+
+[node name="BottomArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomArea2D"]
+position = Vector2(0, 39)
+shape = SubResource("CircleShape2D_00ja2")
+
+[node name="TopArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopArea2D"]
+position = Vector2(0, -38)
+shape = SubResource("CircleShape2D_00ja2")
+
+[connection signal="body_entered" from="BottomArea2D" to="." method="_on_bottom_area_2d_body_entered"]
+[connection signal="body_exited" from="BottomArea2D" to="." method="_on_bottom_area_2d_body_exited"]
+[connection signal="body_entered" from="TopArea2D" to="." method="_on_top_area_2d_body_entered"]
+[connection signal="body_exited" from="TopArea2D" to="." method="_on_top_area_2d_body_exited"]

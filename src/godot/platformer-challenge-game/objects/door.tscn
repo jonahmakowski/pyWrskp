@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://pc3ko15iryc8"]
+
+[ext_resource type="Script" uid="uid://cqc8d84iixif6" path="res://scripts/door.gd" id="1_j7xx1"]
+[ext_resource type="Texture2D" uid="uid://8yu7d2rbmwpf" path="res://assets/terrain/TX Village Props.png" id="2_khffo"]
+[ext_resource type="FontFile" uid="uid://ddmv4fwcipy41" path="res://assets/fonts/PixelOperator8.ttf" id="3_khffo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4hvcy"]
+size = Vector2(31.25, 34)
+
+[node name="Door" type="Node2D"]
+script = ExtResource("1_j7xx1")
+
+[node name="MainSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_khffo")
+region_enabled = true
+region_rect = Rect2(161, 574, 31, 34)
+
+[node name="ColorIcon" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(2, -3)
+texture = ExtResource("2_khffo")
+region_enabled = true
+region_rect = Rect2(202, 585, 11, 12)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_4hvcy")
+
+[node name="Wait" type="Label" parent="."]
+visible = false
+offset_left = -50.0
+offset_top = -34.0
+offset_right = 49.0
+offset_bottom = -26.0
+theme_override_fonts/font = ExtResource("3_khffo")
+theme_override_font_sizes/font_size = 8
+text = "Wait 1 second..."
+
+[node name="Interact" type="Label" parent="."]
+visible = false
+offset_left = -60.0
+offset_top = -34.0
+offset_right = 59.0
+offset_bottom = -26.0
+theme_override_fonts/font = ExtResource("3_khffo")
+theme_override_font_sizes/font_size = 8
+text = "Press F to interact"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

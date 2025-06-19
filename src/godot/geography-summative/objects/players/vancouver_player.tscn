@@ -1,0 +1,113 @@
+[gd_scene load_steps=15 format=3 uid="uid://c87s1bsrai8vs"]
+
+[ext_resource type="Script" uid="uid://baxbat1kwgj3g" path="res://scripts/vancouver/vancouver_player.gd" id="1_625hp"]
+[ext_resource type="Texture2D" uid="uid://c5mfyi6o7hdto" path="res://assets/Player3/main.png" id="2_ktlmg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n36s2"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(34, 15, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yaefa"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(1, 15, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxw4k"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(34, 15, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsjy1"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(67, 15, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_duldj"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(1, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aecse"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(34, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2pnf"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(67, 48, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgkn3"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(1, 114, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwaa1"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(34, 114, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xl8bw"]
+atlas = ExtResource("2_ktlmg")
+region = Rect2(67, 114, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a6c4y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n36s2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yaefa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxw4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsjy1")
+}],
+"loop": true,
+"name": &"walking_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_duldj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aecse")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2pnf")
+}],
+"loop": true,
+"name": &"walking_sideways",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgkn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwaa1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xl8bw")
+}],
+"loop": true,
+"name": &"walking_up",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mwia6"]
+
+[node name="VancouverPlayer" type="CharacterBody2D"]
+script = ExtResource("1_625hp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_a6c4y")
+animation = &"walking_sideways"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_mwia6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)

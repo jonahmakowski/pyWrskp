@@ -12,3 +12,11 @@ func _process(_delta: float) -> void:
 		else:
 			get_tree().paused = false
 			hide()
+
+func _on_restart_button_pressed() -> void:
+	get_tree().paused = false
+	Controller.kill_player()
+
+func _on_resume_button_pressed() -> void:
+	get_tree().paused = false
+	hide()

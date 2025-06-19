@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bccf1yl4sy0jm"]
+
+[ext_resource type="Script" uid="uid://c81sfjiw6e4e4" path="res://scripts/total_timer.gd" id="1_84rew"]
+
+[node name="TotalTimer" type="Node"]
+script = ExtResource("1_84rew")

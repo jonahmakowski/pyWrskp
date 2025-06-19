@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var health_base = 10
+@export var gives_coin = false
 var health = 0
 const SPEED = 100
 var player_direction = 0
@@ -10,6 +11,10 @@ var player_direction = 0
 
 func _ready():
 	health = health_base
+	if gives_coin and uuid not in Controller.coins: Controller.coins.append(uuid)
+	if gives_coin: $Coin.visible = true
+	if uuid in Controller.enemies_defeated:
+		queue_free()
 
 func reset():
 	position = respawn
@@ -79,4 +84,5 @@ func _on_sprite_animation_looped() -> void:
 
 func _on_enemy_audio_finished() -> void:
 	if health <= 0:
+		if gives_coin: Controller.coins_collected.append(uuid)
 		queue_free()

@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://rxk0b444mer0"]
+[gd_scene load_steps=7 format=4 uid="uid://rxk0b444mer0"]
 
 [ext_resource type="Texture2D" uid="uid://dscd0hc38gwbl" path="res://assets/terrain/TX Tileset Ground.png" id="1_amll8"]
 [ext_resource type="PackedScene" uid="uid://b2fcfspwwrmlw" path="res://entities/player.tscn" id="2_770am"]
-[ext_resource type="PackedScene" uid="uid://c562cpq45fb6x" path="res://entities/samurai_enemy.tscn" id="3_0ra3k"]
 [ext_resource type="PackedScene" uid="uid://b7bn2oom5f1i4" path="res://objects/kill_zone.tscn" id="4_cdatj"]
-[ext_resource type="PackedScene" uid="uid://c4o1eqnrc8omq" path="res://objects/heart.tscn" id="5_un07w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gup2b"]
 resource_name = "Terrain"
@@ -346,25 +344,19 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_gup2b")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8xmsw"]
-distance = -143.0
+distance = -230.0
 
 [node name="Level Template" type="Node2D"]
 
 [node name="terrain" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD//wAAAAAAAAAAAAAAAAAAAAABAAAAAAD//wEAAAAAAAEAAAAAAAEAAAABAAEAAAABAAAAAAACAAAAAAABAAEAAAACAAEAAAABAAIAAAACAAEAAAABAAMAAAACAAEAAAABAAQAAAACAAEAAAABAAUAAAACAAEAAAABAAYAAAACAAEAAAABAAcAAAACAAEAAAABAAgAAAACAAEAAAAAAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAAAAAYAAAABAAEAAAAAAAcAAAABAAEAAAAAAAgAAAABAAEAAAD//wIAAAAAAAEAAAD//wMAAAAAAAEAAAD//wQAAAAAAAEAAAD//wUAAAAAAAEAAAD//wYAAAAAAAEAAAD//wcAAAAAAAEAAAD//wgAAAAAAAEAAAD//wkAAAAAAAIAAAAAAAkAAAABAAIAAAABAAkAAAACAAIAAAAIAAAAAAABAAAAAAAHAAAAAAABAAAAAAAJAAAAAAABAAAAAAAGAAAAAAABAAAAAAAKAAAAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("AAD//wAAAAAAAAAAAAAAAAAAAAABAAAAAAD//wEAAAAAAAEAAAAAAAEAAAABAAEAAAABAAAAAAACAAAAAAABAAEAAAACAAEAAAABAAIAAAACAAEAAAABAAMAAAACAAEAAAABAAQAAAACAAEAAAABAAUAAAACAAEAAAABAAYAAAACAAEAAAABAAcAAAACAAEAAAABAAgAAAACAAEAAAAAAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAAAAAYAAAABAAEAAAAAAAcAAAABAAEAAAAAAAgAAAABAAEAAAD//wIAAAAAAAEAAAD//wMAAAAAAAEAAAD//wQAAAAAAAEAAAD//wUAAAAAAAEAAAD//wYAAAAAAAEAAAD//wcAAAAAAAEAAAD//wgAAAAAAAEAAAD//wkAAAAAAAIAAAAAAAkAAAABAAIAAAABAAkAAAACAAIAAAA=")
 tile_set = SubResource("TileSet_vgt4e")
 
 [node name="player" parent="." instance=ExtResource("2_770am")]
 position = Vector2(11, -19)
 
-[node name="enemy1" parent="." instance=ExtResource("3_0ra3k")]
-position = Vector2(271, -21)
-health_base = 1
-
 [node name="KillZone" parent="." instance=ExtResource("4_cdatj")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+position = Vector2(0, -87)
 shape = SubResource("WorldBoundaryShape2D_8xmsw")
-
-[node name="Heart" parent="." instance=ExtResource("5_un07w")]
-position = Vector2(206, -10)

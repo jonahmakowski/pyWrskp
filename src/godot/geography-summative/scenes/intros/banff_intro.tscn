@@ -1,0 +1,233 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjst304op04ol"]
+
+[ext_resource type="Script" uid="uid://c2if00rtedq8n" path="res://scripts/intro.gd" id="1_prfgq"]
+[ext_resource type="FontFile" uid="uid://cf7ol80uefu05" path="res://assets/fonts/PixelOperator8.ttf" id="2_y8kt1"]
+[ext_resource type="PackedScene" uid="uid://chdaent4aov1j" path="res://scenes/places/banff/banff.tscn" id="2_yi535"]
+[ext_resource type="FontFile" uid="uid://c4er40nrjgp5y" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_yi535"]
+[ext_resource type="Texture2D" uid="uid://n33ekk2oostt" path="res://assets/Textbox.png" id="5_jien1"]
+[ext_resource type="Texture2D" uid="uid://but2creg1awg6" path="res://assets/Jon.png" id="6_02gaa"]
+[ext_resource type="Texture2D" uid="uid://bser6x1kla2lh" path="res://assets/backgrounds/mountains.png" id="6_y8kt1"]
+
+[node name="BanffIntro" type="Node2D"]
+script = ExtResource("1_prfgq")
+next_scene = ExtResource("2_yi535")
+num_of_text = 8
+
+[node name="Text" type="Node" parent="."]
+
+[node name="Text1" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "Now that I’ve got my mic back, let’s resume the race."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text/Text1"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Text2" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "Whitehorse is a city located in Yukon and is known for its breathtaking scenery, access to"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text/Text2"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Text3" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "nature, and outdoor activities, all within a small city setting."
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text/Text3"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Text4" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "Your challenge is to ski down Mount Logan! But watch out for trees, rocks, and logs. Let the challenge"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text/Text4"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Text5" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "begin!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text/Text5"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Text6" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "Wait a second… It’s not Whitehorse! You’re supposed to be skiing down Lake Louise, Banff…"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jonah" type="Label" parent="Text/Text6"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jonah"
+
+[node name="Text7" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "My script says Mount Logan…"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jon" type="Label" parent="Text/Text7"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jon"
+
+[node name="Text8" type="Label" parent="Text"]
+visible = false
+offset_left = -114.0
+offset_top = 27.0
+offset_right = 115.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_y8kt1")
+theme_override_font_sizes/font_size = 8
+text = "Well, your script is wrong. GO!"
+autowrap_mode = 3
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Jonah" type="Label" parent="Text/Text8"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = -13.0
+offset_right = 30.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_yi535")
+theme_override_font_sizes/font_size = 8
+text = "Jonah"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4.75, 4.75)
+
+[node name="Backgrounds" type="Node" parent="."]
+
+[node name="Textbox" type="Sprite2D" parent="Backgrounds"]
+z_index = -4
+texture = ExtResource("5_jien1")
+
+[node name="Background" type="Sprite2D" parent="Backgrounds"]
+z_index = -20
+texture = ExtResource("6_y8kt1")
+
+[node name="Jon1" type="Sprite2D" parent="."]
+position = Vector2(109, 10)
+texture = ExtResource("6_02gaa")
