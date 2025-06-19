@@ -3,7 +3,6 @@ extends StaticBody2D
 enum color_enum {WHITE, YELLOW}
 
 @onready var pei_player: CharacterBody2D = $"../../PEIPlayer"
-@onready var total_yellow_req = $"../../GoodMussels".get_child_count()
 @export var color:color_enum
 
 func init(c:String, pos:Vector2):

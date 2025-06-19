@@ -129,7 +129,6 @@ z_index = 30
 collision_mask = 3
 script = ExtResource("1_epd3y")
 max_of_white = 2
-yellow_required = 10
 death_screen = ExtResource("2_yc8f8")
 next_scene = ExtResource("3_00w02")
 

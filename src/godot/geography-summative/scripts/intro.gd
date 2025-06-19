@@ -16,6 +16,7 @@ func _process(delta: float) -> void:
 		return
 	
 	var text_box = get_node('Text/Text' + str(current_text_box))
+
 	text_box.visible = true
 	current_delta_count += delta
 	

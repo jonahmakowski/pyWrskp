@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://de46inx8bf2xf"]
+[gd_scene load_steps=8 format=3 uid="uid://de46inx8bf2xf"]
 
 [ext_resource type="Script" uid="uid://c2if00rtedq8n" path="res://scripts/intro.gd" id="1_2pvsk"]
+[ext_resource type="PackedScene" uid="uid://ixqeudbqvcg1" path="res://scenes/places/victoria/victoria.tscn" id="2_dk1u7"]
 [ext_resource type="FontFile" uid="uid://cf7ol80uefu05" path="res://assets/fonts/PixelOperator8.ttf" id="2_y7mej"]
 [ext_resource type="FontFile" uid="uid://c4er40nrjgp5y" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="3_dk1u7"]
 [ext_resource type="Texture2D" uid="uid://n33ekk2oostt" path="res://assets/Textbox.png" id="5_gng7a"]
@@ -9,6 +10,7 @@
 
 [node name="VictoriaIntro" type="Node2D"]
 script = ExtResource("1_2pvsk")
+next_scene = ExtResource("2_dk1u7")
 num_of_text = 9
 
 [node name="Text" type="Node" parent="."]
