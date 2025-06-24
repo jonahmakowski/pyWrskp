@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://ceox5wdx8g7i2"]
+
+[ext_resource type="Script" uid="uid://bvvsckv422afe" path="res://Scripts/controller.gd" id="1_luahr"]
+[ext_resource type="PackedScene" uid="uid://cbsmafbjq80t6" path="res://Scenes/main.tscn" id="2_jf33l"]
+
+[node name="Controller" type="Node"]
+script = ExtResource("1_luahr")
+main_scene = ExtResource("2_jf33l")

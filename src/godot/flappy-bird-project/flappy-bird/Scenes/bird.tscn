@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://bs60qybi135rm"]
+
+[ext_resource type="Texture2D" uid="uid://br0vwbg18610t" path="res://Assets/Player/StyleBird1/Bird1-1.png" id="1_i8bdw"]
+[ext_resource type="Script" uid="uid://baggi5od16rqm" path="res://Scripts/bird.gd" id="1_mcegt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcegt"]
+atlas = ExtResource("1_i8bdw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnvpi"]
+atlas = ExtResource("1_i8bdw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vl8r2"]
+atlas = ExtResource("1_i8bdw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rr33m"]
+atlas = ExtResource("1_i8bdw")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xf4a6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcegt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnvpi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vl8r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rr33m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pfwoh"]
+radius = 6.0
+
+[node name="Bird" type="CharacterBody2D"]
+script = ExtResource("1_mcegt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xf4a6")
+autoplay = "default"
+frame = 3
+frame_progress = 0.294595
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pfwoh")
