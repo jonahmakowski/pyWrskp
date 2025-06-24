@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ssh81qlip700"
+path="res://.godot/imported/wall_corner_A_outside.obj-c39ed01f243fe7d49e176e76e97d2319.mesh"
+
+[deps]
+
+files=["res://.godot/imported/wall_corner_A_outside.obj-c39ed01f243fe7d49e176e76e97d2319.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/buildings/neutral/wall_corner_A_outside.obj"
+dest_files=["res://.godot/imported/wall_corner_A_outside.obj-c39ed01f243fe7d49e176e76e97d2319.mesh", "res://.godot/imported/wall_corner_A_outside.obj-c39ed01f243fe7d49e176e76e97d2319.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

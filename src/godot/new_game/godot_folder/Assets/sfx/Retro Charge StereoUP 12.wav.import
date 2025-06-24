@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dro22stm7lqx1"
+path="res://.godot/imported/Retro Charge StereoUP 12.wav-2594602d4d27e9b128232df0842282df.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Charge StereoUP 12.wav"
+dest_files=["res://.godot/imported/Retro Charge StereoUP 12.wav-2594602d4d27e9b128232df0842282df.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://birh2aifabkk"
+path="res://.godot/imported/Troubadeck 43 A Quest for Treats.ogg-53e6df9cdf99004c1f0eb3d908af2654.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 43 A Quest for Treats.ogg"
+dest_files=["res://.godot/imported/Troubadeck 43 A Quest for Treats.ogg-53e6df9cdf99004c1f0eb3d908af2654.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

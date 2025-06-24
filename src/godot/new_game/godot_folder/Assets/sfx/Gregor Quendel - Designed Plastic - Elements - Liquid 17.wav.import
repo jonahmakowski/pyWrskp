@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://blqlgjbvel2ud"
+path="res://.godot/imported/Gregor Quendel - Designed Plastic - Elements - Liquid 17.wav-2d56ee24fdebbee83744abb9429a2c60.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Plastic - Elements - Liquid 17.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Plastic - Elements - Liquid 17.wav-2d56ee24fdebbee83744abb9429a2c60.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://ht2jhv7ddmnk"]
+
+[ext_resource type="FontFile" uid="uid://1ixg8g32tecg" path="res://Assets/fonts/fibberish.ttf" id="1_e1x85"]
+[ext_resource type="FontFile" uid="uid://cn46opsbt5myy" path="res://Assets/fonts/NicerNightie.ttf" id="2_cjfk0"]
+[ext_resource type="Texture2D" uid="uid://cp2aqswk10epf" path="res://Assets/borders/boarder2.png" id="2_vj6dk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_110ce"]
+texture = ExtResource("2_vj6dk")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[resource]
+Label/fonts/font = ExtResource("1_e1x85")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_110ce")
+titlebox/fonts/font = ExtResource("2_cjfk0")

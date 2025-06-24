@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dpxv5hdv8rk8w"
+path="res://.godot/imported/Retro Electric Short 17.wav-dd0f0c2f88601b7fedb19e4b0979759d.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Electric Short 17.wav"
+dest_files=["res://.godot/imported/Retro Electric Short 17.wav-dd0f0c2f88601b7fedb19e4b0979759d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

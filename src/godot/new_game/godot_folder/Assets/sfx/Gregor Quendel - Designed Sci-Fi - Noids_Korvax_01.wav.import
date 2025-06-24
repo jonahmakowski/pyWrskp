@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d0byoh0nrt0o0"
+path="res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Noids_Korvax_01.wav-ba1f0e94b0d5de2bff93cd0b55a8b306.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Sci-Fi - Noids_Korvax_01.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Noids_Korvax_01.wav-ba1f0e94b0d5de2bff93cd0b55a8b306.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

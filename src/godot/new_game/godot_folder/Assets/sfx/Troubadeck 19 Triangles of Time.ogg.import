@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c8fl2gtxtd8tq"
+path="res://.godot/imported/Troubadeck 19 Triangles of Time.ogg-eba8e7b61a69df09771f64d904faa89a.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 19 Triangles of Time.ogg"
+dest_files=["res://.godot/imported/Troubadeck 19 Triangles of Time.ogg-eba8e7b61a69df09771f64d904faa89a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

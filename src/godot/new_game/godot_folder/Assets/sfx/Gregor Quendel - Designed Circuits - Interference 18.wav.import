@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c0l0ffu16c1te"
+path="res://.godot/imported/Gregor Quendel - Designed Circuits - Interference 18.wav-0eccff7f4a54cffe9cf53184c674a24a.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Circuits - Interference 18.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Circuits - Interference 18.wav-0eccff7f4a54cffe9cf53184c674a24a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

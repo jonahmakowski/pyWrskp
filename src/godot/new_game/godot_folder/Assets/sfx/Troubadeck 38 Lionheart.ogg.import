@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://hak8ed01x4ky"
+path="res://.godot/imported/Troubadeck 38 Lionheart.ogg-b079d3c24c7f57519b8e34cf66fea2df.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 38 Lionheart.ogg"
+dest_files=["res://.godot/imported/Troubadeck 38 Lionheart.ogg-b079d3c24c7f57519b8e34cf66fea2df.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

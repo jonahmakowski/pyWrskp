@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b46v4v25v3fjx"
+path="res://.godot/imported/Troubadeck 09 A Friend to Stand On.ogg-53e0317e82c91d002eb78c429ad6429b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 09 A Friend to Stand On.ogg"
+dest_files=["res://.godot/imported/Troubadeck 09 A Friend to Stand On.ogg-53e0317e82c91d002eb78c429ad6429b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

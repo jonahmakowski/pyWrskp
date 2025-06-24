@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cypvbjixon8su"
+path="res://.godot/imported/Gregor Quendel - Designed Mecha - Elements - Impact 01.wav-e86cef13b24562db40d169a6a4fdb8bd.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Mecha - Elements - Impact 01.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Mecha - Elements - Impact 01.wav-e86cef13b24562db40d169a6a4fdb8bd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

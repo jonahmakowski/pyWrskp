@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bs4jq0657kxg4"
+path="res://.godot/imported/Retro Passing Airplane 01.wav-d358225c3b9e127f933afde38afa1412.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Passing Airplane 01.wav"
+dest_files=["res://.godot/imported/Retro Passing Airplane 01.wav-d358225c3b9e127f933afde38afa1412.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

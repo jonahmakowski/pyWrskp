@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://0bv2r1hgtxo6"
+path="res://.godot/imported/building_market_yellow.obj-35acbc950a722a308fdb7f58e4e94f0c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/building_market_yellow.obj-35acbc950a722a308fdb7f58e4e94f0c.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/buildings/yellow/building_market_yellow.obj"
+dest_files=["res://.godot/imported/building_market_yellow.obj-35acbc950a722a308fdb7f58e4e94f0c.mesh", "res://.godot/imported/building_market_yellow.obj-35acbc950a722a308fdb7f58e4e94f0c.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

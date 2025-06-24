@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dnf7uctfamdbv"
+path="res://.godot/imported/building_tower_base_red.obj-4d604d3ada5b2f8bf17e7db246f5a1f0.mesh"
+
+[deps]
+
+files=["res://.godot/imported/building_tower_base_red.obj-4d604d3ada5b2f8bf17e7db246f5a1f0.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/buildings/red/building_tower_base_red.obj"
+dest_files=["res://.godot/imported/building_tower_base_red.obj-4d604d3ada5b2f8bf17e7db246f5a1f0.mesh", "res://.godot/imported/building_tower_base_red.obj-4d604d3ada5b2f8bf17e7db246f5a1f0.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

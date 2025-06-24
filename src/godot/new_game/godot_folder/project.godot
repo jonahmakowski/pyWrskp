@@ -1,0 +1,27 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="New Game"
+run/main_scene="uid://ceqmdophphojv"
+config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/image="uid://pgivvfo10jc7"
+config/icon="uid://ch1k3d0vbegg8"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+mouse_cursor/custom_image="uid://dcfkdb2hvkarx"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
