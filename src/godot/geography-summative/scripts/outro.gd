@@ -9,7 +9,10 @@ func _ready():
 	TotalTimer.timer_on = false
 	var data = load_data()
 	
-	if TotalTimer.total_time <= data['best']:
+	if TotalTimer.total_time <= data['best'] and TotalTimer.total_time >= data['worst']:
+		status = "Winner"
+		save(TotalTimer.total_time, TotalTimer.total_time)
+	elif TotalTimer.total_time <= data['best']:
 		status = "Winner"
 		save(TotalTimer.total_time, 0)
 	elif TotalTimer.total_time >= data['worst']:
@@ -53,7 +56,7 @@ func save(best=0, worst=0):
 
 func load_data():
 	if not FileAccess.file_exists("user://savegame.save"):
-		return {"best": 999*999, "worst": 0}
+		return {"best": 9999*9999, "worst": 0}
 	
 	var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
 	
