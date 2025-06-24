@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://cbsmafbjq80t6"]
+
+[ext_resource type="Script" uid="uid://51uvorfm212r" path="res://Scripts/main.gd" id="1_6bp64"]
+[ext_resource type="PackedScene" uid="uid://bs60qybi135rm" path="res://Scenes/bird.tscn" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://c1pvkyawu66j7" path="res://Scripts/ui.gd" id="1_kry3j"]
+[ext_resource type="Script" uid="uid://csul8os1ip4by" path="res://Scripts/pipe_summoner.gd" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://biw7rv3144kqa" path="res://Scenes/pipe.tscn" id="3_8gbba"]
+[ext_resource type="Texture2D" uid="uid://ejhpitexdue2" path="res://icon.svg" id="4_jjvhh"]
+[ext_resource type="Texture2D" uid="uid://hbn2ayyrkg6o" path="res://Assets/Background/Background5.png" id="6_21xkr"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bo1nx"]
+normal = Vector2(-1, 0)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_6bp64")
+
+[node name="UI" type="Control" parent="."]
+z_index = 20
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kry3j")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+layout_mode = 0
+offset_left = -125.0
+offset_top = -222.0
+offset_right = -59.0
+offset_bottom = -202.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Score Display" type="Label" parent="UI/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Score: 0"
+
+[node name="Bird" parent="." instance=ExtResource("1_jjgbg")]
+position = Vector2(-100, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="PipeSummoner" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_bo1nx")
+pipe = ExtResource("3_8gbba")
+
+[node name="Area2D" type="Area2D" parent="PipeSummoner"]
+position = Vector2(562.5, 0)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PipeSummoner/Area2D"]
+shape = SubResource("WorldBoundaryShape2D_bo1nx")
+
+[node name="Sprite2D" type="Sprite2D" parent="PipeSummoner/Area2D"]
+position = Vector2(32.25, -5.72205e-06)
+scale = Vector2(0.496094, 1.42188)
+texture = ExtResource("4_jjvhh")
+
+[node name="Pipes" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -20
+position = Vector2(-0.499966, -0.499995)
+scale = Vector2(1.73828, 1.73828)
+texture = ExtResource("6_21xkr")
+
+[connection signal="area_exited" from="PipeSummoner/Area2D" to="PipeSummoner" method="_on_area_2d_area_exited"]

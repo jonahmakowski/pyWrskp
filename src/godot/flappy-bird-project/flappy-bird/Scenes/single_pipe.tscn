@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://ev07sk33kdip"]
+
+[ext_resource type="Script" uid="uid://1d2hxhddvt2e" path="res://Scripts/single_pipe.gd" id="1_8p1dy"]
+[ext_resource type="Texture2D" uid="uid://brwyqt148choa" path="res://Assets/Tiles/Style 1/PipeStyle1.png" id="1_w2gwt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8p1dy"]
+size = Vector2(32, 354)
+
+[node name="SinglePipe" type="Node2D"]
+script = ExtResource("1_8p1dy")
+
+[node name="End" type="Sprite2D" parent="."]
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 19)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 168)
+shape = SubResource("RectangleShape2D_8p1dy")
+
+[node name="Middle1" type="Sprite2D" parent="."]
+position = Vector2(0, 30)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[node name="Middle2" type="Sprite2D" parent="."]
+position = Vector2(0, 72)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[node name="Middle3" type="Sprite2D" parent="."]
+position = Vector2(0, 114)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[node name="Middle4" type="Sprite2D" parent="."]
+position = Vector2(0, 156)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[node name="Middle5" type="Sprite2D" parent="."]
+position = Vector2(0, 198)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[node name="Middle6" type="Sprite2D" parent="."]
+position = Vector2(0, 240)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[node name="Middle7" type="Sprite2D" parent="."]
+position = Vector2(0, 282)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[node name="Middle8" type="Sprite2D" parent="."]
+position = Vector2(0, 324)
+texture = ExtResource("1_w2gwt")
+region_enabled = true
+region_rect = Rect2(0, 19, 32, 42)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
