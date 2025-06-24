@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://l0knoknp1rw6"
+path="res://.godot/imported/Gregor Quendel - Designed Sci-Fi - MusicOfTheSpheres_PrettyScape.wav-8403f8aeddad6f89cff4bb99e9ef480c.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Sci-Fi - MusicOfTheSpheres_PrettyScape.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Sci-Fi - MusicOfTheSpheres_PrettyScape.wav-8403f8aeddad6f89cff4bb99e9ef480c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

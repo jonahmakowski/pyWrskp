@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ce6eg674g48yi"
+path="res://.godot/imported/Nightmare Mode.wav-a630d3e699ff5b2fde2f8a88a7c51f19.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Nightmare Mode.wav"
+dest_files=["res://.godot/imported/Nightmare Mode.wav-a630d3e699ff5b2fde2f8a88a7c51f19.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

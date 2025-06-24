@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dfw0tnp10u46b"
+path="res://.godot/imported/Retro Jump StereoUP Simple 05.wav-8d721fae7297292ec05deca26ef316be.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Jump StereoUP Simple 05.wav"
+dest_files=["res://.godot/imported/Retro Jump StereoUP Simple 05.wav-8d721fae7297292ec05deca26ef316be.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

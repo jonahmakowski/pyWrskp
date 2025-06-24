@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://12s2lhywdxqq"
+path="res://.godot/imported/Gregor Quendel - Designed Plastic - Elements - Creaking 04.wav-730ad3d8d77a15bca4eb3bab4b2684e2.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Plastic - Elements - Creaking 04.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Plastic - Elements - Creaking 04.wav-730ad3d8d77a15bca4eb3bab4b2684e2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

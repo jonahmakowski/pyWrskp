@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dp0oqn5e4ymj6"
+path="res://.godot/imported/building_watermill_red.obj-cb8103803dcad22e10fb7bdfb0df8aaf.mesh"
+
+[deps]
+
+files=["res://.godot/imported/building_watermill_red.obj-cb8103803dcad22e10fb7bdfb0df8aaf.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/buildings/red/building_watermill_red.obj"
+dest_files=["res://.godot/imported/building_watermill_red.obj-cb8103803dcad22e10fb7bdfb0df8aaf.mesh", "res://.godot/imported/building_watermill_red.obj-cb8103803dcad22e10fb7bdfb0df8aaf.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

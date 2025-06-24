@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dv788v2e84x7b"
+path="res://.godot/imported/projectile_catapult.obj-8372fce7b5c39609f635159d472a00ca.mesh"
+
+[deps]
+
+files=["res://.godot/imported/projectile_catapult.obj-8372fce7b5c39609f635159d472a00ca.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/buildings/neutral/projectile_catapult.obj"
+dest_files=["res://.godot/imported/projectile_catapult.obj-8372fce7b5c39609f635159d472a00ca.mesh", "res://.godot/imported/projectile_catapult.obj-8372fce7b5c39609f635159d472a00ca.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

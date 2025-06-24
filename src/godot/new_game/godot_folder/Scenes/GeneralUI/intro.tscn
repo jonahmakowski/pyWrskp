@@ -1,0 +1,180 @@
+[gd_scene load_steps=16 format=3 uid="uid://ceqmdophphojv"]
+
+[ext_resource type="Theme" uid="uid://ht2jhv7ddmnk" path="res://theme.tres" id="1_7r7lk"]
+[ext_resource type="Texture2D" uid="uid://cmf7tcfkds57l" path="res://Assets/backgrounds/Sky.png" id="1_aklp4"]
+[ext_resource type="Texture2D" uid="uid://duhvxkqjsqglh" path="res://Assets/backgrounds/Rock Mountains.png" id="2_1u6a0"]
+[ext_resource type="FontFile" uid="uid://cn46opsbt5myy" path="res://Assets/fonts/NicerNightie.ttf" id="2_y3sie"]
+[ext_resource type="Texture2D" uid="uid://bs6ssktxpyb3f" path="res://Assets/backgrounds/Grass Mountains.png" id="3_auvo4"]
+[ext_resource type="Texture2D" uid="uid://ddg3tala5bjqd" path="res://Assets/buttons/pack4/quit_button.png" id="3_byh6w"]
+[ext_resource type="Script" uid="uid://bn42mufgl2xbg" path="res://Scripts/GeneralUI/quit_button.gd" id="4_7lhk2"]
+[ext_resource type="Texture2D" uid="uid://jifxw6usq612" path="res://Assets/buttons/pack4/start_button.png" id="4_e5oto"]
+[ext_resource type="AudioStream" uid="uid://ru2p7kwabjx1" path="res://Assets/sfx/Wood Block1.ogg" id="6_7lhk2"]
+[ext_resource type="Texture2D" uid="uid://cp2aqswk10epf" path="res://Assets/borders/boarder2.png" id="6_auvo4"]
+[ext_resource type="AudioStream" uid="uid://ytbqhyrquvqu" path="res://Assets/sfx/Troubadeck 34 Prickly Hugs.ogg" id="7_jc3jc"]
+[ext_resource type="Texture2D" uid="uid://ctnxencj877ui" path="res://Assets/buttons/pack4/settings_button.png" id="8_1u6a0"]
+[ext_resource type="Script" uid="uid://c7ngps24aej0" path="res://Scripts/GeneralUI/settings_button.gd" id="10_x8ou0"]
+[ext_resource type="Script" uid="uid://bbtmkckvhg8r3" path="res://Scripts/GeneralUI/play_button.gd" id="11_t62c2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t62c2"]
+texture = ExtResource("6_auvo4")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[node name="Intro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_aklp4")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_1u6a0")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_auvo4")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_7r7lk")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = -10
+
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer2/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_7r7lk")
+theme_override_fonts/font = ExtResource("2_y3sie")
+theme_override_font_sizes/font_size = 144
+text = "Game Title"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_7r7lk")
+theme_override_styles/panel = SubResource("StyleBoxTexture_t62c2")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="QuitButton" type="Button" parent="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_byh6w")
+flat = true
+script = ExtResource("4_7lhk2")
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("8_1u6a0")
+flat = true
+script = ExtResource("10_x8ou0")
+
+[node name="PlayButton" type="Button" parent="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_e5oto")
+flat = true
+script = ExtResource("11_t62c2")
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Spacer3" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_7lhk2")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_jc3jc")
+autoplay = true
+parameters/looping = true
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/QuitButton" to="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/QuitButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/SettingsButton" to="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/SettingsButton" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PlayButton" method="_on_pressed"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bybxe5n0wx1yr"
+path="res://.godot/imported/Light Ambient 1 (Loop).ogg-819badf3565ea4a9a1d1bb248577e814.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Light Ambient 1 (Loop).ogg"
+dest_files=["res://.godot/imported/Light Ambient 1 (Loop).ogg-819badf3565ea4a9a1d1bb248577e814.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

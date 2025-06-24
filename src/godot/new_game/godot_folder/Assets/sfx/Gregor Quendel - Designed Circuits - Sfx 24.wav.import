@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cf7fw8jlra84j"
+path="res://.godot/imported/Gregor Quendel - Designed Circuits - Sfx 24.wav-348a5468ca5463148e6324dd07439ed1.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Circuits - Sfx 24.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Circuits - Sfx 24.wav-348a5468ca5463148e6324dd07439ed1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

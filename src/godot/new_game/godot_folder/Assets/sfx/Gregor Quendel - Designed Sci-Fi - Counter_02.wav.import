@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cjyb8ge10sigw"
+path="res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Counter_02.wav-b96ef5b0866f23e135a7907ad4caf457.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Sci-Fi - Counter_02.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Counter_02.wav-b96ef5b0866f23e135a7907ad4caf457.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

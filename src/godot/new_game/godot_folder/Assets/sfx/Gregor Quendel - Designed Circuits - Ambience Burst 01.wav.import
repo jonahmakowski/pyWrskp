@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cgd51du41kb4i"
+path="res://.godot/imported/Gregor Quendel - Designed Circuits - Ambience Burst 01.wav-704963c2a7ef1643dbaaddfa1470cd2a.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Circuits - Ambience Burst 01.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Circuits - Ambience Burst 01.wav-704963c2a7ef1643dbaaddfa1470cd2a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

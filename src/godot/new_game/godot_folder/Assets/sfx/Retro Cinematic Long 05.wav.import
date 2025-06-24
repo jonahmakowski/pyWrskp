@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dvsrbwad4o0ep"
+path="res://.godot/imported/Retro Cinematic Long 05.wav-6f9b58e62b7f2bc53ed743498378c216.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Cinematic Long 05.wav"
+dest_files=["res://.godot/imported/Retro Cinematic Long 05.wav-6f9b58e62b7f2bc53ed743498378c216.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

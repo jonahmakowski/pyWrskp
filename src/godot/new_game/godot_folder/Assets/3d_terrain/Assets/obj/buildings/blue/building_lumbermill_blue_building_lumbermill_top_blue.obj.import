@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://byq0n2ml1rj5g"
+path="res://.godot/imported/building_lumbermill_blue_building_lumbermill_top_blue.obj-5b66fedf69d40f60e6f4f3b49dc8a3d1.mesh"
+
+[deps]
+
+files=["res://.godot/imported/building_lumbermill_blue_building_lumbermill_top_blue.obj-5b66fedf69d40f60e6f4f3b49dc8a3d1.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/buildings/blue/building_lumbermill_blue_building_lumbermill_top_blue.obj"
+dest_files=["res://.godot/imported/building_lumbermill_blue_building_lumbermill_top_blue.obj-5b66fedf69d40f60e6f4f3b49dc8a3d1.mesh", "res://.godot/imported/building_lumbermill_blue_building_lumbermill_top_blue.obj-5b66fedf69d40f60e6f4f3b49dc8a3d1.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

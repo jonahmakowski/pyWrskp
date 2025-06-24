@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bvt4h627jlwm7"
+path="res://.godot/imported/Retro Instrument - crystal - C04.wav-69e0241db645e026a8392dc8e144c060.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Instrument - crystal - C04.wav"
+dest_files=["res://.godot/imported/Retro Instrument - crystal - C04.wav-69e0241db645e026a8392dc8e144c060.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

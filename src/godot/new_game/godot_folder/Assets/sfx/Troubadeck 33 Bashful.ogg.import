@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ddh41updtfr5i"
+path="res://.godot/imported/Troubadeck 33 Bashful.ogg-c9e64d632dbaef81280015d031d0afb7.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 33 Bashful.ogg"
+dest_files=["res://.godot/imported/Troubadeck 33 Bashful.ogg-c9e64d632dbaef81280015d031d0afb7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

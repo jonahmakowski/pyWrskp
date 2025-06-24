@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bw0xfebxlwlpj"
+path="res://.godot/imported/Troubadeck 35 Lambicorn.ogg-a7c0b5a60c6e344f8708e6ae3039b972.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 35 Lambicorn.ogg"
+dest_files=["res://.godot/imported/Troubadeck 35 Lambicorn.ogg-a7c0b5a60c6e344f8708e6ae3039b972.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

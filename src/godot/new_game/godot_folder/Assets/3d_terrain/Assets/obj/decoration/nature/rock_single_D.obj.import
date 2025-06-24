@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dffgm7gtfsgyp"
+path="res://.godot/imported/rock_single_D.obj-97f3374b1f29231602b89f20d1e79788.mesh"
+
+[deps]
+
+files=["res://.godot/imported/rock_single_D.obj-97f3374b1f29231602b89f20d1e79788.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/decoration/nature/rock_single_D.obj"
+dest_files=["res://.godot/imported/rock_single_D.obj-97f3374b1f29231602b89f20d1e79788.mesh", "res://.godot/imported/rock_single_D.obj-97f3374b1f29231602b89f20d1e79788.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

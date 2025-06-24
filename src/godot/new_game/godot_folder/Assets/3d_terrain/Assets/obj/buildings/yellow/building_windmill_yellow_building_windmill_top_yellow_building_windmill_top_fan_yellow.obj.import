@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cbf1col68l0ud"
+path="res://.godot/imported/building_windmill_yellow_building_windmill_top_yellow_building_windmill_top_fan_yellow.obj-7fa8eca2c01b8b222ba4e0b22a09319e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/building_windmill_yellow_building_windmill_top_yellow_building_windmill_top_fan_yellow.obj-7fa8eca2c01b8b222ba4e0b22a09319e.mesh"]
+
+source_file="res://Assets/3d_terrain/Assets/obj/buildings/yellow/building_windmill_yellow_building_windmill_top_yellow_building_windmill_top_fan_yellow.obj"
+dest_files=["res://.godot/imported/building_windmill_yellow_building_windmill_top_yellow_building_windmill_top_fan_yellow.obj-7fa8eca2c01b8b222ba4e0b22a09319e.mesh", "res://.godot/imported/building_windmill_yellow_building_windmill_top_yellow_building_windmill_top_fan_yellow.obj-7fa8eca2c01b8b222ba4e0b22a09319e.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

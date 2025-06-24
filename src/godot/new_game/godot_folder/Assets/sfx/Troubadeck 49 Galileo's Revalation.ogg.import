@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dfa3uxdt3qf71"
+path="res://.godot/imported/Troubadeck 49 Galileo's Revalation.ogg-f3b7d7ca2b239893be97d1dba155538c.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 49 Galileo's Revalation.ogg"
+dest_files=["res://.godot/imported/Troubadeck 49 Galileo's Revalation.ogg-f3b7d7ca2b239893be97d1dba155538c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

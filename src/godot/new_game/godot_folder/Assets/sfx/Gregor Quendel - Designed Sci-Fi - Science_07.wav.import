@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://228adnhu1pr5"
+path="res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Science_07.wav-1e9e4a8bb6a1ed0d65d6a65916526875.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Sci-Fi - Science_07.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Sci-Fi - Science_07.wav-1e9e4a8bb6a1ed0d65d6a65916526875.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

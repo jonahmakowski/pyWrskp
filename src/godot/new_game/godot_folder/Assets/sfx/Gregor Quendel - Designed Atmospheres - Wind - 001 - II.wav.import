@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbatutarxr4d4"
+path="res://.godot/imported/Gregor Quendel - Designed Atmospheres - Wind - 001 - II.wav-10fe481b8c0731210b843a2a47120061.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Gregor Quendel - Designed Atmospheres - Wind - 001 - II.wav"
+dest_files=["res://.godot/imported/Gregor Quendel - Designed Atmospheres - Wind - 001 - II.wav-10fe481b8c0731210b843a2a47120061.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

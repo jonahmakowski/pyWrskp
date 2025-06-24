@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ydk4my3gcnlp"
+path="res://.godot/imported/Troubadeck 50 Queen's March.ogg-560319da7cacf7a4df4625a9973d23e5.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/sfx/Troubadeck 50 Queen's March.ogg"
+dest_files=["res://.godot/imported/Troubadeck 50 Queen's March.ogg-560319da7cacf7a4df4625a9973d23e5.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dhp0sg701eyx3"
+path="res://.godot/imported/Retro Falling Water 07.wav-5a40130e78d3683840ca787bd9bca442.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Falling Water 07.wav"
+dest_files=["res://.godot/imported/Retro Falling Water 07.wav-5a40130e78d3683840ca787bd9bca442.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

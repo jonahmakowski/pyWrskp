@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://0e7ff12qqbtc"
+path="res://.godot/imported/Retro Charge Electric Off StereoUP 03.wav-77fe663e679fbde80a9bedcf053cbdeb.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/Retro Charge Electric Off StereoUP 03.wav"
+dest_files=["res://.godot/imported/Retro Charge Electric Off StereoUP 03.wav-77fe663e679fbde80a9bedcf053cbdeb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
