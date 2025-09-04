@@ -33,7 +33,7 @@ try:
     if response.ok:
         print("✅ Webhook hit successfully!")
         print(f"Status Code: {response.status_code}")
-        
+
         print("\n--- Response Headers ---")
         if response.headers:
             # response.headers is a dictionary-like object. We can iterate through it.
