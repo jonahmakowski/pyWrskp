@@ -18,7 +18,7 @@ def get_summary(path: str):
             WEBHOOK_URL,
             headers=CUSTOM_HEADERS,
             json=payload,
-            timeout=30,
+            timeout=300,
         )
     except requests.exceptions.RequestException as exc:
         print(f"❌ Network error while calling the webhook: {exc}")
