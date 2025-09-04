@@ -150,7 +150,7 @@ github_commit:
     - git config user.email "jonah@makowski.ca"
     - git checkout main
     - git remote set-url origin "https://jonahmakowski:$GITHUB_PASSWORD@github.com/jonahmakowski/pyWrskp.git"
-    - git remote set-url gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git" || git remote add gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.4:8929/jonahmakowski/pyWrskp.git"
+    - git remote set-url gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git" || git remote add gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
     - git pull gitlab main
     - git config pull.rebase false
     - git pull origin
@@ -185,7 +185,7 @@ build_package:
 #    GIT_DEPTH: 0
 #  before_script:
 #    - pip install openai
-#    - pip install --upgrade pyWrkspPackage --trusted-host 192.168.86.9 --index-url http://192.168.86.4:8929/api/v4/projects/4/packages/pypi/simple
+#    - pip install --upgrade pyWrkspPackage --trusted-host 192.168.86.9 --index-url http://192.168.86.9:8929/api/v4/projects/4/packages/pypi/simple
 #    - apk add git
 #  script:
 #    - export API_KEY=${AI_API_KEY}
