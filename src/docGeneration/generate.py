@@ -1,7 +1,7 @@
 import os
 import subprocess
-from pyWrkspPackage import load_from_file
 import openai
+import new_n8n_version
 
 # Configuration
 CUSTOM_API_URL = "http://192.168.86.4:4001"  # Set your custom API endpoint here
@@ -57,6 +57,8 @@ for file_num, file in enumerate(source_files):
     with open(file, "r") as f:
         code = f.read()
 
+    # Old, and now obsolete version
+    """
     # Send the code to API for documentation
     prompt = load_from_file("src/docGeneration/prompt.md")
 
@@ -75,6 +77,11 @@ for file_num, file in enumerate(source_files):
     if not documentation:
         print(f"⚠️ No documentation generated for {file}")
         continue
+    """
+
+    # New version via n8n
+
+    documentation = new_n8n_version.get_summary(file)
 
     # Convert file path from /src/ to /docs/
     doc_path = (
