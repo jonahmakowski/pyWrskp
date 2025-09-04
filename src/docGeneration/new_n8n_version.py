@@ -4,12 +4,10 @@ import pyWrkspPackage
 
 WEBHOOK_URL = "http://192.168.86.2:5678/webhook/6a1ebb89-46f0-4716-9f6f-a655eaf98359"
 
-CUSTOM_HEADERS = {
-    "User-Agent": "python-requests/2.32.0",
-    "Accept": "application/json"
-}
+CUSTOM_HEADERS = {"User-Agent": "python-requests/2.32.0", "Accept": "application/json"}
 
-def get_summary(path:str):
+
+def get_summary(path: str):
     payload = {
         "file_contents": pyWrkspPackage.load_from_file(path),
         "path": path,
@@ -34,7 +32,7 @@ def get_summary(path:str):
                 print("\n--- Response Body (JSON) ---")
                 print(json.dumps(data, indent=2, ensure_ascii=False))
 
-                return data['output']['summary']
+                return data["output"]["summary"]
             except ValueError:
                 print("\n--- Response Body (raw) ---")
                 print(response.text)
