@@ -11,7 +11,7 @@ print("Modified files:", modified_files)
 
 # Filter files from /src/ that are Python or C++ source_files
 source_files = [
-    f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".gd"))
+    f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
 ]
 
 print(f"{len(source_files)}; Source files:", source_files)
@@ -29,6 +29,8 @@ for doc_file in documentation_files:
         doc_file.replace("docs/ai_docs/", "src/")
         .replace(".md", ".py")
         .replace(".markdown", ".gd")
+        .replace(".cpp.md", ".cpp")
+        .replace(".rs.md", ".rs")
     )
     if not os.path.exists(corresponding_source_file):
         print(f"Removing outdated documentation: {doc_file}")
@@ -80,6 +82,8 @@ for file_num, file in enumerate(source_files):
         file.replace("src/", "docs/ai_docs/")
         .replace(".py", ".md")
         .replace(".gd", ".markdown")
+        .replace(".cpp", ".cpp.md")
+        .replace(".rs", ".rs.md")
     )
 
     # Ensure parent directories exist
