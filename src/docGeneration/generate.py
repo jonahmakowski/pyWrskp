@@ -3,11 +3,6 @@ import subprocess
 import openai
 import new_n8n_version
 
-# Configuration
-CUSTOM_API_URL = "http://192.168.86.4:4001"  # Set your custom API endpoint here
-OPENAI_API_KEY = os.getenv("API_KEY")  # Your OpenAI API key or other service's API key
-MODEL_NAME = "codestral-latest"  # or other appropriate model name
-
 # Get list of modified files in the last commit
 git_diff_cmd = "git diff --name-only HEAD~1"
 modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlines()
@@ -43,9 +38,6 @@ for doc_file in documentation_files:
 if not source_files:
     print("No source files modified. Skipping doc generation.")
     exit(0)
-
-# Initialize OpenAI client with custom API URL
-client = openai.OpenAI(api_key=OPENAI_API_KEY, base_url=CUSTOM_API_URL)
 
 for file_num, file in enumerate(source_files):
     if not os.path.exists(file):
