@@ -1,7 +1,7 @@
 # Documentation for src/docGeneration/generate.py
 
 # AI Summary
-This code is responsible for generating documentation for modified source files in a project. It retrieves a list of modified files, filters them to include only source files, removes outdated documentation, and generates new documentation using the new_n8n_version.get_summary function. The documentation is then saved to the corresponding files in the docs/ai_docs/ directory.
+The code is a Python script that generates documentation for modified source files. It retrieves the list of modified files, filters them to include only Python or C++ source files, removes outdated documentation, and generates new documentation using the new_n8n_version.get_summary function. The script ensures that the parent directories exist and writes the documentation to the appropriate directory.
 
 The AI gave it a general rating of 8/10
 
@@ -9,11 +9,11 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and follows Python conventions, but there are a few areas where it could be improved, such as error handling and variable naming.# Functions
+The code is generally well-structured and follows Python conventions. However, there are a few areas where it could be improved, such as adding more comments and error handling.# Functions
 
-## get_modified_files
+## Get list of modified files in the last commit
 ### Explanation
-This function retrieves a list of files that have been modified in the last commit using the git diff command.
+This function retrieves the list of files that have been modified in the last commit using the git diff command.
 ### Code
 ```python
 git_diff_cmd = "git diff --name-only HEAD~1"
@@ -22,34 +22,23 @@ modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlin
 print("Modified files:", modified_files)
 ```
 
-## filter_source_files
+## Filter files from /src/ that are Python or C++ source_files
 ### Explanation
-This function filters the list of modified files to include only those files located in the /src/ directory and having extensions .py, .gd, .cpp, or .rs.
+This function filters the list of modified files to include only those files located in the /src/ directory that have a .py, .gd, .cpp, or .rs extension.
 ### Code
 ```python
 source_files = [
-    f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
+    f
+    for f in modified_files
+    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
 ]
 
-print(f"{lel(source_files)}; Source files:", source_files)
+print(f"{len(source_files)}; Source files:", source_files)
 ```
 
-## get_documentation_files
+## Remove old documentation for files that have been deleted
 ### Explanation
-This function retrieves a list of documentation files located in the docs/ai_docs/ directory.
-### Code
-```python
-documentation_files = [
-    os.path.join(dirpath, f)
-    for (dirpath, dirnames, filenames) in os.walk("docs/ai_docs/")
-    for f in filenames
-]
-print(f"{len(documentation_files)}; Documentation files:", documentation_files)
-```
-
-## remove_outdated_documentation
-### Explanation
-This function removes outdated documentation files by checking if the corresponding source file exists.
+This function removes outdated documentation files by checking if the corresponding source file exists. If the source file does not exist, the documentation file is deleted.
 ### Code
 ```python
 for doc_file in documentation_files:
@@ -65,9 +54,9 @@ for doc_file in documentation_files:
         os.remove(doc_file)
 ```
 
-## generate_documentation
+## Generate New Documentation
 ### Explanation
-This function generates documentation for each source file by reading the source code and using the new_n8n_version.get_summary function to generate the documentation. The documentation is then saved to the corresponding file in the docs/ai_docs/ directory.
+This function generates new documentation for the modified source files. It reads the source code, generates documentation using the new_n8n_version.get_summary function, and saves the documentation in the appropriate directory.
 ### Code
 ```python
 for file_num, file in enumerate(source_files):
@@ -100,6 +89,19 @@ for file_num, file in enumerate(source_files):
 
     print(f"✅ Saved docs: {doc_path}")
 ```
+
+## Get list of documentation files
+### Explanation
+This function retrieves the list of documentation files located in the docs/ai_docs/ directory.
+### Code
+```python
+documentation_files = [
+    os.path.join(dirpath, f)
+    for (dirpath, dirnames, filenames) in os.walk("docs/ai_docs/")
+    for f in filenames
+]
+print(f"{len(documentation_files)}; Documentation files:", documentation_files)
+```
 # Overall File Contents
 ```python
 import os
@@ -115,7 +117,9 @@ print("Modified files:", modified_files)
 
 # Filter files from /src/ that are Python or C++ source_files
 source_files = [
-    f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
+    f
+    for f in modified_files
+    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
 ]
 
 print(f"{len(source_files)}; Source files:", source_files)
