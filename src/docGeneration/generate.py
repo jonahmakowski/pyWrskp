@@ -11,7 +11,9 @@ print("Modified files:", modified_files)
 
 # Filter files from /src/ that are Python or C++ source_files
 source_files = [
-    f for f in modified_files if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
+    f
+    for f in modified_files
+    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
 ]
 
 print(f"{len(source_files)}; Source files:", source_files)
