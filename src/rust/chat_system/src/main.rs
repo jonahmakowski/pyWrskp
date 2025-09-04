@@ -3,7 +3,6 @@ use std::{
     net::{TcpListener, TcpStream},
 };
 
-
 fn main() {
     let listener = TcpListener::bind("0.0.0.0:7878").unwrap();
 
@@ -23,8 +22,7 @@ fn handle_connection(mut stream: TcpStream) {
 
         stream.write_all(response.as_bytes()).unwrap();
         println!("Got valid request: {}", request_line);
-    }
-    else {
+    } else {
         let response = "HTTP/1.1 404 NOT FOUND\r\n\r\n";
         stream.write_all(response.as_bytes()).unwrap();
         println!("Got invalid request: {}", request_line);
