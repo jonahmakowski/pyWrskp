@@ -1,5 +1,6 @@
 current_number = 1
 
+
 def is_prime(n: int) -> bool:
     current = 2
     while True:
@@ -8,6 +9,7 @@ def is_prime(n: int) -> bool:
         if n % current == 0:
             return False
         current += 1
+
 
 while True:
     if is_prime(current_number):
