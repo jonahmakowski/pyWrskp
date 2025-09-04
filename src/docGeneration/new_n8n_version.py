@@ -1,53 +1,44 @@
+import json
 import requests
 import pyWrkspPackage
 
-# The target URL for the webhook
-url = "http://192.168.86.2:5678/webhook-test/6a1ebb89-46f0-4716-9f6f-a655eaf98359"
+WEBHOOK_URL = "http://192.168.86.2:5678/webhook/6a1ebb89-46f0-4716-9f6f-a655eaf98359"
 
-# Define the custom headers as a Python dictionary.
-# The key is the header name, and the value is the header's content.
-custom_headers = {
-    "host": "192.168.86.2:5678",
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:140.0) Gecko/20100101 Firefox/140.0",
-    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "accept-language": "en-CA,en-US;q=0.7,en;q=0.3",
-    "accept-encoding": "gzip, deflate",
-    "dnt": "1",
-    "sec-gpc": "1",
-    "connection": "keep-alive",
-    "upgrade-insecure-requests": "1",
-    "priority": "u=0, i",
+CUSTOM_HEADERS = {
+    "User-Agent": "python-requests/2.32.0",
+    "Accept": "application/json"
 }
 
-payload = {
-    "file_contents": pyWrkspPackage.load_from_file("./generate.py"),
-    "path": "src/docGeneration/generate.py",
-}
+def get_summary(path:str):
+    payload = {
+        "file_contents": pyWrkspPackage.load_from_file(path),
+        "path": path,
+    }
 
-try:
-    # Send a POST request to the URL with the specified headers.
-    # A POST request is common for webhooks that receive data.
-    response = requests.get(url, headers=custom_headers, json=payload, timeout=1000)
-
-    # Check if the request was successful (status code 200-299)
-    if response.ok:
-        print("✅ Webhook hit successfully!")
-        print(f"Status Code: {response.status_code}")
-
-        print("\n--- Response Headers ---")
-        if response.headers:
-            # response.headers is a dictionary-like object. We can iterate through it.
-            for key, value in response.headers.items():
-                print(f"{key}: {value}")
-        else:
-            print("[No headers were returned in the response]")
-        print(response.json().keys())
-
+    try:
+        response = requests.post(
+            WEBHOOK_URL,
+            headers=CUSTOM_HEADERS,
+            json=payload,
+            timeout=30,
+        )
+    except requests.exceptions.RequestException as exc:
+        print(f"❌ Network error while calling the webhook: {exc}")
     else:
-        print(f"❌ Failed to hit webhook.")
-        print(f"Status Code: {response.status_code}")
-        print(f"Response: {response.text}")
+        if response.ok:
+            print("✅ Webhook hit successfully!")
+            print(f"Status Code: {response.status_code}")
 
-except requests.exceptions.RequestException as e:
-    # Handle potential network errors (e.g., no internet connection)
-    print(f"An error occurred: {e}")
+            try:
+                data = response.json()
+                print("\n--- Response Body (JSON) ---")
+                print(json.dumps(data, indent=2, ensure_ascii=False))
+
+                return data['output']['summary']
+            except ValueError:
+                print("\n--- Response Body (raw) ---")
+                print(response.text)
+        else:
+            print(f"❌ Webhook returned an error.")
+            print(f"Status Code: {response.status_code}")
+            print(f"Response body:\n{response.text}")
