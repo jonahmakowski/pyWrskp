@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://scw57shwwkki"]
+
+[sub_resource type="GDScript" id="GDScript_gc6yq"]
+resource_name = "CardAmountDisplay"
+script/source = "extends PanelContainer
+
+var player_number: int
+@onready var player: Label = %Player
+@onready var cards: Label = %Cards
+
+func setup(num):
+	player_number = num
+
+func _ready() -> void:
+	player.text = \"Player #{0}\".format([player_number+1])
+	cards.text = \"{0} Cards\".format([len(Globals.president_hands[player_number])])
+
+func _process(_delta: float):
+	if len(Globals.president_hands[player_number]) > 0:
+		cards.text = \"{0} Cards\".format([len(Globals.president_hands[player_number])])
+	else:
+		var rank = Controller.get_index_of_generic(player_number, Globals.rankings)
+		cards.text = \"Winner! #{0}\".format([rank+1])
+"
+
+[node name="CardAmountDisplay" type="PanelContainer"]
+offset_right = 72.0
+offset_bottom = 23.0
+script = SubResource("GDScript_gc6yq")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Player" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Player #1"
+horizontal_alignment = 1
+
+[node name="Cards" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "0 Cards"
+horizontal_alignment = 1

@@ -1,0 +1,126 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhu21rm22kh4t"]
+
+[ext_resource type="Script" uid="uid://cahkuqpc7ruxm" path="res://scripts/president/president_round.gd" id="1_west6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w22m3"]
+bg_color = Color(0.301961, 0.301961, 0.301961, 1)
+
+[sub_resource type="GDScript" id="GDScript_s11fr"]
+resource_name = "Round Over Screen"
+script/source = "extends PanelContainer
+
+var active = true
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	if active and Input.is_action_just_pressed('start_turn'):
+		active = false
+		visible = false
+"
+
+[node name="PresidentRound" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_west6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Give Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+action_mode = 0
+button_mask = 7
+text = "Give"
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer3" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.06
+
+[node name="Card Hbox" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer/Card Hbox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Card Area" type="Node" parent="VBoxContainer/Card Hbox"]
+unique_name_in_owner = true
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/Card Hbox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Information Display" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 100
+text = "Player #1 Select 2 Cards to give away."
+horizontal_alignment = 1
+
+[node name="RoundOver" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w22m3")
+script = SubResource("GDScript_s11fr")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RoundOver"]
+layout_mode = 2
+alignment = 1
+
+[node name="Round Over Label" type="Label" parent="RoundOver/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 200
+text = "Round is Over!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player Turn Label on Round Change" type="Label" parent="RoundOver/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Player #1"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Give Button" to="." method="_on_give_button_pressed"]

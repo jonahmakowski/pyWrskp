@@ -1,0 +1,20 @@
+[gd_scene load_steps=9 format=3 uid="uid://beplf1hgx8c20"]
+
+[ext_resource type="Script" uid="uid://bk0t0pmbc5b33" path="res://scripts/globals.gd" id="1_e82qx"]
+[ext_resource type="PackedScene" uid="uid://bw5rlylohoomk" path="res://scenes/main_menu.tscn" id="2_gnr3j"]
+[ext_resource type="PackedScene" uid="uid://d1nor6xn5k2nh" path="res://scenes/president/card.tscn" id="2_uf85h"]
+[ext_resource type="PackedScene" uid="uid://ba5gl4vrfy0ry" path="res://scenes/president/presidentNew.tscn" id="2_wu3ti"]
+[ext_resource type="PackedScene" uid="uid://c7vbu5efpi7wy" path="res://scenes/options_menu.tscn" id="3_0wpll"]
+[ext_resource type="PackedScene" uid="uid://bhu21rm22kh4t" path="res://scenes/president/presidentRound.tscn" id="4_y8y8d"]
+[ext_resource type="PackedScene" uid="uid://dklgx76u31upp" path="res://scenes/president/scoreDisplay.tscn" id="5_d3yge"]
+[ext_resource type="PackedScene" uid="uid://cl1u5sgx8wrkw" path="res://scenes/president/presidentMenu.tscn" id="8_uyay2"]
+
+[node name="Globals" type="Node"]
+script = ExtResource("1_e82qx")
+main_menu = ExtResource("2_gnr3j")
+options_menu = ExtResource("3_0wpll")
+president_scene = ExtResource("2_wu3ti")
+president_card_scene = ExtResource("2_uf85h")
+president_round_scene = ExtResource("4_y8y8d")
+president_score_scene = ExtResource("5_d3yge")
+president_menu = ExtResource("8_uyay2")

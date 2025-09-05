@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://dklgx76u31upp"]
+
+[ext_resource type="Script" uid="uid://ch8qjnaxm0ec4" path="res://scripts/president/score_display.gd" id="1_5humi"]
+[ext_resource type="PackedScene" uid="uid://cio3guy5nlyvx" path="res://scenes/president/scoreDisplayHelper.tscn" id="2_q5jwl"]
+
+[node name="ScoreDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5humi")
+helper = ExtResource("2_q5jwl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VScrollBar" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Grid" type="GridContainer" parent="VBoxContainer/VScrollBar"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Continue" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Continue"
+
+[connection signal="pressed" from="VBoxContainer/Continue" to="." method="_on_continue_pressed"]
