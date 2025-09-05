@@ -48,9 +48,9 @@ for file_num, file in enumerate(source_files):
         continue
 
     print(f"{file_num} Generating docs for: {file}")
-    
+
     # Old, and now obsolete version via direct OpenAI API
-    
+
     """
     # Read the source code
     with open(file, "r") as f:
@@ -83,7 +83,7 @@ for file_num, file in enumerate(source_files):
 
     # Convert file path from /src/ to /docs/
     doc_path = "docs/ai_docs/" + file.split("/", 1)[1]
-    
+
     # Change the file extension to .md
     doc_path = (
         doc_path.replace(".py", ".md")
