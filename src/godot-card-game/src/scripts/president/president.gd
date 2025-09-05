@@ -91,7 +91,9 @@ func valid_hand():
 		var num_of_selected_cards = len(selected_cards)
 		var num_of_played_cards = len(currently_played)
 		
-		if num_of_played_cards == 1 and num_of_selected_cards != 1:
+		if 2 == currently_played[0].card.rank:
+			return false
+		elif num_of_played_cards == 1 and num_of_selected_cards != 1:
 			return false
 		elif num_of_played_cards == 2 and num_of_selected_cards != 1:
 			return false

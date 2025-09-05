@@ -8,7 +8,7 @@ var current_good_num = 0
 var hands = []
 var selected_cards = []
 
-@onready var rankings = Globals.rankings
+@onready var rankings = Globals.rankings.duplicate(true)
 @onready var round_over: PanelContainer = %RoundOver
 @onready var card_hbox: HBoxContainer = %"Card Hbox"
 @onready var card_area: Node = %"Card Area"
@@ -21,6 +21,9 @@ var selected_cards = []
 @onready var card_scene: PackedScene = Globals.president_card_scene
 
 func show_hand(hand: Array):
+	for h in hands:
+		h.sort_custom(Controller.president_sort_hand)
+	
 	var children = card_hbox.get_children()
 	for child in children:
 		if child.is_in_group("card"):
@@ -58,7 +61,7 @@ func _ready() -> void:
 		for unimportant in range(Globals.num_of_players): Globals.president_scores.append([]) # Fill it with empty lists
 	
 	# Set the current score to give to the number of players
-	var score_to_give = Globals.num_of_players
+	var score_to_give = Globals.num_of_players - 1
 	
 	for player in Globals.rankings: # For each player in the rankings
 		Globals.president_scores[player].append(score_to_give) # Give them their score
