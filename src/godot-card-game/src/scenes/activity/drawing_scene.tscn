@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://1yjrci1uj7nx"]
+
+[ext_resource type="Script" uid="uid://dkvudruwae56t" path="res://scripts/activity/drawing_scene.gd" id="1_pewco"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_up3i5"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="DrawingScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pewco")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_up3i5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -111.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Spacer" type="Control" parent="HBoxContainer"]
+z_index = -100
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Success" type="Button" parent="HBoxContainer"]
+z_index = 100
+layout_mode = 2
+text = "Success"
+
+[node name="Spacer2" type="Control" parent="HBoxContainer"]
+z_index = -100
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fail" type="Button" parent="HBoxContainer"]
+z_index = 100
+layout_mode = 2
+text = "Fail"
+
+[node name="Spacer3" type="Control" parent="HBoxContainer"]
+z_index = -100
+layout_mode = 2
+size_flags_horizontal = 3

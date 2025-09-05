@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1nor6xn5k2nh"]
+
+[ext_resource type="Texture2D" uid="uid://bk47awbq6bcef" path="res://assets/cards/0/clubs_1.png" id="1_1frsx"]
+[ext_resource type="Script" uid="uid://uyovlaw1ii7l" path="res://scripts/president/card.gd" id="1_t2sfb"]
+
+[node name="Card" type="TextureRect" groups=["card"]]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_1frsx")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("1_t2sfb")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

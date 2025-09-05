@@ -1,0 +1,238 @@
+[gd_scene load_steps=10 format=3 uid="uid://ba5gl4vrfy0ry"]
+
+[ext_resource type="Script" uid="uid://dq3bckn2rq0vn" path="res://scripts/president/president.gd" id="1_wx1wy"]
+[ext_resource type="PackedScene" uid="uid://scw57shwwkki" path="res://scenes/president/cardAmountDisplay.tscn" id="3_osqdi"]
+[ext_resource type="PackedScene" uid="uid://d1nor6xn5k2nh" path="res://scenes/president/card.tscn" id="3_qspbj"]
+[ext_resource type="PackedScene" uid="uid://bhu21rm22kh4t" path="res://scenes/president/presidentRound.tscn" id="3_xrhbe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trtgy"]
+bg_color = Color(0.301961, 0.301961, 0.301961, 1)
+corner_detail = 1
+
+[sub_resource type="GDScript" id="GDScript_5rxyo"]
+resource_name = "NextTurn"
+script/source = "extends PanelContainer
+
+@onready var label: Label = $Label
+@onready var president: Control = $\"..\"
+@onready var next_player_timer: Timer = %NextPlayerTimer
+
+var currently_active = false
+var first_frame = false
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+
+func next_turn():
+	currently_active = true
+	first_frame = true
+	visible = true
+	Globals.card_select_enabled = false
+	label.text = \"It's Player #{0}'s Turn\".format([president.current_hand+1])
+	get_tree().paused = true
+
+func _process(_delta: float) -> void:
+	if first_frame:
+		await get_tree().process_frame
+		first_frame = false
+	
+	if Input.is_action_just_pressed(\"start_turn\"):
+		visible = false
+		currently_active = false
+		Globals.card_select_enabled = true
+		get_tree().paused = false
+"
+
+[sub_resource type="GDScript" id="GDScript_qyl4p"]
+resource_name = "Play"
+script/source = "extends Button
+
+@onready var president: Control = $\"../../..\"
+@onready var next_player_menu: PanelContainer = %\"Next Player Menu\"
+
+func _on_pressed() -> void:
+	if not next_player_menu.currently_active:
+		president.run_hand()
+"
+
+[sub_resource type="GDScript" id="GDScript_g5h1i"]
+resource_name = "Pass"
+script/source = "extends Button
+
+@onready var president: Control = $\"../../..\"
+@onready var next_player_menu: PanelContainer = %\"Next Player Menu\"
+
+func _on_pressed() -> void:
+	if not next_player_menu.currently_active:
+		president.pass_hand()
+"
+
+[sub_resource type="GDScript" id="GDScript_trtgy"]
+resource_name = "Hand Display"
+script/source = "extends Label
+
+@onready var president: Control = $\"../..\"
+
+func update():
+	text = \"It's Player #{0}'s hand!\".format([president.current_hand+1])
+
+func _ready() -> void:
+	update()
+
+func _on_timer_timeout() -> void:
+	update()
+"
+
+[node name="President" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wx1wy")
+card_scene = ExtResource("3_qspbj")
+inbetween_scene = ExtResource("3_xrhbe")
+card_amount_display = ExtResource("3_osqdi")
+
+[node name="Next Player Menu" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtgy")
+script = SubResource("GDScript_5rxyo")
+
+[node name="Label" type="Label" parent="Next Player Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "It's Player #[Player Numbers]'s Turn"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Spacer2" type="Control" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Card Played Area" type="HBoxContainer" parent="VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Play" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+action_mode = 0
+button_mask = 7
+text = "Play Hand"
+script = SubResource("GDScript_qyl4p")
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Pass" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+action_mode = 0
+button_mask = 7
+text = "Pass"
+script = SubResource("GDScript_g5h1i")
+
+[node name="Spacer3" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer3" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.06
+
+[node name="Card Hbox" type="HBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+alignment = 1
+
+[node name="Spacer" type="Control" parent="VBoxContainer/Card Hbox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Card Area" type="Node" parent="VBoxContainer/Card Hbox"]
+unique_name_in_owner = true
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/Card Hbox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Hand Display" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 100
+text = "It's Player #___'s hand!"
+horizontal_alignment = 1
+script = SubResource("GDScript_trtgy")
+
+[node name="Card Count Area" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="NextPlayerTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Play" to="VBoxContainer/HBoxContainer/Play" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Pass" to="VBoxContainer/HBoxContainer/Pass" method="_on_pressed"]
+[connection signal="timeout" from="NextPlayerTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="NextPlayerTimer" to="VBoxContainer/Hand Display" method="_on_timer_timeout"]
