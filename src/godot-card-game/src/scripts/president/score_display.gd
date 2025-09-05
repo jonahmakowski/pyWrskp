@@ -2,14 +2,14 @@ extends Control
 
 @onready var next_scene: PackedScene = Globals.president_scene
 
-@onready var scores = Globals.president_scores
+@onready var scores = Globals.president_scores.duplicate(true)
 @onready var num_of_players = Globals.num_of_players
 
 @onready var grid: GridContainer = %Grid
 
 @export var helper: PackedScene
 
-var test_mode = false # Sets the score
+const test_mode = false # Sets the score
 
 func _ready():
 	if test_mode:
@@ -18,7 +18,7 @@ func _ready():
 	for index in range(num_of_players):
 		if len(scores[index]) == 0:
 			Globals.president_scores[index].append(0)
-			scores = Globals.president_scores
+			scores = Globals.president_scores.duplicate(true)
 	
 	var totals = []
 	
