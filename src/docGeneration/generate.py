@@ -1,6 +1,5 @@
 import os
 import subprocess
-import openai
 import new_n8n_version
 
 # Get list of modified files in the last commit
@@ -49,12 +48,15 @@ for file_num, file in enumerate(source_files):
         continue
 
     print(f"{file_num} Generating docs for: {file}")
+    
+    # Old, and now obsolete version via direct OpenAI API
+    
+    """
     # Read the source code
     with open(file, "r") as f:
         code = f.read()
 
-    # Old, and now obsolete version
-    """
+    
     # Send the code to API for documentation
     prompt = load_from_file("src/docGeneration/prompt.md")
 
@@ -80,9 +82,11 @@ for file_num, file in enumerate(source_files):
     documentation = new_n8n_version.get_summary(file)
 
     # Convert file path from /src/ to /docs/
+    doc_path = "docs/ai_docs/" + file.split("/", 1)[1]
+    
+    # Change the file extension to .md
     doc_path = (
-        file.replace("src/", "docs/ai_docs/")
-        .replace(".py", ".md")
+        doc_path.replace(".py", ".md")
         .replace(".gd", ".markdown")
         .replace(".cpp", ".cpp.md")
         .replace(".rs", ".rs.md")
