@@ -1,0 +1,111 @@
+diff --git a/src/godot-card-game-preproccessing/activity_words.py b/src/godot-card-game-preproccessing/activity_words.py
+index 57ce3521c..fcaa8542b 100644
+--- a/src/godot-card-game-preproccessing/activity_words.py
++++ b/src/godot-card-game-preproccessing/activity_words.py
+@@ -4,6 +4,7 @@ import os
+ from dotenv import load_dotenv
+ from time import sleep
+ 
++
+ def get_word_definition(word: str) -> list[str] | str:
+     """
+     Gets the definition(s) of a word using the dictionaryapi.dev API.
+@@ -18,31 +19,33 @@ def get_word_definition(word: str) -> list[str] | str:
+                          or an API error occurs.
+     """
+     base_url = "https://api.dictionaryapi.dev/api/v2/entries/en/"
+-    api_url = f"{base_url}{word.lower()}" # Convert to lowercase for consistent API calls
++    api_url = (
++        f"{base_url}{word.lower()}"  # Convert to lowercase for consistent API calls
++    )
+ 
+     try:
+         response = requests.get(api_url)
+-        response.raise_for_status() # Raises an HTTPError for bad responses (4xx or 5xx)
++        response.raise_for_status()  # Raises an HTTPError for bad responses (4xx or 5xx)
+ 
+         data = response.json()
+ 
+         if not data:
+             return f"No data found for '{word}'. The API returned an empty response."
+-        
++
+         # The API returns a list, even for a single word query.
+         # Typically, the first element contains the primary information.
+         word_info = data[0]
+ 
+         definitions = []
+-        if 'meanings' in word_info:
+-            for meaning in word_info['meanings']:
+-                part_of_speech = meaning.get('partOfSpeech', 'N/A')
+-                if 'definitions' in meaning:
+-                    for definition_obj in meaning['definitions']:
+-                        definition_text = definition_obj.get('definition')
++        if "meanings" in word_info:
++            for meaning in word_info["meanings"]:
++                part_of_speech = meaning.get("partOfSpeech", "N/A")
++                if "definitions" in meaning:
++                    for definition_obj in meaning["definitions"]:
++                        definition_text = definition_obj.get("definition")
+                         if definition_text:
+                             definitions.append(f"({part_of_speech}) {definition_text}")
+-        
++
+         if definitions:
+             return definitions
+         else:
+@@ -63,11 +66,12 @@ def get_word_definition(word: str) -> list[str] | str:
+         return "Timeout error: The request to the dictionary API took too long."
+     except requests.exceptions.RequestException as e:
+         return f"An unexpected request error occurred: {e}"
+-    except ValueError: # JSON decoding error
++    except ValueError:  # JSON decoding error
+         return f"Error: Could not decode JSON response from the API for '{word}'."
+-    except IndexError: # If data is empty or not in expected list format
++    except IndexError:  # If data is empty or not in expected list format
+         return f"Error: Unexpected response format from API for '{word}'."
+ 
++
+ file = pyWrkspPackage.load_from_file("google-10000-english-no-swears.txt")
+ words = file.split("\n")
+ 
+@@ -80,7 +84,7 @@ for index, word in enumerate(words):
+         if isinstance(definitions, list):
+             words_with_definitions[word] = definitions
+         else:
+-            print(definitions) 
++            print(definitions)
+ 
+ pyWrkspPackage.json_write_file("words_with_definitions.json", words_with_definitions)
+ 
+@@ -95,10 +99,18 @@ system_prompt = pyWrkspPackage.load_from_file("activity_words_system_prompt.md")
+ ratings_and_definitions = {}
+ 
+ for index, word in enumerate(words_with_definitions.keys()):
+-    result, _ = pyWrkspPackage.ai_response([{"role": "system", "content": system_prompt}, {'role': 'user', 'content': "Word: {}".format(word)}], 'litellm/general_model', url="http://192.168.86.11:4001", key=ai_key)
+-    print('\n\nWord: {}. ({}/{})'.format(word, index + 1, len(words_with_definitions)))
++    result, _ = pyWrkspPackage.ai_response(
++        [
++            {"role": "system", "content": system_prompt},
++            {"role": "user", "content": "Word: {}".format(word)},
++        ],
++        "litellm/general_model",
++        url="http://192.168.86.11:4001",
++        key=ai_key,
++    )
++    print("\n\nWord: {}. ({}/{})".format(word, index + 1, len(words_with_definitions)))
+     print(result)
+-    
++
+     speaking = int(result.split("\n")[0].split(": ")[1])
+     pantomiming = int(result.split("\n")[1].split(": ")[1])
+     drawing = int(result.split("\n")[2].split(": ")[1])
+@@ -107,7 +119,7 @@ for index, word in enumerate(words_with_definitions.keys()):
+         "definitions": words_with_definitions[word],
+         "speaking": speaking,
+         "pantomiming": pantomiming,
+-        "drawing": drawing
++        "drawing": drawing,
+     }
+ 
+ pyWrkspPackage.json_write_file("activity_words.json", ratings_and_definitions)
