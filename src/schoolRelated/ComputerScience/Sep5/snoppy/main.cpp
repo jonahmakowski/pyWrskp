@@ -27,7 +27,7 @@ int main() {
     // Print everything except the bmi category
     printf("Age\tHeight(cm)\tWeight(kg)\tBMI\t\tCategory\n");
     printf("---\t----------\t----------\t--------\t-----------\n");
-    printf("%3d\t%10d\t%10.2f\t%8.2f\t", age, height, weight, bmi);
+    printf("%3d\t%10d\t%10.1f\t%8.2f\t", age, height, weight, bmi);
 
     // Choose the bmi using if/then (selection) statements
     if (bmi <= 18.4) {
