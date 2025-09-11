@@ -36,12 +36,12 @@ int main() {
     place[strcspn(place, "\n")] = '\0';
 
     // Get input for profession
-    printf("Enter a profession:\n");
+    printf("Enter a profession (Plural):\n");
     fgets(profession, sizeof(profession), stdin);
     profession[strcspn(profession, "\n")] = '\0';
 
     // Get input for insult
-    printf("Enter an insult:\n");
+    printf("Enter an insult (like idiot):\n");
     fgets(insult, sizeof(insult), stdin);
     insult[strcspn(insult, "\n")] = '\0';
 
