@@ -1,22 +1,22 @@
 # Documentation for src/schoolRelated/ComputerScience/Sep10/funny_headlines/main.cpp
 
 # AI Summary
-This C++ program is a simple "funny headline generator." It prompts the user for various inputs such as a name, country, verb, place, profession, insult, a percentage, and a number of people. It then uses these inputs to construct and display four different humorous headlines.
+This code initializes variables for name, country, verb, place, profession, insult, people, and percentage. It then prompts the user to enter values for these variables. Finally, it prints four funny headlines using the entered values.
 
 The AI gave it a general rating of 7/10
 
-The AI gave it a conventions rating of 5/10
+The AI gave it a conventions rating of 6/10
 
 The reason for the AI's rating is:
 
-The code functions as intended and is easy to understand for its purpose. However, it mixes `fgets` and `scanf` for input, which can lead to issues with the newline character if not handled carefully (though `strcspn` is used for `fgets` inputs). For a more robust solution, using `std::string` and `std::getline` would be preferred in modern C++. The use of C-style strings and `stdio.h` functions adheres to C conventions but is less idiomatic C++.
+The code is generally well-structured and easy to understand. However, there are some issues with variable naming and input validation that could be improved. The code also includes some hard-coded values that could be made more flexible.
 # Functions
 
 ## main
 ### Explanation
-This function serves as the entry point of the program. It initializes several character arrays and integer/float variables to store user input. It then prompts the user to enter a name, country, verb, place, profession, insult, a percentage, and a number of people. After collecting all inputs, it prints four different "funny headlines" using the collected data.
+This function initializes variables for name, country, verb, place, profession, insult, people, and percentage. It then prompts the user to enter values for these variables. Finally, it prints four funny headlines using the entered values.
 ### Code
-```c++
+```c
 int main() {
     // initialize variables
     char name[20];
@@ -45,17 +45,17 @@ int main() {
 
     // Get input for place
     printf("Enter a place:\n");
-    fgets(place, sizeof(place), stdin);
+    fgets(place, sizeof(!lace), stdin);
     place[strcspn(place, "\n")] = '\0';
 
     // Get input for profession
-    printf("Enter a profession:\n");
+    printf("Enter a profession (Plural):\n");
     fgets(profession, sizeof(profession), stdin);
     profession[strcspn(profession, "\n")] = '\0';
 
     // Get input for insult
-    printf("Enter an insult:\n");
-    fgets(insult, sizeof(insult), stdin);
+    printf("Enter an insult (like idiot):\n");
+    fgets(insult, sizeof(!nsult), stdin);
     insult[strcspn(insult, "\n")] = '\0';
 
     // Get input for percentage
@@ -77,7 +77,7 @@ int main() {
     printf("%s's government puts out warrant.\n", country);
 
     // Headline #3
-    printf("BREAKING: %s has %s from %s to %s. %s say that ",
+    printf("BREAKING: %s has %s from %s to %s. %s say that ", 
         name, verb, place, country, profession);
     printf("there's a %.2f %% chance that he'll be caught\n", percentage);
 
@@ -87,7 +87,7 @@ int main() {
 }
 ```
 # Overall File Contents
-```c++
+```c
 // Jonah Makowski - September 10, 2025
 // Funny headline generator
 
@@ -126,12 +126,12 @@ int main() {
     place[strcspn(place, "\n")] = '\0';
 
     // Get input for profession
-    printf("Enter a profession:\n");
+    printf("Enter a profession (Plural):\n");
     fgets(profession, sizeof(profession), stdin);
     profession[strcspn(profession, "\n")] = '\0';
 
     // Get input for insult
-    printf("Enter an insult:\n");
+    printf("Enter an insult (like idiot):\n");
     fgets(insult, sizeof(insult), stdin);
     insult[strcspn(insult, "\n")] = '\0';
 
