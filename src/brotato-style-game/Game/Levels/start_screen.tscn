@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1iisoecc21vw"]
+
+[ext_resource type="Script" uid="uid://ds86ckwsn3ew3" path="res://Game/Levels/start_screen.gd" id="1_anmtb"]
+
+[node name="StartScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_anmtb")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="CenterContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[connection signal="pressed" from="CenterContainer/Start" to="." method="_on_start_pressed"]
