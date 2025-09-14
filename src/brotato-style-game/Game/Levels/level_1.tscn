@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwtuj8gt2qb8i"]
+
+[ext_resource type="Script" uid="uid://2dh54713klop" path="res://Game/Levels/level_1.gd" id="1_615i5"]
+[ext_resource type="PackedScene" uid="uid://dw10flqwe3hji" path="res://Game/Player/player.tscn" id="1_yq1ce"]
+[ext_resource type="Texture2D" uid="uid://covwfsiky0drf" path="res://icon.svg" id="2_hxy2c"]
+[ext_resource type="PackedScene" uid="uid://4og3jljwtklm" path="res://Game/Enemies/enemy_spawner.tscn" id="4_615i5"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_hxy2c"]
+vertices = PackedVector2Array(278, 152.008, -277.961, 152.977, -277.031, -151, 278, -151)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-287, -161, -288, 163, 288, 162, 288, -161)])
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_615i5")
+
+[node name="Player" parent="." instance=ExtResource("1_yq1ce")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_hxy2c")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+unique_name_in_owner = true
+navigation_polygon = SubResource("NavigationPolygon_hxy2c")
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_615i5")]
+unique_name_in_owner = true
+max_x = 275
+max_y = 150
