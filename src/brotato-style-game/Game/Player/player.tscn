@@ -1,10 +1,11 @@
-[gd_scene load_steps=47 format=3 uid="uid://dw10flqwe3hji"]
+[gd_scene load_steps=48 format=3 uid="uid://dw10flqwe3hji"]
 
 [ext_resource type="Texture2D" uid="uid://cf5acp38isyf4" path="res://Assets/Players/1/Character 1.png" id="1_m57qa"]
 [ext_resource type="Script" uid="uid://deg1reqm8v4v1" path="res://Game/Player/player.gd" id="1_s3asc"]
 [ext_resource type="PackedScene" uid="uid://clht32bvehj4w" path="res://Game/Player/player_weapon.tscn" id="3_letr6"]
 [ext_resource type="PackedScene" uid="uid://4p8rtd7jp7lj" path="res://Game/UIScenes/stats_display.tscn" id="3_segth"]
 [ext_resource type="Script" uid="uid://t2r7g3ifjr0a" path="res://Game/Player/weapon_container.gd" id="3_vytja"]
+[ext_resource type="Resource" uid="uid://c7dxl7hhasr45" path="res://Resources/Weapons/WoodenSword.tres" id="6_p2hw7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2hw7"]
 atlas = ExtResource("1_m57qa")
@@ -388,8 +389,7 @@ radius = 30.0
 
 [node name="PlayerWeapon" parent="WeaponContainer" instance=ExtResource("3_letr6")]
 position = Vector2(30, 0)
-weapon_type = "wooden"
-weapon = "sword"
+data = ExtResource("6_p2hw7")
 
 [connection signal="animation_finished" from="Sprites/1" to="." method="_on_animation_finished"]
 [connection signal="area_entered" from="ArrowDetector" to="." method="_on_arrow_detector_area_entered"]

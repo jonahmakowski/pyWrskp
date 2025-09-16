@@ -1,0 +1,37 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://dlrcmg7fmjpwe"]
+
+[ext_resource type="Texture2D" uid="uid://dqqo3x18ncfjl" path="res://Assets/Player Weapons/16x16/RPG Weapon No Outline.png" id="1_vb5at"]
+[ext_resource type="Texture2D" uid="uid://crfp683ofdv00" path="res://Assets/Player Weapons/16x16/RPG Weapons Dark Outline.png" id="2_fox2y"]
+[ext_resource type="Texture2D" uid="uid://tcrv8ojjmd18" path="res://Assets/Player Weapons/16x16/RPG Weapons Light Outline.png" id="3_muqu4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8wsr"]
+atlas = ExtResource("1_vb5at")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhgie"]
+atlas = ExtResource("2_fox2y")
+region = Rect2(224, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il23h"]
+atlas = ExtResource("3_muqu4")
+region = Rect2(224, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8wsr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhgie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il23h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8wsr")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
