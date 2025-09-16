@@ -6,6 +6,7 @@ extends Node
 @export var death_screen: PackedScene
 @export var enemy: PackedScene
 @export var player_arrow: PackedScene
+@export var player_weapon: PackedScene
 @export var coin: PackedScene
 @export var upgrade_selection: PackedScene
 @export var upgrade_selection_helper: PackedScene

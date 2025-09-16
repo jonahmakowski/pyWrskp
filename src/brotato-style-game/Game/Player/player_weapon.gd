@@ -5,7 +5,7 @@ extends Node2D
 	set(new_weapon):
 		data = new_weapon
 		if data != null and sprite != null:
-			sprite.sprite_frames = data.sprite
+			%Sprite.sprite_frames = data.sprite
 
 @onready var sprite: AnimatedSprite2D = %Sprite
 
@@ -21,7 +21,8 @@ func _ready() -> void:
 	if data == null:
 		push_error("Weapon data is null")
 		return
-	sprite.sprite_frames = data.sprite
+	
+	%Sprite.sprite_frames = data.sprite
 
 func fire_projectile(target: Vector2):
 	var instance = Scenes.player_arrow.instantiate()
@@ -29,7 +30,7 @@ func fire_projectile(target: Vector2):
 	instance.global_position = global_position
 	get_parent().get_parent().get_parent().add_child(instance)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -49,7 +50,7 @@ func _process(delta: float) -> void:
 			
 			cooldown_timer.wait_time = data.cooldown
 			cooldown_timer.start()
-	
+
 	if data.weapon_range == 0:
 		for body in contact_area_2d.get_overlapping_bodies():
 			if body.is_in_group("enemy") and body.sprite.animation != "Hurt":

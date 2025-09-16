@@ -14,7 +14,7 @@ func _ready():
 	direction = global_position.direction_to(target)
 	velocity = direction * Stats.PROJECTILE_SPEED * Stats.projectile_speed_multiplyer
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func _process(_delta: float) -> void:

@@ -6,8 +6,8 @@ extends Resource
 @export var rarity: int:
 	set(value):
 		rarity = value
-		weight = rarity_to_weight[rarity]
-		rarity_text = rarity_to_text[rarity]
+		weight = Stats.RARITY_TO_WEIGHT[rarity]
+		rarity_text = Stats.RARITY_TO_TEXT[rarity]
 
 var weight: int
 var rarity_text: String
@@ -20,9 +20,6 @@ var rarity_text: String
 # type = "*" or "+"
 
 @export var to_change: Array[stat_changes]
-
-const rarity_to_weight = {1: 20}
-const rarity_to_text = {1: "Common"}
 
 func apply():
 	for stat in to_change:

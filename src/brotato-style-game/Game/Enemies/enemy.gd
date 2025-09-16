@@ -26,7 +26,7 @@ func find_player():
 	
 	return player
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var player = find_player()
 	
 	if player == null:
@@ -71,7 +71,7 @@ func attack():
 		player.take_damage(Stats.ENEMY_DAMAGE[enemy_type] * Stats.enemy_damage_multiplyer)
 	timer.start()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	health_label.text = "Health: {0}".format([health if health > 0 else 0])
 	if Input.is_action_pressed("show_enemy_health"):
 		health_label.show()

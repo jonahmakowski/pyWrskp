@@ -5,7 +5,7 @@ extends PanelContainer
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("show_stats"):
 		if not visible:
 			visible = true
@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 		child.queue_free()
 	
 	for stat in Stats.DEFAULTS.keys():
-		var t = "{0}: {1}".format([stat, Stats.get(stat)])
+		var t = "{0}: {1}".format([stat, str(Stats.get(stat))])
 		var instance = Label.new()
 		instance.text = t
 		stats_here.add_child(instance)

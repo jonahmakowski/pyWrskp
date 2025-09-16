@@ -12,6 +12,9 @@ var death_value = 1
 var rotation_speed = 1.0
 var max_weapons = 4
 var num_of_upgrades = 3
+var refund_rate = 50
+@export var base_weapon: weapon
+@onready var current_weapons: Array[weapon] = [base_weapon]
 
 # Player Constants
 const SPEED = 200
@@ -41,8 +44,12 @@ var max_enemies = 10
 var enemy_spawn_rate = 1
 var level_time = 30
 
+# Rarity Constants
+const RARITY_TO_WEIGHT = {1: 20}
+const RARITY_TO_TEXT = {1: "Common"}
+
 # Reset System
-const DEFAULTS = {
+var DEFAULTS = {
 	"speed_multiplyer": 1,
 	"current_health": 10,
 	"max_health": 10,
@@ -53,6 +60,8 @@ const DEFAULTS = {
 	"rotation_speed": 1.0,
 	"max_weapons": 4,
 	"num_of_upgrades": 3,
+	"refund_rate": 50,
+	"current_weapons": [base_weapon],
 	
 	"enemy_speed_multiplyer": 1,
 	"enemy_health_multiplyer": 1,

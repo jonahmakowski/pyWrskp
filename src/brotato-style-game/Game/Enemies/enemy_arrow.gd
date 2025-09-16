@@ -21,7 +21,7 @@ func _ready():
 	direction = global_position.direction_to(player.global_position)
 	velocity = (direction * Stats.ENEMY_PROJECTILE_SPEED) * Stats.enemy_projectile_speed_multiplyer
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:

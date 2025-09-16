@@ -1,13 +1,14 @@
 [gd_resource type="Resource" script_class="weapon" load_steps=3 format=3 uid="uid://c7dxl7hhasr45"]
 
-[ext_resource type="Script" uid="uid://bhfkn37juchlj" path="res://Game/Player/weapon_resource.gd" id="1_8oev5"]
-[ext_resource type="SpriteFrames" uid="uid://4bpkkh2draal" path="res://Resources/Weapons/WeaponSpriteFrames/WoodenSword.tres" id="2_oeivv"]
+[ext_resource type="Script" uid="uid://bhfkn37juchlj" path="res://Game/Player/weapon_resource.gd" id="1_oa41k"]
+[ext_resource type="SpriteFrames" uid="uid://4bpkkh2draal" path="res://Resources/Weapons/SpriteFrames/WoodenSword.tres" id="2_oa41k"]
 
 [resource]
-script = ExtResource("1_8oev5")
+script = ExtResource("1_oa41k")
 weapon_type = "wooden"
 weapon_style = "sword"
 damage = 2.0
 melee = true
-sprite = ExtResource("2_oeivv")
+sprite = ExtResource("2_oa41k")
+cost = 3
 metadata/_custom_type_script = "uid://bhfkn37juchlj"

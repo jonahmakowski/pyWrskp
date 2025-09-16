@@ -7,13 +7,22 @@ const PLAYER = 1
 @onready var killed_label: Label = %"Killed Label"
 @onready var coin_label: Label = %"Coin Label"
 @onready var time_remaining_label: Label = %TimeRemainingLabel
+@onready var weapon_container: Node2D = %WeaponContainer
 
 var enemies_list = []
 
 func _ready() -> void:
 	sprite.show()
+	
+	for child in weapon_container.get_children():
+		child.queue_free()
+	
+	for w in Stats.current_weapons:
+		var instance = Scenes.player_weapon.instantiate()
+		instance.data = w
+		weapon_container.add_child(instance)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if direction:
 		if sprite.animation != "Hurt": sprite.animation = "Walking"
