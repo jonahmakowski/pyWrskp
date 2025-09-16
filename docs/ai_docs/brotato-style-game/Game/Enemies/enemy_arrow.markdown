@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Enemies/enemy_arrow.gd
 
 # AI Summary
-This script defines a CharacterBody2D node that represents an enemy arrow in a game. The arrow moves towards the player and is removed from the scene when it exits the screen. The script includes functions to find the player, set up the arrow's initial properties, handle physics, and manage the arrow's lifecycle.
+This file defines a CharacterBody2D node that represents an enemy arrow. It includes functions to find the player, set up the arrow's initial properties, handle physics processing, and handle screen exit events.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are some areas where it could be more concise. The variable naming is clear, and the code adheres to basic conventions, but there is room for improvement in terms of code organization and comments.
+The code is generally well-structured and functional, but there are some areas where it could be more concise or follow conventions more closely.
 # Functions
 
 ## find_player
 ### Explanation
-This function searches for a player object within the game scene. It iterates through all children of the parent node and checks if any of them are in the 'player' group. If a player is found, it returns the player object; otherwise, it returns null.
+This function searches for a player object within the parent's children. It iterates through all children of the parent object and checks if any child is in the 'player' group. If a player is found, it returns the player object; otherwise, it returns null.
 ### Code
 ```gdscript
 func find_player():
@@ -28,7 +28,7 @@ func find_player():
 
 ## _ready
 ### Explanation
-This function is called when the node is added to the scene tree. It finds the player using the find_player function. If no player is found, it removes the node from the scene tree. Otherwise, it sets the rotation and direction of the node towards the player and sets the velocity of the node.
+This function is called when the node is ready. It finds the player using the find_player function. If no player is found, it queues the node for deletion. Otherwise, it sets the rotation and direction of the node towards the player and sets the velocity of the node.
 ### Code
 ```gdscript
 func _ready():
@@ -45,16 +45,16 @@ func _ready():
 
 ## _physics_process
 ### Explanation
-This function is called during the physics process. It moves the node according to its velocity.
+This function is called during the physics process. It moves and slides the node.
 ### Code
 ```gdscript
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 ```
 
 ## _on_visible_on_screen_notifier_2d_screen_exited
 ### Explanation
-This function is called when the node exits the screen. It removes the node from the scene tree.
+This function is called when the node exits the screen. It queues the node for deletion.
 ### Code
 ```gdscript
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -85,7 +85,7 @@ func _ready():
 	direction = global_position.direction_to(player.global_position)
 	velocity = (direction * Stats.ENEMY_PROJECTILE_SPEED) * Stats.enemy_projectile_speed_multiplyer
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
