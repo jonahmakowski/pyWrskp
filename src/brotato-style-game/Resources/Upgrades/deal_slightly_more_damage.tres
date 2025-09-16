@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="upgrade" load_steps=4 format=3 uid="uid://nnr3x72qhlsk"]
+
+[ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="1_p85qv"]
+[ext_resource type="Script" uid="uid://bqncvia7w0o5o" path="res://Game/UpgradeSystem/stat_changes_class.gd" id="2_83b3l"]
+
+[sub_resource type="Resource" id="Resource_y3rla"]
+script = ExtResource("2_83b3l")
+stat = "damage_multiplyer"
+change_by = 0.05
+type = "+"
+metadata/_custom_type_script = "uid://bqncvia7w0o5o"
+
+[resource]
+script = ExtResource("1_p85qv")
+name = "Deal Slightly More Damage!"
+desription = "Add 0.05 to the damage multiplyer."
+rarity = 1
+to_change = Array[ExtResource("2_83b3l")]([SubResource("Resource_y3rla")])
+metadata/_custom_type_script = "uid://b18fl5nvhyqn4"

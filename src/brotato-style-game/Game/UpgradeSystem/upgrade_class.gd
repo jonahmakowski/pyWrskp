@@ -19,7 +19,7 @@ var rarity_text: String
 # {"stat": String, "change_value": int, "type": String}
 # type = "*" or "+"
 
-@export var to_change: Array[Dictionary]
+@export var to_change: Array[stat_changes]
 
 const rarity_to_weight = {1: 20}
 const rarity_to_text = {1: "Common"}
@@ -27,6 +27,6 @@ const rarity_to_text = {1: "Common"}
 func apply():
 	for stat in to_change:
 		if stat['type'] == "+":
-			Stats.set(stat['stat'], Stats.get(stat['stat']) + stat['change_value'])
+			Stats.set(stat['stat'], Stats.get(stat['stat']) + stat['change_by'])
 		elif stat['type'] == "*":
-			Stats.set(stat['stat'], Stats.get(stat['stat']) * stat['change_value'])
+			Stats.set(stat['stat'], Stats.get(stat['stat']) * stat['change_by'])

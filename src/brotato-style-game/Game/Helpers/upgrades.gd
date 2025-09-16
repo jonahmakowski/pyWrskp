@@ -1,7 +1,9 @@
 extends Node
 
 @export var slightly_faster_spin: upgrade
-@onready var all_upgrades = [slightly_faster_spin]
+@export var deal_slightly_more_damage: upgrade
+
+@onready var all_upgrades = [slightly_faster_spin, deal_slightly_more_damage]
 var upgrades_with_weights = []
 
 func _ready():
