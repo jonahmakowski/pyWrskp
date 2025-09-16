@@ -1,7 +1,15 @@
-[gd_resource type="Resource" script_class="weapon" load_steps=2 format=3 uid="uid://cwnengbqm7amo"]
+[gd_resource type="Resource" script_class="weapon" load_steps=3 format=3 uid="uid://cwnengbqm7amo"]
 
 [ext_resource type="Script" uid="uid://bhfkn37juchlj" path="res://Game/Player/weapon_resource.gd" id="1_1ccoy"]
+[ext_resource type="SpriteFrames" uid="uid://dlrcmg7fmjpwe" path="res://Resources/Weapons/SpriteFrames/WoodenBasicBow.tres" id="2_te1hy"]
 
 [resource]
 script = ExtResource("1_1ccoy")
+weapon_type = "wooden"
+weapon_style = "basicbow"
+damage = 2.0
+weapon_range = 150.0
+cooldown = 1.5
+sprite = ExtResource("2_te1hy")
+cost = 5
 metadata/_custom_type_script = "uid://bhfkn37juchlj"

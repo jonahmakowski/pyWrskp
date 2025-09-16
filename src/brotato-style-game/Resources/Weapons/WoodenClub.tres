@@ -1,7 +1,16 @@
-[gd_resource type="Resource" script_class="weapon" load_steps=2 format=3 uid="uid://cche8rp7m1va"]
+[gd_resource type="Resource" script_class="weapon" load_steps=3 format=3 uid="uid://cche8rp7m1va"]
 
-[ext_resource type="Script" uid="uid://bhfkn37juchlj" path="res://Game/Player/weapon_resource.gd" id="1_rfj2f"]
+[ext_resource type="Script" uid="uid://bhfkn37juchlj" path="res://Game/Player/weapon_resource.gd" id="1_k2833"]
+[ext_resource type="SpriteFrames" uid="uid://ccg7rqe6jhq4v" path="res://Resources/Weapons/SpriteFrames/WoodenClub.tres" id="2_k2833"]
 
 [resource]
-script = ExtResource("1_rfj2f")
+script = ExtResource("1_k2833")
+weapon_type = "wooden"
+weapon_style = "club"
+damage = 5.0
+weapon_range = 30.0
+cooldown = 2.0
+melee = true
+sprite = ExtResource("2_k2833")
+cost = 1
 metadata/_custom_type_script = "uid://bhfkn37juchlj"
