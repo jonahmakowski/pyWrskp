@@ -10,7 +10,8 @@ extends Node2D
 	set(new_weapon):
 		weapon = new_weapon
 		update_weapons()
-var sprite: Sprite2D
+
+var sprite: AnimatedSprite2D
 var damage: float
 var weapon_range: float
 var cooldown: float
@@ -20,16 +21,19 @@ var attacking = false
 
 var WEAPON_POWERS = {
 	"club": {"wooden": {"sprite": "Sprites/Wooden/Club", "damage": 5, "range": 30, "cooldown": 2, "melee": true}},
-	"basicbow": {"wooden": {"sprite": "Sprites/Wooden/BasicBow", "damage": 2, "range": 150, "cooldown": 1.5, "melee": false}}
+	"basicbow": {"wooden": {"sprite": "Sprites/Wooden/BasicBow", "damage": 2, "range": 150, "cooldown": 1.5, "melee": false}},
+	"sword": {"wooden": {"sprite": "Sprites/Wooden/Sword", "damage": 2, "range": 0, "cooldown": 0, "melee": true}}
 }
 
 @onready var cooldown_timer: Timer = %CooldownTimer
+@onready var contact_area_2d: Area2D = %ContactArea2D
 
 func update_weapons():
 	if (WEAPON_POWERS.has(weapon) and WEAPON_POWERS[weapon].has(weapon_type)) and Engine.is_editor_hint():
 		sprite.hide()
 		sprite = get_node(WEAPON_POWERS[weapon][weapon_type]["sprite"])
 		sprite.show()
+		print('Performed Sprite Update')
 	
 	if (weapon == "" or weapon_type == "") and sprite != null:
 		sprite.hide()
@@ -61,10 +65,12 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	if not attacking:
+	if not attacking and weapon_range > 0:
 		var enemies = get_parent().get_parent().enemies_list
 		if len(enemies) > 0 and enemies[0]['distance'] <= weapon_range:
 			attacking = true
+			
+			sprite.play()
 			
 			if melee:
 				enemies[0]['instance'].take_damage(damage * Stats.damage_multiplyer)
@@ -75,6 +81,12 @@ func _process(delta: float) -> void:
 			
 			cooldown_timer.wait_time = cooldown
 			cooldown_timer.start()
+	
+	if weapon_range == 0:
+		for body in contact_area_2d.get_overlapping_bodies():
+			if body.is_in_group("enemy") and body.sprite.animation != "Hurt":
+				body.take_damage(damage * Stats.damage_multiplyer)
+				print('Did contact damage')
 
 func _on_cooldown_timer_timeout() -> void:
 	attacking = false

@@ -7,3 +7,5 @@ extends Node
 @export var enemy: PackedScene
 @export var player_arrow: PackedScene
 @export var coin: PackedScene
+@export var upgrade_selection: PackedScene
+@export var upgrade_selection_helper: PackedScene

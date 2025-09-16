@@ -1,13 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkp4u2ecmh85f"]
+[gd_scene load_steps=11 format=3 uid="uid://dkp4u2ecmh85f"]
 
 [ext_resource type="Script" uid="uid://chm5pah7v0wyd" path="res://Game/Helpers/scenes.gd" id="1_nqnsq"]
-[ext_resource type="PackedScene" uid="uid://c1iisoecc21vw" path="res://Game/Levels/start_screen.tscn" id="2_r100x"]
+[ext_resource type="PackedScene" uid="uid://c1iisoecc21vw" path="res://Game/UIScenes/start_screen.tscn" id="2_r100x"]
 [ext_resource type="PackedScene" uid="uid://ifibi2g6byis" path="res://Game/Enemies/enemy_arrow.tscn" id="2_u1edw"]
 [ext_resource type="PackedScene" uid="uid://dwtuj8gt2qb8i" path="res://Game/Levels/level_1.tscn" id="3_u1edw"]
-[ext_resource type="PackedScene" uid="uid://bvr475b6d43uh" path="res://Game/Levels/death.tscn" id="5_2fluc"]
+[ext_resource type="PackedScene" uid="uid://bvr475b6d43uh" path="res://Game/UIScenes/death.tscn" id="5_2fluc"]
 [ext_resource type="PackedScene" uid="uid://cbvllpndrbxe6" path="res://Game/Enemies/enemy.tscn" id="6_trq3s"]
 [ext_resource type="PackedScene" uid="uid://cbej2wrdv8qq7" path="res://Game/Player/player_arrow.tscn" id="7_sdism"]
 [ext_resource type="PackedScene" uid="uid://daoof5b1b0vq6" path="res://Game/Coin/coin.tscn" id="8_otyj3"]
+[ext_resource type="PackedScene" uid="uid://1hcrv5kk2y6r" path="res://Game/UIScenes/upgrade_selection.tscn" id="9_652my"]
+[ext_resource type="PackedScene" uid="uid://boqmcof5p4d7x" path="res://Game/UIScenes/upgrade_selection_helper.tscn" id="10_esh0w"]
 
 [node name="Scenes" type="Node"]
 script = ExtResource("1_nqnsq")
@@ -18,3 +20,5 @@ death_screen = ExtResource("5_2fluc")
 enemy = ExtResource("6_trq3s")
 player_arrow = ExtResource("7_sdism")
 coin = ExtResource("8_otyj3")
+upgrade_selection = ExtResource("9_652my")
+upgrade_selection_helper = ExtResource("10_esh0w")

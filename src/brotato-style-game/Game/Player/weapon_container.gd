@@ -7,7 +7,7 @@ extends Node2D
 		arrange_children_in_circle(current_angle)
 		animate_in_editor = value
 
-@export var rotation_speed: float = 2.0
+var rotation_speed: float = 1
 
 @export var radius: float = 50.0:
 	set(value):
@@ -23,6 +23,9 @@ func _ready() -> void:
 	arrange_children_in_circle(current_angle)
 
 func _process(delta: float) -> void:
+	if not Engine.is_editor_hint():
+		rotation_speed = Stats.rotation_speed
+	
 	if not Engine.is_editor_hint() or animate_in_editor:
 		if current_angle == null:
 			current_angle = 0.0
