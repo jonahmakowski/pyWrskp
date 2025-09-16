@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Player/weapon_container.gd
 
 # AI Summary
-This code defines a Node2D class that arranges its children nodes in a circle. The children nodes are arranged based on a base angle, which can be updated over time to create a rotating effect. The code includes functions for initializing the angle, updating the angle, and arranging the children nodes.
+This file defines a Node2D class that arranges its children in a circle. It includes functions to initialize the node, update the rotation of the children, and arrange the children in a circle. The radius of the circle can be set via an export variable, and the rotation speed can be adjusted based on the game's stats.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are some areas where it could be improved for better readability and adherence to conventions.
+The code is generally well-structured and functional, but there are some areas where it could adhere more closely to conventions, such as consistent indentation and spacing.
 # Functions
 
 ## _ready
 ### Explanation
-This function initializes the current angle to 0.0 and arranges the children nodes in a circle.
+This function is called when the node is ready. It initializes the current angle to 0.0 and arranges the children in a circle.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -24,10 +24,13 @@ func _ready() -> void:
 
 ## _process
 ### Explanation
-This function updates the current angle based on the rotation speed and delta time, and arranges the children nodes in a circle. It only runs if the game is not in the editor or if animate_in_editor is true.
+This function is called every frame. It updates the rotation speed if not in the editor, and updates the current angle and arranges the children in a circle if not in the editor or if animate_in_editor is true.
 ### Code
 ```gdscript
 func _process(delta: float) -> void:
+	if not Engine.is_editor_hint():
+		rotation_speed = Stats.rotation_speed
+	
 	if not Engine.is_editor_hint() or animate_in_editor:
 		if current_angle == null:
 			current_angle = 0.0
@@ -38,7 +41,7 @@ func _process(delta: float) -> void:
 
 ## arrange_children_in_circle
 ### Explanation
-This function arranges the children nodes in a circle based on the base angle. It filters the children to only include Node2D instances and calculates the position of each child node using trigonometric functions.
+This function arranges the children of the node in a circle. It filters the children to only include Node2D instances, and then calculates the position of each child based on the base angle and the angle step.
 ### Code
 ```gdscript
 func arrange_children_in_circle(base_angle: float) -> void:
@@ -65,7 +68,7 @@ extends Node2D
 		arrange_children_in_circle(current_angle)
 		animate_in_editor = value
 
-@export var rotation_speed: float = 2.0
+var rotation_speed: float = 1
 
 @export var radius: float = 50.0:
 	set(value):
@@ -81,6 +84,9 @@ func _ready() -> void:
 	arrange_children_in_circle(current_angle)
 
 func _process(delta: float) -> void:
+	if not Engine.is_editor_hint():
+		rotation_speed = Stats.rotation_speed
+	
 	if not Engine.is_editor_hint() or animate_in_editor:
 		if current_angle == null:
 			current_angle = 0.0
