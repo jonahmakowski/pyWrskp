@@ -1,8 +1,9 @@
-[gd_scene load_steps=46 format=3 uid="uid://dw10flqwe3hji"]
+[gd_scene load_steps=47 format=3 uid="uid://dw10flqwe3hji"]
 
 [ext_resource type="Texture2D" uid="uid://cf5acp38isyf4" path="res://Assets/Players/1/Character 1.png" id="1_m57qa"]
 [ext_resource type="Script" uid="uid://deg1reqm8v4v1" path="res://Game/Player/player.gd" id="1_s3asc"]
 [ext_resource type="PackedScene" uid="uid://clht32bvehj4w" path="res://Game/Player/player_weapon.tscn" id="3_letr6"]
+[ext_resource type="PackedScene" uid="uid://4p8rtd7jp7lj" path="res://Game/UIScenes/stats_display.tscn" id="3_segth"]
 [ext_resource type="Script" uid="uid://t2r7g3ifjr0a" path="res://Game/Player/weapon_container.gd" id="3_vytja"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2hw7"]
@@ -372,18 +373,23 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Killed 0 enemies this round"
 
+[node name="TimeRemainingLabel" type="Label" parent="CanvasLayer/Control/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Killed 0 enemies this round"
+
+[node name="StatsDisplay" parent="CanvasLayer/Control" instance=ExtResource("3_segth")]
+visible = false
+layout_mode = 1
+
 [node name="WeaponContainer" type="Node2D" parent="."]
 script = ExtResource("3_vytja")
+radius = 30.0
 
 [node name="PlayerWeapon" parent="WeaponContainer" instance=ExtResource("3_letr6")]
-position = Vector2(50, 0)
+position = Vector2(30, 0)
 weapon_type = "wooden"
-weapon = "basicbow"
-
-[node name="PlayerWeapon2" parent="WeaponContainer" instance=ExtResource("3_letr6")]
-position = Vector2(-50, 6.12323e-15)
-weapon_type = "wooden"
-weapon = "club"
+weapon = "sword"
 
 [connection signal="animation_finished" from="Sprites/1" to="." method="_on_animation_finished"]
 [connection signal="area_entered" from="ArrowDetector" to="." method="_on_arrow_detector_area_entered"]

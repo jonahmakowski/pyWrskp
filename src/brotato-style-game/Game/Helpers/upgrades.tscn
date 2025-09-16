@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkqfyuxbpkfa1"]
+
+[ext_resource type="Script" uid="uid://phfunan87r2k" path="res://Game/Helpers/upgrades.gd" id="1_1nyun"]
+[ext_resource type="Resource" uid="uid://dgwu0sob0mf0g" path="res://Resources/Upgrades/slightly_faster_spin.tres" id="2_vayjv"]
+
+[node name="Upgrades" type="Node"]
+script = ExtResource("1_1nyun")
+slightly_faster_spin = ExtResource("2_vayjv")

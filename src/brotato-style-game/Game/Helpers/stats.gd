@@ -9,6 +9,9 @@ var damage_multiplyer = 1
 var projectile_speed_multiplyer = 1
 var piercing = 0
 var death_value = 1
+var rotation_speed = 1.0
+var max_weapons = 4
+var num_of_upgrades = 3
 
 # Player Constants
 const SPEED = 200
@@ -33,6 +36,11 @@ const ENEMY_DAMAGE = {"Orc": 3, "Swordsman": 1.5, "Archer": 1}
 var enemies_killed = 0
 var coins = 0
 
+# Level Stats
+var max_enemies = 10
+var enemy_spawn_rate = 1
+var level_time = 30
+
 # Reset System
 const DEFAULTS = {
 	"speed_multiplyer": 1,
@@ -42,6 +50,9 @@ const DEFAULTS = {
 	"damage_multiplyer": 1,
 	"projectile_speed_multiplyer": 1,
 	"piercing": 0,
+	"rotation_speed": 1.0,
+	"max_weapons": 4,
+	"num_of_upgrades": 3,
 	
 	"enemy_speed_multiplyer": 1,
 	"enemy_health_multiplyer": 1,
@@ -50,9 +61,12 @@ const DEFAULTS = {
 	"enemy_damage_multiplyer": 1,
 	
 	"enemies_killed": 0,
-	"coins": 0
+	"coins": 0,
+	
+	"max_enemies": 10,
+	"enemy_spawn_rate": 1,
+	"level_time": 30
 }
-
 
 func reset():
 	for var_name in DEFAULTS:

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://2dh54713klop" path="res://Game/Levels/level_1.gd" id="1_615i5"]
 [ext_resource type="PackedScene" uid="uid://dw10flqwe3hji" path="res://Game/Player/player.tscn" id="1_yq1ce"]
-[ext_resource type="Texture2D" uid="uid://covwfsiky0drf" path="res://icon.svg" id="2_hxy2c"]
+[ext_resource type="Texture2D" uid="uid://ds1kji66nw5hf" path="res://icon.svg" id="2_hxy2c"]
 [ext_resource type="PackedScene" uid="uid://4og3jljwtklm" path="res://Game/Enemies/enemy_spawner.tscn" id="4_615i5"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_hxy2c"]
@@ -26,3 +26,8 @@ navigation_polygon = SubResource("NavigationPolygon_hxy2c")
 unique_name_in_owner = true
 max_x = 275
 max_y = 150
+
+[node name="LevelOverTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="LevelOverTimer" to="." method="_on_level_over_timer_timeout"]

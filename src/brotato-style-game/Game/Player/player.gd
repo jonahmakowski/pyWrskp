@@ -6,6 +6,7 @@ const PLAYER = 1
 @onready var health_label: Label = %"Health Label"
 @onready var killed_label: Label = %"Killed Label"
 @onready var coin_label: Label = %"Coin Label"
+@onready var time_remaining_label: Label = %TimeRemainingLabel
 
 var enemies_list = []
 
@@ -57,6 +58,7 @@ func _process(delta: float) -> void:
 	health_label.text = "Health: {0}/{1}".format([round(Stats.current_health*10)/10, round(Stats.max_health*10)/10])
 	killed_label.text = "Killed {0} enemies this round".format([Stats.enemies_killed])
 	coin_label.text = "Coins: {0}".format([Stats.coins])
+	time_remaining_label.text = "{0} seconds remaining".format([round(get_parent().find_child("LevelOverTimer").time_left * 10) / 10])
 
 func take_damage(damage: float):
 	Stats.current_health -= damage

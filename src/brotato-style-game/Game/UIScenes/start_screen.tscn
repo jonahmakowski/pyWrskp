@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c1iisoecc21vw"]
 
-[ext_resource type="Script" uid="uid://ds86ckwsn3ew3" path="res://Game/Levels/start_screen.gd" id="1_anmtb"]
+[ext_resource type="Script" uid="uid://ds86ckwsn3ew3" path="res://Game/UIScenes/start_screen.gd" id="1_8kfle"]
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -9,7 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_anmtb")
+script = ExtResource("1_8kfle")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
