@@ -24,4 +24,5 @@ shape = SubResource("CircleShape2D_swv7n")
 unique_name_in_owner = true
 one_shot = true
 
+[connection signal="body_entered" from="ContactArea2D" to="." method="_on_contact_area_2d_body_entered"]
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

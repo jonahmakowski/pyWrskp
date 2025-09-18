@@ -15,6 +15,7 @@ var num_of_upgrades = 3
 var refund_rate = 50
 @export var base_weapon: weapon
 @onready var current_weapons: Array[weapon] = [base_weapon]
+var weapons_in_shop = 3
 
 # Player Constants
 const SPEED = 200

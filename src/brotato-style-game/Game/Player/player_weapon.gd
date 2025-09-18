@@ -24,11 +24,22 @@ func _ready() -> void:
 	
 	%Sprite.sprite_frames = data.sprite
 
-func fire_projectile(target: Vector2):
+func fire_projectile(targets: Array):
+	var enemy = targets[0]['instance']
+	var target = targets[0]['position']
+	for t in targets:
+		if not t['instance'].death_targeted and t['distance'] <= data.weapon_range:
+			target = t['position']
+			enemy = t['instance']
+			break
+	
 	var instance = Scenes.player_arrow.instantiate()
 	instance.init(target, data.damage * Stats.damage_multiplyer)
 	instance.global_position = global_position
 	get_parent().get_parent().get_parent().add_child(instance)
+	
+	if enemy.health - (data.damage * Stats.damage_multiplyer) <= 0:
+		enemy.death_targeted = true
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -43,19 +54,17 @@ func _process(_delta: float) -> void:
 			
 			if data.melee:
 				enemies[0]['instance'].take_damage(data.damage * Stats.damage_multiplyer)
-				print('Did melee damage')
 			else:
-				fire_projectile(enemies[0]['position'])
-				print('Fired a projectile')
+				fire_projectile(enemies)
 			
 			cooldown_timer.wait_time = data.cooldown
 			cooldown_timer.start()
 
-	if data.weapon_range == 0:
-		for body in contact_area_2d.get_overlapping_bodies():
-			if body.is_in_group("enemy") and body.sprite.animation != "Hurt":
-				body.take_damage(data.damage * Stats.damage_multiplyer)
-				print('Did contact damage')
-
 func _on_cooldown_timer_timeout() -> void:
 	attacking = false
+
+func _on_contact_area_2d_body_entered(body: Node2D) -> void:
+	if data.weapon_range == 0:
+		if body.is_in_group("enemy"):
+			body.take_damage(data.damage * Stats.damage_multiplyer)
+			print('Did contact damage')

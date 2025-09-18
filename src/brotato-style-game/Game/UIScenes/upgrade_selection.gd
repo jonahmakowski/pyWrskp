@@ -7,4 +7,4 @@ func _ready() -> void:
 		add_child(instance)
 
 func selected_upgrade():
-	get_tree().change_scene_to_packed(Scenes.level1)
+	get_tree().change_scene_to_packed(Scenes.shop)

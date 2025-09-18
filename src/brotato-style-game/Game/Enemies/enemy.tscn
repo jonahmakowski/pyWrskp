@@ -685,9 +685,15 @@ theme_override_font_sizes/font_size = 8
 text = "Health: ()"
 horizontal_alignment = 1
 
+[node name="DeathTargetedTimeout" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
 [connection signal="animation_finished" from="Sprites/Archer" to="." method="_on_animation_finished"]
 [connection signal="animation_finished" from="Sprites/Swordsman" to="." method="_on_animation_finished"]
 [connection signal="animation_finished" from="Sprites/Orc" to="." method="_on_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="DeathTargetedTimeout" to="." method="_on_death_targeted_timeout_timeout"]
