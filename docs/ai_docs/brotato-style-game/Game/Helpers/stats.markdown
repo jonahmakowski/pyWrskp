@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Helpers/stats.gd
 
 # AI Summary
-This file defines various variables and constants related to player stats, enemy stats, currencies, and level stats. It also includes a function to reset these variables to their default values.
+This script defines various variables and constants related to player and enemy attributes, currencies, level stats, and rarity. It also includes a function to reset these variables to their default values.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to read. However, some variable names could be more descriptive, and there are a few instances where the code could be more concise.
+The code is generally well-structured and easy to understand. However, there are a few inconsistencies in variable naming and some variables could be better documented.
 # Functions
 
 ## reset
 ### Explanation
-This function resets all the variables to their default values as defined in the DEFAULTS dictionary.
+This function resets all the variables in the script to their default values. It iterates over the DEFAULTS dictionary and sets each variable to its corresponding value in the dictionary.
 ### Code
 ```gdscript
 func reset():
@@ -37,6 +37,9 @@ var death_value = 1
 var rotation_speed = 1.0
 var max_weapons = 4
 var num_of_upgrades = 3
+var refund_rate = 50
+@export var base_weapon: weapon
+@onready var current_weapons: Array[weapon] = [base_weapon]
 
 # Player Constants
 const SPEED = 200
@@ -66,8 +69,12 @@ var max_enemies = 10
 var enemy_spawn_rate = 1
 var level_time = 30
 
+# Rarity Constants
+const RARITY_TO_WEIGHT = {1: 20}
+const RARITY_TO_TEXT = {1: "Common"}
+
 # Reset System
-const DEFAULTS = {
+var DEFAULTS = {
 	"speed_multiplyer": 1,
 	"current_health": 10,
 	"max_health": 10,
@@ -78,6 +85,8 @@ const DEFAULTS = {
 	"rotation_speed": 1.0,
 	"max_weapons": 4,
 	"num_of_upgrades": 3,
+	"refund_rate": 50,
+	"current_weapons": [base_weapon],
 	
 	"enemy_speed_multiplyer": 1,
 	"enemy_health_multiplyer": 1,
