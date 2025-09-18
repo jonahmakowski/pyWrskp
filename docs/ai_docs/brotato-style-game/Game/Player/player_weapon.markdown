@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Player/player_weapon.gd
 
 # AI Summary
-This file defines a weapon system for a game. It includes functions to set and initialize the weapon, handle the weapon's behavior each frame, and manage the cooldown timer. The weapon can be either melee or ranged, and it can deal damage to enemies.
+This file defines a weapon system for a player in a game. It includes functionality for initializing the weapon, setting up the sprite, firing projectiles, handling melee and ranged attacks, and managing the cooldown timer. The weapon can be either melee or ranged, and it interacts with enemies in the game world.
 
 The AI gave it a general rating of 8/10
 
@@ -9,19 +9,8 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are some areas where it could be more concise and adhere more closely to conventions.
+The code is generally well-structured and functional, but there are some areas where it could be more concise and adhere more strictly to conventions.
 # Functions
-
-## set
-### Explanation
-Sets the weapon data and updates the sprite frames if the data and sprite are not null.
-### Code
-```gdscript
-	set(new_weapon):
-		data = new_weapon
-		if data != null and sprite != null:
-			sprite.sprite_frames = data.sprite
-```
 
 ## init
 ### Explanation
@@ -34,19 +23,20 @@ func init(w):
 
 ## _ready
 ### Explanation
-Initializes the weapon when the node is ready. It checks if the weapon data is null and updates the sprite frames accordingly.
+Sets up the weapon's sprite frames when the node is ready.
 ### Code
 ```gdscript
 func _ready() -> void:
 	if data == null:
 		push_error("Weapon data is null")
 		return
-	sprite.sprite_frames = data.sprite
+	
+	%Sprite.sprite_frames = data.sprite
 ```
 
 ## fire_projectile
 ### Explanation
-Fires a projectile towards the target. It instantiates a projectile, initializes it with the target and damage, and adds it to the scene.
+Fires a projectile towards the target position.
 ### Code
 ```gdscript
 func fire_projectile(target: Vector2):
@@ -58,10 +48,10 @@ func fire_projectile(target: Vector2):
 
 ## _process
 ### Explanation
-Processes the weapon's behavior each frame. It checks if the weapon is not attacking and within range of an enemy, then attacks. It also handles contact damage for melee weapons.
+Handles the weapon's attack logic, including melee and ranged attacks.
 ### Code
 ```gdscript
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -81,7 +71,7 @@ func _process(delta: float) -> void:
 			
 			cooldown_timer.wait_time = data.cooldown
 			cooldown_timer.start()
-	
+
 	if data.weapon_range == 0:
 		for body in contact_area_2d.get_overlapping_bodies():
 			if body.is_in_group("enemy") and body.sprite.animation != "Hurt":
@@ -91,7 +81,7 @@ func _process(delta: float) -> void:
 
 ## _on_cooldown_timer_timeout
 ### Explanation
-Resets the attacking state when the cooldown timer times out.
+Resets the attacking state after the cooldown timer expires.
 ### Code
 ```gdscript
 func _on_cooldown_timer_timeout() -> void:
@@ -106,7 +96,7 @@ extends Node2D
 	set(new_weapon):
 		data = new_weapon
 		if data != null and sprite != null:
-			sprite.sprite_frames = data.sprite
+			%Sprite.sprite_frames = data.sprite
 
 @onready var sprite: AnimatedSprite2D = %Sprite
 
@@ -122,7 +112,8 @@ func _ready() -> void:
 	if data == null:
 		push_error("Weapon data is null")
 		return
-	sprite.sprite_frames = data.sprite
+	
+	%Sprite.sprite_frames = data.sprite
 
 func fire_projectile(target: Vector2):
 	var instance = Scenes.player_arrow.instantiate()
@@ -130,7 +121,7 @@ func fire_projectile(target: Vector2):
 	instance.global_position = global_position
 	get_parent().get_parent().get_parent().add_child(instance)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
@@ -150,7 +141,7 @@ func _process(delta: float) -> void:
 			
 			cooldown_timer.wait_time = data.cooldown
 			cooldown_timer.start()
-	
+
 	if data.weapon_range == 0:
 		for body in contact_area_2d.get_overlapping_bodies():
 			if body.is_in_group("enemy") and body.sprite.animation != "Hurt":
