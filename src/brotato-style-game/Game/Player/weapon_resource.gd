@@ -12,7 +12,14 @@ extends Resource
 @export var rarity: int:
 	set(value):
 		rarity = value
-		rarity_text = Stats.RARITY_TO_TEXT[rarity]
-		weight = Stats.RARITY_TO_WEIGHT[rarity]
+		call_deferred("set_rarity")
+
+
 var rarity_text: String
 var weight: int
+@export var static_sprite: AtlasTexture
+@export var name: String
+
+func set_rarity():
+	rarity_text = Stats.RARITY_TO_TEXT[rarity]
+	weight = Stats.RARITY_TO_WEIGHT[rarity]

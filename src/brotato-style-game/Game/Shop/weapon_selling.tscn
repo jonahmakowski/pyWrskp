@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://vkfwxlomk466"]
+
+[ext_resource type="Texture2D" uid="uid://4xttocqyr405" path="res://Assets/Player Weapons/32x32/RPG Weapon No Outline 32x32.png" id="1_cbd8l"]
+[ext_resource type="Script" uid="uid://lchfrf5rjlgf" path="res://Game/Shop/weapon_selling.gd" id="1_l1ly5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1ly5"]
+atlas = ExtResource("1_cbd8l")
+region = Rect2(4, 2, 26, 26)
+
+[node name="WeaponSelling" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_l1ly5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Image" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("AtlasTexture_l1ly5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Weapon Name"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Stats" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "This is where the weapon Stats Go!"
+autowrap_mode = 3
+
+[node name="Sell" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Sell"
+
+[connection signal="pressed" from="VBoxContainer/Sell" to="." method="_on_sell_pressed"]

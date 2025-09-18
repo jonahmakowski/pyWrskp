@@ -10,3 +10,6 @@ extends Node
 @export var coin: PackedScene
 @export var upgrade_selection: PackedScene
 @export var upgrade_selection_helper: PackedScene
+@export var shop_weapon_selling: PackedScene
+@export var shop_weapon_selection: PackedScene
+@export var shop: PackedScene

@@ -4,11 +4,13 @@ extends CharacterBody2D
 
 var health
 var attacking = false
+var death_targeted = false
 
 @onready var sprite: AnimatedSprite2D = get_node("Sprites/" + str(enemy_type))
 @onready var timer: Timer = $Timer
 @onready var navigation_agent_2d: NavigationAgent2D = %NavigationAgent2D
 @onready var health_label: Label = $HealthLabel
+@onready var death_targeted_timeout: Timer = %DeathTargetedTimeout
 
 func init(type):
 	enemy_type = type
@@ -88,6 +90,9 @@ func _process(_delta: float) -> void:
 	
 	if global_position.distance_to(player.global_position) <= Stats.ENEMY_RANGE[enemy_type] and not attacking:
 		attack()
+	
+	if death_targeted:
+		death_targeted_timeout.start()
 
 
 func _on_animation_finished() -> void:
@@ -122,3 +127,6 @@ func take_damage(amount):
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	take_damage(body.damage)
 	body.hits += 1
+
+func _on_death_targeted_timeout_timeout() -> void:
+	death_targeted = false

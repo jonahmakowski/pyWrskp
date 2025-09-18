@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dkp4u2ecmh85f"]
+[gd_scene load_steps=15 format=3 uid="uid://dkp4u2ecmh85f"]
 
 [ext_resource type="Script" uid="uid://chm5pah7v0wyd" path="res://Game/Helpers/scenes.gd" id="1_nqnsq"]
 [ext_resource type="PackedScene" uid="uid://c1iisoecc21vw" path="res://Game/UIScenes/start_screen.tscn" id="2_r100x"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://daoof5b1b0vq6" path="res://Game/Coin/coin.tscn" id="8_otyj3"]
 [ext_resource type="PackedScene" uid="uid://1hcrv5kk2y6r" path="res://Game/UIScenes/upgrade_selection.tscn" id="9_652my"]
 [ext_resource type="PackedScene" uid="uid://boqmcof5p4d7x" path="res://Game/UIScenes/upgrade_selection_helper.tscn" id="10_esh0w"]
+[ext_resource type="PackedScene" uid="uid://vkfwxlomk466" path="res://Game/Shop/weapon_selling.tscn" id="12_h7ibk"]
+[ext_resource type="PackedScene" uid="uid://cfsenlj3dl7ay" path="res://Game/Shop/weapon_selection.tscn" id="13_mn2rn"]
+[ext_resource type="PackedScene" uid="uid://cvgkbx7bekr1g" path="res://Game/Shop/shop.tscn" id="14_q3ski"]
 
 [node name="Scenes" type="Node"]
 script = ExtResource("1_nqnsq")
@@ -24,3 +27,6 @@ player_weapon = ExtResource("8_esh0w")
 coin = ExtResource("8_otyj3")
 upgrade_selection = ExtResource("9_652my")
 upgrade_selection_helper = ExtResource("10_esh0w")
+shop_weapon_selling = ExtResource("12_h7ibk")
+shop_weapon_selection = ExtResource("13_mn2rn")
+shop = ExtResource("14_q3ski")
