@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Helpers/upgrades.gd
 
 # AI Summary
-This file defines a Node class that manages upgrades. It initializes an array of upgrades and populates another array with weighted upgrades. It also provides a function to get a random upgrade from the weighted array.
+This file defines a Node class that manages a collection of upgrades. It includes functionality to initialize a weighted list of upgrades and to randomly select an upgrade based on these weights. The code is well-structured and adheres to the conventions of the Godot engine.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 9/10
 
 The reason for the AI's rating is:
 
-The code is well-structured and follows conventions, but there is room for improvement in terms of conciseness and functionality.
+The code is well-structured and adheres to the conventions of the Godot engine. The functionality is clear and concise.
 # Functions
 
 ## _ready
 ### Explanation
-This function initializes the upgrades_with_weights array by iterating over all_upgrades and appending each upgrade according to its weight.
+This function initializes the upgrades_with_weights array by populating it with each upgrade repeated according to its weight. This is done to create a weighted random selection mechanism.
 ### Code
 ```gdscript
 func _ready():
@@ -26,7 +26,7 @@ func _ready():
 
 ## get_random_upgrade
 ### Explanation
-This function returns a random upgrade from the upgrades_with_weights array.
+This function selects and returns a random upgrade from the upgrades_with_weights array. The selection is weighted based on the initial weights assigned to each upgrade.
 ### Code
 ```gdscript
 func get_random_upgrade() -> upgrade:
@@ -37,10 +37,7 @@ func get_random_upgrade() -> upgrade:
 ```gdscript
 extends Node
 
-@export var slightly_faster_spin: upgrade
-@export var deal_slightly_more_damage: upgrade
-
-@onready var all_upgrades = [slightly_faster_spin, deal_slightly_more_damage]
+@export var all_upgrades: Array[upgrade]
 var upgrades_with_weights = []
 
 func _ready():
