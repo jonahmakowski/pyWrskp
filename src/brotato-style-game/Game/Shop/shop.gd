@@ -31,8 +31,4 @@ func get_random_weapon():
 	return weapons_with_weights[index]
 
 func _on_button_pressed() -> void:
-	Stats.max_enemies += 1
-	if Stats.enemy_spawn_rate > 0.05:
-		Stats.enemy_spawn_rate -= 0.05
-	Stats.level += 1
 	get_tree().change_scene_to_packed(Scenes.level1)
