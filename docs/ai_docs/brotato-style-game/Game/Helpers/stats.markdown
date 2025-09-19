@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Helpers/stats.gd
 
 # AI Summary
-This script defines various variables and constants related to player and enemy attributes, currencies, level stats, and rarity. It also includes a function to reset these variables to their default values.
+This file is a Godot script that extends the Node class and manages various statistics and properties for a game. It includes variables for player attributes, enemy attributes, currencies, level stats, and constants for rarity and reset system. The script also provides a reset function to revert all variables to their default values.
 
 The AI gave it a general rating of 8/10
 
@@ -9,18 +9,8 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to understand. However, there are a few inconsistencies in variable naming and some variables could be better documented.
+The code is generally well-structured and functional, but there are some inconsistencies in naming conventions and some variables could be better organized or documented.
 # Functions
-
-## reset
-### Explanation
-This function resets all the variables in the script to their default values. It iterates over the DEFAULTS dictionary and sets each variable to its corresponding value in the dictionary.
-### Code
-```gdscript
-func reset():
-	for var_name in DEFAULTS:
-		set(var_name, DEFAULTS[var_name])
-```
 # Overall File Contents
 ```gdscript
 extends Node
@@ -40,6 +30,7 @@ var num_of_upgrades = 3
 var refund_rate = 50
 @export var base_weapon: weapon
 @onready var current_weapons: Array[weapon] = [base_weapon]
+var weapons_in_shop = 3
 
 # Player Constants
 const SPEED = 200
@@ -65,9 +56,10 @@ var enemies_killed = 0
 var coins = 0
 
 # Level Stats
-var max_enemies = 10
+var max_enemies = 30
 var enemy_spawn_rate = 1
 var level_time = 30
+var level = 1
 
 # Rarity Constants
 const RARITY_TO_WEIGHT = {1: 20}
@@ -97,9 +89,10 @@ var DEFAULTS = {
 	"enemies_killed": 0,
 	"coins": 0,
 	
-	"max_enemies": 10,
+	"max_enemies": 30,
 	"enemy_spawn_rate": 1,
-	"level_time": 30
+	"level_time": 30,
+	"level": 1
 }
 
 func reset():

@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Player/player.gd
 
 # AI Summary
-This file defines the player character in a game, handling movement, health management, weapon management, and interactions with enemies. It includes functions for initializing the player, processing physics for movement, sorting and retrieving enemies, updating the game state every frame, taking damage, handling arrow collisions, and managing animation states.
+This file defines a player character in a game, handling movement, animations, health management, and interactions with enemies. It includes functions for initializing the player, processing physics and frame updates, sorting and retrieving enemies, taking damage, and handling animation events.
 
 The AI gave it a general rating of 8/10
 
@@ -14,7 +14,7 @@ The code is generally well-structured and functional, but there are areas where 
 
 ## _ready
 ### Explanation
-This function is called when the node enters the scene tree for the first time. It initializes the player's sprite and weapons.
+This function is called when the node is ready. It shows the sprite, clears any existing weapons in the weapon container, instantiates and adds the current weapons to the weapon container, and sets the level label text.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -27,11 +27,13 @@ func _ready() -> void:
 		var instance = Scenes.player_weapon.instantiate()
 		instance.data = w
 		weapon_container.add_child(instance)
+	
+	level_label.text = "Level: {0}".format([Stats.level])
 ```
 
 ## _physics_process
 ### Explanation
-This function is called during the physics process. It handles player movement and animation based on input.
+This function is called every physics frame. It handles player movement and animation based on input direction.
 ### Code
 ```gdscript
 func _physics_process(_delta: float) -> void:
@@ -50,7 +52,7 @@ func _physics_process(_delta: float) -> void:
 
 ## enemy_sort
 ### Explanation
-This function is used to sort enemies by distance.
+This function is used to sort enemies by their distance from the player.
 ### Code
 ```gdscript
 func enemy_sort(a, b): # by distance
@@ -61,7 +63,7 @@ func enemy_sort(a, b): # by distance
 
 ## get_enemies
 ### Explanation
-This function retrieves a list of enemies in the scene, excluding those that are dead.
+This function retrieves a list of enemies in the game, excluding those that are in the "Death" animation state, and sorts them by distance from the player.
 ### Code
 ```gdscript
 func get_enemies():
@@ -79,7 +81,7 @@ func get_enemies():
 
 ## _process
 ### Explanation
-This function is called every frame. It updates the player's health, UI elements, and checks for game over conditions.
+This function is called every frame. It updates the list of enemies, handles health regeneration, checks for player death, and updates various UI labels.
 ### Code
 ```gdscript
 func _process(delta: float) -> void:
@@ -101,7 +103,7 @@ func _process(delta: float) -> void:
 
 ## take_damage
 ### Explanation
-This function reduces the player's health by the specified damage amount and plays the hurt animation.
+This function reduces the player's health by the specified damage amount and plays the "Hurt" animation.
 ### Code
 ```gdscript
 func take_damage(damage: float):
@@ -111,7 +113,7 @@ func take_damage(damage: float):
 
 ## _on_arrow_detector_body_entered
 ### Explanation
-This function is called when an arrow enters the arrow detector area. It removes the arrow and applies damage to the player.
+This function is called when the arrow detector area enters another body. It frees the body and applies damage to the player based on the archer's damage value.
 ### Code
 ```gdscript
 func _on_arrow_detector_body_entered(body: Node2D) -> void:
@@ -121,7 +123,7 @@ func _on_arrow_detector_body_entered(body: Node2D) -> void:
 
 ## _on_animation_finished
 ### Explanation
-This function is called when an animation finishes playing. It resets the player's animation to idle if the current animation is hurt.
+This function is called when an animation finishes playing. If the finished animation is "Hurt", it plays the "Idle" animation.
 ### Code
 ```gdscript
 func _on_animation_finished() -> void:
@@ -140,6 +142,7 @@ const PLAYER = 1
 @onready var coin_label: Label = %"Coin Label"
 @onready var time_remaining_label: Label = %TimeRemainingLabel
 @onready var weapon_container: Node2D = %WeaponContainer
+@onready var level_label: Label = %LevelLabel
 
 var enemies_list = []
 
@@ -153,6 +156,8 @@ func _ready() -> void:
 		var instance = Scenes.player_weapon.instantiate()
 		instance.data = w
 		weapon_container.add_child(instance)
+	
+	level_label.text = "Level: {0}".format([Stats.level])
 
 func _physics_process(_delta: float) -> void:
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
