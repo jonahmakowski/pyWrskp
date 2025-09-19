@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkqfyuxbpkfa1"]
+[gd_scene load_steps=6 format=3 uid="uid://bkqfyuxbpkfa1"]
 
 [ext_resource type="Script" uid="uid://phfunan87r2k" path="res://Game/Helpers/upgrades.gd" id="1_1nyun"]
+[ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="2_h55b6"]
 [ext_resource type="Resource" uid="uid://dgwu0sob0mf0g" path="res://Resources/Upgrades/slightly_faster_spin.tres" id="2_vayjv"]
 [ext_resource type="Resource" uid="uid://nnr3x72qhlsk" path="res://Resources/Upgrades/deal_slightly_more_damage.tres" id="3_64byh"]
+[ext_resource type="Resource" uid="uid://cpeu7kr8u33w4" path="res://Resources/Upgrades/heal_slightly_faster.tres" id="3_fvqd1"]
 
 [node name="Upgrades" type="Node"]
 script = ExtResource("1_1nyun")
-slightly_faster_spin = ExtResource("2_vayjv")
-deal_slightly_more_damage = ExtResource("3_64byh")
+all_upgrades = Array[ExtResource("2_h55b6")]([ExtResource("3_fvqd1"), ExtResource("2_vayjv"), ExtResource("3_64byh")])
