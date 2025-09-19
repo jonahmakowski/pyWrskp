@@ -359,11 +359,6 @@ theme_override_constants/margin_bottom = 5
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="LevelLabel" type="Label" parent="CanvasLayer/Control/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Level: 1"
-
 [node name="Health Label" type="Label" parent="CanvasLayer/Control/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -398,4 +393,5 @@ position = Vector2(30, 0)
 data = ExtResource("6_p2hw7")
 
 [connection signal="animation_finished" from="Sprites/1" to="." method="_on_animation_finished"]
+[connection signal="area_entered" from="ArrowDetector" to="." method="_on_arrow_detector_area_entered"]
 [connection signal="body_entered" from="ArrowDetector" to="." method="_on_arrow_detector_body_entered"]

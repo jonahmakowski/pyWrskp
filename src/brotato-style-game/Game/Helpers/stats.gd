@@ -41,10 +41,9 @@ var enemies_killed = 0
 var coins = 0
 
 # Level Stats
-var max_enemies = 30
+var max_enemies = 10
 var enemy_spawn_rate = 1
 var level_time = 30
-var level = 1
 
 # Rarity Constants
 const RARITY_TO_WEIGHT = {1: 20}
@@ -74,10 +73,9 @@ var DEFAULTS = {
 	"enemies_killed": 0,
 	"coins": 0,
 	
-	"max_enemies": 30,
+	"max_enemies": 10,
 	"enemy_spawn_rate": 1,
-	"level_time": 30,
-	"level": 1
+	"level_time": 30
 }
 
 func reset():
