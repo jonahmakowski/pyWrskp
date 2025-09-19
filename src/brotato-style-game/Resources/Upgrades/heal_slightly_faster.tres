@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="upgrade" load_steps=4 format=3 uid="uid://cpeu7kr8u33w4"]
+
+[ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="1_rtm2y"]
+[ext_resource type="Script" uid="uid://bqncvia7w0o5o" path="res://Game/UpgradeSystem/stat_changes_class.gd" id="2_j22nt"]
+
+[sub_resource type="Resource" id="Resource_rtm2y"]
+script = ExtResource("2_j22nt")
+stat = "health_regen"
+change_by = 0.05
+type = "+"
+metadata/_custom_type_script = "uid://bqncvia7w0o5o"
+
+[resource]
+script = ExtResource("1_rtm2y")
+name = "Heal Slightly Faster!"
+desription = "Increase healing rate by 0.05 per second."
+rarity = 1
+to_change = Array[ExtResource("2_j22nt")]([SubResource("Resource_rtm2y")])
+metadata/_custom_type_script = "uid://b18fl5nvhyqn4"
