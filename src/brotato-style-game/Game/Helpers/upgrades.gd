@@ -1,9 +1,6 @@
 extends Node
 
-@export var slightly_faster_spin: upgrade
-@export var deal_slightly_more_damage: upgrade
-
-@onready var all_upgrades = [slightly_faster_spin, deal_slightly_more_damage]
+@export var all_upgrades: Array[upgrade]
 var upgrades_with_weights = []
 
 func _ready():
