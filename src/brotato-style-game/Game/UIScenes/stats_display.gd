@@ -17,8 +17,8 @@ func _process(_delta: float) -> void:
 	for child in stats_here.get_children():
 		child.queue_free()
 	
-	for stat in Stats.DEFAULTS.keys():
-		var t = "{0}: {1}".format([stat, str(Stats.get(stat))])
+	for stat in Stats.NAMES.keys():
+		var t = "{0}: {1}".format([Stats.NAMES[stat], str(Stats.get(stat))])
 		var instance = Label.new()
 		instance.text = t
 		stats_here.add_child(instance)
