@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Helpers/stats.gd
 
 # AI Summary
-This file is a Godot script that extends the Node class and manages various statistics and properties for a game. It includes variables for player attributes, enemy attributes, currencies, level stats, and constants for rarity and reset system. The script also provides a reset function to revert all variables to their default values.
+This file is a script for a game in the Godot Engine. It defines various variables and constants for the player, enemies, currencies, level stats, and rarity. It also includes a function to reset all variables to their default values.
 
 The AI gave it a general rating of 8/10
 
@@ -9,8 +9,18 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are some inconsistencies in naming conventions and some variables could be better organized or documented.
+The code is generally well-structured and easy to read. However, there are some inconsistencies in naming conventions, such as the use of underscores in variable names and the use of camel case in constant names. The code could also benefit from more comments to explain the purpose of certain variables and functions.
 # Functions
+
+## reset
+### Explanation
+Resets all the variables to their default values.
+### Code
+```gdscript
+func reset():
+	for var_name in DEFAULTS:
+		set(var_name, DEFAULTS[var_name])
+```
 # Overall File Contents
 ```gdscript
 extends Node
@@ -64,6 +74,28 @@ var level = 1
 # Rarity Constants
 const RARITY_TO_WEIGHT = {1: 20}
 const RARITY_TO_TEXT = {1: "Common"}
+
+# Pretty Names
+const NAMES = {
+	"enemies_killed": "Enemies Killed",
+	
+	"speed_multiplyer": "Speed Multiplyer",
+	"max_health": "Max Health",
+	"health_regen": "Health Regeneration (per second)",
+	"damage_multiplyer": "Damage Multiplyer",
+	"projectile_speed_multiplyer": "Projectile Speed Multiplyer",
+	"piercing": "Piercing",
+	"rotation_speed": "Rotation Speed",
+	"max_weapons": "Max Weapons",
+	"num_of_upgrades": "Number of Upgrades in Upgrade Panel",
+	"refund_rate": "Refund Rate (in percentage returned)",
+	
+	"enemy_speed_multiplyer": "Enemy Speed Multiplyer",
+	"enemy_health_multiplyer": "Enemy Health Multiplyer",
+	"enemy_range_multiplyer": "Enemy Range Multiplyer",
+	"enemy_projectile_speed_multiplyer": "Enemy Projectile Speed Multiplyer",
+	"enemy_damage_multiplyer": "Enemy Damage Multiplyer"
+}
 
 # Reset System
 var DEFAULTS = {
