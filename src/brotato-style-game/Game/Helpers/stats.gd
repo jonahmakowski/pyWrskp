@@ -50,6 +50,28 @@ var level = 1
 const RARITY_TO_WEIGHT = {1: 20}
 const RARITY_TO_TEXT = {1: "Common"}
 
+# Pretty Names
+const NAMES = {
+	"enemies_killed": "Enemies Killed",
+	
+	"speed_multiplyer": "Speed Multiplyer",
+	"max_health": "Max Health",
+	"health_regen": "Health Regeneration (per second)",
+	"damage_multiplyer": "Damage Multiplyer",
+	"projectile_speed_multiplyer": "Projectile Speed Multiplyer",
+	"piercing": "Piercing",
+	"rotation_speed": "Rotation Speed",
+	"max_weapons": "Max Weapons",
+	"num_of_upgrades": "Number of Upgrades in Upgrade Panel",
+	"refund_rate": "Refund Rate (in percentage returned)",
+	
+	"enemy_speed_multiplyer": "Enemy Speed Multiplyer",
+	"enemy_health_multiplyer": "Enemy Health Multiplyer",
+	"enemy_range_multiplyer": "Enemy Range Multiplyer",
+	"enemy_projectile_speed_multiplyer": "Enemy Projectile Speed Multiplyer",
+	"enemy_damage_multiplyer": "Enemy Damage Multiplyer"
+}
+
 # Reset System
 var DEFAULTS = {
 	"speed_multiplyer": 1,
