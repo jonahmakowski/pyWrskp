@@ -32,7 +32,7 @@ func _on_buy_pressed() -> void:
 	
 	if len(Stats.current_weapons) < Stats.max_weapons:
 		Stats.coins -= data.cost
-		Stats.current_weapons.append(data)
+		Stats.current_weapons.append(data.duplicate(true))
 		
 		get_parent().get_parent().redo_selling()
 		

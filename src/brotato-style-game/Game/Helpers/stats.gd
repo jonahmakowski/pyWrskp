@@ -7,14 +7,14 @@ var max_health = 10
 var health_regen = 0
 var damage_multiplyer = 1
 var projectile_speed_multiplyer = 1
-var piercing = 0
+var piercing: int = 0
 var death_value = 1
 var rotation_speed = 1.0
-var max_weapons = 4
-var num_of_upgrades = 3
+var max_weapons: int = 4
+var num_of_upgrades: int = 3
 var refund_rate = 50
 @export var base_weapon: weapon
-@onready var current_weapons: Array[weapon] = [base_weapon]
+@onready var current_weapons: Array[weapon] = [base_weapon.duplicate(true)]
 var weapons_in_shop = 3
 
 # Player Constants
@@ -41,14 +41,13 @@ var enemies_killed = 0
 var coins = 0
 
 # Level Stats
-var max_enemies = 30
-var enemy_spawn_rate = 1
+var enemy_spawn_rate = 2
 var level_time = 30
 var level = 1
 
 # Rarity Constants
-const RARITY_TO_WEIGHT = {1: 20}
-const RARITY_TO_TEXT = {1: "Common"}
+const RARITY_TO_WEIGHT = {1: 20, 2: 16, 3: 12, 4: 8, 5: 4, 6: 2, 7: 1}
+const RARITY_TO_TEXT = {1: "Common", 2: "Uncommon", 3: "Rare", 4: "Epic", 5: "Legendary", 6: "Mythic", 7: "Unique"}
 
 # Pretty Names
 const NAMES = {
@@ -73,7 +72,7 @@ const NAMES = {
 }
 
 # Reset System
-var DEFAULTS = {
+@onready var DEFAULTS = {
 	"speed_multiplyer": 1,
 	"current_health": 10,
 	"max_health": 10,
@@ -97,7 +96,7 @@ var DEFAULTS = {
 	"coins": 0,
 	
 	"max_enemies": 30,
-	"enemy_spawn_rate": 1,
+	"enemy_spawn_rate": 2,
 	"level_time": 30,
 	"level": 1
 }

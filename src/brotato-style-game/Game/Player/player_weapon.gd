@@ -53,7 +53,9 @@ func _process(_delta: float) -> void:
 			sprite.play()
 			
 			if data.melee:
-				enemies[0]['instance'].take_damage(data.damage * Stats.damage_multiplyer)
+				for enemy in enemies:
+					if enemy['distance'] <= data.weapon_range:
+						enemy['instance'].take_damage(data.damage * Stats.damage_multiplyer)
 			else:
 				fire_projectile(enemies)
 			

@@ -8,11 +8,10 @@ atlas = ExtResource("1_cbd8l")
 region = Rect2(4, 2, 26, 26)
 
 [node name="WeaponSelling" type="Control"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 9
 anchor_bottom = 1.0
-grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -48,8 +47,13 @@ layout_mode = 2
 text = "This is where the weapon Stats Go!"
 autowrap_mode = 3
 
+[node name="Merge" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Merge"
+
 [node name="Sell" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Sell"
 
+[connection signal="pressed" from="VBoxContainer/Merge" to="." method="_on_merge_pressed"]
 [connection signal="pressed" from="VBoxContainer/Sell" to="." method="_on_sell_pressed"]
