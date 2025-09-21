@@ -14,6 +14,6 @@ metadata/_custom_type_script = "uid://bqncvia7w0o5o"
 script = ExtResource("1_4ecnl")
 name = "Heal Faster!"
 desription = "Increase healing rate by 0.1 per second."
-rarity = 1
+rarity = 2
 to_change = Array[ExtResource("2_wj6o2")]([SubResource("Resource_rtm2y")])
 metadata/_custom_type_script = "uid://b18fl5nvhyqn4"

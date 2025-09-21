@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bkqfyuxbpkfa1"]
+[gd_scene load_steps=17 format=3 uid="uid://bkqfyuxbpkfa1"]
 
 [ext_resource type="Script" uid="uid://phfunan87r2k" path="res://Game/Helpers/upgrades.gd" id="1_1nyun"]
 [ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="2_h55b6"]
@@ -9,10 +9,14 @@
 [ext_resource type="Resource" uid="uid://chxykjh13ul6v" path="res://Resources/Upgrades/2 - Uncommon/uncommon_piercing.tres" id="6_fvqd1"]
 [ext_resource type="Resource" uid="uid://xmrxr2tex12w" path="res://Resources/Upgrades/2 - Uncommon/uncommon_damage.tres" id="7_8324e"]
 [ext_resource type="Resource" uid="uid://iaby1l0k83qw" path="res://Resources/Upgrades/2 - Uncommon/uncommon_health_regen.tres" id="9_a1t1f"]
+[ext_resource type="Resource" uid="uid://c1d1rg70syj8q" path="res://Resources/Upgrades/2 - Uncommon/uncommon_refund.tres" id="10_5bvso"]
 [ext_resource type="Resource" uid="uid://dduipv4qa2a1e" path="res://Resources/Upgrades/1 - Common/common_max_health.tres" id="10_8tjmm"]
 [ext_resource type="Resource" uid="uid://bnlkphnxs3057" path="res://Resources/Upgrades/4 - Epic/epic_weapon_max_count.tres" id="11_mddjy"]
 [ext_resource type="Resource" uid="uid://bo7bewxw1la4s" path="res://Resources/Upgrades/2 - Uncommon/uncommon_max_health.tres" id="12_uf31i"]
+[ext_resource type="Resource" uid="uid://56i7lhgmp2lp" path="res://Resources/Upgrades/1 - Common/common_speed.tres" id="13_uf31i"]
+[ext_resource type="Resource" uid="uid://srq8ape0npp4" path="res://Resources/Upgrades/2 - Uncommon/uncommon_speed.tres" id="14_7nl2o"]
+[ext_resource type="Resource" uid="uid://5pinr27uhh8v" path="res://Resources/Upgrades/1 - Common/common_refund.tres" id="15_tceyr"]
 
 [node name="Upgrades" type="Node"]
 script = ExtResource("1_1nyun")
-all_upgrades = Array[ExtResource("2_h55b6")]([ExtResource("3_fvqd1"), ExtResource("2_vayjv"), ExtResource("3_64byh"), ExtResource("6_8bxuo"), ExtResource("7_8324e"), ExtResource("6_fvqd1"), ExtResource("9_a1t1f"), ExtResource("10_8tjmm"), ExtResource("11_mddjy"), ExtResource("12_uf31i")])
+all_upgrades = Array[ExtResource("2_h55b6")]([ExtResource("11_mddjy"), ExtResource("7_8324e"), ExtResource("6_8bxuo"), ExtResource("9_a1t1f"), ExtResource("12_uf31i"), ExtResource("14_7nl2o"), ExtResource("6_fvqd1"), ExtResource("10_5bvso"), ExtResource("3_64byh"), ExtResource("3_fvqd1"), ExtResource("13_uf31i"), ExtResource("2_vayjv"), ExtResource("15_tceyr"), ExtResource("10_8tjmm")])

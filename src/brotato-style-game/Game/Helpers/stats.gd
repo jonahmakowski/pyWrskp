@@ -95,7 +95,6 @@ const NAMES = {
 	"enemies_killed": 0,
 	"coins": 0,
 	
-	"max_enemies": 30,
 	"enemy_spawn_rate": 2,
 	"level_time": 30,
 	"level": 1

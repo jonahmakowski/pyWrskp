@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="upgrade" load_steps=5 format=3 uid="uid://bpoiivuo3b2tv"]
+
+[ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="1_2gth8"]
+[ext_resource type="Script" uid="uid://bqncvia7w0o5o" path="res://Game/UpgradeSystem/stat_changes_class.gd" id="2_07sep"]
+
+[sub_resource type="Resource" id="Resource_2gth8"]
+script = ExtResource("2_07sep")
+stat = "damage_multiplyer"
+change_by = 2.0
+type = "*"
+metadata/_custom_type_script = "uid://bqncvia7w0o5o"
+
+[sub_resource type="Resource" id="Resource_07sep"]
+script = ExtResource("2_07sep")
+stat = "enemy_damage_multiplyer"
+change_by = 2.0
+type = "*"
+metadata/_custom_type_script = "uid://bqncvia7w0o5o"
+
+[resource]
+script = ExtResource("1_2gth8")
+name = "Double Double Damage!"
+desription = "Double your own damage, and double the damage of your enemies (double your damage multiplyer, and your enemies')."
+rarity = 3
+to_change = Array[ExtResource("2_07sep")]([SubResource("Resource_2gth8"), SubResource("Resource_07sep")])
+metadata/_custom_type_script = "uid://b18fl5nvhyqn4"
