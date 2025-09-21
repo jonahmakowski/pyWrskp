@@ -14,6 +14,12 @@ extends Resource
 		rarity = value
 		call_deferred("set_rarity")
 
+var merge_factor: int = 1:
+	set(value):
+		merge_factor = value
+		damage *= 2
+		cost *= 2
+		cooldown /= 1.5
 
 var rarity_text: String
 var weight: int

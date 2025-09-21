@@ -2,8 +2,6 @@ extends Node2D
 
 @export var max_x: int
 @export var max_y: int
-var interval = 1
-var max_enemies = 10
 
 var current_interval = 0.0
 
@@ -32,7 +30,6 @@ func count_enemies():
 
 func _process(delta: float) -> void:
 	current_interval += delta
-	if current_interval >= interval:
+	if current_interval >= Stats.enemy_spawn_rate:
 		current_interval = 0.0
-		if count_enemies() < max_enemies:
-			spawn_enemy()
+		spawn_enemy()
