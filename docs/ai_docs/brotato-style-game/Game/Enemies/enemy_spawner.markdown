@@ -1,20 +1,20 @@
 # Documentation for src/brotato-style-game/Game/Enemies/enemy_spawner.gd
 
 # AI Summary
-This GDScript file defines an enemy spawner for a 2D game. It extends Node2D and uses exported variables for maximum spawn coordinates. It manages enemy spawning based on a time interval and a maximum enemy limit. It includes functions to spawn a random enemy type at a random position, count existing enemies, and a process function to handle the spawning logic over time.
+This file is a script for a Node2D in a game. It handles the spawning of enemies at random positions and counts the number of enemies in the game. The script uses exported variables to set the maximum x and y positions for enemy spawning. It also uses a current interval variable to control the rate at which enemies are spawned.
 
 The AI gave it a general rating of 8/10
 
-The AI gave it a conventions rating of 9/10
+The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to understand. Variable names are clear, and the logic for spawning and counting enemies is concise. The use of `@export` for configurable variables is good practice. The `_ready` function is empty but that's a common pattern in Godot when it's not needed. Adherence to GDScript conventions is good, with clear function signatures and snake_case for variables and functions.
+The code is generally well-structured and easy to understand. However, the variable names could be more descriptive, and the code could be more concise in some places.
 # Functions
 
 ## _ready
 ### Explanation
-This is an overridden Godot Engine function that is called when the node enters the scene tree. In this implementation, it does nothing.
+This function is called when the node is ready. It does nothing in this case.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -23,7 +23,7 @@ func _ready() -> void:
 
 ## spawn_enemy
 ### Explanation
-This function creates a new enemy instance at a random position within the defined max_x and max_y boundaries. It also assigns a random enemy type ("Archer", "Swordsman", or "Orc") and adds the new enemy as a child of the current node's parent.
+This function spawns an enemy at a random position within the specified range. The enemy type is randomly selected from a list of types.
 ### Code
 ```gdscript
 func spawn_enemy() -> void:
@@ -41,7 +41,7 @@ func spawn_enemy() -> void:
 
 ## count_enemies
 ### Explanation
-This function iterates through all children of the parent node and counts how many of them are in the "enemy" group, returning the total count.
+This function counts the number of enemies in the game. It does this by iterating over all children of the parent node and checking if they are in the "enemy" group.
 ### Code
 ```gdscript
 func count_enemies():
@@ -55,15 +55,14 @@ func count_enemies():
 
 ## _process
 ### Explanation
-This is an overridden Godot Engine function called every frame. It manages the enemy spawning interval. If the current interval exceeds the defined "interval", it resets the counter and, if the number of enemies is below "max_enemies", it calls the `spawn_enemy` function.
+This function is called every frame. It increments the current interval by the delta time and spawns an enemy if the current interval is greater than or equal to the enemy spawn rate.
 ### Code
 ```gdscript
 func _process(delta: float) -> void:
 	current_interval += delta
-	if current_interval >= interval:
+	if current_interval >= Stats.enemy_spawn_rate:
 		current_interval = 0.0
-		if count_enemies() < max_enemies:
-			spawn_enemy()
+		spawn_enemy()
 ```
 # Overall File Contents
 ```gdscript
@@ -71,8 +70,6 @@ extends Node2D
 
 @export var max_x: int
 @export var max_y: int
-var interval = 1
-var max_enemies = 10
 
 var current_interval = 0.0
 
@@ -101,9 +98,8 @@ func count_enemies():
 
 func _process(delta: float) -> void:
 	current_interval += delta
-	if current_interval >= interval:
+	if current_interval >= Stats.enemy_spawn_rate:
 		current_interval = 0.0
-		if count_enemies() < max_enemies:
-			spawn_enemy()
+		spawn_enemy()
 
 ```
