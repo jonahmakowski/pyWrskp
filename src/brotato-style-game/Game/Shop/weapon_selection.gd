@@ -17,11 +17,11 @@ func _ready() -> void:
 	stats.text += "Melee: {0}\n".format([data.melee])
 	stats.text += "Cost: {0}\n".format([data.cost])
 	
-	if Stats.coins < data.cost:
+	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 
 func _process(_delta: float) -> void:
-	if Stats.coins < data.cost or len(Stats.current_weapons) >= Stats.max_weapons:
+	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	else:
 		buy.disabled = false
@@ -34,6 +34,20 @@ func _on_buy_pressed() -> void:
 		Stats.coins -= data.cost
 		Stats.current_weapons.append(data.duplicate(true))
 		
-		get_parent().get_parent().redo_selling()
+		get_parent().get_parent().call_deferred("redo_selling")
 		
 		queue_free()
+	elif len(Stats.current_weapons) == Stats.max_weapons:
+		Stats.coins -= data.cost
+		for w in Stats.current_weapons:
+			if w.name == data.name and w.merge_factor == data.merge_factor:
+				w.merge_factor += 1
+				get_parent().get_parent().call_deferred("redo_selling")
+				queue_free()
+				break
+
+func can_merge():
+	for w in Stats.current_weapons:
+		if w.name == data.name and w.merge_factor == data.merge_factor:
+			return true
+	return false
