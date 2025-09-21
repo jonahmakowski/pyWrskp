@@ -14,5 +14,6 @@ metadata/_custom_type_script = "uid://bqncvia7w0o5o"
 script = ExtResource("1_1w2t4")
 name = "Slightly more Max Health!"
 desription = "Increase max health by 1."
+rarity = 1
 to_change = Array[ExtResource("2_fcr7q")]([SubResource("Resource_1w2t4")])
 metadata/_custom_type_script = "uid://b18fl5nvhyqn4"
