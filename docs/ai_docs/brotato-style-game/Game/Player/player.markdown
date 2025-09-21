@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Player/player.gd
 
 # AI Summary
-This file defines a player character in a game, handling movement, animations, health management, and interactions with enemies. It includes functions for initializing the player, processing physics and frame updates, sorting and retrieving enemies, taking damage, and handling animation events.
+This file defines a player character in a game. It handles player movement, health management, weapon management, and interactions with enemies. The player can move around the game world, take damage from enemies, and use weapons to defeat them. The file also includes functions for sorting and retrieving enemies, updating the player's health, and managing the game's UI elements.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are areas where it could be more concise and adhere more strictly to conventions.
+The code is generally well-structured and easy to understand. However, there are a few areas where the code could be more concise or efficient. The code also follows the conventions of the Godot game engine, but there are a few instances where the code could be more consistent with the engine's conventions.
 # Functions
 
 ## _ready
 ### Explanation
-This function is called when the node is ready. It shows the sprite, clears any existing weapons in the weapon container, instantiates and adds the current weapons to the weapon container, and sets the level label text.
+This function is called when the node enters the scene tree for the first time. It initializes the player's sprite, clears any existing weapons, adds the current weapons to the weapon container, and sets the level label text.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -33,7 +33,7 @@ func _ready() -> void:
 
 ## _physics_process
 ### Explanation
-This function is called every physics frame. It handles player movement and animation based on input direction.
+This function is called during the physics process. It handles player movement and updates the player's sprite animation based on the direction of movement.
 ### Code
 ```gdscript
 func _physics_process(_delta: float) -> void:
@@ -63,7 +63,7 @@ func enemy_sort(a, b): # by distance
 
 ## get_enemies
 ### Explanation
-This function retrieves a list of enemies in the game, excluding those that are in the "Death" animation state, and sorts them by distance from the player.
+This function retrieves a list of enemies in the game, filters out enemies that are already dead, and sorts them by distance from the player.
 ### Code
 ```gdscript
 func get_enemies():
@@ -81,7 +81,7 @@ func get_enemies():
 
 ## _process
 ### Explanation
-This function is called every frame. It updates the list of enemies, handles health regeneration, checks for player death, and updates various UI labels.
+This function is called every frame. It updates the list of enemies, manages the player's health, updates the health, killed, coin, and time remaining labels, and checks if the player has died.
 ### Code
 ```gdscript
 func _process(delta: float) -> void:
@@ -98,12 +98,12 @@ func _process(delta: float) -> void:
 	health_label.text = "Health: {0}/{1}".format([round(Stats.current_health*10)/10, round(Stats.max_health*10)/10])
 	killed_label.text = "Killed {0} enemies this round".format([Stats.enemies_killed])
 	coin_label.text = "Coins: {0}".format([Stats.coins])
-	time_remaining_label.text = "{0} seconds remaining".format([round(get_parent().find_child("LevelOverTimer").time_left * 10) / 10])
+	time_remaining_label.text = "{0}s".format([round(get_parent().find_child("LevelOverTimer").time_left * 10) / 10])
 ```
 
 ## take_damage
 ### Explanation
-This function reduces the player's health by the specified damage amount and plays the "Hurt" animation.
+This function reduces the player's health by the specified damage amount and plays the 'Hurt' animation.
 ### Code
 ```gdscript
 func take_damage(damage: float):
@@ -113,7 +113,7 @@ func take_damage(damage: float):
 
 ## _on_arrow_detector_body_entered
 ### Explanation
-This function is called when the arrow detector area enters another body. It frees the body and applies damage to the player based on the archer's damage value.
+This function is called when an arrow enters the arrow detector area. It removes the arrow from the game and applies damage to the player based on the archer's damage and the enemy damage multiplier.
 ### Code
 ```gdscript
 func _on_arrow_detector_body_entered(body: Node2D) -> void:
@@ -123,7 +123,7 @@ func _on_arrow_detector_body_entered(body: Node2D) -> void:
 
 ## _on_animation_finished
 ### Explanation
-This function is called when an animation finishes playing. If the finished animation is "Hurt", it plays the "Idle" animation.
+This function is called when an animation finishes playing. If the animation is 'Hurt', it plays the 'Idle' animation.
 ### Code
 ```gdscript
 func _on_animation_finished() -> void:
@@ -204,7 +204,7 @@ func _process(delta: float) -> void:
 	health_label.text = "Health: {0}/{1}".format([round(Stats.current_health*10)/10, round(Stats.max_health*10)/10])
 	killed_label.text = "Killed {0} enemies this round".format([Stats.enemies_killed])
 	coin_label.text = "Coins: {0}".format([Stats.coins])
-	time_remaining_label.text = "{0} seconds remaining".format([round(get_parent().find_child("LevelOverTimer").time_left * 10) / 10])
+	time_remaining_label.text = "{0}s".format([round(get_parent().find_child("LevelOverTimer").time_left * 10) / 10])
 
 func take_damage(damage: float):
 	Stats.current_health -= damage

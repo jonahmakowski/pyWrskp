@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Helpers/stats.gd
 
 # AI Summary
-This script is a Node in the Godot game engine. It defines various variables and constants related to the player, enemies, currencies, and level stats. It also includes a reset function to reset all variables to their default values.
+This file contains the game's statistics and constants. It includes variables for player and enemy attributes, currencies, level stats, and rarity constants. The reset function resets all the variables to their default values.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to read. However, there are some inconsistencies in the naming conventions and some variables could be better organized.
+The code is generally well-structured and easy to understand. However, there are some inconsistencies in naming conventions and some variables are not used.
 # Functions
 
 ## reset
 ### Explanation
-This function resets all the variables in the script to their default values. It iterates over the DEFAULTS dictionary and uses the set function to assign each variable its default value.
+This function resets all the variables in the game to their default values. It iterates over the DEFAULTS dictionary and sets each variable to its corresponding value.
 ### Code
 ```gdscript
 func reset():
@@ -120,7 +120,6 @@ const NAMES = {
 	"enemies_killed": 0,
 	"coins": 0,
 	
-	"max_enemies": 30,
 	"enemy_spawn_rate": 2,
 	"level_time": 30,
 	"level": 1
