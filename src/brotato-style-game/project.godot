@@ -26,6 +26,10 @@ Upgrades="*res://Game/Helpers/upgrades.tscn"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[gdunit4]
+
+settings/common/update_notification_enabled=false
+
 [global_group]
 
 player=""

@@ -53,7 +53,7 @@ func _on_merge_pressed() -> void:
 		
 		Stats.current_weapons.remove_at(index)
 		merger.merge_factor += 1
-		get_parent().get_parent().get_parent().redo_selling()
+		get_parent().get_parent().get_parent().call_deferred("redo_selling")
 
 func can_merge():
 	var existing = 0

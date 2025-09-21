@@ -8,12 +8,11 @@ atlas = ExtResource("1_cbd8l")
 region = Rect2(4, 2, 26, 26)
 
 [node name="WeaponSelling" type="Control"]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_l1ly5")
 

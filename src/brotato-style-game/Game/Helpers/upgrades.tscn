@@ -10,7 +10,7 @@
 [ext_resource type="Resource" uid="uid://xmrxr2tex12w" path="res://Resources/Upgrades/2 - Uncommon/uncommon_damage.tres" id="7_8324e"]
 [ext_resource type="Resource" uid="uid://iaby1l0k83qw" path="res://Resources/Upgrades/2 - Uncommon/uncommon_health_regen.tres" id="9_a1t1f"]
 [ext_resource type="Resource" uid="uid://dduipv4qa2a1e" path="res://Resources/Upgrades/1 - Common/common_max_health.tres" id="10_8tjmm"]
-[ext_resource type="Resource" uid="uid://bnlkphnxs3057" path="res://Resources/Upgrades/3 - Rare/rare_weapon_max_count.tres" id="11_mddjy"]
+[ext_resource type="Resource" uid="uid://bnlkphnxs3057" path="res://Resources/Upgrades/4 - Epic/epic_weapon_max_count.tres" id="11_mddjy"]
 [ext_resource type="Resource" uid="uid://bo7bewxw1la4s" path="res://Resources/Upgrades/2 - Uncommon/uncommon_max_health.tres" id="12_uf31i"]
 
 [node name="Upgrades" type="Node"]
