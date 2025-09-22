@@ -11,7 +11,7 @@ func _ready() -> void:
 	
 	title.text = "{0} ({1})".format([data.name, data.rarity_text])
 	
-	stats.text = "Damage: {0}\n".format([data.damage])
+	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
 	stats.text += "Range: {0}\n".format([data.weapon_range])
 	stats.text += "Cooldown: {0}\n".format([data.cooldown])
 	stats.text += "Melee: {0}\n".format([data.melee])

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="upgrade" load_steps=5 format=3 uid="uid://8lwh345je4ab"]
+
+[ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="1_hvk3f"]
+[ext_resource type="Script" uid="uid://bqncvia7w0o5o" path="res://Game/UpgradeSystem/stat_changes_class.gd" id="2_odbyx"]
+
+[sub_resource type="Resource" id="Resource_k320v"]
+script = ExtResource("2_odbyx")
+stat = "projectile_bounces"
+change_by = 1.0
+type = "+"
+metadata/_custom_type_script = "uid://bqncvia7w0o5o"
+
+[sub_resource type="Resource" id="Resource_nricn"]
+script = ExtResource("2_odbyx")
+stat = "piercing"
+change_by = 1.0
+type = "+"
+metadata/_custom_type_script = "uid://bqncvia7w0o5o"
+
+[resource]
+script = ExtResource("1_hvk3f")
+name = "Arrow Bounce"
+desription = "Arrows bounce off the edge of the screen one more time! Also increases piercing by one."
+rarity = 4
+to_change = Array[ExtResource("2_odbyx")]([SubResource("Resource_k320v"), SubResource("Resource_nricn")])
+metadata/_custom_type_script = "uid://b18fl5nvhyqn4"

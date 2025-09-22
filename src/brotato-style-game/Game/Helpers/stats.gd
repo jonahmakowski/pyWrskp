@@ -15,7 +15,9 @@ var num_of_upgrades: int = 3
 var refund_rate = 50
 @export var base_weapon: weapon
 @onready var current_weapons: Array[weapon] = [base_weapon.duplicate(true)]
-var weapons_in_shop = 3
+var weapons_in_shop: int = 3
+var projectile_bounces: int = 0
+var arrow_tracing = 0
 
 # Player Constants
 const SPEED = 200
@@ -63,43 +65,56 @@ const NAMES = {
 	"max_weapons": "Max Weapons",
 	"num_of_upgrades": "Number of Upgrades in Upgrade Panel",
 	"refund_rate": "Refund Rate (in percentage returned)",
+	"projectile_bounces": "Projectile Bounces (off edge of screen)",
+	"arrow_tracing": "Arrow Tracing (Aimbot)",
 	
 	"enemy_speed_multiplyer": "Enemy Speed Multiplyer",
 	"enemy_health_multiplyer": "Enemy Health Multiplyer",
 	"enemy_range_multiplyer": "Enemy Range Multiplyer",
 	"enemy_projectile_speed_multiplyer": "Enemy Projectile Speed Multiplyer",
-	"enemy_damage_multiplyer": "Enemy Damage Multiplyer"
+	"enemy_damage_multiplyer": "Enemy Damage Multiplyer",
+	"enemy_spawn_rate": "Enemy Spawn Rate (in enemies per second)"
 }
+
+var DEFAULTS: Dictionary
 
 # Reset System
-@onready var DEFAULTS = {
-	"speed_multiplyer": 1,
-	"current_health": 10,
-	"max_health": 10,
-	"health_regen": 0,
-	"damage_multiplyer": 1,
-	"projectile_speed_multiplyer": 1,
-	"piercing": 0,
-	"rotation_speed": 1.0,
-	"max_weapons": 4,
-	"num_of_upgrades": 3,
-	"refund_rate": 50,
-	"current_weapons": [base_weapon],
-	
-	"enemy_speed_multiplyer": 1,
-	"enemy_health_multiplyer": 1,
-	"enemy_range_multiplyer": 1,
-	"enemy_projectile_speed_multiplyer": 1,
-	"enemy_damage_multiplyer": 1,
-	
-	"enemies_killed": 0,
-	"coins": 0,
-	
-	"enemy_spawn_rate": 2,
-	"level_time": 30,
-	"level": 1
-}
+func define_defaults():
+	DEFAULTS = {
+		"speed_multiplyer": 1,
+		"current_health": 10,
+		"max_health": 10,
+		"health_regen": 0,
+		"damage_multiplyer": 1,
+		"projectile_speed_multiplyer": 1,
+		"piercing": 0,
+		"rotation_speed": 1.0,
+		"max_weapons": 4,
+		"num_of_upgrades": 3,
+		"refund_rate": 50,
+		"projectile_bounces": 0,
+		"arrow_tracing": 0,
+		
+		"enemy_speed_multiplyer": 1,
+		"enemy_health_multiplyer": 1,
+		"enemy_range_multiplyer": 1,
+		"enemy_projectile_speed_multiplyer": 1,
+		"enemy_damage_multiplyer": 1,
+		
+		"enemies_killed": 0,
+		"coins": 0,
+		
+		"enemy_spawn_rate": 2,
+		"level_time": 30,
+		"level": 1
+	}
+
+func _ready():
+	define_defaults()
 
 func reset():
+	current_weapons.clear()
+	current_weapons.append(base_weapon.duplicate(true))
+	
 	for var_name in DEFAULTS:
 		set(var_name, DEFAULTS[var_name])

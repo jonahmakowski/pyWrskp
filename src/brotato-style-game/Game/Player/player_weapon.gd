@@ -26,15 +26,13 @@ func _ready() -> void:
 
 func fire_projectile(targets: Array):
 	var enemy = targets[0]['instance']
-	var target = targets[0]['position']
 	for t in targets:
 		if not t['instance'].death_targeted and t['distance'] <= data.weapon_range:
-			target = t['position']
 			enemy = t['instance']
 			break
 	
 	var instance = Scenes.player_arrow.instantiate()
-	instance.init(target, data.damage * Stats.damage_multiplyer)
+	instance.init(enemy, data.damage * Stats.damage_multiplyer)
 	instance.global_position = global_position
 	get_parent().get_parent().get_parent().add_child(instance)
 	

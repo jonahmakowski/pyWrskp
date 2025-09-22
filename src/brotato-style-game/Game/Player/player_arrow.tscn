@@ -21,4 +21,8 @@ shape = SubResource("RectangleShape2D_t0fms")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
+[node name="BounceDetecter" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(9, -1, 1, 2)
+
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="screen_exited" from="BounceDetecter" to="." method="_on_bounce_detecter_screen_exited"]
