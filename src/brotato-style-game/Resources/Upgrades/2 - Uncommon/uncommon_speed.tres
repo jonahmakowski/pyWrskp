@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://bqncvia7w0o5o"
 [resource]
 script = ExtResource("1_no50s")
 name = "Move Faster!"
-desription = "Increase move speed multiplyer by 0.05!"
+desription = "Increase move speed multiplyer by 0.1!"
 rarity = 2
 to_change = Array[ExtResource("2_mohg8")]([SubResource("Resource_gwhgw")])
 metadata/_custom_type_script = "uid://b18fl5nvhyqn4"

@@ -32,14 +32,16 @@ func get_random_weapon():
 
 func _on_button_pressed() -> void:
 	if Stats.enemy_spawn_rate > 1:
-		Stats.enemy_spawn_rate -= 0.1
+		Stats.enemy_spawn_rate -= 0.25
 	elif Stats.enemy_spawn_rate > 0.05:
 		Stats.enemy_spawn_rate -= 0.05
+	elif Stats.enemy_spawn_rate > 0.005:
+		Stats.enemy_spawn_rate -= 0.001
 	
-	Stats.enemy_health_multiplyer += 0.05
-	Stats.enemy_damage_multiplyer += 0.05
-	Stats.enemy_speed_multiplyer += 0.05
-	Stats.enemy_projectile_speed_multiplyer += 0.02
+	Stats.enemy_health_multiplyer += 0.1
+	Stats.enemy_damage_multiplyer += 0.1
+	Stats.enemy_speed_multiplyer += 0.1
+	Stats.enemy_projectile_speed_multiplyer += 0.05
 	
 	Stats.level += 1
 	

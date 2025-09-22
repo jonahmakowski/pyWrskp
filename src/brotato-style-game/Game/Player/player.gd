@@ -13,6 +13,7 @@ const PLAYER = 1
 var enemies_list = []
 
 func _ready() -> void:
+	Stats.current_health = Stats.max_health
 	sprite.show()
 	
 	for child in weapon_container.get_children():
