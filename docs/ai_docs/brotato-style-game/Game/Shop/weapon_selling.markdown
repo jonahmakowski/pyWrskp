@@ -1,20 +1,20 @@
 # Documentation for src/brotato-style-game/Game/Shop/weapon_selling.gd
 
 # AI Summary
-This file defines a weapon display in a game. It handles the display of weapon information, selling weapons, and merging weapons. The code is well-structured and easy to understand, with clear function names and comments.
+This file is a part of a game's shop system. It handles the display and functionality of weapons in the shop. The weapons can be sold or merged, and the player's coins are updated accordingly. The code is well-structured and easy to understand, but there are some areas where it could be improved for better performance and readability.
 
 The AI gave it a general rating of 8/10
 
-The AI gave it a conventions rating of 9/10
+The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is well-structured and follows conventions, with clear function names and comments. The functionality is clear and concise, with each function having a specific purpose.
+The code is generally well-written and follows the conventions of the GDScript language. However, there are some areas where it could be improved for better performance and readability.
 # Functions
 
 ## _ready
 ### Explanation
-This function is called when the node enters the scene tree for the first time. It sets up the initial state of the weapon display, including the image, title, and stats. It also disables the merge button if merging is not possible.
+This function initializes the weapon's image, title, and stats. It also checks if the weapon can be merged and disables the merge button if it cannot.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -22,7 +22,7 @@ func _ready() -> void:
 	
 	title.text = "{0} ({1})\n(Merge Factor: {2})".format([data.name, data.rarity_text, data.merge_factor])
 	
-	stats.text = "Damage: {0}\n".format([data.damage])
+	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
 	stats.text += "Range: {0}\n".format([data.weapon_range])
 	stats.text += "Cooldown: {0}\n".format([data.cooldown])
 	stats.text += "Melee: {0}\n".format([data.melee])
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 ## _on_sell_pressed
 ### Explanation
-This function is called when the sell button is pressed. It removes the weapon from the player's inventory and adds the refund value to the player's coins. It then refreshes the shop display.
+This function handles the event when the sell button is pressed. It removes the weapon from the player's inventory and adds the refund value to the player's coins.
 ### Code
 ```gdscript
 func _on_sell_pressed() -> void:
@@ -52,7 +52,7 @@ func _on_sell_pressed() -> void:
 
 ## _process
 ### Explanation
-This function is called every frame. It checks if merging is possible and updates the merge button's disabled state accordingly.
+This function is called every frame. It checks if the weapon can be merged and updates the merge button's disabled state accordingly.
 ### Code
 ```gdscript
 func _process(_delta: float) -> void:
@@ -64,7 +64,7 @@ func _process(_delta: float) -> void:
 
 ## _on_merge_pressed
 ### Explanation
-This function is called when the merge button is pressed. It finds another weapon with the same name and merge factor, removes it from the player's inventory, and increases the merge factor of the current weapon. It then refreshes the shop display.
+This function handles the event when the merge button is pressed. It finds another weapon with the same name and merge factor, removes it from the player's inventory, and increases the merge factor of the current weapon.
 ### Code
 ```gdscript
 func _on_merge_pressed() -> void:
@@ -87,7 +87,7 @@ func _on_merge_pressed() -> void:
 
 ## can_merge
 ### Explanation
-This function checks if merging is possible by counting the number of weapons with the same name and merge factor. If there are at least two such weapons, it returns true.
+This function checks if the weapon can be merged. It does this by counting the number of weapons with the same name and merge factor in the player's inventory. If there are at least two such weapons, it returns true.
 ### Code
 ```gdscript
 func can_merge():
@@ -115,7 +115,7 @@ func _ready() -> void:
 	
 	title.text = "{0} ({1})\n(Merge Factor: {2})".format([data.name, data.rarity_text, data.merge_factor])
 	
-	stats.text = "Damage: {0}\n".format([data.damage])
+	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
 	stats.text += "Range: {0}\n".format([data.weapon_range])
 	stats.text += "Cooldown: {0}\n".format([data.cooldown])
 	stats.text += "Melee: {0}\n".format([data.melee])

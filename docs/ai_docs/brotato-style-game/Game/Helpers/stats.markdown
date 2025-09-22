@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Helpers/stats.gd
 
 # AI Summary
-This file contains the game's statistics and constants. It includes variables for player and enemy attributes, currencies, level stats, and rarity constants. The reset function resets all the variables to their default values.
+This file defines various game statistics and provides functions to initialize and reset these statistics. It includes player attributes, enemy attributes, currencies, and level statistics. The file also includes constants for enemy health, range, cooldown, projectile speed, speed, and damage, as well as rarity constants and pretty names for display purposes.
 
 The AI gave it a general rating of 8/10
 
@@ -9,15 +9,63 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to understand. However, there are some inconsistencies in naming conventions and some variables are not used.
+The code is generally well-structured and easy to understand. However, there are some inconsistencies in naming conventions and some variables could be better documented.
 # Functions
+
+## define_defaults
+### Explanation
+This function defines the default values for various game statistics. It initializes a dictionary called DEFAULTS with default values for player attributes, enemy attributes, currencies, and level statistics.
+### Code
+```gdscript
+func define_defaults():
+	DEFAULTS = {
+		"speed_multiplyer": 1,
+		"current_health": 10,
+		"max_health": 10,
+		"health_regen": 0,
+		"damage_multiplyer": 1,
+		"projectile_speed_multiplyer": 1,
+		"piercing": 0,
+		"rotation_speed": 1.0,
+		"max_weapons": 4,
+		"num_of_upgrades": 3,
+		"refund_rate": 50,
+		"projectile_bounces": 0,
+		"arrow_tracing": 0,
+		
+		"enemy_speed_multiplyer": 1,
+		"enemy_health_multiplyer": 1,
+		"enemy_range_multiplyer": 1,
+		"enemy_projectile_speed_multiplyer": 1,
+		"enemy_damage_multiplyer": 1,
+		
+		"enemies_killed": 0,
+		"coins": 0,
+		
+		"enemy_spawn_rate": 2,
+		"level_time": 30,
+		"level": 1
+	}
+```
+
+## _ready
+### Explanation
+This function is called when the node is ready. It calls the define_defaults function to initialize the default values for the game statistics.
+### Code
+```gdscript
+func _ready():
+	define_defaults()
+```
 
 ## reset
 ### Explanation
-This function resets all the variables in the game to their default values. It iterates over the DEFAULTS dictionary and sets each variable to its corresponding value.
+This function resets the game statistics to their default values. It clears the current weapons array and appends a duplicate of the base weapon. It then iterates over the DEFAULTS dictionary and sets each variable to its default value.
 ### Code
 ```gdscript
 func reset():
+	current_weapons.clear()
+	current_weapons.append(base_weapon.duplicate(true))
+	
 	for var_name in DEFAULTS:
 		set(var_name, DEFAULTS[var_name])
 ```
@@ -40,7 +88,9 @@ var num_of_upgrades: int = 3
 var refund_rate = 50
 @export var base_weapon: weapon
 @onready var current_weapons: Array[weapon] = [base_weapon.duplicate(true)]
-var weapons_in_shop = 3
+var weapons_in_shop: int = 3
+var projectile_bounces: int = 0
+var arrow_tracing = 0
 
 # Player Constants
 const SPEED = 200
@@ -88,44 +138,57 @@ const NAMES = {
 	"max_weapons": "Max Weapons",
 	"num_of_upgrades": "Number of Upgrades in Upgrade Panel",
 	"refund_rate": "Refund Rate (in percentage returned)",
+	"projectile_bounces": "Projectile Bounces (off edge of screen)",
+	"arrow_tracing": "Arrow Tracing (Aimbot)",
 	
 	"enemy_speed_multiplyer": "Enemy Speed Multiplyer",
 	"enemy_health_multiplyer": "Enemy Health Multiplyer",
 	"enemy_range_multiplyer": "Enemy Range Multiplyer",
 	"enemy_projectile_speed_multiplyer": "Enemy Projectile Speed Multiplyer",
-	"enemy_damage_multiplyer": "Enemy Damage Multiplyer"
+	"enemy_damage_multiplyer": "Enemy Damage Multiplyer",
+	"enemy_spawn_rate": "Enemy Spawn Rate (in enemies per second)"
 }
+
+var DEFAULTS: Dictionary
 
 # Reset System
-@onready var DEFAULTS = {
-	"speed_multiplyer": 1,
-	"current_health": 10,
-	"max_health": 10,
-	"health_regen": 0,
-	"damage_multiplyer": 1,
-	"projectile_speed_multiplyer": 1,
-	"piercing": 0,
-	"rotation_speed": 1.0,
-	"max_weapons": 4,
-	"num_of_upgrades": 3,
-	"refund_rate": 50,
-	"current_weapons": [base_weapon],
-	
-	"enemy_speed_multiplyer": 1,
-	"enemy_health_multiplyer": 1,
-	"enemy_range_multiplyer": 1,
-	"enemy_projectile_speed_multiplyer": 1,
-	"enemy_damage_multiplyer": 1,
-	
-	"enemies_killed": 0,
-	"coins": 0,
-	
-	"enemy_spawn_rate": 2,
-	"level_time": 30,
-	"level": 1
-}
+func define_defaults():
+	DEFAULTS = {
+		"speed_multiplyer": 1,
+		"current_health": 10,
+		"max_health": 10,
+		"health_regen": 0,
+		"damage_multiplyer": 1,
+		"projectile_speed_multiplyer": 1,
+		"piercing": 0,
+		"rotation_speed": 1.0,
+		"max_weapons": 4,
+		"num_of_upgrades": 3,
+		"refund_rate": 50,
+		"projectile_bounces": 0,
+		"arrow_tracing": 0,
+		
+		"enemy_speed_multiplyer": 1,
+		"enemy_health_multiplyer": 1,
+		"enemy_range_multiplyer": 1,
+		"enemy_projectile_speed_multiplyer": 1,
+		"enemy_damage_multiplyer": 1,
+		
+		"enemies_killed": 0,
+		"coins": 0,
+		
+		"enemy_spawn_rate": 2,
+		"level_time": 30,
+		"level": 1
+	}
+
+func _ready():
+	define_defaults()
 
 func reset():
+	current_weapons.clear()
+	current_weapons.append(base_weapon.duplicate(true))
+	
 	for var_name in DEFAULTS:
 		set(var_name, DEFAULTS[var_name])
 

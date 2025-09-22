@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Player/player.gd
 
 # AI Summary
-This file defines a player character in a game. It handles player movement, health management, weapon management, and interactions with enemies. The player can move around the game world, take damage from enemies, and use weapons to defeat them. The file also includes functions for sorting and retrieving enemies, updating the player's health, and managing the game's UI elements.
+This file defines a player character in a 2D game, handling movement, health management, weapon management, and interaction with enemies. It includes functions for initialization, physics processing, enemy management, and UI updates.
 
 The AI gave it a general rating of 8/10
 
@@ -9,15 +9,16 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to understand. However, there are a few areas where the code could be more concise or efficient. The code also follows the conventions of the Godot game engine, but there are a few instances where the code could be more consistent with the engine's conventions.
+The code is generally well-structured and functional, but there are areas where it could be more concise and adhere more strictly to conventions.
 # Functions
 
 ## _ready
 ### Explanation
-This function is called when the node enters the scene tree for the first time. It initializes the player's sprite, clears any existing weapons, adds the current weapons to the weapon container, and sets the level label text.
+Initializes the player's health, shows the sprite, clears existing weapons, adds current weapons to the weapon container, and sets the level label.
 ### Code
 ```gdscript
 func _ready() -> void:
+	Stats.current_health = Stats.max_health
 	sprite.show()
 	
 	for child in weapon_container.get_children():
@@ -33,7 +34,7 @@ func _ready() -> void:
 
 ## _physics_process
 ### Explanation
-This function is called during the physics process. It handles player movement and updates the player's sprite animation based on the direction of movement.
+Handles player movement and animation based on input direction.
 ### Code
 ```gdscript
 func _physics_process(_delta: float) -> void:
@@ -52,7 +53,7 @@ func _physics_process(_delta: float) -> void:
 
 ## enemy_sort
 ### Explanation
-This function is used to sort enemies by their distance from the player.
+Sorts enemies by distance.
 ### Code
 ```gdscript
 func enemy_sort(a, b): # by distance
@@ -63,7 +64,7 @@ func enemy_sort(a, b): # by distance
 
 ## get_enemies
 ### Explanation
-This function retrieves a list of enemies in the game, filters out enemies that are already dead, and sorts them by distance from the player.
+Retrieves a list of enemies, excluding those that are dead.
 ### Code
 ```gdscript
 func get_enemies():
@@ -81,7 +82,7 @@ func get_enemies():
 
 ## _process
 ### Explanation
-This function is called every frame. It updates the list of enemies, manages the player's health, updates the health, killed, coin, and time remaining labels, and checks if the player has died.
+Updates the list of enemies, manages health regeneration, checks for player death, and updates various UI labels.
 ### Code
 ```gdscript
 func _process(delta: float) -> void:
@@ -103,7 +104,7 @@ func _process(delta: float) -> void:
 
 ## take_damage
 ### Explanation
-This function reduces the player's health by the specified damage amount and plays the 'Hurt' animation.
+Reduces the player's health by the specified damage amount and plays the hurt animation.
 ### Code
 ```gdscript
 func take_damage(damage: float):
@@ -113,7 +114,7 @@ func take_damage(damage: float):
 
 ## _on_arrow_detector_body_entered
 ### Explanation
-This function is called when an arrow enters the arrow detector area. It removes the arrow from the game and applies damage to the player based on the archer's damage and the enemy damage multiplier.
+Handles the event when an arrow enters the player's detection area, removing the arrow and applying damage.
 ### Code
 ```gdscript
 func _on_arrow_detector_body_entered(body: Node2D) -> void:
@@ -123,7 +124,7 @@ func _on_arrow_detector_body_entered(body: Node2D) -> void:
 
 ## _on_animation_finished
 ### Explanation
-This function is called when an animation finishes playing. If the animation is 'Hurt', it plays the 'Idle' animation.
+Handles the event when an animation finishes, specifically resetting the sprite to the idle animation if it was hurt.
 ### Code
 ```gdscript
 func _on_animation_finished() -> void:
@@ -147,6 +148,7 @@ const PLAYER = 1
 var enemies_list = []
 
 func _ready() -> void:
+	Stats.current_health = Stats.max_health
 	sprite.show()
 	
 	for child in weapon_container.get_children():
