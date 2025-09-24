@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Helpers/stats.gd
 
 # AI Summary
-This file defines various game statistics and provides functions to initialize and reset these statistics. It includes player attributes, enemy attributes, currencies, and level statistics. The file also includes constants for enemy health, range, cooldown, projectile speed, speed, and damage, as well as rarity constants and pretty names for display purposes.
+This file defines various player and enemy attributes and constants, and provides functions to reset these attributes to their default values. It also includes constants for enemy health, range, cooldown, speed, and damage, as well as rarity weights and text. The file is part of a game and is written in GDScript.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to understand. However, there are some inconsistencies in naming conventions and some variables could be better documented.
+The code is generally well-structured and easy to understand. However, there are some inconsistencies in naming conventions and some variables could be better organized.
 # Functions
 
 ## define_defaults
 ### Explanation
-This function defines the default values for various game statistics. It initializes a dictionary called DEFAULTS with default values for player attributes, enemy attributes, currencies, and level statistics.
+This function sets the default values for various player and enemy attributes. It initializes a dictionary called DEFAULTS with key-value pairs representing the default values for attributes such as speed multiplyer, health, damage multiplyer, and more.
 ### Code
 ```gdscript
 func define_defaults():
@@ -32,6 +32,7 @@ func define_defaults():
 		"refund_rate": 50,
 		"projectile_bounces": 0,
 		"arrow_tracing": 0,
+		"coin_retrieval_percentage": 0,
 		
 		"enemy_speed_multiplyer": 1,
 		"enemy_health_multiplyer": 1,
@@ -48,18 +49,9 @@ func define_defaults():
 	}
 ```
 
-## _ready
-### Explanation
-This function is called when the node is ready. It calls the define_defaults function to initialize the default values for the game statistics.
-### Code
-```gdscript
-func _ready():
-	define_defaults()
-```
-
 ## reset
 ### Explanation
-This function resets the game statistics to their default values. It clears the current weapons array and appends a duplicate of the base weapon. It then iterates over the DEFAULTS dictionary and sets each variable to its default value.
+This function resets the player's weapons and attributes to their default values. It clears the current weapons array and appends a duplicate of the base weapon. It then iterates over the DEFAULTS dictionary and sets each attribute to its default value.
 ### Code
 ```gdscript
 func reset():
@@ -90,11 +82,24 @@ var refund_rate = 50
 @onready var current_weapons: Array[weapon] = [base_weapon.duplicate(true)]
 var weapons_in_shop: int = 3
 var projectile_bounces: int = 0
-var arrow_tracing = 0
+var arrow_tracing = 0:
+	set(value):
+		if value >= 1:
+			arrow_tracing = 1
+		else:
+			arrow_tracing = 0
+
+var coin_retrieval_percentage: int = 0:
+	set(value):
+		if value >= 100:
+			coin_retrieval_percentage = 100
+		else:
+			coin_retrieval_percentage = value
 
 # Player Constants
 const SPEED = 200
 const PROJECTILE_SPEED = 250
+const COIN_MOVEMENT_SPEED = 210
 
 # Enemies
 var enemy_speed_multiplyer = 1
@@ -140,6 +145,7 @@ const NAMES = {
 	"refund_rate": "Refund Rate (in percentage returned)",
 	"projectile_bounces": "Projectile Bounces (off edge of screen)",
 	"arrow_tracing": "Arrow Tracing (Aimbot)",
+	"coin_retrieval_percentage": "Coin Retrieval Percentage",
 	
 	"enemy_speed_multiplyer": "Enemy Speed Multiplyer",
 	"enemy_health_multiplyer": "Enemy Health Multiplyer",
@@ -167,6 +173,7 @@ func define_defaults():
 		"refund_rate": 50,
 		"projectile_bounces": 0,
 		"arrow_tracing": 0,
+		"coin_retrieval_percentage": 0,
 		
 		"enemy_speed_multiplyer": 1,
 		"enemy_health_multiplyer": 1,

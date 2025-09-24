@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Player/player_weapon.gd
 
 # AI Summary
-This file defines a player weapon in a Godot game. It includes functionality for setting weapon data, initializing the weapon, firing projectiles, processing attacks, handling cooldowns, and dealing contact damage. The weapon can be either melee or ranged, and it checks for enemies within its range to determine when to attack.
+This GDScript file implements the logic for a player's weapon in a Brotato-style game. It handles initialization, sprite setup, attack mechanics for both melee and ranged weapons (including projectile firing), and managing attack cooldowns.
 
 The AI gave it a general rating of 8/10
 
@@ -9,20 +9,8 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are areas where it could be more concise and adhere more closely to conventions.
+The code is generally well-structured and functional, handling both melee and ranged combat effectively. Good use of `@onready` and `@export` is observed. However, the repeated `get_parent().get_parent().get_parent()` for scene tree navigation is a brittle approach and could lead to issues if the scene structure changes, indicating a slight deviation from best practices in terms of scene management and tight coupling.
 # Functions
-
-## set
-### Explanation
-Sets the weapon data and updates the sprite frames if the data and sprite are not null.
-### Code
-```gdscript
-@export var data: weapon: # The weapon (ie club)
-	set(new_weapon):
-		data = new_weapon
-		if data != null and sprite != null:
-			%Sprite.sprite_frames = data.sprite
-```
 
 ## init
 ### Explanation
@@ -35,20 +23,20 @@ func init(w):
 
 ## _ready
 ### Explanation
-Initializes the weapon sprite frames and checks if the weapon data is null.
+Called when the node is ready. It initializes the weapon's sprite frames based on the provided `data`.
 ### Code
 ```gdscript
 func _ready() -> void:
 	if data == null:
 		push_error("Weapon data is null")
 		return
-
+	
 	%Sprite.sprite_frames = data.sprite
 ```
 
 ## fire_projectile
 ### Explanation
-Fires a projectile towards the nearest enemy within the weapon range.
+Handles the logic for firing a projectile. It finds a suitable target, instantiates a 'player_arrow' scene, initializes it, positions it, and adds it to the scene. It also marks the target for death if the projectile is lethal.
 ### Code
 ```gdscript
 func fire_projectile(targets: Array):
@@ -57,25 +45,25 @@ func fire_projectile(targets: Array):
 		if not t['instance'].death_targeted and t['distance'] <= data.weapon_range:
 			enemy = t['instance']
 			break
-
+	
 	var instance = Scenes.player_arrow.instantiate()
 	instance.init(enemy, data.damage * Stats.damage_multiplyer)
 	instance.global_position = global_position
 	get_parent().get_parent().get_parent().add_child(instance)
-
+	
 	if enemy.health - (data.damage * Stats.damage_multiplyer) <= 0:
 		enemy.death_targeted = true
 ```
 
 ## _process
 ### Explanation
-Processes the weapon's attack logic, including checking for enemies within range and initiating attacks.
+Called every frame to update the weapon's state. It checks if an attack can be initiated, plays the attack animation, and either deals melee damage to nearby enemies or fires a projectile based on the weapon type. It then starts the cooldown timer.
 ### Code
 ```gdscript
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-
+	
 	if not attacking and data.weapon_range > 0:
 		var enemies = get_parent().get_parent().enemies_list
 		if len(enemies) > 0 and enemies[0]['distance'] <= data.weapon_range:
@@ -96,7 +84,7 @@ func _process(_delta: float) -> void:
 
 ## _on_cooldown_timer_timeout
 ### Explanation
-Resets the attacking state when the cooldown timer times out.
+Resets the `attacking` flag to `false` when the cooldown timer finishes, allowing the weapon to attack again.
 ### Code
 ```gdscript
 func _on_cooldown_timer_timeout() -> void:
@@ -105,14 +93,13 @@ func _on_cooldown_timer_timeout() -> void:
 
 ## _on_contact_area_2d_body_entered
 ### Explanation
-Handles contact damage when the weapon's contact area enters another body.
+Handles melee damage when a body enters the weapon's `contact_area_2d`. If the weapon has a range of 0 and the entered body is an 'enemy', it deals damage.
 ### Code
 ```gdscript
 func _on_contact_area_2d_body_entered(body: Node2D) -> void:
 	if data.weapon_range == 0:
 		if body.is_in_group("enemy"):
 			body.take_damage(data.damage * Stats.damage_multiplyer)
-			print('Did contact damage')
 ```
 # Overall File Contents
 ```gdscript
@@ -185,6 +172,5 @@ func _on_contact_area_2d_body_entered(body: Node2D) -> void:
 	if data.weapon_range == 0:
 		if body.is_in_group("enemy"):
 			body.take_damage(data.damage * Stats.damage_multiplyer)
-			print('Did contact damage')
 
 ```
