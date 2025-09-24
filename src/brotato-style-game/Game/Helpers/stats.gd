@@ -17,11 +17,24 @@ var refund_rate = 50
 @onready var current_weapons: Array[weapon] = [base_weapon.duplicate(true)]
 var weapons_in_shop: int = 3
 var projectile_bounces: int = 0
-var arrow_tracing = 0
+var arrow_tracing = 0:
+	set(value):
+		if value >= 1:
+			arrow_tracing = 1
+		else:
+			arrow_tracing = 0
+
+var coin_retrieval_percentage: int = 0:
+	set(value):
+		if value >= 100:
+			coin_retrieval_percentage = 100
+		else:
+			coin_retrieval_percentage = value
 
 # Player Constants
 const SPEED = 200
 const PROJECTILE_SPEED = 250
+const COIN_MOVEMENT_SPEED = 210
 
 # Enemies
 var enemy_speed_multiplyer = 1
@@ -67,6 +80,7 @@ const NAMES = {
 	"refund_rate": "Refund Rate (in percentage returned)",
 	"projectile_bounces": "Projectile Bounces (off edge of screen)",
 	"arrow_tracing": "Arrow Tracing (Aimbot)",
+	"coin_retrieval_percentage": "Coin Retrieval Percentage",
 	
 	"enemy_speed_multiplyer": "Enemy Speed Multiplyer",
 	"enemy_health_multiplyer": "Enemy Health Multiplyer",
@@ -94,6 +108,7 @@ func define_defaults():
 		"refund_rate": 50,
 		"projectile_bounces": 0,
 		"arrow_tracing": 0,
+		"coin_retrieval_percentage": 0,
 		
 		"enemy_speed_multiplyer": 1,
 		"enemy_health_multiplyer": 1,

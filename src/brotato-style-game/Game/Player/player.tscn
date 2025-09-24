@@ -315,7 +315,6 @@ script = ExtResource("1_s3asc")
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="1" type="AnimatedSprite2D" parent="Sprites"]
-visible = false
 sprite_frames = SubResource("SpriteFrames_euk0e")
 animation = &"Hurt"
 autoplay = "Idle"
@@ -344,46 +343,42 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+[node name="StatsContainer" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_right = 104.0
 offset_bottom = 23.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/StatsContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/StatsContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="LevelLabel" type="Label" parent="CanvasLayer/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="LevelLabel" type="Label" parent="CanvasLayer/Control/StatsContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Level: 1"
 
-[node name="Health Label" type="Label" parent="CanvasLayer/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Health Label" type="Label" parent="CanvasLayer/Control/StatsContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Health: 10/10"
 
-[node name="Coin Label" type="Label" parent="CanvasLayer/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Coin Label" type="Label" parent="CanvasLayer/Control/StatsContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Coins: 0"
 
-[node name="Killed Label" type="Label" parent="CanvasLayer/Control/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Killed Label" type="Label" parent="CanvasLayer/Control/StatsContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Killed 0 enemies this round"
 
-[node name="StatsDisplay" parent="CanvasLayer/Control" instance=ExtResource("3_segth")]
-visible = false
-layout_mode = 1
-
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
+[node name="Time Container" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -393,7 +388,7 @@ offset_right = 26.0
 offset_bottom = 26.0
 grow_horizontal = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/PanelContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Time Container"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -402,12 +397,16 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="TimeRemainingLabel" type="Label" parent="CanvasLayer/Control/PanelContainer2/MarginContainer"]
+[node name="TimeRemainingLabel" type="Label" parent="CanvasLayer/Control/Time Container/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "30s"
 horizontal_alignment = 1
+
+[node name="StatsDisplay" parent="CanvasLayer/Control" instance=ExtResource("3_segth")]
+visible = false
+layout_mode = 1
 
 [node name="WeaponContainer" type="Node2D" parent="."]
 unique_name_in_owner = true
