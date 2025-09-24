@@ -42,6 +42,7 @@ func _on_button_pressed() -> void:
 	Stats.enemy_damage_multiplyer += 0.1
 	Stats.enemy_speed_multiplyer += 0.1
 	Stats.enemy_projectile_speed_multiplyer += 0.05
+	Stats.level_time += 2
 	
 	Stats.level += 1
 	

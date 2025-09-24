@@ -67,4 +67,3 @@ func _on_contact_area_2d_body_entered(body: Node2D) -> void:
 	if data.weapon_range == 0:
 		if body.is_in_group("enemy"):
 			body.take_damage(data.damage * Stats.damage_multiplyer)
-			print('Did contact damage')

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bkqfyuxbpkfa1"]
+[gd_scene load_steps=19 format=3 uid="uid://bkqfyuxbpkfa1"]
 
 [ext_resource type="Script" uid="uid://phfunan87r2k" path="res://Game/Helpers/upgrades.gd" id="1_1nyun"]
 [ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="2_h55b6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://nnr3x72qhlsk" path="res://Resources/Upgrades/1 - Common/common_damage.tres" id="3_64byh"]
 [ext_resource type="Resource" uid="uid://cpeu7kr8u33w4" path="res://Resources/Upgrades/1 - Common/common_health_regen.tres" id="3_fvqd1"]
 [ext_resource type="Resource" uid="uid://8lwh345je4ab" path="res://Resources/Upgrades/4 - Epic/epic_arrow_bounce.tres" id="3_tceyr"]
+[ext_resource type="Resource" uid="uid://c18pyfhl11ujp" path="res://Resources/Upgrades/3 - Rare/rare_retrival_upgrade.tres" id="5_7wi2o"]
 [ext_resource type="Resource" uid="uid://nudsrr6uk252" path="res://Resources/Upgrades/2 - Uncommon/uncommon_spin.tres" id="6_8bxuo"]
 [ext_resource type="Resource" uid="uid://chxykjh13ul6v" path="res://Resources/Upgrades/2 - Uncommon/uncommon_piercing.tres" id="6_fvqd1"]
 [ext_resource type="Resource" uid="uid://xmrxr2tex12w" path="res://Resources/Upgrades/2 - Uncommon/uncommon_damage.tres" id="7_8324e"]
@@ -20,4 +21,4 @@
 
 [node name="Upgrades" type="Node"]
 script = ExtResource("1_1nyun")
-all_upgrades = Array[ExtResource("2_h55b6")]([ExtResource("3_tceyr"), ExtResource("11_mddjy"), ExtResource("7_8324e"), ExtResource("6_8bxuo"), ExtResource("9_a1t1f"), ExtResource("12_uf31i"), ExtResource("14_7nl2o"), ExtResource("6_fvqd1"), ExtResource("10_5bvso"), ExtResource("3_64byh"), ExtResource("3_fvqd1"), ExtResource("13_uf31i"), ExtResource("2_vayjv"), ExtResource("15_tceyr"), ExtResource("10_8tjmm")])
+all_upgrades = Array[ExtResource("2_h55b6")]([ExtResource("3_tceyr"), ExtResource("11_mddjy"), ExtResource("5_7wi2o"), ExtResource("7_8324e"), ExtResource("6_8bxuo"), ExtResource("9_a1t1f"), ExtResource("12_uf31i"), ExtResource("14_7nl2o"), ExtResource("6_fvqd1"), ExtResource("10_5bvso"), ExtResource("3_64byh"), ExtResource("3_fvqd1"), ExtResource("13_uf31i"), ExtResource("2_vayjv"), ExtResource("15_tceyr"), ExtResource("10_8tjmm")])
