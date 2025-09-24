@@ -1,20 +1,20 @@
 # Documentation for src/brotato-style-game/Game/Shop/shop.gd
 
 # AI Summary
-This file defines a shop system for a game. It manages the weapons available for purchase, updates the display of weapons for sale, and handles the logic for when a button is pressed, which affects enemy stats and advances the level.
+This GDScript file (`shop.gd`) is a core component of the game's shop and level progression system. It extends `Control` and manages the display and selection of weapons available to the player. It initializes a weighted list of weapons for random selection and dynamically populates UI elements for buying and selling weapons. Additionally, it contains logic for advancing to the next game level, which involves adjusting global enemy statistics like spawn rate, health, damage, and speed, as well as updating the level time and loading the next scene.
 
 The AI gave it a general rating of 8/10
 
-The AI gave it a conventions rating of 7/10
+The AI gave it a conventions rating of 8/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are areas where it could be more concise and adhere more closely to conventions.
+The code is generally well-structured and follows GDScript conventions, including the use of `@export` for editable properties, `@onready` for node references, and type hints for functions. The logic for weighted weapon selection and shop UI updates is clear. The `_on_button_pressed` function, while functional, could be slightly refactored to reduce repetition in the `enemy_spawn_rate` conditional logic, perhaps using a data-driven approach for spawn rate adjustments based on thresholds. Overall, it's clean and readable, but minor improvements could enhance its conciseness and maintainability.
 # Functions
 
 ## _ready
 ### Explanation
-This function is called when the node is ready. It initializes the weapons_with_weights array by appending each weapon according to its weight. It then calls redo_selling() to update the weapon selling display. Finally, it creates instances of shop_weapon_selection for each weapon in the shop and adds them to the weapon_selection container.
+This function is called when the node is ready. It initializes the weapons_with_weights array by appending each weapon according to its weight, effectively creating a weighted random selection. It then calls `redo_selling()` to set up the selling section of the shop. Finally, it populates the `weapon_selection` HBoxContainer with instances of `Scenes.shop_weapon_selection`, assigning a randomly selected weapon to each instance.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 ## redo_selling
 ### Explanation
-This function updates the weapon selling display. It first removes all children from the weapon_selling container. Then, for each weapon in Stats.current_weapons, it creates an instance of shop_weapon_selling, sets its data to the weapon, and adds it to the weapon_selling container.
+This function updates the display of weapons currently being sold. It first clears any existing weapon display elements from the `weapon_selling` HBoxContainer. Then, for each weapon in `Stats.current_weapons`, it instantiates a `Scenes.shop_weapon_selling` scene, assigns the weapon data to it, and adds it to the `weapon_selling` container.
 ### Code
 ```gdscript
 func redo_selling():
@@ -47,7 +47,7 @@ func redo_selling():
 
 ## get_random_weapon
 ### Explanation
-This function returns a random weapon from the weapons_with_weights array. It generates a random index within the range of the array and returns the weapon at that index.
+This function selects and returns a random weapon from the `weapons_with_weights` array. The `weapons_with_weights` array is pre-populated in `_ready()` to include multiple entries for weapons with higher "weight" values, ensuring a weighted random distribution.
 ### Code
 ```gdscript
 func get_random_weapon():
@@ -57,7 +57,7 @@ func get_random_weapon():
 
 ## _on_button_pressed
 ### Explanation
-This function is called when a button is pressed. It decreases the enemy spawn rate based on its current value. It then increases various enemy stats and increments the level. Finally, it changes the scene to level1.
+This function is triggered when a button is pressed, likely signaling the progression to a new level or wave. It adjusts the `Stats.enemy_spawn_rate` based on a tiered reduction system. It then globally increases several enemy-related statistics such as health, damage, speed, and projectile speed. The `Stats.level_time` is also extended, and the `Stats.level` is incremented. Finally, it transitions the game scene to `Scenes.level1`.
 ### Code
 ```gdscript
 func _on_button_pressed() -> void:
@@ -72,6 +72,7 @@ func _on_button_pressed() -> void:
 	Stats.enemy_damage_multiplyer += 0.1
 	Stats.enemy_speed_multiplyer += 0.1
 	Stats.enemy_projectile_speed_multiplyer += 0.05
+	Stats.level_time += 2
 	
 	Stats.level += 1
 	
@@ -123,6 +124,7 @@ func _on_button_pressed() -> void:
 	Stats.enemy_damage_multiplyer += 0.1
 	Stats.enemy_speed_multiplyer += 0.1
 	Stats.enemy_projectile_speed_multiplyer += 0.05
+	Stats.level_time += 2
 	
 	Stats.level += 1
 	

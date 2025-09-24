@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Player/player_arrow.gd
 
 # AI Summary
-This file defines the behavior of a player arrow in a game. The arrow is initialized with a target and damage value, and its direction and velocity are set towards the target. The arrow can bounce off walls and other objects, and its direction and velocity can be updated if it is tracing the target. The arrow is removed when it exits the screen or when it has hit the target enough times.
+This file defines a player arrow in a game. It handles the initialization, movement, and interactions of the arrow, including targeting enemies, bouncing off surfaces, and being freed when it exits the screen or hits a certain number of times.
 
 The AI gave it a general rating of 8/10
 
@@ -9,7 +9,7 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to understand, but there are some areas where the naming conventions could be improved. The code is also well-commented, which makes it easier to understand.
+The code is generally well-structured and functional, but there are some areas where it could be more concise and adhere more closely to conventions.
 # Functions
 
 ## init
@@ -24,7 +24,7 @@ func init(t, d):
 
 ## _ready
 ### Explanation
-Sets the initial rotation and direction of the player arrow towards the target.
+Sets the initial rotation and direction of the arrow towards the target.
 ### Code
 ```gdscript
 func _ready():
@@ -35,23 +35,56 @@ func _ready():
 
 ## _physics_process
 ### Explanation
-Handles the physics processing for the player arrow.
+Handles the physics processing for the arrow.
 ### Code
 ```gdscript
 func _physics_process(_delta: float) -> void:
 	move_and_slide()
 ```
 
+## enemy_sort
+### Explanation
+Sorts enemies by distance.
+### Code
+```gdscript
+func enemy_sort(a, b): # by distance
+	if a["distance"] < b["distance"]:
+		return true
+	return false
+```
+
+## get_enemies
+### Explanation
+Gets a list of enemies and sorts them by distance.
+### Code
+```gdscript
+func get_enemies() -> Array:
+	var enemies = []
+	for child in get_parent().get_children():
+		if child.is_in_group("enemy"):
+			if child.sprite.animation == "Death":
+				continue
+			enemies.append({"enemy": child.enemy_type, "position": child.global_position, "distance": global_position.distance_to(child.global_position), "instance": child})
+	
+	enemies.sort_custom(enemy_sort)
+	
+	return enemies
+```
+
 ## _process
 ### Explanation
-Handles the processing for the player arrow, including checking if the arrow has hit the target enough times to be removed and updating the direction and velocity of the arrow if it is tracing the target.
+Handles the main processing for the arrow, including checking if the arrow should be freed, updating the target if necessary, and updating the rotation and direction towards the target.
 ### Code
 ```gdscript
 func _process(_delta: float) -> void:
 	if hits > Stats.piercing:
 		queue_free()
+		return
 	
-	if Stats.arrow_tracing > 0 and target != null:
+	if target == null and Stats.arrow_tracing > 0:
+		target = get_enemies()[0]['instance']
+	
+	if Stats.arrow_tracing > 0:
 		rotation = global_position.angle_to_point(target.global_position)
 		direction = global_position.direction_to(target.global_position)
 		velocity = direction * Stats.PROJECTILE_SPEED * Stats.projectile_speed_multiplyer
@@ -59,7 +92,7 @@ func _process(_delta: float) -> void:
 
 ## _on_visible_on_screen_notifier_2d_screen_exited
 ### Explanation
-Removes the player arrow when it exits the screen.
+Handles the event when the arrow exits the screen.
 ### Code
 ```gdscript
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
@@ -68,7 +101,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 ## _on_bounce_detecter_screen_exited
 ### Explanation
-Handles the bouncing of the player arrow when it hits a wall or other object.
+Handles the event when the arrow bounces off a surface.
 ### Code
 ```gdscript
 func _on_bounce_detecter_screen_exited() -> void:
@@ -101,11 +134,32 @@ func _ready():
 func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
+func enemy_sort(a, b): # by distance
+	if a["distance"] < b["distance"]:
+		return true
+	return false
+
+func get_enemies() -> Array:
+	var enemies = []
+	for child in get_parent().get_children():
+		if child.is_in_group("enemy"):
+			if child.sprite.animation == "Death":
+				continue
+			enemies.append({"enemy": child.enemy_type, "position": child.global_position, "distance": global_position.distance_to(child.global_position), "instance": child})
+	
+	enemies.sort_custom(enemy_sort)
+	
+	return enemies
+
 func _process(_delta: float) -> void:
 	if hits > Stats.piercing:
 		queue_free()
+		return
 	
-	if Stats.arrow_tracing > 0 and target != null:
+	if target == null and Stats.arrow_tracing > 0:
+		target = get_enemies()[0]['instance']
+	
+	if Stats.arrow_tracing > 0:
 		rotation = global_position.angle_to_point(target.global_position)
 		direction = global_position.direction_to(target.global_position)
 		velocity = direction * Stats.PROJECTILE_SPEED * Stats.projectile_speed_multiplyer
