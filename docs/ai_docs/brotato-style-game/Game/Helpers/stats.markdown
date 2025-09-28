@@ -1,20 +1,20 @@
 # Documentation for src/brotato-style-game/Game/Helpers/stats.gd
 
 # AI Summary
-This file defines various player and enemy attributes and constants, and provides functions to reset these attributes to their default values. It also includes constants for enemy health, range, cooldown, speed, and damage, as well as rarity weights and text. The file is part of a game and is written in GDScript.
+This file defines a Node class that extends the Node class in Godot. It contains variables and constants for player attributes, enemy attributes, currencies, level stats, and rarity constants. It also includes a dictionary of pretty names for these variables. The file also includes functions to define default values for these variables and to reset the game state to these default values.
 
-The AI gave it a general rating of 8/10
+The AI gave it a general rating of 7/10
 
-The AI gave it a conventions rating of 7/10
+The AI gave it a conventions rating of 8/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and easy to understand. However, there are some inconsistencies in naming conventions and some variables could be better organized.
+The code is generally well-structured and easy to read. However, there are some inconsistencies in the naming conventions, such as the use of underscores in some variable names and camelCase in others. Additionally, the code could benefit from more comments to explain the purpose of certain variables and functions.
 # Functions
 
 ## define_defaults
 ### Explanation
-This function sets the default values for various player and enemy attributes. It initializes a dictionary called DEFAULTS with key-value pairs representing the default values for attributes such as speed multiplyer, health, damage multiplyer, and more.
+This function initializes the DEFAULTS dictionary with default values for various player and enemy attributes. It sets default values for player stats like speed multiplier, health, damage multiplier, etc., and also sets default values for enemy attributes like speed multiplier, health multiplier, etc. Additionally, it sets default values for game-related variables like enemies killed, coins, enemy spawn rate, level time, and level.
 ### Code
 ```gdscript
 func define_defaults():
@@ -49,9 +49,18 @@ func define_defaults():
 	}
 ```
 
+## _ready
+### Explanation
+This function is called when the node is ready. It calls the define_defaults() function to initialize the DEFAULTS dictionary with default values.
+### Code
+```gdscript
+func _ready():
+	define_defaults()
+```
+
 ## reset
 ### Explanation
-This function resets the player's weapons and attributes to their default values. It clears the current weapons array and appends a duplicate of the base weapon. It then iterates over the DEFAULTS dictionary and sets each attribute to its default value.
+This function resets the game state to its default values. It clears the current_weapons array and appends a duplicate of the base_weapon to it. Then, it iterates over the DEFAULTS dictionary and sets each variable to its default value using the set() function.
 ### Code
 ```gdscript
 func reset():
@@ -118,7 +127,10 @@ const ENEMY_DAMAGE = {"Orc": 3, "Swordsman": 1.5, "Archer": 1}
 
 # Currencies
 var enemies_killed = 0
-var coins = 0
+var coins = 0:
+	set(value):
+		coins = value
+		Messanger.MONEY_CHANGE.emit()
 
 # Level Stats
 var enemy_spawn_rate = 2
