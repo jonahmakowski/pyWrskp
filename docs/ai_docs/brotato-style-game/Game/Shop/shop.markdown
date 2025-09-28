@@ -1,20 +1,20 @@
 # Documentation for src/brotato-style-game/Game/Shop/shop.gd
 
 # AI Summary
-This GDScript file (`shop.gd`) is a core component of the game's shop and level progression system. It extends `Control` and manages the display and selection of weapons available to the player. It initializes a weighted list of weapons for random selection and dynamically populates UI elements for buying and selling weapons. Additionally, it contains logic for advancing to the next game level, which involves adjusting global enemy statistics like spawn rate, health, damage, and speed, as well as updating the level time and loading the next scene.
+This file is a shop system for a game. It manages the selection and selling of weapons, handles rerolling of weapons, and adjusts various game stats when the level is increased. The code is well-structured and uses signals to manage interactions between different parts of the game.
 
 The AI gave it a general rating of 8/10
 
-The AI gave it a conventions rating of 8/10
+The AI gave it a conventions rating of 9/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and follows GDScript conventions, including the use of `@export` for editable properties, `@onready` for node references, and type hints for functions. The logic for weighted weapon selection and shop UI updates is clear. The `_on_button_pressed` function, while functional, could be slightly refactored to reduce repetition in the `enemy_spawn_rate` conditional logic, perhaps using a data-driven approach for spawn rate adjustments based on thresholds. Overall, it's clean and readable, but minor improvements could enhance its conciseness and maintainability.
+The code is well-structured and follows good practices. The use of signals for interaction between different parts of the game is a good design choice. The code is also well-commented, making it easier to understand.
 # Functions
 
 ## _ready
 ### Explanation
-This function is called when the node is ready. It initializes the weapons_with_weights array by appending each weapon according to its weight, effectively creating a weighted random selection. It then calls `redo_selling()` to set up the selling section of the shop. Finally, it populates the `weapon_selection` HBoxContainer with instances of `Scenes.shop_weapon_selection`, assigning a randomly selected weapon to each instance.
+This function initializes the shop by populating the weapons_with_weights array with weapons based on their weights. It also connects signals for redoing the selling and selection, and enables the reroll button.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -22,7 +22,23 @@ func _ready() -> void:
 		for i in range(w.weight):
 			weapons_with_weights.append(w)
 	
+	Messanger.REDO_SELLING.connect(redo_selling)
+	Messanger.REDO_SELECTION.connect(redo_selection)
 	redo_selling()
+	redo_selection()
+	
+	Messanger.MONEY_CHANGE.connect(reroll_enabled)
+	reroll_enabled()
+```
+
+## redo_selection
+### Explanation
+This function clears the current weapon selection and repopulates it with new random weapons.
+### Code
+```gdscript
+func redo_selection():
+	for child in weapon_selection.get_children():
+		child.queue_free()
 	
 	for i in range(Stats.weapons_in_shop):
 		var instance = Scenes.shop_weapon_selection.instantiate()
@@ -32,7 +48,7 @@ func _ready() -> void:
 
 ## redo_selling
 ### Explanation
-This function updates the display of weapons currently being sold. It first clears any existing weapon display elements from the `weapon_selling` HBoxContainer. Then, for each weapon in `Stats.current_weapons`, it instantiates a `Scenes.shop_weapon_selling` scene, assigns the weapon data to it, and adds it to the `weapon_selling` container.
+This function clears the current weapon selling display and repopulates it with the weapons the player currently has.
 ### Code
 ```gdscript
 func redo_selling():
@@ -47,7 +63,7 @@ func redo_selling():
 
 ## get_random_weapon
 ### Explanation
-This function selects and returns a random weapon from the `weapons_with_weights` array. The `weapons_with_weights` array is pre-populated in `_ready()` to include multiple entries for weapons with higher "weight" values, ensuring a weighted random distribution.
+This function returns a random weapon from the weapons_with_weights array.
 ### Code
 ```gdscript
 func get_random_weapon():
@@ -57,7 +73,7 @@ func get_random_weapon():
 
 ## _on_button_pressed
 ### Explanation
-This function is triggered when a button is pressed, likely signaling the progression to a new level or wave. It adjusts the `Stats.enemy_spawn_rate` based on a tiered reduction system. It then globally increases several enemy-related statistics such as health, damage, speed, and projectile speed. The `Stats.level_time` is also extended, and the `Stats.level` is incremented. Finally, it transitions the game scene to `Scenes.level1`.
+This function is called when the button is pressed. It increases the level, adjusts various enemy stats, and changes the scene to the next level.
 ### Code
 ```gdscript
 func _on_button_pressed() -> void:
@@ -78,6 +94,34 @@ func _on_button_pressed() -> void:
 	
 	get_tree().change_scene_to_packed(Scenes.level1)
 ```
+
+## _on_reroll_button_pressed
+### Explanation
+This function is called when the reroll button is pressed. It checks if the player has enough coins, deducts the cost, updates the reroll cost, and repopulates the weapon selection.
+### Code
+```gdscript
+func _on_reroll_button_pressed() -> void:
+	if Stats.coins < reroll_cost:
+		return
+	
+	Stats.coins -= reroll_cost
+	reroll_cost *= 2
+	reroll_button.text = "Reroll\n(Cost: {0})".format([reroll_cost])
+	
+	redo_selection()
+```
+
+## reroll_enabled
+### Explanation
+This function enables or disables the reroll button based on whether the player has enough coins.
+### Code
+```gdscript
+func reroll_enabled() -> void:
+	if Stats.coins < reroll_cost:
+		reroll_button.disabled = true
+	else:
+		reroll_button.disabled = false
+```
 # Overall File Contents
 ```gdscript
 extends Control
@@ -86,13 +130,26 @@ extends Control
 var weapons_with_weights: Array[weapon]
 @onready var weapon_selling: HBoxContainer = %WeaponSelling
 @onready var weapon_selection: HBoxContainer = %WeaponSelection
+@onready var reroll_button: Button = %RerollButton
+
+var reroll_cost = 1
 
 func _ready() -> void:
 	for w in weapons:
 		for i in range(w.weight):
 			weapons_with_weights.append(w)
 	
+	Messanger.REDO_SELLING.connect(redo_selling)
+	Messanger.REDO_SELECTION.connect(redo_selection)
 	redo_selling()
+	redo_selection()
+	
+	Messanger.MONEY_CHANGE.connect(reroll_enabled)
+	reroll_enabled()
+
+func redo_selection():
+	for child in weapon_selection.get_children():
+		child.queue_free()
 	
 	for i in range(Stats.weapons_in_shop):
 		var instance = Scenes.shop_weapon_selection.instantiate()
@@ -129,5 +186,21 @@ func _on_button_pressed() -> void:
 	Stats.level += 1
 	
 	get_tree().change_scene_to_packed(Scenes.level1)
+
+func _on_reroll_button_pressed() -> void:
+	if Stats.coins < reroll_cost:
+		return
+	
+	Stats.coins -= reroll_cost
+	reroll_cost *= 2
+	reroll_button.text = "Reroll\n(Cost: {0})".format([reroll_cost])
+	
+	redo_selection()
+
+func reroll_enabled() -> void:
+	if Stats.coins < reroll_cost:
+		reroll_button.disabled = true
+	else:
+		reroll_button.disabled = false
 
 ```

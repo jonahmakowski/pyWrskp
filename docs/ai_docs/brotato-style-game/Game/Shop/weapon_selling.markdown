@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Shop/weapon_selling.gd
 
 # AI Summary
-This file is a part of a game's shop system. It handles the display and functionality of weapons in the shop. The weapons can be sold or merged, and the player's coins are updated accordingly. The code is well-structured and easy to understand, but there are some areas where it could be improved for better performance and readability.
+This file is a Godot script that extends the Control node. It manages the display and functionality of a weapon in a shop. It includes functions for initializing the weapon display, handling sell and merge actions, and checking if a weapon can be merged.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-written and follows the conventions of the GDScript language. However, there are some areas where it could be improved for better performance and readability.
+The code is generally well-structured and functional, but there are some areas where it could be more concise or follow conventions more closely.
 # Functions
 
 ## _ready
 ### Explanation
-This function initializes the weapon's image, title, and stats. It also checks if the weapon can be merged and disables the merge button if it cannot.
+This function is called when the node is ready. It sets the image texture, title text, and stats text based on the weapon data. It also connects the check_merge function to the WEAPON_CHANGE signal.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -29,13 +29,13 @@ func _ready() -> void:
 	stats.text += "Cost: {0}\n".format([data.cost])
 	stats.text += "Refund Value: {0}".format([int(data.cost * (Stats.refund_rate / 100.0))])
 	
-	if not can_merge():
-		merge.disabled = true
+	check_merge()
+	Messanger.WEAPON_CHANGE.connect(check_merge)
 ```
 
 ## _on_sell_pressed
 ### Explanation
-This function handles the event when the sell button is pressed. It removes the weapon from the player's inventory and adds the refund value to the player's coins.
+This function is called when the sell button is pressed. It removes the weapon from the current weapons list, adds the refund value to the coins, and calls the redo_selling function on the parent node.
 ### Code
 ```gdscript
 func _on_sell_pressed() -> void:
@@ -50,12 +50,12 @@ func _on_sell_pressed() -> void:
 	get_parent().get_parent().get_parent().redo_selling()
 ```
 
-## _process
+## check_merge
 ### Explanation
-This function is called every frame. It checks if the weapon can be merged and updates the merge button's disabled state accordingly.
+This function checks if the weapon can be merged and sets the merge button's disabled property accordingly.
 ### Code
 ```gdscript
-func _process(_delta: float) -> void:
+func check_merge() -> void:
 	if not can_merge():
 		merge.disabled = true
 	else:
@@ -64,7 +64,7 @@ func _process(_delta: float) -> void:
 
 ## _on_merge_pressed
 ### Explanation
-This function handles the event when the merge button is pressed. It finds another weapon with the same name and merge factor, removes it from the player's inventory, and increases the merge factor of the current weapon.
+This function is called when the merge button is pressed. It finds another weapon with the same name and merge factor, removes it from the current weapons list, increments the merge factor of the remaining weapon, and emits the REDO_SELLING signal.
 ### Code
 ```gdscript
 func _on_merge_pressed() -> void:
@@ -82,12 +82,12 @@ func _on_merge_pressed() -> void:
 		
 		Stats.current_weapons.remove_at(index)
 		merger.merge_factor += 1
-		get_parent().get_parent().get_parent().call_deferred("redo_selling")
+		Messanger.REDO_SELLING.emit()
 ```
 
 ## can_merge
 ### Explanation
-This function checks if the weapon can be merged. It does this by counting the number of weapons with the same name and merge factor in the player's inventory. If there are at least two such weapons, it returns true.
+This function checks if there are at least two weapons with the same name and merge factor in the current weapons list.
 ### Code
 ```gdscript
 func can_merge():
@@ -122,8 +122,8 @@ func _ready() -> void:
 	stats.text += "Cost: {0}\n".format([data.cost])
 	stats.text += "Refund Value: {0}".format([int(data.cost * (Stats.refund_rate / 100.0))])
 	
-	if not can_merge():
-		merge.disabled = true
+	check_merge()
+	Messanger.WEAPON_CHANGE.connect(check_merge)
 
 func _on_sell_pressed() -> void:
 	var index = 0
@@ -136,7 +136,7 @@ func _on_sell_pressed() -> void:
 	Stats.coins += int(data.cost * (Stats.refund_rate / 100.0))
 	get_parent().get_parent().get_parent().redo_selling()
 
-func _process(_delta: float) -> void:
+func check_merge() -> void:
 	if not can_merge():
 		merge.disabled = true
 	else:
@@ -157,7 +157,7 @@ func _on_merge_pressed() -> void:
 		
 		Stats.current_weapons.remove_at(index)
 		merger.merge_factor += 1
-		get_parent().get_parent().get_parent().call_deferred("redo_selling")
+		Messanger.REDO_SELLING.emit()
 
 func can_merge():
 	var existing = 0
