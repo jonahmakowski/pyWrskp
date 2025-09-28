@@ -53,7 +53,10 @@ const ENEMY_DAMAGE = {"Orc": 3, "Swordsman": 1.5, "Archer": 1}
 
 # Currencies
 var enemies_killed = 0
-var coins = 0
+var coins = 0:
+	set(value):
+		coins = value
+		Messanger.MONEY_CHANGE.emit()
 
 # Level Stats
 var enemy_spawn_rate = 2
