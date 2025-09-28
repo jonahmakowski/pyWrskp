@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Scenes="*res://Game/Helpers/scenes.tscn"
 Stats="*res://Game/Helpers/stats.tscn"
 Upgrades="*res://Game/Helpers/upgrades.tscn"
+Messanger="*res://Game/Helpers/Messanger.gd"
 
 [display]
 

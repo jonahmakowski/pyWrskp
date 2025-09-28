@@ -19,8 +19,12 @@ func _ready() -> void:
 	
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
+	
+	Messanger.MONEY_CHANGE.connect(reroll_enabled)
+	Messanger.WEAPON_CHANGE.connect(reroll_enabled)
+	reroll_enabled()
 
-func _process(_delta: float) -> void:
+func reroll_enabled() -> void:
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	else:
@@ -34,7 +38,7 @@ func _on_buy_pressed() -> void:
 		Stats.coins -= data.cost
 		Stats.current_weapons.append(data.duplicate(true))
 		
-		get_parent().get_parent().call_deferred("redo_selling")
+		Messanger.REDO_SELLING.emit()
 		
 		queue_free()
 	elif len(Stats.current_weapons) == Stats.max_weapons:
@@ -42,7 +46,7 @@ func _on_buy_pressed() -> void:
 		for w in Stats.current_weapons:
 			if w.name == data.name and w.merge_factor == data.merge_factor:
 				w.merge_factor += 1
-				get_parent().get_parent().call_deferred("redo_selling")
+				Messanger.REDO_SELLING.emit()
 				queue_free()
 				break
 

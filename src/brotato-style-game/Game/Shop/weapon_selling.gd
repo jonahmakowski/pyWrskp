@@ -18,8 +18,8 @@ func _ready() -> void:
 	stats.text += "Cost: {0}\n".format([data.cost])
 	stats.text += "Refund Value: {0}".format([int(data.cost * (Stats.refund_rate / 100.0))])
 	
-	if not can_merge():
-		merge.disabled = true
+	check_merge()
+	Messanger.WEAPON_CHANGE.connect(check_merge)
 
 func _on_sell_pressed() -> void:
 	var index = 0
@@ -32,7 +32,7 @@ func _on_sell_pressed() -> void:
 	Stats.coins += int(data.cost * (Stats.refund_rate / 100.0))
 	get_parent().get_parent().get_parent().redo_selling()
 
-func _process(_delta: float) -> void:
+func check_merge() -> void:
 	if not can_merge():
 		merge.disabled = true
 	else:
@@ -53,7 +53,7 @@ func _on_merge_pressed() -> void:
 		
 		Stats.current_weapons.remove_at(index)
 		merger.merge_factor += 1
-		get_parent().get_parent().get_parent().call_deferred("redo_selling")
+		Messanger.REDO_SELLING.emit()
 
 func can_merge():
 	var existing = 0

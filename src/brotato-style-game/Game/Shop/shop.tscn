@@ -38,9 +38,21 @@ theme_override_font_sizes/font_size = 24
 text = "Coins: 0"
 script = ExtResource("6_a3od8")
 
-[node name="WeaponSelection" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RerollButton" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
+text = "Reroll 
+(Cost: 1)"
+
+[node name="WeaponSelection" type="HBoxContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
@@ -54,8 +66,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.75
 
-[node name="Button" type="Button" parent="."]
+[node name="Continue" type="Button" parent="."]
 layout_mode = 2
 text = "Continue"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/RerollButton" to="." method="_on_reroll_button_pressed"]
+[connection signal="pressed" from="Continue" to="." method="_on_button_pressed"]
