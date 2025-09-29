@@ -3,12 +3,13 @@
 [ext_resource type="Script" uid="uid://bg2gj8w8jayel" path="res://Game/UIScenes/upgrade_selection_helper.gd" id="1_ug44i"]
 
 [node name="Upgrade" type="VBoxContainer"]
-anchors_preset = 15
-anchor_right = 1.0
+custom_minimum_size = Vector2(381, 0)
+anchors_preset = 9
 anchor_bottom = 1.0
-grow_horizontal = 2
+offset_right = 381.0
+offset_bottom = -486.0
 grow_vertical = 2
-size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_ug44i")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

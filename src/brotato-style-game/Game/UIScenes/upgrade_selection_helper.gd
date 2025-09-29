@@ -17,4 +17,4 @@ func _ready() -> void:
 
 func _on_button_pressed() -> void:
 	rendered_upgrade.apply()
-	get_parent().selected_upgrade()
+	get_tree().change_scene_to_packed(Scenes.shop)

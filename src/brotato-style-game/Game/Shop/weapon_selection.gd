@@ -9,7 +9,10 @@ var data: weapon
 func _ready() -> void:
 	image.texture = data.static_sprite
 	
-	title.text = "{0} ({1})".format([data.name, data.rarity_text])
+	if Stats.damage_multiplyer != 1:
+		stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	else:
+		stats.text = "Damage: {0}\n".format([data.damage])
 	
 	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
 	stats.text += "Range: {0}\n".format([data.weapon_range])
@@ -20,11 +23,11 @@ func _ready() -> void:
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	
-	Messanger.MONEY_CHANGE.connect(reroll_enabled)
-	Messanger.WEAPON_CHANGE.connect(reroll_enabled)
-	reroll_enabled()
+	Messanger.MONEY_CHANGE.connect(can_buy)
+	Messanger.WEAPON_CHANGE.connect(can_buy)
+	can_buy()
 
-func reroll_enabled() -> void:
+func can_buy() -> void:
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	else:

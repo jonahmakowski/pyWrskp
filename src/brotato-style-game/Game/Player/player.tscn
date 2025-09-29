@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://clht32bvehj4w" path="res://Game/Player/player_weapon.tscn" id="3_letr6"]
 [ext_resource type="PackedScene" uid="uid://4p8rtd7jp7lj" path="res://Game/UIScenes/stats_display.tscn" id="3_segth"]
 [ext_resource type="Script" uid="uid://t2r7g3ifjr0a" path="res://Game/Player/weapon_container.gd" id="3_vytja"]
-[ext_resource type="Resource" uid="uid://c7dxl7hhasr45" path="res://Resources/Weapons/WoodenSword.tres" id="6_p2hw7"]
+[ext_resource type="Resource" uid="uid://cche8rp7m1va" path="res://Resources/Weapons/WoodenClub.tres" id="6_p2hw7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p2hw7"]
 atlas = ExtResource("1_m57qa")

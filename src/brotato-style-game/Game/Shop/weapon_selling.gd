@@ -4,14 +4,19 @@ var data: weapon
 @onready var image: TextureRect = %Image
 @onready var title: Label = %Title
 @onready var stats: Label = %Stats
-@onready var merge: Button = $VBoxContainer/Merge
+@onready var merge: Button = %Merge
+
 
 func _ready() -> void:
 	image.texture = data.static_sprite
 	
 	title.text = "{0} ({1})\n(Merge Factor: {2})".format([data.name, data.rarity_text, data.merge_factor])
 	
-	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	if Stats.damage_multiplyer != 1:
+		stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	else:
+		stats.text = "Damage: {0}\n".format([data.damage])
+	
 	stats.text += "Range: {0}\n".format([data.weapon_range])
 	stats.text += "Cooldown: {0}\n".format([data.cooldown])
 	stats.text += "Melee: {0}\n".format([data.melee])
