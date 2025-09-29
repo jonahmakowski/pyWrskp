@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/Shop/weapon_selling.gd
 
 # AI Summary
-This file is a Godot script that extends the Control node. It manages the display and functionality of a weapon in a shop. It includes functions for initializing the weapon display, handling sell and merge actions, and checking if a weapon can be merged.
+This file is a Godot script that extends the Control node. It is responsible for displaying and managing a weapon in a shop. The script sets up the weapon's image, title, and stats, and provides functionality for selling and merging weapons.
 
 The AI gave it a general rating of 8/10
 
@@ -9,12 +9,12 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, but there are some areas where it could be more concise or follow conventions more closely.
+The code is generally well-written and follows the Godot scripting conventions. However, there are a few areas where the code could be improved, such as the use of hard-coded values and the lack of comments.
 # Functions
 
 ## _ready
 ### Explanation
-This function is called when the node is ready. It sets the image texture, title text, and stats text based on the weapon data. It also connects the check_merge function to the WEAPON_CHANGE signal.
+This function is called when the node is ready. It sets up the weapon's image, title, and stats, and connects the check_merge function to the WEAPON_CHANGE signal.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -22,7 +22,11 @@ func _ready() -> void:
 	
 	title.text = "{0} ({1})\n(Merge Factor: {2})".format([data.name, data.rarity_text, data.merge_factor])
 	
-	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	if Stats.damage_multiplyer != 1:
+		stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	else:
+		stats.text = "Damage: {0}\n".format([data.damage])
+	
 	stats.text += "Range: {0}\n".format([data.weapon_range])
 	stats.text += "Cooldown: {0}\n".format([data.cooldown])
 	stats.text += "Melee: {0}\n".format([data.melee])
@@ -35,7 +39,7 @@ func _ready() -> void:
 
 ## _on_sell_pressed
 ### Explanation
-This function is called when the sell button is pressed. It removes the weapon from the current weapons list, adds the refund value to the coins, and calls the redo_selling function on the parent node.
+This function is called when the sell button is pressed. It removes the weapon from the current weapons list, adds the refund value to the coins, and calls the redo_selling function.
 ### Code
 ```gdscript
 func _on_sell_pressed() -> void:
@@ -64,7 +68,7 @@ func check_merge() -> void:
 
 ## _on_merge_pressed
 ### Explanation
-This function is called when the merge button is pressed. It finds another weapon with the same name and merge factor, removes it from the current weapons list, increments the merge factor of the remaining weapon, and emits the REDO_SELLING signal.
+This function is called when the merge button is pressed. It checks if the weapon can be merged, finds the other weapon to merge with, removes the other weapon from the current weapons list, increases the merge factor of the current weapon, and emits the REDO_SELLING signal.
 ### Code
 ```gdscript
 func _on_merge_pressed() -> void:
@@ -87,7 +91,7 @@ func _on_merge_pressed() -> void:
 
 ## can_merge
 ### Explanation
-This function checks if there are at least two weapons with the same name and merge factor in the current weapons list.
+This function checks if there are two weapons with the same name and merge factor in the current weapons list.
 ### Code
 ```gdscript
 func can_merge():
@@ -108,14 +112,19 @@ var data: weapon
 @onready var image: TextureRect = %Image
 @onready var title: Label = %Title
 @onready var stats: Label = %Stats
-@onready var merge: Button = $VBoxContainer/Merge
+@onready var merge: Button = %Merge
+
 
 func _ready() -> void:
 	image.texture = data.static_sprite
 	
 	title.text = "{0} ({1})\n(Merge Factor: {2})".format([data.name, data.rarity_text, data.merge_factor])
 	
-	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	if Stats.damage_multiplyer != 1:
+		stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	else:
+		stats.text = "Damage: {0}\n".format([data.damage])
+	
 	stats.text += "Range: {0}\n".format([data.weapon_range])
 	stats.text += "Cooldown: {0}\n".format([data.cooldown])
 	stats.text += "Melee: {0}\n".format([data.melee])

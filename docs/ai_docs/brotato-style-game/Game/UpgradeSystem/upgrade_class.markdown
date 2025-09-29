@@ -1,7 +1,7 @@
 # Documentation for src/brotato-style-game/Game/UpgradeSystem/upgrade_class.gd
 
 # AI Summary
-This file defines a class called 'upgrade' that extends the 'Resource' class. It includes properties for the upgrade's name, description, rarity, icon, and an array of stat changes. The 'apply' function applies these stat changes to the player's stats. The rarity property is set using a setter method that also updates the weight and rarity text based on predefined mappings in the Stats object.
+This file defines an upgrade class in Godot. It includes properties for the upgrade's name, description, rarity, icon, and the changes to be made to stats. It also includes functions to check conditions and apply the upgrade.
 
 The AI gave it a general rating of 8/10
 
@@ -9,15 +9,34 @@ The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is generally well-structured and functional, with clear variable names and a logical flow. However, there is a typo in the 'desription' variable name, and the 'change_value' key in the 'to_change' array format comment should be 'change_by' to match the actual code.
+The code is generally well-structured and functional, but there are some inconsistencies in naming conventions and some potential improvements in code organization.
 # Functions
+
+## check_conditions
+### Explanation
+This function checks if all conditions for an upgrade are met. It iterates through the conditions array and returns false if any condition is not met. Otherwise, it returns true.
+### Code
+```gdscript
+func check_conditions():
+	var result = true
+	
+	for condition in conditions:
+		if not condition.check_condition():
+			result = false
+			break
+	
+	return result
+```
 
 ## apply
 ### Explanation
-This function applies the changes specified in the 'to_change' array to the player's stats. It iterates over each stat change in the array and updates the corresponding stat in the Stats object. If the change type is '+', it adds the change value to the current stat value. If the change type is '*', it multiplies the current stat value by the change value.
+This function applies the upgrade if all conditions are met. If any condition is not met, it issues a warning. It then iterates through the to_change array and applies the changes to the stats based on the type of change (either addition or multiplication).
 ### Code
 ```gdscript
 func apply():
+	if not check_conditions():
+		push_warning("Applying upgrade even though one or more conditions are invalid")
+	
 	for stat in to_change:
 		if stat['type'] == "+":
 			Stats.set(stat['stat'], Stats.get(stat['stat']) + stat['change_by'])
@@ -48,8 +67,22 @@ var rarity_text: String
 # type = "*" or "+"
 
 @export var to_change: Array[stat_changes]
+@export var conditions: Array[upgrade_conditions]
+
+func check_conditions():
+	var result = true
+	
+	for condition in conditions:
+		if not condition.check_condition():
+			result = false
+			break
+	
+	return result
 
 func apply():
+	if not check_conditions():
+		push_warning("Applying upgrade even though one or more conditions are invalid")
+	
 	for stat in to_change:
 		if stat['type'] == "+":
 			Stats.set(stat['stat'], Stats.get(stat['stat']) + stat['change_by'])

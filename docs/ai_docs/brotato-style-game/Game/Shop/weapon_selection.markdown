@@ -1,26 +1,29 @@
 # Documentation for src/brotato-style-game/Game/Shop/weapon_selection.gd
 
 # AI Summary
-This file is a part of a larger game project. It is responsible for displaying and managing the selection of weapons in the game's shop. It uses the Godot game engine and is written in the GDScript language. The file extends the Control node and has several functions that are called at different times to set up the weapon's image, title, and stats, enable or disable the buy button, and handle the buying of weapons.
+This file is a weapon selection script for a game. It handles the display of weapon information, the buying of weapons, and the merging of weapons. It uses the Stats and Messanger singletons to manage the player's coins, weapons, and other game state.
 
-The AI gave it a general rating of 8/10
+The AI gave it a general rating of 7/10
 
-The AI gave it a conventions rating of 9/10
+The AI gave it a conventions rating of 8/10
 
 The reason for the AI's rating is:
 
-The code is generally well-written and follows the conventions of the GDScript language. However, there are a few areas where the code could be improved, such as the use of magic numbers and the lack of comments to explain the code's functionality.
+The code is generally well-structured and easy to understand. However, there are some areas where the code could be more concise or efficient. The code also follows the Godot engine's conventions for the most part, but there are some areas where the code could be more consistent.
 # Functions
 
 ## _ready
 ### Explanation
-This function is called when the node is ready. It sets up the weapon's image, title, and stats. It also connects to the MONEY_CHANGE and WEAPON_CHANGE signals and calls reroll_enabled.
+This function is called when the node is ready. It sets the image texture, updates the stats text based on the damage multiplier, and connects to the MONEY_CHANGE and WEAPON_CHANGE signals. It also calls the can_buy function.
 ### Code
 ```gdscript
 func _ready() -> void:
 	image.texture = data.static_sprite
 	
-	title.text = "{0} ({1})".format([data.name, data.rarity_text])
+	if Stats.damage_multiplyer != 1:
+		stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	else:
+		stats.text = "Damage: {0}\n".format([data.damage])
 	
 	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
 	stats.text += "Range: {0}\n".format([data.weapon_range])
@@ -31,17 +34,17 @@ func _ready() -> void:
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	
-	Messanger.MONEY_CHANGE.connect(reroll_enabled)
-	Messanger.WEAPON_CHANGE.connect(reroll_enabled)
-	reroll_enabled()
+	Messanger.MONEY_CHANGE.connect(can_buy)
+	Messanger.WEAPON_CHANGE.connect(can_buy)
+	can_buy()
 ```
 
-## reroll_enabled
+## can_buy
 ### Explanation
-This function is called when the MONEY_CHANGE or WEAPON_CHANGE signal is emitted. It enables or disables the buy button based on the player's coins and the number of weapons they currently have.
+This function checks if the player can buy the weapon. It disables the buy button if the player doesn't have enough coins or if the player has reached the maximum number of weapons and cannot merge the weapon.
 ### Code
 ```gdscript
-func reroll_enabled() -> void:
+func can_buy() -> void:
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	else:
@@ -50,7 +53,7 @@ func reroll_enabled() -> void:
 
 ## _on_buy_pressed
 ### Explanation
-This function is called when the buy button is pressed. It checks if the player has enough coins to buy the weapon. If they do, it subtracts the cost of the weapon from the player's coins and adds the weapon to the player's current weapons. If the player already has the maximum number of weapons, it checks if any of the weapons can be merged with the new weapon. If they can, it merges them.
+This function is called when the buy button is pressed. It checks if the player can buy the weapon, subtracts the cost from the player's coins, and adds the weapon to the player's current weapons. If the player has reached the maximum number of weapons, it merges the weapon with an existing one.
 ### Code
 ```gdscript
 func _on_buy_pressed() -> void:
@@ -76,7 +79,7 @@ func _on_buy_pressed() -> void:
 
 ## can_merge
 ### Explanation
-This function checks if any of the player's current weapons can be merged with the new weapon. It returns true if they can, and false if they cannot.
+This function checks if the weapon can be merged with an existing one. It returns true if there is a weapon with the same name and merge factor.
 ### Code
 ```gdscript
 func can_merge():
@@ -98,7 +101,10 @@ var data: weapon
 func _ready() -> void:
 	image.texture = data.static_sprite
 	
-	title.text = "{0} ({1})".format([data.name, data.rarity_text])
+	if Stats.damage_multiplyer != 1:
+		stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
+	else:
+		stats.text = "Damage: {0}\n".format([data.damage])
 	
 	stats.text = "Damage: {0} -> {1}\n".format([data.damage, data.damage * Stats.damage_multiplyer])
 	stats.text += "Range: {0}\n".format([data.weapon_range])
@@ -109,11 +115,11 @@ func _ready() -> void:
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	
-	Messanger.MONEY_CHANGE.connect(reroll_enabled)
-	Messanger.WEAPON_CHANGE.connect(reroll_enabled)
-	reroll_enabled()
+	Messanger.MONEY_CHANGE.connect(can_buy)
+	Messanger.WEAPON_CHANGE.connect(can_buy)
+	can_buy()
 
-func reroll_enabled() -> void:
+func can_buy() -> void:
 	if Stats.coins < data.cost or (len(Stats.current_weapons) >= Stats.max_weapons and not can_merge()):
 		buy.disabled = true
 	else:
