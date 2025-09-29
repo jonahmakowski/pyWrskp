@@ -5,15 +5,19 @@ extends Node
 	set(value):
 		all_upgrades = value
 		all_upgrades.sort_custom(sort_by_rarity)
-		notify_property_list_changed()
+		if not Engine.is_editor_hint(): set_weights()
+		else: notify_property_list_changed()
 
 var upgrades_with_weights = []
 
 func _ready():
+	if not Engine.is_editor_hint():
+		set_weights()
+
+func set_weights():
 	upgrades_with_weights = []
 	for u in all_upgrades:
-		var weight = u.weight
-		for i in range(weight):
+		for i in range(u.weight):
 			upgrades_with_weights.append(u)
 
 func get_random_upgrade() -> upgrade:
