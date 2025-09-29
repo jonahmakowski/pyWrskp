@@ -47,6 +47,7 @@ text = "This is where the weapon Stats Go!"
 autowrap_mode = 3
 
 [node name="Merge" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Merge"
 

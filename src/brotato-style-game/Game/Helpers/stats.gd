@@ -3,7 +3,7 @@ extends Node
 # Player
 var speed_multiplyer = 1
 var current_health = 10
-var max_health = 10
+var max_health: int = 10
 var health_regen = 0
 var damage_multiplyer = 1
 var projectile_speed_multiplyer = 1
@@ -14,9 +14,15 @@ var max_weapons: int = 4
 var num_of_upgrades: int = 3
 var refund_rate = 50
 @export var base_weapon: weapon
-@onready var current_weapons: Array[weapon] = [base_weapon.duplicate(true)]
+
+@onready var current_weapons: Array[weapon] = [base_weapon.duplicate(true)]:
+	set(value):
+		current_weapons = value
+		Messanger.WEAPON_CHANGE.emit()
+
 var weapons_in_shop: int = 3
 var projectile_bounces: int = 0
+
 var arrow_tracing = 0:
 	set(value):
 		if value >= 1:
@@ -53,6 +59,7 @@ const ENEMY_DAMAGE = {"Orc": 3, "Swordsman": 1.5, "Archer": 1}
 
 # Currencies
 var enemies_killed = 0
+
 var coins = 0:
 	set(value):
 		coins = value
@@ -93,9 +100,9 @@ const NAMES = {
 	"enemy_spawn_rate": "Enemy Spawn Rate (in enemies per second)"
 }
 
+# Reset System
 var DEFAULTS: Dictionary
 
-# Reset System
 func define_defaults():
 	DEFAULTS = {
 		"speed_multiplyer": 1,
@@ -136,3 +143,20 @@ func reset():
 	
 	for var_name in DEFAULTS:
 		set(var_name, DEFAULTS[var_name])
+
+# Increase difficulty for next level
+func next_level():
+	if enemy_spawn_rate > 1:
+		enemy_spawn_rate -= 0.25
+	elif enemy_spawn_rate > 0.05:
+		enemy_spawn_rate -= 0.05
+	elif enemy_spawn_rate > 0.005:
+		enemy_spawn_rate -= 0.001
+	
+	enemy_health_multiplyer += 0.1
+	enemy_damage_multiplyer += 0.1
+	enemy_speed_multiplyer += 0.1
+	enemy_projectile_speed_multiplyer += 0.05
+	level_time += 2
+	
+	level += 1

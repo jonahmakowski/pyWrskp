@@ -14,7 +14,9 @@ func _ready() -> void:
 			weapons_with_weights.append(w)
 	
 	Messanger.REDO_SELLING.connect(redo_selling)
+	Messanger.WEAPON_CHANGE.connect(redo_selling)
 	Messanger.REDO_SELECTION.connect(redo_selection)
+	
 	redo_selling()
 	redo_selection()
 	
@@ -44,20 +46,7 @@ func get_random_weapon():
 	return weapons_with_weights[index]
 
 func _on_button_pressed() -> void:
-	if Stats.enemy_spawn_rate > 1:
-		Stats.enemy_spawn_rate -= 0.25
-	elif Stats.enemy_spawn_rate > 0.05:
-		Stats.enemy_spawn_rate -= 0.05
-	elif Stats.enemy_spawn_rate > 0.005:
-		Stats.enemy_spawn_rate -= 0.001
-	
-	Stats.enemy_health_multiplyer += 0.1
-	Stats.enemy_damage_multiplyer += 0.1
-	Stats.enemy_speed_multiplyer += 0.1
-	Stats.enemy_projectile_speed_multiplyer += 0.05
-	Stats.level_time += 2
-	
-	Stats.level += 1
+	Stats.next_level()
 	
 	get_tree().change_scene_to_packed(Scenes.level1)
 
