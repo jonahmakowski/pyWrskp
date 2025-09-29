@@ -1,20 +1,20 @@
 # Documentation for src/brotato-style-game/Game/Shop/shop.gd
 
 # AI Summary
-This file is a shop system for a game. It manages the selection and selling of weapons, handles rerolling of weapons, and adjusts various game stats when the level is increased. The code is well-structured and uses signals to manage interactions between different parts of the game.
+This file defines a shop in a game, where players can buy and sell weapons. It includes functions to initialize the shop, handle button presses, and manage the weapon selection and selling displays. The shop also includes a reroll feature that allows players to refresh the weapon selection for a cost.
 
 The AI gave it a general rating of 8/10
 
-The AI gave it a conventions rating of 9/10
+The AI gave it a conventions rating of 7/10
 
 The reason for the AI's rating is:
 
-The code is well-structured and follows good practices. The use of signals for interaction between different parts of the game is a good design choice. The code is also well-commented, making it easier to understand.
+The code is generally well-structured and easy to understand. However, there are a few areas where the code could be more concise or efficient. The adherence to conventions is good, but there are some areas where the code could be more consistent.
 # Functions
 
 ## _ready
 ### Explanation
-This function initializes the shop by populating the weapons_with_weights array with weapons based on their weights. It also connects signals for redoing the selling and selection, and enables the reroll button.
+Initializes the shop by populating the weapons_with_weights array based on the weights of the weapons. It also connects various signals to their respective handlers and calls redo_selling and redo_selection functions. Finally, it connects the MONEY_CHANGE signal to the reroll_enabled function and calls reroll_enabled.
 ### Code
 ```gdscript
 func _ready() -> void:
@@ -23,7 +23,9 @@ func _ready() -> void:
 			weapons_with_weights.append(w)
 	
 	Messanger.REDO_SELLING.connect(redo_selling)
+	Messanger.WEAPON_CHANGE.connect(redo_selling)
 	Messanger.REDO_SELECTION.connect(redo_selection)
+	
 	redo_selling()
 	redo_selection()
 	
@@ -33,7 +35,7 @@ func _ready() -> void:
 
 ## redo_selection
 ### Explanation
-This function clears the current weapon selection and repopulates it with new random weapons.
+Clears the current weapon selection and repopulates it with new random weapons. It does this by first freeing all existing children of the weapon_selection container, then instantiating new shop_weapon_selection scenes and setting their data to a randomly selected weapon.
 ### Code
 ```gdscript
 func redo_selection():
@@ -48,7 +50,7 @@ func redo_selection():
 
 ## redo_selling
 ### Explanation
-This function clears the current weapon selling display and repopulates it with the weapons the player currently has.
+Clears the current weapon selling display and repopulates it with the weapons the player currently has. It does this by first freeing all existing children of the weapon_selling container, then instantiating new shop_weapon_selling scenes and setting their data to the weapons in Stats.current_weapons.
 ### Code
 ```gdscript
 func redo_selling():
@@ -63,7 +65,7 @@ func redo_selling():
 
 ## get_random_weapon
 ### Explanation
-This function returns a random weapon from the weapons_with_weights array.
+Returns a random weapon from the weapons_with_weights array. It does this by generating a random index within the bounds of the array and returning the weapon at that index.
 ### Code
 ```gdscript
 func get_random_weapon():
@@ -73,31 +75,18 @@ func get_random_weapon():
 
 ## _on_button_pressed
 ### Explanation
-This function is called when the button is pressed. It increases the level, adjusts various enemy stats, and changes the scene to the next level.
+Handles the button press event. It advances the game to the next level and changes the scene to the level1 scene.
 ### Code
 ```gdscript
 func _on_button_pressed() -> void:
-	if Stats.enemy_spawn_rate > 1:
-		Stats.enemy_spawn_rate -= 0.25
-	elif Stats.enemy_spawn_rate > 0.05:
-		Stats.enemy_spawn_rate -= 0.05
-	elif Stats.enemy_spawn_rate > 0.005:
-		Stats.enemy_spawn_rate -= 0.001
-	
-	Stats.enemy_health_multiplyer += 0.1
-	Stats.enemy_damage_multiplyer += 0.1
-	Stats.enemy_speed_multiplyer += 0.1
-	Stats.enemy_projectile_speed_multiplyer += 0.05
-	Stats.level_time += 2
-	
-	Stats.level += 1
+	Stats.next_level()
 	
 	get_tree().change_scene_to_packed(Scenes.level1)
 ```
 
 ## _on_reroll_button_pressed
 ### Explanation
-This function is called when the reroll button is pressed. It checks if the player has enough coins, deducts the cost, updates the reroll cost, and repopulates the weapon selection.
+Handles the reroll button press event. It checks if the player has enough coins to reroll, deducts the reroll cost from the player's coins, doubles the reroll cost, updates the reroll button's text to reflect the new cost, and calls redo_selection to refresh the weapon selection.
 ### Code
 ```gdscript
 func _on_reroll_button_pressed() -> void:
@@ -113,7 +102,7 @@ func _on_reroll_button_pressed() -> void:
 
 ## reroll_enabled
 ### Explanation
-This function enables or disables the reroll button based on whether the player has enough coins.
+Enables or disables the reroll button based on whether the player has enough coins to reroll. It does this by checking if the player's coins are less than the reroll cost and setting the disabled property of the reroll button accordingly.
 ### Code
 ```gdscript
 func reroll_enabled() -> void:
@@ -140,7 +129,9 @@ func _ready() -> void:
 			weapons_with_weights.append(w)
 	
 	Messanger.REDO_SELLING.connect(redo_selling)
+	Messanger.WEAPON_CHANGE.connect(redo_selling)
 	Messanger.REDO_SELECTION.connect(redo_selection)
+	
 	redo_selling()
 	redo_selection()
 	
@@ -170,20 +161,7 @@ func get_random_weapon():
 	return weapons_with_weights[index]
 
 func _on_button_pressed() -> void:
-	if Stats.enemy_spawn_rate > 1:
-		Stats.enemy_spawn_rate -= 0.25
-	elif Stats.enemy_spawn_rate > 0.05:
-		Stats.enemy_spawn_rate -= 0.05
-	elif Stats.enemy_spawn_rate > 0.005:
-		Stats.enemy_spawn_rate -= 0.001
-	
-	Stats.enemy_health_multiplyer += 0.1
-	Stats.enemy_damage_multiplyer += 0.1
-	Stats.enemy_speed_multiplyer += 0.1
-	Stats.enemy_projectile_speed_multiplyer += 0.05
-	Stats.level_time += 2
-	
-	Stats.level += 1
+	Stats.next_level()
 	
 	get_tree().change_scene_to_packed(Scenes.level1)
 
