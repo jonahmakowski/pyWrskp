@@ -151,6 +151,7 @@ github_commit:
     - git checkout main
     - git remote set-url origin "https://jonahmakowski:$GITHUB_PASSWORD@github.com/jonahmakowski/pyWrskp.git"
     - git remote set-url gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git" || git remote add gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
+    - rm -rf /builds/jonahmakowski/pyWrskp/.git/refs/remotes/gitlab/main.lock
     - git pull gitlab main
     - git config pull.rebase false
     - git pull origin
