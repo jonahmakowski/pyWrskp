@@ -27,12 +27,13 @@ print(f"{len(documentation_files)}; Documentation files:", documentation_files)
 # Remove old documentation for files that have been deleted
 for doc_file in documentation_files:
     corresponding_source_file = (
-        doc_file.replace("docs/ai_docs/", "src/")
-        .replace(".md", ".py")
+        doc_file.replace(".md", ".py")
         .replace(".markdown", ".gd")
         .replace(".cpp.md", ".cpp")
         .replace(".rs.md", ".rs")
     )
+    corresponding_source_file = "src/" + doc_file.split("/", 2)[2]
+    
     if not os.path.exists(corresponding_source_file):
         print(f"Removing outdated documentation: {doc_file}")
         os.remove(doc_file)
