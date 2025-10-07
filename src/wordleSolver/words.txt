@@ -15293,7 +15293,6 @@ snurp
 snurt
 soaky
 soaks
-soapi
 soapy
 soaps
 soary
@@ -314141,7 +314140,6 @@ soaperies
 soapers
 soapfish
 soapfishes
-soapi
 soapy
 soapier
 soapiest
@@ -668040,7 +668038,6 @@ spamcombat
 spamcontrol
 spamcop
 spamcount
-spamd
 spamdemic
 spamdemicmap_bit
 spamdemicmap_large
@@ -1040628,7 +1040625,6 @@ spam.cn
 spamassassin
 spambox
 spamcontrol
-spamd
 spamd0
 spamd1
 spamd2
@@ -1669733,7 +1669729,6 @@ stainlessly
 stainlessness
 stainproof
 stains
-staio
 stair
 stairbeak
 stairbuilder
