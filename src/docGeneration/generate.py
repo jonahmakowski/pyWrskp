@@ -33,7 +33,7 @@ for doc_file in documentation_files:
         .replace(".rs.md", ".rs")
     )
     corresponding_source_file = "src/" + doc_file.split("/", 2)[2]
-    
+
     if not os.path.exists(corresponding_source_file):
         print(f"Removing outdated documentation: {doc_file}")
         os.remove(doc_file)
