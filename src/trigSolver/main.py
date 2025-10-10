@@ -7,6 +7,7 @@ opposite_input = input("Enter the length of the opposite side: ")
 adjacent_input = input("Enter the length of the adjacent side: ")
 angle_input = input("Enter the angle in degrees: ")
 
+
 def parse_input(input_str):
     if input_str == "":
         return None
@@ -14,6 +15,7 @@ def parse_input(input_str):
         return float(input_str)
     except ValueError:
         return None
+
 
 hypotenuse = parse_input(hypotenuse_input)
 opposite = parse_input(opposite_input)
