@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="upgrade" load_steps=6 format=3 uid="uid://c18pyfhl11ujp"]
 
-[ext_resource type="Script" uid="uid://c3578jtbtaedu" path="res://Game/UpgradeSystem/upgrade_conditions_resource.gd" id="1_80cxt"]
+[ext_resource type="Script" uid="uid://b1imt2cvyihpg" path="res://Game/UpgradeSystem/upgrade_conditions_resource.gd" id="1_80cxt"]
 [ext_resource type="Script" uid="uid://b18fl5nvhyqn4" path="res://Game/UpgradeSystem/upgrade_class.gd" id="1_bra8n"]
 [ext_resource type="Script" uid="uid://bqncvia7w0o5o" path="res://Game/UpgradeSystem/stat_changes_class.gd" id="2_80cxt"]
 
