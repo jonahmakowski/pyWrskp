@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw7ob7dlrqbsr"]
+
+[ext_resource type="Script" uid="uid://b2758ik5rx1wo" path="res://Weapons/00 Weapon Base/weapon_base.gd" id="1_d1r2v"]
+[ext_resource type="PackedScene" uid="uid://dx1uv0b6qcwqs" path="res://Weapons/Pistol/pistol_projectile.tscn" id="2_jc8w0"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_d1r2v"]
+radius = 0.1
+height = 0.5
+
+[node name="Pistol" type="Node3D"]
+script = ExtResource("1_d1r2v")
+projectile = ExtResource("2_jc8w0")
+firerate = 1
+metadata/_custom_type_script = "uid://b2758ik5rx1wo"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_d1r2v")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
