@@ -1,0 +1,5 @@
+University of Ottawa	Apple 16 512 2099.00
+Western University	Apple 16 1024 2399.00
+University of Toronto	Dell 16 512 929.00
+McGill University	HP 32 1024 1085.63
+Stanford University	Apple 16 512 1331.00
