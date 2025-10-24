@@ -1,4 +1,24 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+bool drawn(int *cards_drawn, int card) {
+    for (int i = 0; i < 54; i++) {
+        if (cards_drawn[i] == card) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool all_drawn(int *cards_drawn) {
+    for (int i = 0; i < 54; i++) {
+        if (cards_drawn[i] == -3) {
+            return false;
+        }
+    }
+    return true;
+}
 
 int main() {
     // Question 1
@@ -91,6 +111,28 @@ int main() {
 
     printf("Min: %d, Max: %d\n", min, max);
     printf("Min Index: %d, Max Index: %d\n", min_index, max_index);
+
+    // Question 10
+    const int PLAYERS = 4;
+    srand(time(0));
+    
+    printf("Question 10:\n");
+    int cards_drawn[54] = {-3};
+    char suits[4][10] = {"Hearts", "Diamonds", "Clubs", "Spades"};
+    char ranks[13][10] = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+
+    int player = 1;
+    int index = 0;
+    
+    while (!all_drawn(cards_drawn)) {
+        int card = rand() % 54 - 2; // -2 to 51, where -2 and -1 are jokers
+        if (!drawn(cards_drawn, card)) {
+            cards_drawn[index] = card;
+            printf("Player %d drew %s of %s\n", player, ranks[card % 13], suits[card / 13]);
+            player = (player % PLAYERS) + 1;
+            index++;
+        }
+    }
 
     return 0;
 }
