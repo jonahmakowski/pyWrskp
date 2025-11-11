@@ -26,6 +26,6 @@ ALLEGRO_DISPLAY *display = nullptr;
 ALLEGRO_EVENT_QUEUE *event_queue = nullptr;
 ALLEGRO_TIMER *timer = nullptr;
 
-ALLEGRO_FONT *default_font = al_create_builtin_font();
+ALLEGRO_FONT *default_font = nullptr;
 
 #endif
