@@ -1,3 +1,6 @@
+#ifndef STRUCTS_CPP
+#define STRUCTS_CPP
+
 struct Vector2 {
     float x;
     float y;
@@ -25,3 +28,5 @@ struct Object {
     Vector2i velocity;
     Vector2i position;
 };
+
+#endif

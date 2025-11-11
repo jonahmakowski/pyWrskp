@@ -1,3 +1,6 @@
+#ifndef FUNCTION_CPP
+#define FUNCTION_CPP
+
 #include <math.h>
 #include "structs.cpp"
 #include "globals.cpp"
@@ -58,7 +61,4 @@ Object check_collisions(Object obj, Object objects[], int amount) {
     return obj;
 }
 
-void add_object(Object obj) {
-    objects[object_count] = obj;
-    object_count++;
-}
+#endif
