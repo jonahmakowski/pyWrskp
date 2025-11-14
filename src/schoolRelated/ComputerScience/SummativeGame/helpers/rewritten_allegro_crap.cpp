@@ -9,10 +9,12 @@
 
 #include "globals.cpp"
 
+// Renaming allegro functions to make it more sense to me
 #define update() al_flip_display()
 #define sleep(seconds) al_rest(seconds)
 #define fill_screen(color) al_clear_to_color(color)
 #define load_image(path) al_load_bitmap(path)
+// Macro to load image with error checking, it checks that the image is actually there and loaded properly
 #define load_image_with_checks(path, ptr) { \
     ALLEGRO_BITMAP *temp = load_image(path); \
     if (!temp) { \
@@ -22,6 +24,7 @@
     ptr = temp; \
 }
 
+// Renaming drawing functions to use Vector2 and Vector2i and make more sense to me
 void draw_rectangle(Vector2i top_left, Vector2i bottom_right, ALLEGRO_COLOR color) {
     al_draw_filled_rectangle(top_left.x, top_left.y, bottom_right.x, bottom_right.y, color);
 }
@@ -38,18 +41,37 @@ void draw_line(Vector2i start, Vector2i end, ALLEGRO_COLOR color, float thicknes
     al_draw_line(start.x, start.y, end.x, end.y, color, thickness);
 }
 
-void draw_image(ALLEGRO_BITMAP *image, Vector2i position_upper_left) {
+// Made it so that this function draws the image centered at the position, instead of putting the top left corner there
+void draw_image(ALLEGRO_BITMAP *image, Vector2i position) {
+    int width = al_get_bitmap_width(image);
+    int height = al_get_bitmap_height(image);
+    Vector2i position_upper_left = {position.x - width / 2, position.y - height / 2};
     al_draw_bitmap(image, position_upper_left.x, position_upper_left.y, 0);
 }
 
-void draw_scaled_image(ALLEGRO_BITMAP *image, Vector2i position_upper_left, float scale_x, float scale_y) {
-    al_draw_scaled_bitmap(image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), position_upper_left.x, position_upper_left.y, al_get_bitmap_width(image) * scale_x, al_get_bitmap_height(image) * scale_y, 0);
+void draw_scaled_image(ALLEGRO_BITMAP *image, Vector2i position, Vector2 scale) {
+    int width = al_get_bitmap_width(image) * scale.x;
+    int height = al_get_bitmap_height(image) * scale.y;
+    
+    Vector2i position_upper_left;
+    if (!FULLSCREEN) {
+        position_upper_left = {position.x - width / 2, position.y - height / 2};
+    } else {
+        position_upper_left = {position.x - width / 2, position.y};
+    }
+
+    al_draw_scaled_bitmap(image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), position_upper_left.x, position_upper_left.y, al_get_bitmap_width(image) * scale.x, al_get_bitmap_height(image) * scale.y, 0);
 }
 
+// Setup Allegro and its components
 bool init_allegro() {
     if(!al_init() || !al_init_image_addon() || !al_init_primitives_addon()) {
         printf("failed to initalize libraries\n");
         return false;
+    }
+
+    if (FULLSCREEN) {
+        al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
     }
 
     // Exit program if program fails to create display

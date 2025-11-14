@@ -9,53 +9,110 @@
 
 #include "helpers/structs.cpp"
 #include "helpers/globals.cpp"
-#include "helpers/function.cpp"
 #include "helpers/rewritten_allegro_crap.cpp"
 #include "helpers/colors.cpp"
+#include "helpers/functions.cpp"
+#include "helpers/keybinds.cpp"
 
-ALLEGRO_BITMAP *sun_image = NULL;
+Object sun;
+
+int speed = 5;
 
 void frame_logic() {
+    // Update camera position based on velocity
+    update_camera_position();
+
+    sun.velocity.x += (int)(speed * get_direction_to(sun.position, get_camera_mouse_pos()).x);
+    sun.velocity.y += (int)(speed * get_direction_to(sun.position, get_camera_mouse_pos()).y);
+
+    sun.velocity.x *= 0.9;
+    sun.velocity.y *= 0.9;
+
+    if (is_within(sun, get_camera_mouse_pos())) {
+        printf("Got hit!\n");
+        exit(0);
+    }
+
+    update_position(sun);
+
     fill_screen(WHITE);
     Vector2i center = {SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
-    draw_image(sun_image, center);
+    draw_object(sun);
 }
 
-void handle_input(ALLEGRO_EVENT ev) {
-    printf("Key pressed!\n");
+// Handling the keyboard input ev is the allegro event
+void handle_keyboard_input_down(ALLEGRO_EVENT ev) {
+    if (pressing_keybind(move_up, ev)) {
+        camera.velocity.y = 10;
+    } else if (pressing_keybind(move_down, ev)) {
+        camera.velocity.y = -10;
+    } else if (pressing_keybind(move_left, ev)) {
+        camera.velocity.x = 10;
+    } else if (pressing_keybind(move_right, ev)) {
+        camera.velocity.x = -10;
+    } else if (pressing_keybind(kill_keybind, ev)) {
+        printf("Exiting due to kill keybind\n");
+        exit(0);
+    }
 }
 
-int main(int argc, char *argv[]) {
-    printf("Running\n");
-    
+void handle_keyboard_input_up(ALLEGRO_EVENT ev) {
+    if (pressing_keybind(move_up, ev) || pressing_keybind(move_down, ev)) {
+        camera.velocity.y = 0;
+    } else if (pressing_keybind(move_left, ev) || pressing_keybind(move_right, ev)) {
+        camera.velocity.x = 0;
+    }
+}
+
+void handle_mouse_input(ALLEGRO_EVENT ev) {
+    printf("Mouse clicked at (%d, %d)\n", mouse_pos.x, mouse_pos.y);
+    sun.scale.x += 0.1;
+}
+
+int main(int argc, char *argv[]) {    
     if (!init_allegro()) {
         return -1;
     }
 
     long frames = 0;
 
-    load_image_with_checks("images/sun.png", sun_image);
+    load_image_with_checks("images/sun.png", sun.image);
+    sun.position = {0, 0};
+    sun.scale = {0.5, 0.5};
 
     al_start_timer(timer);
+    al_get_mouse_cursor_position(&mouse_pos.x, &mouse_pos.y);
     while(true) {
         ALLEGRO_EVENT ev;
 
         al_wait_for_event(event_queue, &ev);
 
+        if (ev.type == ALLEGRO_EVENT_MOUSE_AXES) {
+            mouse_pos = {ev.mouse.x, ev.mouse.y};
+        }
+
+        // Handling Input
+        if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            handle_mouse_input(ev);
+        }
+
+        if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+            handle_keyboard_input_down(ev);
+        }
+
+        if (ev.type == ALLEGRO_EVENT_KEY_UP) {
+            handle_keyboard_input_up(ev);
+        }
+
+        // Run frame logic
         if(ev.type == ALLEGRO_EVENT_TIMER) {
             frame_logic();
             update();
             frames += 1;
         }
-        
-        // Handling Input
-        if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-            handle_input(ev);
-        }
-        
-        if (frames > FPS * 5) {
-            printf("Exiting after 5 seconds\n");
-            break;
+
+        if (frames % (FPS * 3) == 0) {
+            speed += 1;
         }
     }
 
