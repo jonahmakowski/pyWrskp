@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkea8qwedpia0"]
-
-[ext_resource type="Script" uid="uid://dx6mhsx35u65i" path="res://Game/Helpers/stats.gd" id="1_ptht5"]
-[ext_resource type="Resource" uid="uid://cche8rp7m1va" path="res://Resources/Weapons/WoodenClub.tres" id="2_d1i7o"]
-
-[node name="Stats" type="Node"]
-script = ExtResource("1_ptht5")
-base_weapon = ExtResource("2_d1i7o")
