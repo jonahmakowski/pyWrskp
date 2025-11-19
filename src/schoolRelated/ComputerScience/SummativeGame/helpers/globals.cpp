@@ -11,7 +11,9 @@
 
 #define SCREEN_WIDTH 2160
 #define SCREEN_HEIGHT 1440
-#define FULLSCREEN true
+#define FULLSCREEN false
+
+#define PANEL_ROUNDING 10.0f
 
 Object objects[MAX_WIDTH * MAX_HEIGHT] = {};
 int object_count = 0;
