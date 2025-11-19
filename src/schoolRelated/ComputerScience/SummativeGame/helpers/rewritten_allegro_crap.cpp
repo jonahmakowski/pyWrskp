@@ -10,6 +10,7 @@
 #include "globals.cpp"
 
 // Renaming allegro functions to make it more sense to me
+
 #define update() al_flip_display()
 #define sleep(seconds) al_rest(seconds)
 #define fill_screen(color) al_clear_to_color(color)
@@ -23,10 +24,16 @@
     } \
     ptr = temp; \
 }
+#define get_display_height() al_get_display_height(display)
+#define get_display_width() al_get_display_width(display)
 
 // Renaming drawing functions to use Vector2 and Vector2i and make more sense to me
 void draw_rectangle(Vector2i top_left, Vector2i bottom_right, ALLEGRO_COLOR color) {
     al_draw_filled_rectangle(top_left.x, top_left.y, bottom_right.x, bottom_right.y, color);
+}
+
+void draw_rectangle_rounded(Vector2i top_left, Vector2i bottom_right, float radius, ALLEGRO_COLOR color) {
+    al_draw_filled_rounded_rectangle(top_left.x, top_left.y, bottom_right.x, bottom_right.y, radius, radius, color);
 }
 
 void draw_circle(Vector2i center, float radius, ALLEGRO_COLOR color) {
@@ -47,6 +54,17 @@ void draw_image(ALLEGRO_BITMAP *image, Vector2i position) {
     int height = al_get_bitmap_height(image);
     Vector2i position_upper_left = {position.x - width / 2, position.y - height / 2};
     al_draw_bitmap(image, position_upper_left.x, position_upper_left.y, 0);
+}
+
+void draw_text(ALLEGRO_FONT *font, ALLEGRO_COLOR color, Vector2i position, const char *text) {
+    al_draw_text(font, color, position.x, position.y, ALLEGRO_ALIGN_CENTRE, text);
+}
+
+Vector2i get_window_size() {
+    Vector2i size;
+    size.x = al_get_display_width(display);
+    size.y = al_get_display_height(display);
+    return size;
 }
 
 void draw_scaled_image(ALLEGRO_BITMAP *image, Vector2i position, Vector2 scale) {

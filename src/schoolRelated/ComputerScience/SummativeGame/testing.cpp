@@ -6,6 +6,8 @@
 #include <allegro5/allegro_primitives.h>
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "helpers/structs.cpp"
 #include "helpers/globals.cpp"
@@ -14,59 +16,98 @@
 #include "helpers/functions.cpp"
 #include "helpers/keybinds.cpp"
 
-Object sun;
+#define projectile_speed 30
+#define enemy_speed 5
 
-int speed = 5;
+Object player;
+
+Object projectile_template;
+Object projectiles[100];
+
+Object enemy_template;
+Object enemies[100];
+
+//Panel test_panel;
 
 void frame_logic() {
-    // Update camera position based on velocity
-    update_camera_position();
+    player.position.x = get_camera_mouse_pos().x;
 
-    sun.velocity.x += (int)(speed * get_direction_to(sun.position, get_camera_mouse_pos()).x);
-    sun.velocity.y += (int)(speed * get_direction_to(sun.position, get_camera_mouse_pos()).y);
+    //fill_screen(WHITE);
+    draw(player);
 
-    sun.velocity.x *= 0.9;
-    sun.velocity.y *= 0.9;
+    //draw(test_panel);
 
-    if (is_within(sun, get_camera_mouse_pos())) {
-        printf("Got hit!\n");
-        exit(0);
+    for (int i = 0; i < 100; i++) {
+        if (projectiles[i].exists) {
+            update_position(projectiles[i]);
+            draw(projectiles[i]);
+            if (projectiles[i].position.y < 0) {
+                projectiles[i].exists = false;
+            }
+        }
     }
 
-    update_position(sun);
+    if (rand() % 50 == 0) {
+        Object new_enemy = enemy_template;
+        new_enemy.position = {(rand() % get_display_width()), 0};
+        
+        for (int i = 0; i < 100; i++) {
+            if (enemies[i].image == NULL || !enemies[i].exists) {
+                enemies[i] = new_enemy;
+                enemies[i].velocity.y = enemy_speed;
+                break;
+            }
+        }
+    }
 
-    fill_screen(WHITE);
-    Vector2i center = {SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
-    draw_object(sun);
+    for (int i = 0; i < 100; i++) {
+        if (enemies[i].exists) {
+            update_position(enemies[i]);
+            draw(enemies[i]);
+            if (enemies[i].position.y > get_display_height()) {
+                enemies[i].exists = false;
+            }
+        }
+    }
+
+    for (int i = 0; i < 100; i++) {
+        for (int j = 0; j < 100; j++) {
+            if (projectiles[i].exists && enemies[j].exists && is_colliding(projectiles[i], enemies[j])) {
+                projectiles[i].exists = false;
+                enemies[j].exists = false;
+            }
+        }
+    }
 }
 
 // Handling the keyboard input ev is the allegro event
 void handle_keyboard_input_down(ALLEGRO_EVENT ev) {
-    if (pressing_keybind(move_up, ev)) {
-        camera.velocity.y = 10;
-    } else if (pressing_keybind(move_down, ev)) {
-        camera.velocity.y = -10;
-    } else if (pressing_keybind(move_left, ev)) {
-        camera.velocity.x = 10;
-    } else if (pressing_keybind(move_right, ev)) {
-        camera.velocity.x = -10;
-    } else if (pressing_keybind(kill_keybind, ev)) {
+    if (pressing_keybind(kill_keybind, ev)) {
         printf("Exiting due to kill keybind\n");
+        al_destroy_display(display);
         exit(0);
     }
 }
 
 void handle_keyboard_input_up(ALLEGRO_EVENT ev) {
-    if (pressing_keybind(move_up, ev) || pressing_keybind(move_down, ev)) {
-        camera.velocity.y = 0;
-    } else if (pressing_keybind(move_left, ev) || pressing_keybind(move_right, ev)) {
-        camera.velocity.x = 0;
-    }
+    // Currently not used
 }
 
 void handle_mouse_input(ALLEGRO_EVENT ev) {
-    printf("Mouse clicked at (%d, %d)\n", mouse_pos.x, mouse_pos.y);
-    sun.scale.x += 0.1;
+    //if (is_within(test_panel, get_camera_mouse_pos())) {
+    //    printf("Clicked within panel\n");
+    //}
+
+    Object new_projectile = projectile_template;
+    new_projectile.position = player.position;
+    new_projectile.velocity.y = -projectile_speed;
+    
+    for (int i = 0; i < 100; i++) {
+        if (projectiles[i].image == NULL || !projectiles[i].exists) {
+            projectiles[i] = new_projectile;
+            break;
+        }
+    }
 }
 
 int main(int argc, char *argv[]) {    
@@ -74,11 +115,24 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    long frames = 0;
+    srand(time(0));
 
-    load_image_with_checks("images/sun.png", sun.image);
-    sun.position = {0, 0};
-    sun.scale = {0.5, 0.5};
+    load_image_with_checks("images/sun.png", player.image);
+    player.position = {0, (int)(get_display_height() * 0.9)};
+    player.scale = {0.5, 0.5};
+    player.exists = true;
+
+    load_image_with_checks("images/sun.png", projectile_template.image);
+    projectile_template.scale = {0.2, 0.2};
+    projectile_template.exists = true;
+
+    load_image_with_checks("images/earth.png", enemy_template.image);
+    enemy_template.scale = {0.3, 0.3};
+    enemy_template.exists = true;
+
+    //test_panel.top_left = {10, 10};
+    //test_panel.bottom_right = {get_window_size().x / 2, get_window_size().y / 2};
+    //test_panel.color = BLUE;
 
     al_start_timer(timer);
     al_get_mouse_cursor_position(&mouse_pos.x, &mouse_pos.y);
@@ -108,11 +162,6 @@ int main(int argc, char *argv[]) {
         if(ev.type == ALLEGRO_EVENT_TIMER) {
             frame_logic();
             update();
-            frames += 1;
-        }
-
-        if (frames % (FPS * 3) == 0) {
-            speed += 1;
         }
     }
 
