@@ -15,7 +15,7 @@ python_formatter:
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
     - git config pull.rebase false
-    - git pull origin/main main
+    - git pull origin main
     - echo "Running Black for code formatting..."
     - black . || echo "Black formatting failed but continuing..."
     - git config --global user.email "gitlab-ci@localhost"
@@ -44,7 +44,7 @@ rust_formatter:
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
     - git config pull.rebase false
-    - git pull origin/main main
+    - git pull origin main
     - cd src/rust/rust_formatter
     - rustup component add rustfmt
     - cargo run --release
@@ -173,7 +173,7 @@ generate_docs:
     - git config --global user.name "GitLab CI"
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
-    - git pull origin/main main
+    - git pull origin main
     - python src/docGeneration/generate.py  # Runs AI-powered doc generation
     - git add .
     - |
@@ -208,7 +208,7 @@ commit_and_push:
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
     - echo "Checking for changes from Black and Docs..."
     - git config pull.rebase false
-    - git pull origin/main main
+    - git pull origin main
     - |
       if [ -f python_changes.patch ]; then
         echo "Applying changes from Python..."
