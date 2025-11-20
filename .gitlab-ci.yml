@@ -2,7 +2,6 @@ stages:
 - format
 - cleanup
 - docs
-- distribute
 - commit
 - build
 
@@ -138,26 +137,6 @@ docker_build:
         fi
       done
 
-github_commit:
-  image: alpine:latest
-  stage: distribute
-  variables:
-    GIT_DEPTH: 0
-  script:
-    - apk add git tar ca-certificates
-    - update-ca-certificates
-    - git config user.name "GitLab CI"
-    - git config user.email "jonah@makowski.ca"
-    - git checkout main
-    - git remote set-url origin "https://jonahmakowski:$GITHUB_PASSWORD@github.com/jonahmakowski/pyWrskp.git"
-    - git remote set-url gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git" || git remote add gitlab "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
-    - rm -rf /builds/jonahmakowski/pyWrskp/.git/refs/remotes/gitlab/main.lock || echo "No lock file!"
-    - rm -rf /builds/jonahmakowski/pyWrskp/.git/refs/heads/main.lock || echo "No lock file!"
-    - git pull gitlab main
-    - git config pull.rebase false
-    - git pull origin
-    - git push
-
 build_package:
   image: python:alpine
   stage: build
@@ -232,7 +211,7 @@ commit_and_push:
     - git pull
     - |
       if [ -f python_changes.patch ]; then
-        echo "Applying changes from Black..."
+        echo "Applying changes from Python..."
         git apply python_changes.patch || echo "Failed to apply changes from Black, continuing..."
         rm python_changes.patch || echo "python_changes.patch not found, continuing..."
       fi
@@ -244,7 +223,7 @@ commit_and_push:
       fi
     - |
       if [ -f rust_changes.patch ]; then
-        echo "Applying changes from Docs..."
+        echo "Applying changes from Rust..."
         git apply rust_changes.patch || echo "Failed to apply changes from Docs, continuing..."
         rm rust_changes.patch || echo "rust_changes.patch not found, continuing..."
       fi
