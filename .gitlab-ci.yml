@@ -208,7 +208,7 @@ commit_and_push:
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
     - echo "Checking for changes from Black and Docs..."
     - git config pull.rebase false
-    - git pull
+    - git pull origin/main main
     - |
       if [ -f python_changes.patch ]; then
         echo "Applying changes from Python..."
