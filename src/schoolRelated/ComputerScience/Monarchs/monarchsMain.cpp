@@ -21,12 +21,37 @@
 //#include <allegro5/allegro_native_dialog.h> 		// for message box
 #include "monarchs.h"
 
+void handle_mouse_input(ALLEGRO_EVENT ev, ALLEGRO_FONT *font, Person monarchs[], int number) {
+    // Placeholder for mouse input handling
+    if (ev.mouse.x < SCREEN_W / 10 && ev.mouse.y < SCREEN_H/15) {
+        sort_by_age_at_death(monarchs, number);
+    } else if (ev.mouse.x < SCREEN_W / 5 && ev.mouse.y < SCREEN_H/15) {
+        sort_by_death_year(monarchs, number);
+    } else if (ev.mouse.x < SCREEN_W/5 * 2 && ev.mouse.y < SCREEN_H/15) {
+        printf("Enter 'a' to add a monarch or 'r' to remove a monarch:\n");
+        char choice;
+        scanf(" %c", &choice);
+        if (choice == 'a') {
+            add_monarch(monarchs, number);
+        } else if (choice == 'r') {
+            remove_monarch(monarchs, number);
+        }
+    }
+    draw_stuff(font, monarchs, number);
+    write_data_to_file(monarchs, number);
+}
+
 // NOTE: argc, argv parameters are required.
 int main(int argc, char *argv[]) {
+    show_instructions();
 
     //***************ALLEGRO SETUP REQUIREMENTS******************
     //initialize Allegro
+
     initializeAllegro();
+
+    ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();
+    al_register_event_source(event_queue, al_get_mouse_event_source());
 
     //declare and initialize display and font, and check they have been setup properly
     ALLEGRO_DISPLAY *display = al_create_display(SCREEN_W, SCREEN_H);
@@ -45,15 +70,17 @@ int main(int argc, char *argv[]) {
 
 	//*********************PRINTS OUTPUT TO SCREEN*******************
 	//Builds screen by printing to the buffer
-	al_clear_to_color(BACKGROUND);
-    printTitle(font);
-    printDatabase(font, monarchs, number);
+	draw_stuff(font, monarchs, number);
 
-    //flips the buffer to the screen
-    al_flip_display();
+    while(true) {
+        ALLEGRO_EVENT ev;
 
-    //wait for 20 seconds.
-    al_rest(20.0);
+        al_wait_for_event(event_queue, &ev);
+
+        if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+            handle_mouse_input(ev, font, monarchs, number);
+        }
+    }
 
     // Free up memory taken by display.
     al_destroy_display(display);

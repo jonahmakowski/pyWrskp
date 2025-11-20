@@ -19,15 +19,13 @@ int readFile(Person p[], int &counter){
 
     counter = 0;
     char line[100];
-    char trash[100];
     while (fgets(line, sizeof(line), inFile)) {
-        sscanf(line, "%13s %5s %d %13s %d %s %d %13s %d",
+        sscanf(line, "%13s %5s %d %13s %d to %d %13s %d",
                p[counter].name,
                p[counter].regnal,
                &p[counter].birth.year,
                p[counter].birth.month,
                &p[counter].birth.day,
-               trash,
                &p[counter].death.year,
                p[counter].death.month,
                &p[counter].death.day);
