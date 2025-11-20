@@ -79,6 +79,8 @@ int main(int argc, char *argv[]) {
 
         if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             handle_mouse_input(ev, font, monarchs, number);
+            // This is here because otherwise it removes monarchs added in the same run for some reason.
+            readFile(monarchs, number);
         }
     }
 

@@ -65,7 +65,7 @@ void show_instructions() {
 }
 
 void sort_by_age_at_death(Person p[], int counter) {
-    for (int i = 0; i < counter - 1; i++) {
+    for (int i = 0; i < counter; i++) {
         for (int j = 0; j < counter - i - 1; j++) {
             if (ageAtDeath(p[j]) > ageAtDeath(p[j + 1])) {
                 Person temp = p[j];
@@ -77,7 +77,7 @@ void sort_by_age_at_death(Person p[], int counter) {
 }
 
 void sort_by_death_year(Person p[], int counter) {
-    for (int i = 0; i < counter - 1; i++) {
+    for (int i = 0; i < counter; i++) {
         for (int j = 0; j < counter - i - 1; j++) {
             if (p[j].death.year > p[j + 1].death.year) {
                 Person temp = p[j];
