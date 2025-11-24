@@ -1,5 +1,5 @@
 // to run:
-// clang++ testing.cpp -o ./target/testing $(pkg-config allegro-5 allegro_main-5 allegro_font-5 allegro_primitives-5 allegro_image-5 --libs --cflags); ./target/testing
+// clang++ space_invaders.cpp -o ./target/space_invaders $(pkg-config allegro-5 allegro_main-5 allegro_font-5 allegro_primitives-5 allegro_image-5 --libs --cflags); ./target/space_invaders
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -32,7 +32,7 @@ Object enemies[100];
 void frame_logic() {
     player.position.x = get_camera_mouse_pos().x;
 
-    //fill_screen(WHITE);
+    fill_screen(WHITE);
     draw(player);
 
     //draw(test_panel);
