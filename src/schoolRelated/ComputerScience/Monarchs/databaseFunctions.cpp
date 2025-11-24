@@ -7,7 +7,30 @@
 #include "monarchs.h"
 #include <allegro5/allegro_primitives.h>
 
+int month_to_number(const char* month) {
+    if (strcmp(month, "January") == 0) return 1;
+    if (strcmp(month, "February") == 0) return 2;
+    if (strcmp(month, "March") == 0) return 3;
+    if (strcmp(month, "April") == 0) return 4;
+    if (strcmp(month, "May") == 0) return 5;
+    if (strcmp(month, "June") == 0) return 6;
+    if (strcmp(month, "July") == 0) return 7;
+    if (strcmp(month, "August") == 0) return 8;
+    if (strcmp(month, "September") == 0) return 9;
+    if (strcmp(month, "October") == 0) return 10;
+    if (strcmp(month, "November") == 0) return 11;
+    if (strcmp(month, "December") == 0) return 12;
+    return 0; // Invalid month
+}
+
 int ageAtDeath(const Person p) {
+    int month_birth = month_to_number(p.birth.month);
+    int month_death = month_to_number(p.death.month);
+
+    if (month_death < month_birth || p.death.day < p.birth.day) {
+        return p.death.year - p.birth.year - 1;
+    }
+    
     return p.death.year - p.birth.year;
 }
 

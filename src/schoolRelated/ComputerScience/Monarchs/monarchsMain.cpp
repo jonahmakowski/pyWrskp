@@ -1,8 +1,8 @@
 /*****************************************************************************
- *	Name:     Lindsay Cullum                                                 *
- *	Date:     April 2018                                                     *
+ *	Name:     Lindsay Cullum / Jonah Makowski                                *
+ *	Date:     April 2018 / Nov 24 2025                                       *
  *                                                                           *
- *	Purpose: Monarchs Template                                               *
+ *	Purpose: Monarchs                                                        *
  *	                                                                         *
  *	Usage:   Starter code for the Monarchs assignment - using Allegro        *
  *	                                                                         *
