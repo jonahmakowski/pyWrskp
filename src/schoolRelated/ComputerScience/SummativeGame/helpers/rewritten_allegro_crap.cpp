@@ -15,6 +15,7 @@
 #define sleep(seconds) al_rest(seconds)
 #define fill_screen(color) al_clear_to_color(color)
 #define load_image(path) al_load_bitmap(path)
+
 // Macro to load image with error checking, it checks that the image is actually there and loaded properly
 #define load_image_with_checks(path, ptr) { \
     ALLEGRO_BITMAP *temp = load_image(path); \
@@ -24,6 +25,7 @@
     } \
     ptr = temp; \
 }
+
 #define get_display_height() al_get_display_height(display)
 #define get_display_width() al_get_display_width(display)
 
@@ -56,10 +58,12 @@ void draw_image(ALLEGRO_BITMAP *image, Vector2i position) {
     al_draw_bitmap(image, position_upper_left.x, position_upper_left.y, 0);
 }
 
+// Draws text centered at the position
 void draw_text(ALLEGRO_FONT *font, ALLEGRO_COLOR color, Vector2i position, const char *text) {
-    al_draw_text(font, color, position.x, position.y, ALLEGRO_ALIGN_CENTRE, text);
+    al_draw_text(font, color, position.x, position.y, ALLEGRO_ALIGN_CENTER, text);
 }
 
+// Gets the window size as a Vector2i
 Vector2i get_window_size() {
     Vector2i size;
     size.x = al_get_display_width(display);
@@ -67,6 +71,7 @@ Vector2i get_window_size() {
     return size;
 }
 
+// Draws a scaled image centered at the position
 void draw_scaled_image(ALLEGRO_BITMAP *image, Vector2i position, Vector2 scale) {
     int width = al_get_bitmap_width(image) * scale.x;
     int height = al_get_bitmap_height(image) * scale.y;

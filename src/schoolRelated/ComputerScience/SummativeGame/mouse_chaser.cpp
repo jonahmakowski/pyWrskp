@@ -22,13 +22,13 @@ void frame_logic() {
     // Update camera position based on velocity
     update_camera_position();
 
-    sun.velocity.x += (int)(speed * get_direction_to(sun.position, get_camera_mouse_pos()).x);
-    sun.velocity.y += (int)(speed * get_direction_to(sun.position, get_camera_mouse_pos()).y);
+    sun.velocity.x += (int)(speed * get_direction_to(sun.position, get_mouse_pos()).x);
+    sun.velocity.y += (int)(speed * get_direction_to(sun.position, get_mouse_pos()).y);
 
     sun.velocity.x *= 0.9;
     sun.velocity.y *= 0.9;
 
-    if (is_within(sun, get_camera_mouse_pos())) {
+    if (is_within(sun, get_mouse_pos())) {
         printf("Got hit!\n");
         exit(0);
     }

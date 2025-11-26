@@ -30,7 +30,7 @@ Object enemies[100];
 //Panel test_panel;
 
 void frame_logic() {
-    player.position.x = get_camera_mouse_pos().x;
+    player.position.x = get_mouse_pos().x;
 
     fill_screen(WHITE);
     draw(player);
