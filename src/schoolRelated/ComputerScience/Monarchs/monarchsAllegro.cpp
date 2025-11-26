@@ -33,7 +33,7 @@ int checkSetup(ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font){
     if (!font){
         //al_show_native_message_box(display, "Error", "Error", "Could not load comic.ttf",
         //                            nullptr, ALLEGRO_MESSAGEBOX_ERROR);
-      return -1;
+        return -1;
     }
 
     return 0;

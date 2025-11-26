@@ -27,7 +27,9 @@ int ageAtDeath(const Person p) {
     int month_birth = month_to_number(p.birth.month);
     int month_death = month_to_number(p.death.month);
 
-    if (month_death < month_birth || p.death.day < p.birth.day) {
+    if (month_death < month_birth) {
+        return p.death.year - p.birth.year - 1;
+    } else if (month_death == month_birth && p.death.day < p.birth.day) {
         return p.death.year - p.birth.year - 1;
     }
     
