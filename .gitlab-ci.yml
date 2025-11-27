@@ -171,6 +171,7 @@ generate_docs:
   script:
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
+    - git config pull.rebase true
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
     - git pull origin main
