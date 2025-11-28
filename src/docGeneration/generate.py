@@ -12,7 +12,7 @@ print("Modified files:", modified_files)
 source_files = [
     f
     for f in modified_files
-    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs"))
+    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs", '.c', '.h'))
 ]
 
 print(f"{len(source_files)}; Source files:", source_files)
@@ -31,6 +31,8 @@ for doc_file in documentation_files:
         .replace(".markdown", ".gd")
         .replace(".cpp.md", ".cpp")
         .replace(".rs.md", ".rs")
+        .replace(".c.md", ".c")
+        .replace(".h.md", ".h")
     )
     corresponding_source_file = "src/" + doc_file.split("/", 2)[2]
 
@@ -50,36 +52,6 @@ for file_num, file in enumerate(source_files):
 
     print(f"{file_num} Generating docs for: {file}")
 
-    # Old, and now obsolete version via direct OpenAI API
-
-    """
-    # Read the source code
-    with open(file, "r") as f:
-        code = f.read()
-
-    
-    # Send the code to API for documentation
-    prompt = load_from_file("src/docGeneration/prompt.md")
-
-    # Create chat completion request
-    messages = [
-        {"role": "system", "content": prompt},
-        {"role": "user", "content": code},
-    ]
-
-    response = client.chat.completions.create(
-        model=MODEL_NAME, messages=messages, temperature=0.7, max_tokens=1000
-    )
-
-    documentation = response.choices[0].message.content
-
-    if not documentation:
-        print(f"⚠️ No documentation generated for {file}")
-        continue
-    """
-
-    # New version via n8n
-
     documentation = new_n8n_version.get_summary(file)
 
     # Convert file path from /src/ to /docs/
@@ -91,6 +63,8 @@ for file_num, file in enumerate(source_files):
         .replace(".gd", ".markdown")
         .replace(".cpp", ".cpp.md")
         .replace(".rs", ".rs.md")
+        .replace(".c", ".c.md")
+        .replace(".h", ".h.md")
     )
 
     # Ensure parent directories exist
