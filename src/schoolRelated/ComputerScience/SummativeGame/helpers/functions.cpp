@@ -2,6 +2,9 @@
 #define FUNCTIONS_CPP
 
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+
 #include <math.h>
 
 #include "structs.cpp"
@@ -49,21 +52,32 @@ void draw_child_panel(Panel panel, Vector2i parent_top_left) {
     Vector2i adjusted_top_left = {panel.top_left.x + parent_top_left.x, panel.top_left.y + parent_top_left.y};
     Vector2i adjusted_bottom_right = {panel.bottom_right.x + parent_top_left.x, panel.bottom_right.y + parent_top_left.y};
     draw_rectangle_rounded(adjusted_top_left, adjusted_bottom_right, PANEL_ROUNDING, panel.color);
-    draw_text(default_font, panel.text_color, 
-        {abs(adjusted_top_left.x - adjusted_bottom_right.x) / 2, abs(adjusted_top_left.y - adjusted_bottom_right.y) / 2}, 
+    draw_text(panel.font, panel.text_color, 
+        {adjusted_top_left.x + (adjusted_bottom_right.x - adjusted_top_left.x) / 2, adjusted_top_left.y + (adjusted_bottom_right.y - adjusted_top_left.y) / 2}, 
         panel.text);
 }
 
 // Draws a panel and its children
 void draw(Panel panel) {
     draw_rectangle_rounded(panel.top_left, panel.bottom_right, PANEL_ROUNDING, panel.color);
-    draw_text(default_font, panel.text_color, 
-        {abs(panel.top_left.x - panel.bottom_right.x) / 2, abs(panel.top_left.y - panel.bottom_right.y) / 2}, 
+    draw_text(panel.font, panel.text_color, 
+        {panel.top_left.x + (panel.bottom_right.x - panel.top_left.x) / 2, panel.top_left.y + (panel.bottom_right.y - panel.top_left.y) / 2}, 
         panel.text);
 
     for (int i = 0; i < panel.child_count; i++) {
         draw_child_panel(*panel.children[i], panel.top_left);
     }
+}
+
+// Adds a child panel to a parent panel
+int add_child_panel(Panel &parent, Panel *child) {
+    if (parent.child_count < 20) {
+        parent.children[parent.child_count] = child;
+        parent.child_count++;
+        return 0;
+    }
+    printf("Error: Maximum child panels reached\n");
+    return -1;
 }
 
 // Draws a tower using its object

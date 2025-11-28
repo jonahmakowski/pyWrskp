@@ -1,6 +1,11 @@
 #ifndef STRUCTS_CPP
 #define STRUCTS_CPP
 
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+
+#include "colors.cpp"
+
 // Vector with x,y positions as floats
 struct Vector2 {
     float x;
@@ -34,13 +39,21 @@ struct Camera {
     float zoom;
 };
 
+// Font struct representing a font and its size
+struct Font {
+    ALLEGRO_FONT *font;
+    int size;
+};
+
 // Panel struct representing a UI panel
 struct Panel {
     Vector2i top_left;
     Vector2i bottom_right;
     ALLEGRO_COLOR color;
+
     char text[250];
     ALLEGRO_COLOR text_color = BLACK;
+    Font font;
 
     struct Panel* children[20];
     int child_count = 0;

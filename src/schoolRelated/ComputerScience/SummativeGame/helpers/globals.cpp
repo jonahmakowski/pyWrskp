@@ -3,6 +3,8 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+
 #include "structs.cpp"
 
 #define MAX_WIDTH 800
@@ -21,7 +23,7 @@ ALLEGRO_DISPLAY *display = nullptr;
 ALLEGRO_EVENT_QUEUE *event_queue = nullptr;
 ALLEGRO_TIMER *timer = nullptr;
 
-ALLEGRO_FONT *default_font = nullptr;
+Font default_font;
 Vector2i mouse_pos = {0, 0};
 Camera camera = {{0, 0}, {0, 0}, 1.0f};
 
