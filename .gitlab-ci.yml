@@ -235,6 +235,6 @@ commit_and_push:
         echo "No changes to commit."
       else
         echo "Committing changes to GitLab..."
-        git commit -m "🤖 Auto-generated Modifications and Docs for latest changes"
+        git commit -m "🤖 Auto-generated Modifications and Docs for latest changes [skip ci] "
         git push --set-upstream origin main
       fi
