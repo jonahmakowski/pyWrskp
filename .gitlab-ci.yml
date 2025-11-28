@@ -10,16 +10,16 @@ python_formatter:
   stage: format
   before_script:
     - pip install black
-  script:
     - apk add --no-cache git
+    - git config --global user.email "gitlab-ci@localhost"
+    - git config --global user.name "GitLab CI"
+  script:
     - git checkout main
     - git remote set-url origin "http://gitlab_ci_token:${DOCS_KEY}@192.168.86.9:8929/jonahmakowski/pyWrskp.git"
     - git config pull.rebase false
     - git pull origin main
     - echo "Running Black for code formatting..."
     - black . || echo "Black formatting failed but continuing..."
-    - git config --global user.email "gitlab-ci@localhost"
-    - git config --global user.name "GitLab CI"
     - git add .
     - |
       if git diff --cached --quiet; then
@@ -167,7 +167,7 @@ generate_docs:
   before_script:
     - pip install requests
     - pip install --upgrade pyWrkspPackage --trusted-host 192.168.86.9 --index-url http://192.168.86.9:8929/api/v4/projects/4/packages/pypi/simple
-    - apk add git
+    - apk add --no-cache git
   script:
     - git config --global user.email "gitlab-ci@localhost"
     - git config --global user.name "GitLab CI"
