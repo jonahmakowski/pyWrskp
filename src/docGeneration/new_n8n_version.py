@@ -37,6 +37,6 @@ def get_summary(path: str):
                 print("\n--- Response Body (raw) ---")
                 print(response.text)
         else:
-            print(f"❌ Webhook returned an error.")
+            print("❌ Webhook returned an error.")
             print(f"Status Code: {response.status_code}")
             print(f"Response body:\n{response.text}")
