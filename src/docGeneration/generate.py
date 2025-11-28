@@ -12,7 +12,7 @@ print("Modified files:", modified_files)
 source_files = [
     f
     for f in modified_files
-    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs", '.c', '.h'))
+    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs", ".c", ".h"))
 ]
 
 print(f"{len(source_files)}; Source files:", source_files)
@@ -75,4 +75,3 @@ for file_num, file in enumerate(source_files):
         f.write(f"# Documentation for {file}\n\n{documentation}")
 
     print(f"✅ Saved docs: {doc_path}")
-

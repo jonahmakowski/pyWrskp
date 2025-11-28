@@ -1,0 +1,57 @@
+diff --git a/src/docGeneration/generate.py b/src/docGeneration/generate.py
+index d839756f..49dd3979 100755
+--- a/src/docGeneration/generate.py
++++ b/src/docGeneration/generate.py
+@@ -12,7 +12,7 @@ print("Modified files:", modified_files)
+ source_files = [
+     f
+     for f in modified_files
+-    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs", '.c', '.h'))
++    if f.startswith("src/") and f.endswith((".py", ".gd", ".cpp", ".rs", ".c", ".h"))
+ ]
+ 
+ print(f"{len(source_files)}; Source files:", source_files)
+@@ -75,4 +75,3 @@ for file_num, file in enumerate(source_files):
+         f.write(f"# Documentation for {file}\n\n{documentation}")
+ 
+     print(f"✅ Saved docs: {doc_path}")
+-
+diff --git a/src/docGeneration/new_n8n_version.py b/src/docGeneration/new_n8n_version.py
+index 2fb34a73..e6ad7099 100644
+--- a/src/docGeneration/new_n8n_version.py
++++ b/src/docGeneration/new_n8n_version.py
+@@ -40,4 +40,3 @@ def get_summary(path: str):
+             print("❌ Webhook returned an error.")
+             print(f"Status Code: {response.status_code}")
+             print(f"Response body:\n{response.text}")
+-
+diff --git a/src/python-explaination/file1.py b/src/python-explaination/file1.py
+index cc07e8a7..a7a56ca5 100644
+--- a/src/python-explaination/file1.py
++++ b/src/python-explaination/file1.py
+@@ -5,11 +5,14 @@ a = [1, "two", 3.0, [1, 2, 3]]
+ d = {"key1": "value1", "key2": 2, "key3": [1, 2, 3]}
+ b = False
+ 
++
+ def hello(t):
+     print("From Hello, {}".format(t))
+ 
++
+ hello("Hello")
+ 
++
+ class MyClass:
+     def __init__(self, name):
+         self.name = name
+@@ -17,7 +20,8 @@ class MyClass:
+     def greet(self):
+         print("Hello from {}".format(self.name))
+ 
++
+ m = MyClass("MyClass Instance")
+ m.greet()
+ 
+-print("Hello, World!")
+\ No newline at end of file
++print("Hello, World!")
