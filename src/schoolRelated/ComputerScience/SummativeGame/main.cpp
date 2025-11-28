@@ -22,7 +22,7 @@
 
 // Run every frame
 void frame_logic() {
-    
+
 }
 
 // Handling the keyboard input ev is the allegro event
@@ -91,3 +91,4 @@ int main(int argc, char *argv[]) {
     al_destroy_display(display);
     return 0;
 }
+
