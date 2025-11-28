@@ -40,3 +40,4 @@ def get_summary(path: str):
             print("❌ Webhook returned an error.")
             print(f"Status Code: {response.status_code}")
             print(f"Response body:\n{response.text}")
+
