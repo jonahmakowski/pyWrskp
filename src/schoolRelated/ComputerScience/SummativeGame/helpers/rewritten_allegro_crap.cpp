@@ -6,6 +6,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 #include "globals.cpp"
 
@@ -24,6 +25,17 @@
         return 1; \
     } \
     ptr = temp; \
+}
+
+// Macro to load font with error checking, it checks that the font is actually there and loaded properly
+#define load_font_with_checks(path, size, flags, obj) { \
+    ALLEGRO_FONT *temp_font = al_load_ttf_font(path, size, flags); \
+    if (!temp_font) { \
+        printf("Failed to load font: %s\n", path); \
+        return false; \
+    } \
+    Font result = {temp_font, size}; \
+    obj = result; \
 }
 
 #define get_display_height() al_get_display_height(display)
@@ -59,8 +71,8 @@ void draw_image(ALLEGRO_BITMAP *image, Vector2i position) {
 }
 
 // Draws text centered at the position
-void draw_text(ALLEGRO_FONT *font, ALLEGRO_COLOR color, Vector2i position, const char *text) {
-    al_draw_text(font, color, position.x, position.y, ALLEGRO_ALIGN_CENTER, text);
+void draw_text(Font font, ALLEGRO_COLOR color, Vector2i position, const char *text) {
+    al_draw_text(font.font, color, position.x, position.y-font.size/2, ALLEGRO_ALIGN_CENTRE, text);
 }
 
 // Gets the window size as a Vector2i
@@ -88,7 +100,7 @@ void draw_scaled_image(ALLEGRO_BITMAP *image, Vector2i position, Vector2 scale) 
 
 // Setup Allegro and its components
 bool init_allegro() {
-    if(!al_init() || !al_init_image_addon() || !al_init_primitives_addon()) {
+    if(!al_init() || !al_init_image_addon() || !al_init_primitives_addon() || !al_init_font_addon() || !al_init_ttf_addon()) {
         printf("failed to initalize libraries\n");
         return false;
     }
@@ -134,7 +146,7 @@ bool init_allegro() {
 
     al_set_window_title(display, "Summative Game");
 
-    default_font = al_create_builtin_font();
+    load_font_with_checks("fonts/OpenSans-Font.ttf", 24, 0, default_font);
 
     return true;
 }
