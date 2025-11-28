@@ -3,7 +3,7 @@ import subprocess
 import new_n8n_version
 
 # Get list of modified files in the last commit
-git_diff_cmd = "git diff --name-only HEAD~1"
+git_diff_cmd = "git diff --name-only HEAD~1 HEAD"
 modified_files = subprocess.check_output(git_diff_cmd.split()).decode().splitlines()
 
 print("Modified files:", modified_files)
