@@ -1,5 +1,5 @@
-use std::{env, fs, process, error::Error};
 use minigrep::{search, search_case_insensitive};
+use std::{env, error::Error, fs, process};
 
 fn main() {
     let conf = Config::build().unwrap_or_else(|err| {
@@ -26,7 +26,7 @@ impl Config {
         if args.len() < 3 {
             return Err("Not enough arguments, be sure to include a file and a search string");
         }
-        
+
         let conf = Config {
             query: args[1].clone(),
             file: args[2].clone(),
