@@ -1,8 +1,10 @@
 use std::collections::HashMap;
 
 fn main() {
-    let mut numbers = vec![2, 3, 100, 5, 5, 6, 1, 1, 3, 3, 5, 6, 7, 30045, 103, 1028, 1028, 12164, 1274];
-    let mut numbers_hash= HashMap::new();
+    let mut numbers = vec![
+        2, 3, 100, 5, 5, 6, 1, 1, 3, 3, 5, 6, 7, 30045, 103, 1028, 1028, 12164, 1274,
+    ];
+    let mut numbers_hash = HashMap::new();
 
     let mut sum = 0;
 

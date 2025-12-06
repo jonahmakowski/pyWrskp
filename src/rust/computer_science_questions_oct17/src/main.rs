@@ -18,7 +18,8 @@ fn main() {
     // Reading from the file
     let mut file_contents = String::new();
     let mut file = File::open("data.txt").expect("Unable to open file");
-    file.read_to_string(&mut file_contents).expect("Unable to read file");
+    file.read_to_string(&mut file_contents)
+        .expect("Unable to read file");
 
     // Processing each line
     let mut sum = 0;
