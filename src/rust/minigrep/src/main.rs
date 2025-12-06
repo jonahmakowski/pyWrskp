@@ -1,8 +1,8 @@
+use std::{env, fs, process, error::Error};
 use minigrep::{search, search_case_insensitive};
-use std::{env, error::Error, fs, process};
 
 fn main() {
-    let conf = Config::build().unwrap_or_else(|err| {
+    let conf = Config::build(env::args()).unwrap_or_else(|err| {
         eprintln!("{err}");
         process::exit(1);
     });
@@ -20,16 +20,22 @@ struct Config {
 }
 
 impl Config {
-    fn build() -> Result<Self, &'static str> {
-        let args: Vec<String> = env::args().collect();
+    fn build(mut args: impl Iterator<Item = String>) -> Result<Self, &'static str> {
+        args.next();
+        
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Failed to get query string"),
+        };
 
-        if args.len() < 3 {
-            return Err("Not enough arguments, be sure to include a file and a search string");
-        }
-
+        let file = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Failed to get file path string"),
+        };
+        
         let conf = Config {
-            query: args[1].clone(),
-            file: args[2].clone(),
+            query,
+            file,
             ignore_case: env::var("IGNORE_CASE").is_ok(),
         };
 
@@ -40,10 +46,9 @@ impl Config {
 fn run(conf: Config) -> Result<(), Box<dyn Error>> {
     let file_contents = fs::read_to_string(&conf.file)?;
 
-    let results = if conf.ignore_case {
-        search_case_insensitive(&conf.query, &file_contents)
-    } else {
-        search(&conf.query, &file_contents)
+    let results: Box<dyn Iterator<Item = &str>> = match conf.ignore_case {
+        true => Box::new(search_case_insensitive(&conf.query, &file_contents)),
+        false => Box::new(search(&conf.query, &file_contents)),
     };
 
     for line in results {
