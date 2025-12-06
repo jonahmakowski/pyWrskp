@@ -1,5 +1,5 @@
-use std::{env, fs, process, error::Error};
 use minigrep::{search, search_case_insensitive};
+use std::{env, error::Error, fs, process};
 
 fn main() {
     let conf = Config::build(env::args()).unwrap_or_else(|err| {
@@ -22,7 +22,7 @@ struct Config {
 impl Config {
     fn build(mut args: impl Iterator<Item = String>) -> Result<Self, &'static str> {
         args.next();
-        
+
         let query = match args.next() {
             Some(arg) => arg,
             None => return Err("Failed to get query string"),
@@ -32,7 +32,7 @@ impl Config {
             Some(arg) => arg,
             None => return Err("Failed to get file path string"),
         };
-        
+
         let conf = Config {
             query,
             file,

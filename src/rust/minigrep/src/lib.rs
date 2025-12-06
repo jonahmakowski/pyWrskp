@@ -2,8 +2,13 @@ pub fn search<'a>(query: &str, contents: &'a str) -> impl Iterator<Item = &'a st
     contents.lines().filter(move |line| line.contains(query))
 }
 
-pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> impl Iterator<Item = &'a str> {
-    contents.lines().filter(move |line| line.to_lowercase().contains(&query.to_lowercase()))
+pub fn search_case_insensitive<'a>(
+    query: &str,
+    contents: &'a str,
+) -> impl Iterator<Item = &'a str> {
+    contents
+        .lines()
+        .filter(move |line| line.to_lowercase().contains(&query.to_lowercase()))
 }
 
 #[cfg(test)]
