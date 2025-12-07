@@ -41,33 +41,123 @@ impl Board {
 
         // White Pawns
         for x in 0..8 {
-            pieces.push(ChessPiece {t: PieceType::PAWN, color: Side::WHITE, position: Position {x, y: 1}, symbol: '♙'});
+            pieces.push(ChessPiece {
+                t: PieceType::PAWN,
+                color: Side::WHITE,
+                position: Position { x, y: 1 },
+                symbol: '♙',
+            });
         }
 
         // Black Pawns
         for x in 0..8 {
-            pieces.push(ChessPiece {t: PieceType::PAWN, color: Side::BLACK, position: Position {x, y: 6}, symbol: '♟'});
+            pieces.push(ChessPiece {
+                t: PieceType::PAWN,
+                color: Side::BLACK,
+                position: Position { x, y: 6 },
+                symbol: '♟',
+            });
         }
 
         // White Main Row
-        pieces.push(ChessPiece { t: PieceType::ROOK, color: Side::WHITE, position: Position { x: 0, y: 0 }, symbol: '♖'});
-        pieces.push(ChessPiece { t: PieceType::KNIGHT, color: Side::WHITE, position: Position { x: 1, y: 0 }, symbol: '♘'});
-        pieces.push(ChessPiece { t: PieceType::BISHOP, color: Side::WHITE, position: Position { x: 2, y: 0 }, symbol: '♗'});
-        pieces.push(ChessPiece { t: PieceType::QUEEN, color: Side::WHITE, position: Position { x: 3, y: 0 }, symbol: '♕'});
-        pieces.push(ChessPiece { t: PieceType::KING, color: Side::WHITE, position: Position { x: 4, y: 0 }, symbol: '♔'});
-        pieces.push(ChessPiece { t: PieceType::BISHOP, color: Side::WHITE, position: Position { x: 5, y: 0 }, symbol: '♗'});
-        pieces.push(ChessPiece { t: PieceType::KNIGHT, color: Side::WHITE, position: Position { x: 6, y: 0 }, symbol: '♘'});
-        pieces.push(ChessPiece { t: PieceType::ROOK, color: Side::WHITE, position: Position { x: 7, y: 0 }, symbol: '♖'});
+        pieces.push(ChessPiece {
+            t: PieceType::ROOK,
+            color: Side::WHITE,
+            position: Position { x: 0, y: 0 },
+            symbol: '♖',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::KNIGHT,
+            color: Side::WHITE,
+            position: Position { x: 1, y: 0 },
+            symbol: '♘',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::BISHOP,
+            color: Side::WHITE,
+            position: Position { x: 2, y: 0 },
+            symbol: '♗',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::QUEEN,
+            color: Side::WHITE,
+            position: Position { x: 3, y: 0 },
+            symbol: '♕',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::KING,
+            color: Side::WHITE,
+            position: Position { x: 4, y: 0 },
+            symbol: '♔',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::BISHOP,
+            color: Side::WHITE,
+            position: Position { x: 5, y: 0 },
+            symbol: '♗',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::KNIGHT,
+            color: Side::WHITE,
+            position: Position { x: 6, y: 0 },
+            symbol: '♘',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::ROOK,
+            color: Side::WHITE,
+            position: Position { x: 7, y: 0 },
+            symbol: '♖',
+        });
 
         // Black Main Row
-        pieces.push(ChessPiece { t: PieceType::ROOK, color: Side::BLACK, position: Position { x: 0, y: 7 }, symbol: '♜' });
-        pieces.push(ChessPiece { t: PieceType::KNIGHT, color: Side::BLACK, position: Position { x: 1, y: 7 }, symbol: '♞' });
-        pieces.push(ChessPiece { t: PieceType::BISHOP, color: Side::BLACK, position: Position { x: 2, y: 7 }, symbol: '♝' });
-        pieces.push(ChessPiece { t: PieceType::QUEEN, color: Side::BLACK, position: Position { x: 3, y: 7 }, symbol: '♛' });
-        pieces.push(ChessPiece { t: PieceType::KING, color: Side::BLACK, position: Position { x: 4, y: 7 }, symbol: '♚' });
-        pieces.push(ChessPiece { t: PieceType::BISHOP, color: Side::BLACK, position: Position { x: 5, y: 7 }, symbol: '♝' });
-        pieces.push(ChessPiece { t: PieceType::KNIGHT, color: Side::BLACK, position: Position { x: 6, y: 7 }, symbol: '♞' });
-        pieces.push(ChessPiece { t: PieceType::ROOK, color: Side::BLACK, position: Position { x: 7, y: 7 }, symbol: '♜' });
+        pieces.push(ChessPiece {
+            t: PieceType::ROOK,
+            color: Side::BLACK,
+            position: Position { x: 0, y: 7 },
+            symbol: '♜',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::KNIGHT,
+            color: Side::BLACK,
+            position: Position { x: 1, y: 7 },
+            symbol: '♞',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::BISHOP,
+            color: Side::BLACK,
+            position: Position { x: 2, y: 7 },
+            symbol: '♝',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::QUEEN,
+            color: Side::BLACK,
+            position: Position { x: 3, y: 7 },
+            symbol: '♛',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::KING,
+            color: Side::BLACK,
+            position: Position { x: 4, y: 7 },
+            symbol: '♚',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::BISHOP,
+            color: Side::BLACK,
+            position: Position { x: 5, y: 7 },
+            symbol: '♝',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::KNIGHT,
+            color: Side::BLACK,
+            position: Position { x: 6, y: 7 },
+            symbol: '♞',
+        });
+        pieces.push(ChessPiece {
+            t: PieceType::ROOK,
+            color: Side::BLACK,
+            position: Position { x: 7, y: 7 },
+            symbol: '♜',
+        });
 
         Self {
             pieces,

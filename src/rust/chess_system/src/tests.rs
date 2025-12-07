@@ -13,7 +13,10 @@ fn board_into_grid() {
 fn move_piece() {
     let mut new_board = types::Board::new();
 
-    if let Err(error) = new_board.move_piece(types::Position {x: 1, y: 1}, types::Position {x: 1, y: 3}) {
+    if let Err(error) = new_board.move_piece(
+        types::Position { x: 1, y: 1 },
+        types::Position { x: 1, y: 3 },
+    ) {
         eprintln!("Error: {error}");
         panic!();
     }
