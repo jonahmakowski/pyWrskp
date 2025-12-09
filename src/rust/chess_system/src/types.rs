@@ -1,12 +1,12 @@
 use std::fmt;
 
-#[derive(Clone, PartialEq, Debug)]
+#[derive(Clone, PartialEq, Debug, Copy)]
 pub enum Side {
     BLACK,
     WHITE,
 }
 
-#[derive(Clone, PartialEq, Debug)]
+#[derive(Clone, PartialEq, Debug, Copy)]
 pub enum PieceType {
     PAWN,
     ROOK,
@@ -16,7 +16,7 @@ pub enum PieceType {
     KING,
 }
 
-#[derive(Clone, PartialEq, Debug)]
+#[derive(Clone, PartialEq, Debug, Copy)]
 pub struct ChessPiece {
     t: PieceType,
     color: Side,
@@ -49,7 +49,23 @@ impl ChessPiece {
         }
     }
 
-    pub fn is_valid_move(&self, new_position: Position, board: Board) -> bool {
+    pub fn get_type(&self) -> PieceType {
+        self.t
+    }
+
+    pub fn get_color(&self) -> Side {
+        self.color
+    }
+
+    pub fn get_position(&self) -> Position {
+        self.position
+    }
+
+    pub fn get_symbol(&self) -> char {
+        self.symbol
+    }
+
+    pub fn is_valid_move(&self, new_position: Position, board: &Board) -> bool {
         match self.t {
             PieceType::PAWN => {
                 if new_position.x < 0 || new_position.y < 0 || new_position.x > 7 || new_position.y > 7 {
@@ -100,12 +116,107 @@ impl ChessPiece {
                     return false;
                 }
             },
-            PieceType::ROOK => panic!(),
-            PieceType::KNIGHT => panic!(),
-            PieceType::BISHOP => panic!(),
-            PieceType::QUEEN => panic!(),
-            PieceType::KING => panic!(),
+            PieceType::ROOK => {
+                let directions = vec![(0, 1), (0, -1), (1, 0), (-1, 0)];
+
+                self.in_direction_check(board, new_position, directions)
+            },
+            PieceType::KNIGHT => {
+                let locations = [Position {x: 2, y: 1}, 
+                                                Position {x: 2, y: -1}, 
+                                                Position {x: -2, y: 1}, 
+                                                Position {x: -2, y: -1},
+                                                Position {x: 1, y: 2},
+                                                Position {x: 1, y: -2},
+                                                Position {x: -1, y: 2},
+                                                Position {x: -1, y: -2}];
+                
+                self.check_locations(board, new_position, locations)
+            }
+            PieceType::BISHOP => {
+                let directions = vec![(1, 1), (-1, 1), (-1, -1), (1, -1)];
+
+                self.in_direction_check(board, new_position, directions)
+            },
+            PieceType::QUEEN => {
+                let directions = vec![(1, 1), (-1, 1), (-1, -1), (1, -1), (0, 1), (0, -1), (1, 0), (-1, 0)];
+
+                self.in_direction_check(board, new_position, directions)
+            },
+            PieceType::KING => {
+                let locations = [Position {x: 1, y: 1},
+                                                Position {x: 1, y: -1},
+                                                Position {x: 1, y: 0},
+                                                Position {x: 0, y: 1},
+                                                Position {x: 0, y: -1},
+                                                Position {x: -1, y: 1},
+                                                Position {x: -1, y: -1},
+                                                Position {x: -1, y: 0}];
+                
+                if !self.check_locations(board, new_position, locations) {
+                    return false;
+                }
+
+                // Check if the new position would be under attack
+                for piece in board.pieces.iter() {
+                    if piece.color != self.color && piece.is_valid_move(new_position, board) {
+                        return false;
+                    }
+                }
+
+                true
+            },
         }
+    }
+
+    fn check_locations(&self, board: &Board, new_position: Position, relative_locations: [Position; 8]) -> bool {
+        for location in relative_locations {
+            let position = self.position.add(location);
+
+            if position.x < 0 || position.x > 7 || position.y < 0 || position.y > 7 {
+                continue;
+            }
+
+            match board.does_location_match_color(&position, &self.color) {
+                Some(is_color) => if !is_color && position == new_position { return true; }
+                None => if position == new_position { return true; }
+            }
+        }
+        return false;
+    }
+
+    fn in_direction_check(&self, board: &Board, new_position: Position, directions: Vec<(i8, i8)>) -> bool {
+        if self.t != PieceType::QUEEN && self.t != PieceType::BISHOP && self.t != PieceType::ROOK {
+            panic!("Function should not be called with {:?} only Queen Bishop and Rook", self.t)
+        }
+
+        for direction in directions.iter() {
+            for i in 1..8 {
+                let position = self.position.add(Position {x: i*direction.0, y: i*direction.1});
+
+                if position.x < 0 || position.x > 7 || position.y < 0 || position.y > 7 {
+                    break;
+                }
+
+                match board.does_location_match_color(&position, &self.color) {
+                    Some(is_color) => {
+                        if is_color {
+                            break;
+                        } else if new_position == position {
+                            return true;
+                        } else {
+                            break;
+                        }
+                    }
+                    None => {
+                        if new_position == position {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
 
@@ -115,7 +226,7 @@ impl fmt::Display for ChessPiece {
     }
 }
 
-#[derive(Clone, PartialEq, Debug)]
+#[derive(Clone, PartialEq, Debug, Copy)]
 pub struct Position {
     pub x: i8,
     pub y: i8,
@@ -200,7 +311,7 @@ impl Board {
         result
     }
 
-    pub fn move_piece(&mut self, pos_from: Position, pos_to: Position) -> Result<(), &str> {
+    fn move_piece(&mut self, pos_from: Position, pos_to: Position) -> Result<(), &str> {
         if (pos_from.x > 7 || pos_from.y > 7) || (pos_to.x > 7 || pos_to.y > 7) {
             return Err("Positions are outside of bounds");
         }
@@ -210,6 +321,7 @@ impl Board {
         for piece in self.pieces.iter_mut() {
             if piece.position == pos_from {
                 piece.position = pos_to.clone();
+                self.turn = if self.turn == Side::WHITE { Side::BLACK } else { Side::WHITE };
                 return Ok(());
             }
         }
@@ -217,11 +329,18 @@ impl Board {
         Err("Can't find piece at that position")
     }
 
+    pub fn index_at_location(&self, pos: &Position) -> Option<usize> {
+        for (index, &piece) in self.pieces.iter().enumerate() {
+            if piece.position == *pos {
+                return Some(index);
+            }
+        }
+        return None;
+    }
+    
     pub fn at_location(&self, pos: &Position) -> Option<ChessPiece> {
-        let grid_version = self.into_grid();
-
-        match &grid_version[pos.y as usize][pos.x as usize] {
-            Some(obj) => Some(obj.clone()),
+        match self.index_at_location(pos) {
+            Some(index) => Some(self.pieces[index]),
             None => None,
         }
     }
@@ -232,6 +351,79 @@ impl Board {
             None => return true,
         }
     }
+
+    pub fn does_location_match_color(&self, pos: &Position, color: &Side) -> Option<bool> {
+        match self.index_at_location(pos) {
+            Some(index) => if self.pieces[index].color == *color { return Some(true); } else {return Some(false); },
+            None => return None,
+        }
+    }
+
+    pub fn move_piece_with_error_checking(&mut self, from: &Position, to: &Position) -> Result<(), &str> {
+        let piece = self.pieces[match self.index_at_location(from) {
+            Some(index) => index,
+            None => return Err("No Piece at that position"),
+        }];
+
+        if !piece.is_valid_move(*to, self) {
+            return Err("Invalid Move");
+        }
+        
+        self.move_piece(*from, *to)
+    }
+
+    fn find_pieces(&self, piece_type: PieceType, side: Side) -> Option<usize> {
+        for (index, piece) in self.pieces.iter().enumerate() {
+            if piece.t == piece_type && piece.color == side {
+                return Some(index);
+            }
+        }
+
+        return None;
+    }
+
+    pub fn is_king_under_attack(&self, side: Side) -> bool {
+        let king = self.pieces[match self.find_pieces(PieceType::KING, side) {
+            Some(index) => index,
+            None => panic!("There's no king!"),
+        }];
+
+        for piece in self.pieces.iter() {
+            if piece.color != king.color && piece.is_valid_move(king.position, self) {
+                return true;
+            }
+        }
+
+        false
+    }
+
+    pub fn is_checkmate(&self, side: Side) -> bool {
+        let king = self.pieces[match self.find_pieces(PieceType::KING, side) {
+            Some(index) => index,
+            None => panic!("There's no king!"),
+        }];
+
+        let locations = [Position {x: 1, y: 1},
+                                        Position {x: 1, y: -1},
+                                        Position {x: 1, y: 0},
+                                        Position {x: 0, y: 1},
+                                        Position {x: 0, y: -1},
+                                        Position {x: -1, y: 1},
+                                        Position {x: -1, y: -1},
+                                        Position {x: -1, y: 0}];
+        
+        for location in locations {
+            if king.is_valid_move(king.position.add(location), self) {
+                return false;
+            }
+        }
+
+        if !self.is_king_under_attack(side) {
+            return false;
+        }
+
+        true
+    }
 }
 
 impl fmt::Display for Board {
@@ -239,17 +431,27 @@ impl fmt::Display for Board {
         let mut output = String::new();
 
         let grid_format = self.into_grid();
+        
+        let iterator: Box<dyn Iterator<Item = &Vec<Option<ChessPiece>>> + '_> =
+            if self.turn == Side::WHITE {
+                Box::new(grid_format.iter().rev())
+            } else {
+                Box::new(grid_format.iter())
+            };
 
-        for col in grid_format.iter() {
+        for (index, col) in iterator.enumerate() {
+            output.push_str(&format!("{} ", if self.turn == Side::WHITE { 7-index } else { index }));
             for piece in col.iter() {
                 match piece {
                     Some(p) => output.push(p.symbol),
-                    None => output.push('*'),
+                    None => output.push('□'),
                 }
                 output.push(' ');
             }
             output.push('\n');
         }
+
+        output.push_str("  0 1 2 3 4 5 6 7");
 
         write!(f, "{output}")
     }
