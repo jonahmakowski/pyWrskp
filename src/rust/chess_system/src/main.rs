@@ -8,9 +8,12 @@ fn get_position_from_input() -> Result<types::Position, &'static str> {
         Err(e) => {
             eprintln!("Something Went wrong Error: {e}");
             return Err("Something Went wrong");
-        },
+        }
     }
-    let position_parsed: Vec<i8> = position_string.split(", ").map(|item| item.trim().parse().unwrap_or(-1)).collect();
+    let position_parsed: Vec<i8> = position_string
+        .split(", ")
+        .map(|item| item.trim().parse().unwrap_or(-1))
+        .collect();
 
     if position_parsed.contains(&-1) || position_parsed.len() != 2 {
         println!("Please enter two numbers");
@@ -28,7 +31,14 @@ fn main() {
 
     loop {
         print!("{}[2J", 27 as char);
-        println!("{}'s turn", if board.turn == types::Side::WHITE {"White"} else {"Black"});
+        println!(
+            "{}'s turn",
+            if board.turn == types::Side::WHITE {
+                "White"
+            } else {
+                "Black"
+            }
+        );
         println!("{board}");
 
         println!("Enter the position of where you want to move from in the format of: x, y");
