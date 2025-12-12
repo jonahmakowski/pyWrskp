@@ -66,33 +66,38 @@ impl ChessPiece {
     }
 
     pub fn is_valid_move(&self, new_position: Position, board: &Board) -> bool {
+        if self.valid_moves(&board).contains(&(self.position, new_position)) {
+            true
+        } else {
+            false
+        }
+    }
+
+    pub fn valid_moves(&self, board: &Board) -> Vec<(Position, Position)> {
+        let mut output = Vec::new();
         match self.t {
             PieceType::PAWN => {
-                if new_position.x < 0
-                    || new_position.y < 0
-                    || new_position.x > 7
-                    || new_position.y > 7
-                {
-                    return false;
-                }
-
                 let (start_row, direction) = if self.color == Side::WHITE {
                     (1, 1)
                 } else {
                     (6, -1)
                 };
+                
                 let forward_one = self.position.add(Position {
                     x: 0,
                     y: 1 * direction,
                 });
+
                 let forward_two = self.position.add(Position {
                     x: 0,
                     y: 2 * direction,
                 });
+
                 let diagonal_1 = self.position.add(Position {
                     x: 1,
                     y: 1 * direction,
                 });
+
                 let diagonal_2 = self.position.add(Position {
                     x: -1,
                     y: 1 * direction,
@@ -124,26 +129,23 @@ impl ChessPiece {
                     }
                 };
 
-                if new_position == forward_one && board.is_location_empty(&forward_one) {
-                    return true;
-                } else if self.position.y == start_row
-                    && new_position == forward_two
-                    && board.is_location_empty(&forward_one)
-                    && board.is_location_empty(&forward_two)
-                {
-                    return true;
-                } else if new_position == diagonal_1 && diagonal_one_available {
-                    return true;
-                } else if new_position == diagonal_2 && diagonal_two_available {
-                    return true;
-                } else {
-                    return false;
+                if board.is_location_empty(&forward_one) {
+                    output.push((self.position, forward_one));
+                }
+                if self.position.y == start_row && board.is_location_empty(&forward_one) && board.is_location_empty(&forward_two) {
+                    output.push((self.position, forward_two));
+                }
+                if diagonal_one_available {
+                    output.push((self.position, diagonal_1));
+                }
+                if diagonal_two_available {
+                    output.push((self.position, diagonal_2));
                 }
             }
             PieceType::ROOK => {
                 let directions = vec![(0, 1), (0, -1), (1, 0), (-1, 0)];
 
-                self.in_direction_check(board, new_position, directions)
+                self.in_direction_check(board, directions, &mut output);
             }
             PieceType::KNIGHT => {
                 let locations = [
@@ -157,12 +159,12 @@ impl ChessPiece {
                     Position { x: -1, y: -2 },
                 ];
 
-                self.check_locations(board, new_position, locations)
+                self.check_locations(board, &mut output, locations);
             }
             PieceType::BISHOP => {
                 let directions = vec![(1, 1), (-1, 1), (-1, -1), (1, -1)];
 
-                self.in_direction_check(board, new_position, directions)
+                self.in_direction_check(board, directions, &mut output);
             }
             PieceType::QUEEN => {
                 let directions = vec![
@@ -176,7 +178,7 @@ impl ChessPiece {
                     (-1, 0),
                 ];
 
-                self.in_direction_check(board, new_position, directions)
+                self.in_direction_check(board, directions, &mut output);
             }
             PieceType::KING => {
                 let locations = [
@@ -190,26 +192,29 @@ impl ChessPiece {
                     Position { x: -1, y: 0 },
                 ];
 
-                if !self.check_locations(board, new_position, locations) {
-                    return false;
-                }
+                // Only allow king moves that do not result in being under attack
+                let mut safe_moves = Vec::new();
+                self.check_locations(board, &mut safe_moves, locations);
 
-                // Check if the new position would be under attack
-                for piece in board.pieces.iter() {
-                    if piece.color != self.color && piece.is_valid_move(new_position, board) {
-                        return false;
+                for (from, to) in safe_moves {
+                    let mut hypothetical_board = board.clone();
+                    // Try to move the king to the new position
+                    if hypothetical_board.move_piece(from, to).is_ok() {
+                        // If king is not under attack after the move, it's a valid move
+                        if !hypothetical_board.is_king_under_attack(self.color) {
+                            output.push((from, to));
+                        }
                     }
                 }
-
-                true
             }
         }
+        output
     }
 
     fn check_locations(
         &self,
         board: &Board,
-        new_position: Position,
+        output: &mut Vec<(Position, Position)>,
         relative_locations: [Position; 8],
     ) -> bool {
         for location in relative_locations {
@@ -221,26 +226,24 @@ impl ChessPiece {
 
             match board.does_location_match_color(&position, &self.color) {
                 Some(is_color) => {
-                    if !is_color && position == new_position {
-                        return true;
+                    if !is_color {
+                        output.push((self.position, position));
                     }
                 }
                 None => {
-                    if position == new_position {
-                        return true;
-                    }
+                    output.push((self.position, position));
                 }
             }
         }
-        return false;
+        return true;
     }
 
     fn in_direction_check(
         &self,
         board: &Board,
-        new_position: Position,
         directions: Vec<(i8, i8)>,
-    ) -> bool {
+        output: &mut Vec<(Position, Position)>
+    ) {
         if self.t != PieceType::QUEEN && self.t != PieceType::BISHOP && self.t != PieceType::ROOK {
             panic!(
                 "Function should not be called with {:?} only Queen Bishop and Rook",
@@ -263,21 +266,17 @@ impl ChessPiece {
                     Some(is_color) => {
                         if is_color {
                             break;
-                        } else if new_position == position {
-                            return true;
                         } else {
+                            output.push((self.position, position));
                             break;
                         }
                     }
                     None => {
-                        if new_position == position {
-                            return true;
-                        }
+                        output.push((self.position, position));
                     }
                 }
             }
         }
-        return false;
     }
 }
 
@@ -302,6 +301,7 @@ impl Position {
     }
 }
 
+#[derive(Clone)]
 pub struct Board {
     pub pieces: Vec<ChessPiece>,
     pub turn: Side,
@@ -508,6 +508,10 @@ impl Board {
             return Err("Invalid Move");
         }
 
+        if piece.color != self.turn {
+            return Err("That's the other side's piece!");
+        }
+        
         self.move_piece(*from, *to)
     }
 
@@ -528,8 +532,18 @@ impl Board {
         }];
 
         for piece in self.pieces.iter() {
-            if piece.color != king.color && piece.is_valid_move(king.position, self) {
-                return true;
+            if piece.color != king.color {
+                // Skip king pieces to avoid infinite recursion
+                if piece.t == PieceType::KING {
+                    // Check if king is adjacent
+                    if (piece.position.x - king.position.x).abs() <= 1
+                        && (piece.position.y - king.position.y).abs() <= 1
+                    {
+                        return true;
+                    }
+                } else if piece.is_valid_move(king.position, self) {
+                    return true;
+                }
             }
         }
 
@@ -564,6 +578,10 @@ impl Board {
         }
 
         true
+    }
+
+    pub fn is_stalemate(&self) {
+
     }
 }
 
