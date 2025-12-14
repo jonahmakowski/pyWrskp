@@ -1,5 +1,5 @@
-use std::{env, num::ParseIntError};
 use crate::types::*;
+use std::{env, num::ParseIntError};
 
 /// # Config for what the executable should do
 /// Has four modes:
@@ -23,7 +23,7 @@ impl Config {
     /// 2. list
     /// 3. remove
     /// 4. done
-    /// 
+    ///
     /// Numbers 3-4 will display a list, and then mark a task as done or remove it.
     pub fn build() -> Result<Self, &'static str> {
         let mut result = Config::Default;
@@ -43,17 +43,23 @@ impl Config {
                     let due_month: Result<u32, ParseIntError> = match args.next() {
                         Some(arg) => arg,
                         None => return Err("No due month"),
-                    }.trim().parse();
+                    }
+                    .trim()
+                    .parse();
 
                     let due_day: Result<u32, ParseIntError> = match args.next() {
                         Some(arg) => arg,
                         None => return Err("No due day"),
-                    }.trim().parse();
+                    }
+                    .trim()
+                    .parse();
 
                     let due_year: Result<u32, ParseIntError> = match args.next() {
                         Some(arg) => arg,
                         None => return Err("No due year"),
-                    }.trim().parse();
+                    }
+                    .trim()
+                    .parse();
 
                     let due_month = match due_month {
                         Ok(month) => month,
@@ -76,7 +82,7 @@ impl Config {
                             month: due_month,
                             day: due_day,
                         },
-                        &task_name
+                        &task_name,
                     ));
                 } else if arg == "list" {
                     result = Config::ListTasks;
@@ -99,7 +105,7 @@ impl Config {
 
                     result = Config::ToggleDone(index);
                 }
-            },
+            }
             None => return Err("Lacking first argument"),
         }
 
