@@ -1,6 +1,6 @@
 use std::fs::File;
-use std::io::Read;
 use std::io;
+use std::io::Read;
 
 use crate::types::*;
 
@@ -21,7 +21,8 @@ fn read_from_tasks(file_path: &str) -> Vec<Task> {
     }
 
     let mut file_contents = String::new();
-    file.read_to_string(&mut file_contents).expect("Failed to read file");
+    file.read_to_string(&mut file_contents)
+        .expect("Failed to read file");
 
     if file_contents.trim().is_empty() {
         vec![]
@@ -41,7 +42,7 @@ fn write_to_tasks(file_path: &str, data: Vec<Task>) {
 
 pub fn list_tasks(file_path: &str) {
     for (index, task) in read_from_tasks(file_path).iter().enumerate() {
-        print!("#{}\t", index+1);
+        print!("#{}\t", index + 1);
         println!("{}\n\n", format!("{task}").replace("\n", "\n\t"));
     }
 }
@@ -57,7 +58,7 @@ pub fn create_task(file_path: &str, task: Task) {
 pub fn toggle_task_done(file_path: &str, ind: isize) -> Result<(), &str> {
     let mut tasks = read_from_tasks(file_path);
     let mut ind = ind;
-    
+
     if tasks.len() == 0 {
         return Err("There aren't any notes right now.");
     }
@@ -92,12 +93,12 @@ pub fn toggle_task_done(file_path: &str, ind: isize) -> Result<(), &str> {
     list_tasks(file_path);
 
     Ok(())
-} 
+}
 
 pub fn remove_task(file_path: &str, ind: isize) -> Result<(), &str> {
     let mut tasks = read_from_tasks(file_path);
     let mut ind = ind;
-    
+
     if tasks.len() == 0 {
         return Err("There aren't any notes right now.");
     }
@@ -132,4 +133,4 @@ pub fn remove_task(file_path: &str, ind: isize) -> Result<(), &str> {
     list_tasks(file_path);
 
     Ok(())
-} 
+}

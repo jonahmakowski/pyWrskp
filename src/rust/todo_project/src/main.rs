@@ -1,9 +1,9 @@
-use std::process;
 use config::Config;
+use std::process;
 
 mod config;
-mod types;
 mod functions;
+mod types;
 
 fn main() {
     const FILE: &str = "data.json";
@@ -13,7 +13,7 @@ fn main() {
         Err(err) => {
             println!("Error: {err}");
             process::exit(1);
-        },
+        }
     };
 
     match conf {
@@ -23,12 +23,12 @@ fn main() {
             if let Err(err) = functions::remove_task(FILE, ind) {
                 eprintln!("Error: {err}");
             };
-        },
+        }
         Config::ToggleDone(ind) => {
             if let Err(err) = functions::toggle_task_done(FILE, ind) {
                 eprintln!("Error: {err}");
             };
-        },
+        }
         Config::Default => eprintln!("Config incorrectly setup"),
     }
 }

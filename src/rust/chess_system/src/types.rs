@@ -66,7 +66,10 @@ impl ChessPiece {
     }
 
     pub fn is_valid_move(&self, new_position: Position, board: &Board) -> bool {
-        if self.valid_moves(&board).contains(&(self.position, new_position)) {
+        if self
+            .valid_moves(&board)
+            .contains(&(self.position, new_position))
+        {
             true
         } else {
             false
@@ -82,7 +85,7 @@ impl ChessPiece {
                 } else {
                     (6, -1)
                 };
-                
+
                 let forward_one = self.position.add(Position {
                     x: 0,
                     y: 1 * direction,
@@ -132,7 +135,10 @@ impl ChessPiece {
                 if board.is_location_empty(&forward_one) {
                     output.push((self.position, forward_one));
                 }
-                if self.position.y == start_row && board.is_location_empty(&forward_one) && board.is_location_empty(&forward_two) {
+                if self.position.y == start_row
+                    && board.is_location_empty(&forward_one)
+                    && board.is_location_empty(&forward_two)
+                {
                     output.push((self.position, forward_two));
                 }
                 if diagonal_one_available {
@@ -242,7 +248,7 @@ impl ChessPiece {
         &self,
         board: &Board,
         directions: Vec<(i8, i8)>,
-        output: &mut Vec<(Position, Position)>
+        output: &mut Vec<(Position, Position)>,
     ) {
         if self.t != PieceType::QUEEN && self.t != PieceType::BISHOP && self.t != PieceType::ROOK {
             panic!(
@@ -511,7 +517,7 @@ impl Board {
         if piece.color != self.turn {
             return Err("That's the other side's piece!");
         }
-        
+
         self.move_piece(*from, *to)
     }
 
@@ -580,9 +586,7 @@ impl Board {
         true
     }
 
-    pub fn is_stalemate(&self) {
-
-    }
+    pub fn is_stalemate(&self) {}
 }
 
 impl fmt::Display for Board {

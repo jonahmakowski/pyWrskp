@@ -1,5 +1,5 @@
-use std::fmt::Display;
 use serde_derive::{Deserialize, Serialize};
+use std::fmt::Display;
 
 #[derive(PartialEq, Debug, Deserialize, Serialize)]
 pub struct Date {
@@ -33,7 +33,11 @@ impl Task {
 impl Display for Task {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
         writeln!(f, "\t{}", self.task_name)?;
-        writeln!(f, "Due:\t{}/{}/{}", self.due_date.month, self.due_date.day, self.due_date.year)?;
+        writeln!(
+            f,
+            "Due:\t{}/{}/{}",
+            self.due_date.month, self.due_date.day, self.due_date.year
+        )?;
         writeln!(f, "Done:\t{}", self.done)?;
         Ok(())
     }
