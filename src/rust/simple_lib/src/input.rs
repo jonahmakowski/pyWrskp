@@ -1,6 +1,7 @@
 use std::io;
 use std::str::FromStr;
 
+/// Gets string input from stdin
 pub fn get_string_input() -> Result<String, &'static str> {
     let mut result = String::new();
 
@@ -12,6 +13,8 @@ pub fn get_string_input() -> Result<String, &'static str> {
     Ok(result)
 }
 
+/// Gets number input from stdin
+/// Reads it in, and then uses parse to convert it to a number
 pub fn get_num_input<T: FromStr>() -> Result<T, &'static str> {
     let mut result = String::new();
 
