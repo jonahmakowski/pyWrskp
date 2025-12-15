@@ -1,5 +1,4 @@
 use std::fs::File;
-use std::io;
 use std::io::Read;
 
 use crate::types::*;
@@ -41,7 +40,14 @@ fn write_to_tasks(file_path: &str, data: Vec<Task>) {
 }
 
 pub fn list_tasks(file_path: &str) {
-    for (index, task) in read_from_tasks(file_path).iter().enumerate() {
+    let tasks = read_from_tasks(file_path);
+
+    if tasks.len() == 0 {
+        println!("There aren't any tasks right now");
+        return;
+    }
+
+    for (index, task) in tasks.iter().enumerate() {
         print!("#{}\t", index + 1);
         println!("{}\n\n", format!("{task}").replace("\n", "\n\t"));
     }
@@ -67,15 +73,9 @@ pub fn toggle_task_done(file_path: &str, ind: isize) -> Result<(), &str> {
         list_tasks(file_path);
 
         println!("Choose an task number to mark as done:");
-        let mut index = String::new();
-        match io::stdin().read_line(&mut index) {
-            Ok(_) => (),
-            Err(_) => return Err("Failed to get input"),
-        };
-
-        ind = match index.trim().parse() {
-            Ok(data) => data,
-            Err(_) => return Err("Failed to parse index"),
+        ind = match simple_lib::input::get_num_input() {
+            Ok(ind) => ind,
+            Err(err) => return Err(err),
         };
     }
 
@@ -107,15 +107,9 @@ pub fn remove_task(file_path: &str, ind: isize) -> Result<(), &str> {
         list_tasks(file_path);
 
         println!("Choose an task number to delete:");
-        let mut index = String::new();
-        match io::stdin().read_line(&mut index) {
-            Ok(_) => (),
-            Err(_) => return Err("Failed to get input"),
-        };
-
-        ind = match index.trim().parse() {
-            Ok(data) => data,
-            Err(_) => return Err("Failed to parse index"),
+        ind = match simple_lib::input::get_num_input() {
+            Ok(ind) => ind,
+            Err(err) => return Err(err),
         };
     }
 
