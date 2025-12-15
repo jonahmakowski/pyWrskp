@@ -1,0 +1,1 @@
+A simple library of helpful functions, really only intended for myself, but published for learning
