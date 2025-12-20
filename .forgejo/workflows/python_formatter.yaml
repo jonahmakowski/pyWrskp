@@ -1,0 +1,35 @@
+name: Python Formatter
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/*.py'
+
+jobs:
+  python_format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install black
+          git config --global user.email "forgejo-actions@localhost"
+          git config --global user.name "Forgejo Actions"
+
+      - name: Run Black
+        run: |
+          echo "Running Black..."
+          black .
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "🤖 Auto-format Python code" || echo "Nothing to commit"
+            git push https://$FORGEJO_TOKEN@github.com/jonahmakowski/pyWrskp.git main
+          fi
