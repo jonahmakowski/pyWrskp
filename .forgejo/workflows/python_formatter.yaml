@@ -15,8 +15,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3'
-          pip-version: '25'
+          python-version: '3.12'
+          pip-version: '24.2'
 
       - name: Install dependencies
         run: |
