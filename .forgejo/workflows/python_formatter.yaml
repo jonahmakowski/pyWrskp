@@ -34,5 +34,5 @@ jobs:
           git add .
           if ! git diff --cached --quiet; then
             git commit -m "🤖 Auto-format Python code" || echo "Nothing to commit"
-            git push https://$FORGEJO_TOKEN@github.com/jonahmakowski/pyWrskp.git main
+            git push https://$FORGEJO_TOKEN@git.jonahmakowski.com/jonahmakowski/pyWrskp.git main
           fi
