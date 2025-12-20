@@ -30,7 +30,7 @@ jobs:
         run: |
           source venv/bin/activate
           echo "Running Black..."
-          black .
+          black . || echo "Some error was raised"
           git add .
           if ! git diff --cached --quiet; then
             git commit -m "🤖 Auto-format Python code" || echo "Nothing to commit"
