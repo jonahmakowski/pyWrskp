@@ -9,21 +9,43 @@ on:
 jobs:
   rust_format:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Install Rust
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Rust
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo
+            target
+          key: rust-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            rust-${{ runner.os }}-
+
+      - name: Install minimal Rust + rustfmt
+        shell: bash
         run: |
-          curl https://sh.rustup.rs -sSf | sh -s -- -y
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          rustup component add rustfmt
+          set -e
+
+          if [ ! -x "$HOME/.cargo/bin/rustup" ]; then
+            curl https://sh.rustup.rs -sSf | sh -s -- \
+              -y \
+              --profile minimal \
+              --component rustfmt
+          fi
 
       - name: Install git
         run: sudo apt-get update && sudo apt-get install -y git
 
       - name: Run Rust Formatter
         working-directory: src/rust/rust_formatter
-        run: cargo run --release
+        run: |
+          set -e
+          . "$HOME/.cargo/env"
+          
+          cargo run --release
       
       - name: Git commit
         run: | 
