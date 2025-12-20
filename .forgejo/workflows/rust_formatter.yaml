@@ -1,0 +1,38 @@
+name: Rust Formatter
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/*.rs'
+      - '**/Cargo.toml'
+
+jobs:
+  rust_format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt
+
+      - name: Install git
+        run: sudo apt-get update && sudo apt-get install -y git
+
+      - name: Run Rust Formatter
+        working-directory: src/rust/rust_formatter
+        run: cargo run --release
+      
+      - name: Git commit
+        run: | 
+          git config --global user.email "forgejo-actions@localhost"
+          git config --global user.name "Forgejo Actions"
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "🤖 Auto-format Rust code [skip ci]" || echo "Nothing to commit"
+            git push https://$FORGEJO_TOKEN@git.jonahmakowski.ca/jonahmakowski/pyWrskp.git main
+          fi
