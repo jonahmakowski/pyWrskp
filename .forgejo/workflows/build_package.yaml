@@ -1,0 +1,32 @@
+name: Build Python Package
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/helpfulPackage/setup.py'
+
+jobs:
+  build_package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        run: |
+          apt-get update
+          apt-get install -y python3 python3-pip
+          apt-get install python3.11-venv -y
+          python3 -m venv venv
+
+      - name: Install build tools and build
+        run: |
+          source venv/bin/activate
+          cd src/helpfulPackage
+          pip install --upgrade pip
+          pip install setuptools wheel twine
+          python setup.py bdist_wheel sdist
+          pip install .[dev]
+          twine check dist/*
+          twine upload --repository-url https://git.jonahmakowski.ca/api/pypi/project/${{ forgejo.repository }} dist/*
