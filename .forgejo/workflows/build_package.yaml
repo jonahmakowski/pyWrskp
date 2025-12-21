@@ -31,5 +31,5 @@ jobs:
           pip install .[dev]
           twine check dist/*
           twine upload \
-            --repository-url "$FORGEJO_SERVER_URL/api/pypi/project/$FORGEJO_REPOSITORY" \
+            --repository-url "$FORGEJO_SERVER_URL/api/packages/jonahmakowski/pypi" \
             dist/*
