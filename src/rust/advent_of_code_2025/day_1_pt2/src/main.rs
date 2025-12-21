@@ -5,7 +5,8 @@ fn main() {
     let mut file = File::open("input.txt").expect("Failed to open the file");
 
     let mut file_contents = String::new();
-    file.read_to_string(&mut file_contents).expect("Failed to get data out of file");
+    file.read_to_string(&mut file_contents)
+        .expect("Failed to get data out of file");
 
     let lines = file_contents.lines();
 
@@ -13,7 +14,12 @@ fn main() {
     let mut result = 0;
 
     for line in lines {
-        let line_number: i32 = line.replace("R", "").replace("L", "").trim().parse().expect("Failed to parse num");
+        let line_number: i32 = line
+            .replace("R", "")
+            .replace("L", "")
+            .trim()
+            .parse()
+            .expect("Failed to parse num");
         let mut direction = 1;
 
         if line.contains("L") {
