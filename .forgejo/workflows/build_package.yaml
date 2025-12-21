@@ -29,4 +29,6 @@ jobs:
           python setup.py bdist_wheel sdist
           pip install .[dev]
           twine check dist/*
-          twine upload --repository-url https://git.jonahmakowski.ca/api/pypi/project/${{ forgejo.repository }} dist/*
+          twine upload \
+            --repository-url "$FORGEJO_SERVER_URL/api/pypi/project/$FORGEJO_REPOSITORY" \
+            dist/*
