@@ -21,6 +21,9 @@ jobs:
           python3 -m venv venv
 
       - name: Install build tools and build
+        env:
+          TWINE_USERNAME: forgejo-actions
+          TWINE_PASSWORD: $FORGEJO_TOKEN
         run: |
           source venv/bin/activate
           cd src/helpfulPackage
