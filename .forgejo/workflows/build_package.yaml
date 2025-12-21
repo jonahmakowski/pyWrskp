@@ -20,8 +20,8 @@ jobs:
 
       - name: Install build tools and build
         env:
-          TWINE_USERNAME: forgejo-actions
-          TWINE_PASSWORD: $FORGEJO_TOKEN
+          TWINE_USERNAME: jonahmakowski
+          TWINE_PASSWORD: $PUBLISH_KEY
         run: |
           source venv/bin/activate
           cd src/helpfulPackage
