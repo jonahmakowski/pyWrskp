@@ -16,12 +16,10 @@ pub fn get_string_input() -> Result<String, &'static str> {
 /// Gets number input from stdin
 /// Reads it in, and then uses parse to convert it to a number
 pub fn get_num_input<T: FromStr>() -> Result<T, &'static str> {
-    let mut result = String::new();
-
-    match io::stdin().read_line(&mut result) {
-        Ok(_) => (),
+    let result = match get_string_input() {
+        Ok(res) => res,
         Err(_) => return Err("Failed to get input"),
-    }
+    };
 
     match result.trim().parse::<T>() {
         Ok(num) => Ok(num),
