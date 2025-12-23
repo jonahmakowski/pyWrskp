@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::Read;
-use std::thread;
 use std::sync::mpsc;
+use std::thread;
 
 fn main() {
     let mut file = File::open("input.txt").expect("Failed to open the file");

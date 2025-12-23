@@ -20,7 +20,10 @@ fn main() {
                     continue;
                 }
 
-                let option: i32 = format!("{char}{second_char}").trim().parse().expect("Failed to convert number");
+                let option: i32 = format!("{char}{second_char}")
+                    .trim()
+                    .parse()
+                    .expect("Failed to convert number");
                 options.push(option);
             }
         }
