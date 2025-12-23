@@ -33,17 +33,21 @@ fn main() {
     for id_range in ids {
         for id in id_range {
             let id_str: String = id.to_string();
-            let mut invalid = false;
 
-            let split = id_str.split_at(id_str.len() / 2);
+            for i in 1..id_str.len() {
+                let mut invalid = false;
 
-            if split.0 == split.1 {
-                invalid = true;
-            }
+                let split = id_str.split_at(i);
 
-            if invalid {
-                sum += id;
-                println!("Invalid number {id} -- segments {} {}", split.0, split.1);
+                if id_str.split(split.0).filter(|data| !data.is_empty()).collect::<Vec<&str>>().is_empty() {
+                    invalid = true;
+                }
+
+                if invalid {
+                    sum += id;
+                    println!("Invalid number {id} -- segments {} {}", split.0, split.1);
+                    break;
+                }
             }
         }
     }
