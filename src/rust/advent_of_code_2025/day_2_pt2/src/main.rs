@@ -39,7 +39,12 @@ fn main() {
 
                 let split = id_str.split_at(i);
 
-                if id_str.split(split.0).filter(|data| !data.is_empty()).collect::<Vec<&str>>().is_empty() {
+                if id_str
+                    .split(split.0)
+                    .filter(|data| !data.is_empty())
+                    .collect::<Vec<&str>>()
+                    .is_empty()
+                {
                     invalid = true;
                 }
 
