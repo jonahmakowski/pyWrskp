@@ -1,14 +1,12 @@
-use std::{fs, io};
 use colored::*;
+use std::{fs, io};
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn search_text_test() {
-        
-    }
+    fn search_text_test() {}
 }
 
 pub fn perform_search(path: &str, for_text: &str) -> Result<(), &'static str> {
@@ -33,7 +31,7 @@ pub fn perform_search(path: &str, for_text: &str) -> Result<(), &'static str> {
             Err(_) => {
                 //eprintln!("Failed to open file {file}");
                 continue;
-            },
+            }
         };
 
         let (internal_results, lines) = search_text(&for_text, &file_contents);
@@ -61,7 +59,7 @@ fn get_file_info(path: &str) -> Result<Vec<String>, io::Error> {
         return Ok(vec![path.to_string()]);
     }
 
-    let mut data= vec![];
+    let mut data = vec![];
 
     for entry in fs::read_dir(path)? {
         let entry = entry?;
@@ -100,10 +98,7 @@ fn print_section_bold(text: &str, section: &str) {
     println!();
 }
 
-fn search_text<'a>(
-    query: &str,
-    contents: &'a str,
-) -> (Vec<&'a str>, Vec<i32>) {
+fn search_text<'a>(query: &str, contents: &'a str) -> (Vec<&'a str>, Vec<i32>) {
     let mut lines = vec![];
     let mut current_line = 1;
     let mut results = vec![];
