@@ -4,8 +4,10 @@ mod tests {
 
     #[test]
     fn build_search_config() {
-        let mock_args = vec!["Path to executable", "search", "for_this", "in_this"].into_iter().map(|x| x.to_string());
-            
+        let mock_args = vec!["Path to executable", "search", "for_this", "in_this"]
+            .into_iter()
+            .map(|x| x.to_string());
+
         let conf = Config::build(mock_args).expect("Failed to build config");
 
         match conf {
@@ -22,7 +24,7 @@ mod tests {
 /// ## Build system
 /// ### Search:
 /// <executable> search <search argument> <file/folder path>
-/// 
+///
 /// ## Enum Structure
 /// ### Search:
 /// First argument is search argument, second is the path.
