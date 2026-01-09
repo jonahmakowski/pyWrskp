@@ -13,6 +13,6 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Run Black
-        uses: custom_actions/format-python@main
+        uses: https://git.jonahmakowski.ca/custom_actions/format-python@main
         with:
           script-path: 'jonahmakowski/pyWrskp'
