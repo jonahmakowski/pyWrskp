@@ -15,4 +15,4 @@ jobs:
       - name: Run Black
         uses: https://git.jonahmakowski.ca/custom_actions/format-python@main
         with:
-          script-path: 'jonahmakowski/pyWrskp'
+          repo: 'jonahmakowski/pyWrskp'
