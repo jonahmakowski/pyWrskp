@@ -12,27 +12,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
       
-      - name: Set up Python
-        run: |
-          apt-get update
-          apt-get install -y python3 python3-pip
-          apt-get install python3.11-venv -y
-          python3 -m venv venv
-
-      - name: Install dependencies
-        run: |
-          source venv/bin/activate
-          pip install black
-          git config --global user.email "forgejo-actions@localhost"
-          git config --global user.name "Forgejo Actions"
-
       - name: Run Black
-        run: |
-          source venv/bin/activate
-          echo "Running Black..."
-          black . || echo "Some error was raised"
-          git add .
-          if ! git diff --cached --quiet; then
-            git commit -m "🤖 Auto-format Python code" || echo "Nothing to commit"
-            git push https://$FORGEJO_TOKEN@git.jonahmakowski.com/jonahmakowski/pyWrskp.git main
-          fi
+        uses: custom_actions/format-python@main
+        with:
+          script-path: 'jonahmakowski/pyWrskp'
