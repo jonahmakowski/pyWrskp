@@ -18384,7 +18384,6 @@ snyed
 snyes
 soaks
 soaky
-soapi
 soaps
 soapy
 soars
@@ -18596,7 +18595,6 @@ spald
 spale
 spall
 spalt
-spamd
 spams
 spane
 spang
@@ -18810,7 +18808,6 @@ staid
 staig
 stail
 stain
-staio
 stair
 stake
 stale
