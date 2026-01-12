@@ -3178,7 +3178,6 @@ arion
 ariot
 arise
 arish
-arist
 arite
 arith
 arius
@@ -12345,12 +12344,9 @@ organ
 orgia
 orgic
 orgue
-orias
 oribi
 oriel
-oriya
 orion
-oryza
 orkey
 orles
 orlet
@@ -13242,7 +13238,6 @@ preta
 preux
 preve
 prexy
-priam
 price
 prich
 pricy
@@ -37915,7 +37910,6 @@ arises
 arish
 arising
 arisings
-arist
 arista
 aristae
 aristarch
@@ -232670,7 +232664,6 @@ orgulously
 orhamwood
 ory
 orians
-orias
 oribatid
 oribatidae
 oribatids
@@ -232780,7 +232773,6 @@ origins
 orignal
 orihyperbola
 orihon
-oriya
 orillion
 orillon
 orinasal
@@ -232805,7 +232797,6 @@ oryssus
 oristic
 oryx
 oryxes
-oryza
 oryzanin
 oryzanine
 oryzenin
@@ -268469,7 +268460,6 @@ priacanthid
 priacanthidae
 priacanthine
 priacanthus
-priam
 priapean
 priapi
 priapic
@@ -1091302,7 +1091292,6 @@ ariser
 arises
 arising
 arisings
-arist
 arista
 aristae
 aristarch
@@ -1274047,7 +1274036,6 @@ orgulously
 orgy
 orgy's
 orgyia
-orias
 oribatid
 oribatidae
 oribatids
@@ -1274184,7 +1274172,6 @@ orison
 orisons
 orisphere
 oristic
-oriya
 orkhon
 orkney
 orkneyan
@@ -1274744,7 +1274731,6 @@ oryssidae
 oryssus
 oryx
 oryxes
-oryza
 oryzenin
 oryzivorous
 oryzomys
@@ -1307940,7 +1307926,6 @@ priacanthid
 priacanthidae
 priacanthine
 priacanthus
-priam
 priapean
 priapi
 priapic
@@ -1489277,7 +1489262,6 @@ arise
 arisen
 arises
 arising
-arist
 arista
 aristarchy
 aristate
