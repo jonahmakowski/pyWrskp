@@ -6,6 +6,15 @@ pub enum Side {
     WHITE,
 }
 
+impl Side {
+    pub fn opposite(&self) -> Self {
+        match self {
+            Self::BLACK => Self::WHITE,
+            Self::WHITE => Self::BLACK,
+        }
+    }
+}
+
 #[derive(Clone, PartialEq, Debug, Copy)]
 pub enum PieceType {
     PAWN,
@@ -22,6 +31,7 @@ pub struct ChessPiece {
     color: Side,
     position: Position,
     symbol: char,
+    value: i32,
 }
 
 impl ChessPiece {
@@ -41,11 +51,21 @@ impl ChessPiece {
             (PieceType::KING, Side::BLACK) => '♚',
         };
 
+        let value = match &t {
+            PieceType::PAWN => 1,
+            PieceType::ROOK => 5,
+            PieceType::KNIGHT => 3,
+            PieceType::BISHOP => 3,
+            PieceType::QUEEN => 9,
+            PieceType::KING => 1000,
+        };
+
         Self {
             t,
             color,
             position,
             symbol,
+            value,
         }
     }
 
@@ -205,7 +225,7 @@ impl ChessPiece {
                 for (from, to) in safe_moves {
                     let mut hypothetical_board = board.clone();
                     // Try to move the king to the new position
-                    if hypothetical_board.move_piece(from, to).is_ok() {
+                    if hypothetical_board.move_piece_without_error_checking(&from, &to).is_ok() {
                         // If king is not under attack after the move, it's a valid move
                         if !hypothetical_board.is_king_under_attack(self.color) {
                             output.push((from, to));
@@ -296,6 +316,17 @@ impl fmt::Display for ChessPiece {
 pub struct Position {
     pub x: i8,
     pub y: i8,
+}
+
+pub struct Score {
+    pub white: i32,
+    pub black: i32,
+}
+
+impl Score {
+    pub fn make_relative(&self) -> i32 {
+        self.white - self.black
+    }
 }
 
 impl Position {
@@ -442,15 +473,15 @@ impl Board {
         result
     }
 
-    fn move_piece(&mut self, pos_from: Position, pos_to: Position) -> Result<(), &str> {
+    pub fn move_piece_without_error_checking(&mut self, pos_from: &Position, pos_to: &Position) -> Result<(), &str> {
         if (pos_from.x > 7 || pos_from.y > 7) || (pos_to.x > 7 || pos_to.y > 7) {
             return Err("Positions are outside of bounds");
         }
 
-        self.pieces.retain(|piece| piece.position != pos_to);
+        self.pieces.retain(|piece| piece.position != *pos_to);
 
         for piece in self.pieces.iter_mut() {
-            if piece.position == pos_from {
+            if piece.position == *pos_from {
                 piece.position = pos_to.clone();
                 self.turn = if self.turn == Side::WHITE {
                     Side::BLACK
@@ -518,7 +549,7 @@ impl Board {
             return Err("That's the other side's piece!");
         }
 
-        self.move_piece(*from, *to)
+        self.move_piece_without_error_checking(from, to)
     }
 
     fn find_pieces(&self, piece_type: PieceType, side: Side) -> Option<usize> {
@@ -584,6 +615,18 @@ impl Board {
         }
 
         true
+    }
+
+    pub fn get_score(&self) -> Score {
+        let (mut white, mut black) = (0, 0);
+        for piece in &self.pieces {
+            if piece.color == Side::WHITE {
+                white += piece.value;
+            } else {
+                black += piece.value;
+            }
+        }
+        Score {white, black}
     }
 
     pub fn is_stalemate(&self) {}

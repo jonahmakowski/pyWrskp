@@ -5,3 +5,12 @@ version = 4
 [[package]]
 name = "chess_system"
 version = "0.1.0"
+dependencies = [
+ "simple_lib",
+]
+
+[[package]]
+name = "simple_lib"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f1138e8b14f405d1b9c0f7c4956fe8eb449d2e92a8d427672f4959fc76742a1e"
