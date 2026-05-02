@@ -1,6 +1,0 @@
-[package]
-name = "median_mode_mean"
-version = "0.1.0"
-edition = "2024"
-
-[dependencies]
